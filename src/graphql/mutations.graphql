@@ -1,0 +1,1825 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateProfilePicture(
+  $input: CreateProfilePictureInput!
+  $condition: ModelProfilePictureConditionInput
+) {
+  createProfilePicture(input: $input, condition: $condition) {
+    id
+    imageurl
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    profileID
+    createdAt
+    updatedAt
+    profilePictureProfileId
+  }
+}
+mutation UpdateProfilePicture(
+  $input: UpdateProfilePictureInput!
+  $condition: ModelProfilePictureConditionInput
+) {
+  updateProfilePicture(input: $input, condition: $condition) {
+    id
+    imageurl
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    profileID
+    createdAt
+    updatedAt
+    profilePictureProfileId
+  }
+}
+mutation DeleteProfilePicture(
+  $input: DeleteProfilePictureInput!
+  $condition: ModelProfilePictureConditionInput
+) {
+  deleteProfilePicture(input: $input, condition: $condition) {
+    id
+    imageurl
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    profileID
+    createdAt
+    updatedAt
+    profilePictureProfileId
+  }
+}
+mutation CreateProfile(
+  $input: CreateProfileInput!
+  $condition: ModelProfileConditionInput
+) {
+  createProfile(input: $input, condition: $condition) {
+    id
+    email
+    relation
+    cognitoID
+    usernameID
+    Images {
+      items {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      nextToken
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    family_name
+    profilepictureID
+    profilepicture {
+      id
+      imageurl
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+    }
+    createdAt
+    updatedAt
+    profileUsernameId
+    profileImagePostsId
+  }
+}
+mutation UpdateProfile(
+  $input: UpdateProfileInput!
+  $condition: ModelProfileConditionInput
+) {
+  updateProfile(input: $input, condition: $condition) {
+    id
+    email
+    relation
+    cognitoID
+    usernameID
+    Images {
+      items {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      nextToken
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    family_name
+    profilepictureID
+    profilepicture {
+      id
+      imageurl
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+    }
+    createdAt
+    updatedAt
+    profileUsernameId
+    profileImagePostsId
+  }
+}
+mutation DeleteProfile(
+  $input: DeleteProfileInput!
+  $condition: ModelProfileConditionInput
+) {
+  deleteProfile(input: $input, condition: $condition) {
+    id
+    email
+    relation
+    cognitoID
+    usernameID
+    Images {
+      items {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      nextToken
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    family_name
+    profilepictureID
+    profilepicture {
+      id
+      imageurl
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+    }
+    createdAt
+    updatedAt
+    profileUsernameId
+    profileImagePostsId
+  }
+}
+mutation CreateImages(
+  $input: CreateImagesInput!
+  $condition: ModelImagesConditionInput
+) {
+  createImages(input: $input, condition: $condition) {
+    id
+    imageurl
+    s3_key
+    profileID
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    photoPath
+    createdAt
+    updatedAt
+    imagesImagePostsId
+  }
+}
+mutation UpdateImages(
+  $input: UpdateImagesInput!
+  $condition: ModelImagesConditionInput
+) {
+  updateImages(input: $input, condition: $condition) {
+    id
+    imageurl
+    s3_key
+    profileID
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    photoPath
+    createdAt
+    updatedAt
+    imagesImagePostsId
+  }
+}
+mutation DeleteImages(
+  $input: DeleteImagesInput!
+  $condition: ModelImagesConditionInput
+) {
+  deleteImages(input: $input, condition: $condition) {
+    id
+    imageurl
+    s3_key
+    profileID
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    photoPath
+    createdAt
+    updatedAt
+    imagesImagePostsId
+  }
+}
+mutation CreateImagePost(
+  $input: CreateImagePostInput!
+  $condition: ModelImagePostConditionInput
+) {
+  createImagePost(input: $input, condition: $condition) {
+    id
+    description
+    imagesID
+    image {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    time_posted
+    likes
+    comments
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateImagePost(
+  $input: UpdateImagePostInput!
+  $condition: ModelImagePostConditionInput
+) {
+  updateImagePost(input: $input, condition: $condition) {
+    id
+    description
+    imagesID
+    image {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    time_posted
+    likes
+    comments
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteImagePost(
+  $input: DeleteImagePostInput!
+  $condition: ModelImagePostConditionInput
+) {
+  deleteImagePost(input: $input, condition: $condition) {
+    id
+    description
+    imagesID
+    image {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    time_posted
+    likes
+    comments
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateComments(
+  $input: CreateCommentsInput!
+  $condition: ModelCommentsConditionInput
+) {
+  createComments(input: $input, condition: $condition) {
+    id
+    usernameID
+    comment
+    time_posted
+    imagePostsID
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateComments(
+  $input: UpdateCommentsInput!
+  $condition: ModelCommentsConditionInput
+) {
+  updateComments(input: $input, condition: $condition) {
+    id
+    usernameID
+    comment
+    time_posted
+    imagePostsID
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteComments(
+  $input: DeleteCommentsInput!
+  $condition: ModelCommentsConditionInput
+) {
+  deleteComments(input: $input, condition: $condition) {
+    id
+    usernameID
+    comment
+    time_posted
+    imagePostsID
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateUsername(
+  $input: CreateUsernameInput!
+  $condition: ModelUsernameConditionInput
+) {
+  createUsername(input: $input, condition: $condition) {
+    id
+    username
+    profileID
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Images {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+    usernameImagePostsId
+    usernameImagesId
+    usernameProfileId
+  }
+}
+mutation UpdateUsername(
+  $input: UpdateUsernameInput!
+  $condition: ModelUsernameConditionInput
+) {
+  updateUsername(input: $input, condition: $condition) {
+    id
+    username
+    profileID
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Images {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+    usernameImagePostsId
+    usernameImagesId
+    usernameProfileId
+  }
+}
+mutation DeleteUsername(
+  $input: DeleteUsernameInput!
+  $condition: ModelUsernameConditionInput
+) {
+  deleteUsername(input: $input, condition: $condition) {
+    id
+    username
+    profileID
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Images {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+    usernameImagePostsId
+    usernameImagesId
+    usernameProfileId
+  }
+}

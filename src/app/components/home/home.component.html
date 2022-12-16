@@ -1,0 +1,42 @@
+<div>
+  <ion-content [fullscreen]="true" padding="none" margin="none">
+    <ion-tabs>
+      <ion-tab-bar slot="top" mode="md">
+      </ion-tab-bar>
+    </ion-tabs>
+
+    <div id="container">
+
+      <!-- if user is registered -->
+      <!-- <div class="registered-wrapper" *ngIf="authState === 'signedin' && already_registered">
+        <ion-card *ngIf="!profilepicid" color="danger">
+          <ion-card-content (click)="uploadProfilePic()">
+            <small>It looks like you haven't uploaded a profile picture yet.</small>
+            <div class="upload-div">
+              <strong>Upload Now</strong><ion-icon class="upload-arrow" color="light" name="arrow-forward-circle-outline"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content>
+            <ion-card-title>Hi, {{username}}!</ion-card-title>
+            <small>Welcome to the Alexander-Friedman family website.</small>
+          </ion-card-content>
+        </ion-card>
+      </div> -->
+
+      <!-- if user is not registered -->
+      <ion-card *ngIf="createProfile">
+        <img src="../../../assets/undraw_having_fun.svg" />
+        <ion-card-header>
+          <ion-card-title>Welcome to feta!</ion-card-title>
+          <ion-card-subtitle>Let's get started by creating a profile</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="ion-padding">
+          <ion-button color="light" class="lets-go-button" (click)="openModal()">Let's Go&nbsp;<ion-icon name="arrow-forward-circle-outline"></ion-icon> </ion-button>
+        </ion-card-content>
+      </ion-card>
+      
+    </div>
+  </ion-content>
+</div>

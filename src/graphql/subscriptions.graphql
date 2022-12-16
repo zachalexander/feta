@@ -1,0 +1,1777 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateProfilePicture(
+  $filter: ModelSubscriptionProfilePictureFilterInput
+) {
+  onCreateProfilePicture(filter: $filter) {
+    id
+    imageurl
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    profileID
+    createdAt
+    updatedAt
+    profilePictureProfileId
+  }
+}
+subscription OnUpdateProfilePicture(
+  $filter: ModelSubscriptionProfilePictureFilterInput
+) {
+  onUpdateProfilePicture(filter: $filter) {
+    id
+    imageurl
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    profileID
+    createdAt
+    updatedAt
+    profilePictureProfileId
+  }
+}
+subscription OnDeleteProfilePicture(
+  $filter: ModelSubscriptionProfilePictureFilterInput
+) {
+  onDeleteProfilePicture(filter: $filter) {
+    id
+    imageurl
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    profileID
+    createdAt
+    updatedAt
+    profilePictureProfileId
+  }
+}
+subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
+  onCreateProfile(filter: $filter) {
+    id
+    email
+    relation
+    cognitoID
+    usernameID
+    Images {
+      items {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      nextToken
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    family_name
+    profilepictureID
+    profilepicture {
+      id
+      imageurl
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+    }
+    createdAt
+    updatedAt
+    profileUsernameId
+    profileImagePostsId
+  }
+}
+subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
+  onUpdateProfile(filter: $filter) {
+    id
+    email
+    relation
+    cognitoID
+    usernameID
+    Images {
+      items {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      nextToken
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    family_name
+    profilepictureID
+    profilepicture {
+      id
+      imageurl
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+    }
+    createdAt
+    updatedAt
+    profileUsernameId
+    profileImagePostsId
+  }
+}
+subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
+  onDeleteProfile(filter: $filter) {
+    id
+    email
+    relation
+    cognitoID
+    usernameID
+    Images {
+      items {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      nextToken
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    family_name
+    profilepictureID
+    profilepicture {
+      id
+      imageurl
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+    }
+    createdAt
+    updatedAt
+    profileUsernameId
+    profileImagePostsId
+  }
+}
+subscription OnCreateImages($filter: ModelSubscriptionImagesFilterInput) {
+  onCreateImages(filter: $filter) {
+    id
+    imageurl
+    s3_key
+    profileID
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    photoPath
+    createdAt
+    updatedAt
+    imagesImagePostsId
+  }
+}
+subscription OnUpdateImages($filter: ModelSubscriptionImagesFilterInput) {
+  onUpdateImages(filter: $filter) {
+    id
+    imageurl
+    s3_key
+    profileID
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    photoPath
+    createdAt
+    updatedAt
+    imagesImagePostsId
+  }
+}
+subscription OnDeleteImages($filter: ModelSubscriptionImagesFilterInput) {
+  onDeleteImages(filter: $filter) {
+    id
+    imageurl
+    s3_key
+    profileID
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    photoPath
+    createdAt
+    updatedAt
+    imagesImagePostsId
+  }
+}
+subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
+  onCreateImagePost(filter: $filter) {
+    id
+    description
+    imagesID
+    image {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    time_posted
+    likes
+    comments
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
+  onUpdateImagePost(filter: $filter) {
+    id
+    description
+    imagesID
+    image {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    time_posted
+    likes
+    comments
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
+  onDeleteImagePost(filter: $filter) {
+    id
+    description
+    imagesID
+    image {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    time_posted
+    likes
+    comments
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Images {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameImagesId
+      usernameProfileId
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateComments($filter: ModelSubscriptionCommentsFilterInput) {
+  onCreateComments(filter: $filter) {
+    id
+    usernameID
+    comment
+    time_posted
+    imagePostsID
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateComments($filter: ModelSubscriptionCommentsFilterInput) {
+  onUpdateComments(filter: $filter) {
+    id
+    usernameID
+    comment
+    time_posted
+    imagePostsID
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteComments($filter: ModelSubscriptionCommentsFilterInput) {
+  onDeleteComments(filter: $filter) {
+    id
+    usernameID
+    comment
+    time_posted
+    imagePostsID
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
+  onCreateUsername(filter: $filter) {
+    id
+    username
+    profileID
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Images {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+    usernameImagePostsId
+    usernameImagesId
+    usernameProfileId
+  }
+}
+subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
+  onUpdateUsername(filter: $filter) {
+    id
+    username
+    profileID
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Images {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+    usernameImagePostsId
+    usernameImagesId
+    usernameProfileId
+  }
+}
+subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
+  onDeleteUsername(filter: $filter) {
+    id
+    username
+    profileID
+    ImagePosts {
+      id
+      description
+      imagesID
+      image {
+        id
+        imageurl
+        s3_key
+        profileID
+        usernameID
+        photoPath
+        createdAt
+        updatedAt
+        imagesImagePostsId
+      }
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        family_name
+        profilepictureID
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      createdAt
+      updatedAt
+    }
+    Images {
+      id
+      imageurl
+      s3_key
+      profileID
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      photoPath
+      createdAt
+      updatedAt
+      imagesImagePostsId
+    }
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Images {
+        nextToken
+      }
+      ImagePosts {
+        id
+        description
+        imagesID
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameImagesId
+        usernameProfileId
+      }
+      family_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    createdAt
+    updatedAt
+    usernameImagePostsId
+    usernameImagesId
+    usernameProfileId
+  }
+}
