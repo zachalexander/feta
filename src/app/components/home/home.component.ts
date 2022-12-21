@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { APIService } from '../../API.service';
 import { ModalController } from '@ionic/angular';
 import { CreateProfileModalPage } from '../../modals/create-profile-modal/create-profile-modal.page'
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -13,13 +14,16 @@ import { CreateProfileModalPage } from '../../modals/create-profile-modal/create
 export class HomeComponent {
 
   @Input() name?: string;
-  already_registered = false;
+  already_registered;
   createProfile = false;
+  username;
+  profilepicid;
 
   constructor(
     private router: Router, 
     private api: APIService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public loadingController: LoadingController
   ){}
 
   async openModal() {
@@ -30,8 +34,18 @@ export class HomeComponent {
     return await modal.present();
   }
 
-  ngOnInit(){
-    this.loadUserData();
+  async ngOnInit(){
+    const loading = await this.loadingController.create({
+      spinner: 'lines-sharp-small',
+      translucent: false,
+      cssClass: 'spinner-loading'
+    });
+
+    loading.present();
+
+    await this.loadUserData();
+
+    loading.dismiss();
   }
 
   async signOut(){
@@ -46,46 +60,40 @@ export class HomeComponent {
     
     try {
       let cognitoid = await (await Auth.currentUserCredentials()).identityId
-      console.log(cognitoid)
       let profile = await this.api.GetUserProfileFromCognitoId(cognitoid)
-      console.log(profile)
 
       if(profile && cognitoid){
-        // this.already_registered = true; 
-        // this.username = await this.api.GetUsernameFromProfileId(profile.id);
-        // this.profilepicid = profile.profilepictureID
+        this.already_registered = true; 
+        this.profilepicid = profile.profilepictureID;
+        this.username = await this.api.GetUsernameFromProfileId(profile.id);
 
-        // await localStorage.setItem('usernameID', profile.usernameID)
-        // await localStorage.setItem('cognitoID', cognitoid)
-        // await localStorage.setItem('username', this.username)
-        // await localStorage.removeItem('amplify-signin-with-hostedUI')
-        // await localStorage.removeItem('CognitoIdentityServiceProvider.4hiv9l2c4ir7n1e0j419o92qhf.c3f1ee96-6e6e-41cd-9e3d-ff1ce38ea8c9.clockDrift')
-        // await localStorage.setItem('profileID', profile.id)
-        // this.authState = await AuthState.SignedIn;
-        // this.loaded = true;
+        await localStorage.setItem('usernameID', profile.usernameID)
+        await localStorage.setItem('cognitoID', cognitoid)
+        await localStorage.setItem('username', this.username)
+        await localStorage.removeItem('amplify-signin-with-hostedUI')
+        await localStorage.removeItem('CognitoIdentityServiceProvider.4hiv9l2c4ir7n1e0j419o92qhf.c3f1ee96-6e6e-41cd-9e3d-ff1ce38ea8c9.clockDrift')
+        await localStorage.setItem('profileID', profile.id)
       } else if(!cognitoid && !profile) {
-        // this.authState = await AuthState.SignedOut;
-        // this.loaded = true;
+        await this.router.navigate(['/login']).then(() => { window.location.reload()})
         await this.router.navigate(['/login']).then(() => { window.location.reload()})
       } else if(!cognitoid){
-        // this.authState = await AuthState.SignedOut;
-        // this.loaded = true;
-        // await this.router.navigate(['/login']).then(() => { window.location.reload()})
+        await this.router.navigate(['/login']).then(() => { window.location.reload()})
       } else if(cognitoid && !profile) {
         console.log('cognitoID found, but no profile!')
         this.already_registered = false;
         this.createProfile = true;
-        // this.loaded = true;
       } else {
-        // this.loaded = true;
+        await this.router.navigate(['/login']).then(() => { window.location.reload()})
       }
     }
     catch (error) {
-      // this.authState = AuthState.SignedOut;
-      // this.loaded = true;
-      // this.already_registered = false;
+       await this.router.navigate(['/login']).then(() => { window.location.reload()})
     }
 
+}
+
+async uploadProfilePic(){
+  await this.router.navigate(['/profile-picture']).then(() => { window.location.reload()})
 }
 
 }

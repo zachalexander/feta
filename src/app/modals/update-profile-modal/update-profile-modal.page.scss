@@ -1,0 +1,162 @@
+
+.profile-pic-div {
+    height: 20vh;
+}
+
+form {
+    height: 25vh;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid whitesmoke;
+    border-bottom: 1px solid whitesmoke;
+}
+
+.profile-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    max-width: 200px;
+    font-size: 75%;
+}
+
+ion-text {
+
+    font-weight: 600;
+}
+
+
+ion-avatar {
+    height: 120px;
+    width: 120px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 1em auto;
+
+}
+
+ion-row {
+    margin: 1em auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.username-edit-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.username-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+
+
+    ion-input {
+        // background: whitesmoke;
+        padding: 0em 0.5em !important;
+        border-bottom: 1px solid whitesmoke;
+    }
+}
+
+.familyname-wrapper {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    ion-input {
+        // background: whitesmoke;
+        padding: 0em 0.5em !important;
+        border-bottom: 1px solid whitesmoke;
+    }
+}
+
+.error-message, .error-message-taken, .error-message-characters {
+    color: indianred;
+    font-size: 0.65em;
+    font-weight: 600;
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.error-message {
+    margin: 0.25em auto 1em 8.25em;
+}
+
+.error-message-characters {
+    margin: 0.25em auto 1em 8.25em;
+}
+
+.error-message-taken {
+    margin: 0.25em auto 1em 8.25em;
+}
+
+.success-message {
+    color: mediumseagreen;
+    font-size: 0.65em;
+    font-weight: 600;
+    margin: 0.25em auto 1em 8.25em;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.pending-message, .initial-message {
+    height: 0.25em;
+}
+
+.invalid-entry {
+    color: indianred;
+    font-size: 1.25em;
+    --ionicon-stroke-width: 40px;
+    padding-left: 0.5em;
+}
+
+.valid-entry {
+    color: mediumseagreen;
+    font-size: 1.25em;
+    --ionicon-stroke-width: 40px;
+    padding-left: 0.5em;
+}
+
+.relation-selector-wrapper {
+    margin: 0em 0.75em 0em 1.25em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    ion-item {
+        max-width: 75%;
+    }
+
+    ion-select {
+        min-width: 100%;
+    }
+
+    .relation-select {
+        display: flex;
+        justify-content: left;
+        width: 100%;
+        border-bottom: 1px solid whitesmoke;
+    }
+}
+
+.validate-spinner {
+    margin-left: 0.5em;
+    padding: 0.5em;
+    transform: scale(0.75)
+}
+
+.name-input {
+    display: flex;
+    font-size: 0.75em;
+    width: 90px;
+}

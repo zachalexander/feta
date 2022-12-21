@@ -56,12 +56,14 @@ export class CreateProfileModalPage implements OnInit{
     this.slideOpts = {
       pagination: { clickable: false },
       keyboard: { enabled: true },
+      allowTouchMove: false,
+      simulateTouch: false,
       navigation: { 
         nextEl: 'next-button',
         prevEl: 'previous-button'
       },
       spaceBetween: 30,
-      effect: 'fade'
+      effect: 'slide'
     }
   }
 
@@ -104,7 +106,6 @@ export class CreateProfileModalPage implements OnInit{
   }
 
   async createProfile(profile){
-    console.log(profile)
     await this.api.CreateProfile(profile).then(() => {});
   }
 

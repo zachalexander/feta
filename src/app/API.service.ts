@@ -232,6 +232,8 @@ export type UpdateProfileInput = {
   profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
   _version?: number | null;
+  _lastChangedAt?: Date | null;
+  _deleted?: boolean | null;
 };
 
 export type DeleteProfileInput = {
@@ -381,6 +383,9 @@ export type UpdateUsernameInput = {
   usernameImagePostsId?: string | null;
   usernameImagesId?: string | null;
   usernameProfileId?: string | null;
+  _version?: number | null;
+  _deleted?: boolean | null;
+  _lastChangedAt?: Date | null;
 };
 
 export type DeleteUsernameInput = {
@@ -2747,6 +2752,7 @@ export type GetProfileQuery = {
   updatedAt: string;
   profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
+  _version?: number | null;
 };
 
 export type ListProfilesQuery = {
@@ -3393,6 +3399,9 @@ export type ListUsernamesQuery = {
     usernameProfileId?: string | null;
   } | null>;
   nextToken?: string | null;
+  _deleted?: boolean | null;
+  _lastChangedAt?: Date | null;
+  _version?: number | null;
 };
 
 export type ProfilesByProfilepictureIDQuery = {
@@ -5621,6 +5630,8 @@ export type GetUsernameDataQuery = {
     username: string;
     profileID: string;
     _version: number;
+    _lastChangedAt?: Date | null;
+    _deleted?: boolean | null;
 };
 
 @Injectable({
@@ -5628,13 +5639,60 @@ export type GetUsernameDataQuery = {
 })
 export class APIService {
 
+  async getUserProfileImageData(profileID: String): Promise<any>{
+
+    const statement = `query getUserProfileImageData($profileID: ID!) {
+      listProfiles(filter: {id: {eq: $profileID}}) {
+        items {
+          Images {
+            items {
+              id
+              imagesImagePostsId
+              imageurl
+              profileID
+              createdAt
+            }
+          }
+          cognitoID
+          createdAt
+          email
+          family_name
+          id
+          profileImagePostsId
+          profileUsernameId
+          profilepictureID
+          relation
+          updatedAt
+          usernameID
+        }
+      }
+    }`;
+
+    const gqlAPIServiceArguments: any = {
+      profileID
+    };
+
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
+    let array: any = response.data.listProfiles.items[0].Images.items;
+    let imageArray = [];
+
+    await Promise.all(array.map(async images => {
+      if(!images._deleted){
+        imageArray.push({
+          url: images.imageurl,
+          time_posted: images.createdAt
+        })
+      }
+    }))
+
+    return [imageArray, response.data.listProfiles.items[0]];
+
+  }
+
   async GetUsernameFromProfileId(profileID: String): Promise<any>{
     const statement = `query getUsernameData($profileID: String) {
       listUsernames(filter: {profileID: {eq: $profileID}}) {
         items {
-          _deleted
-          _lastChangedAt
-          _version
           profileID
           id
           username
@@ -5654,9 +5712,6 @@ export class APIService {
     const statement = `query getUsernameData($profileID: String) {
       listUsernames(filter: {profileID: {eq: $profileID}}) {
         items {
-          _deleted
-          _lastChangedAt
-          _version
           profileID
           id
           username
@@ -5694,8 +5749,26 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    console.log(response)
     return <any>response.data.listProfiles.items[0];
+  }
+
+  async GetProfilePictureProfileID(profileID: string): Promise<GetProfilePictureQuery>{
+    const statement = `query getProfilePictureProfileID($profileID: String) {
+      listProfilePictures(filter: {profileID: {eq: $profileID}}) {
+        items {
+          profileID
+          id
+          imageurl
+        }
+      }
+    }`;
+    const gqlAPIServiceArguments: any = {
+      profileID
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetProfilePictureQuery>response.data.listProfilePictures.items[0];
   }
 
   async CreateProfilePicture(

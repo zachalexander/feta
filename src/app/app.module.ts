@@ -15,8 +15,12 @@ import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import awsconfig from '../aws-exports';
 
 import { CreateProfileModalPage } from './modals/create-profile-modal/create-profile-modal.page';
+import { UpdateProfileModalPage } from './modals/update-profile-modal/update-profile-modal.page';
+import { ProfileMenuModalPage } from './modals/profile-menu-modal/profile-menu-modal.page';
+import { ProfilePicturePage } from './pages/profile-picture/profile-picture.page';
 
 import { SwiperModule } from 'swiper/angular';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 Amplify.configure(awsconfig);
 
@@ -24,7 +28,10 @@ Amplify.configure(awsconfig);
   declarations: [
     AppComponent, 
     LoginComponent,
-    CreateProfileModalPage
+    CreateProfileModalPage,
+    UpdateProfileModalPage,
+    ProfileMenuModalPage,
+    ProfilePicturePage
   ],
   imports: [
     BrowserModule, 
@@ -32,7 +39,8 @@ Amplify.configure(awsconfig);
     AppRoutingModule, 
     AmplifyAuthenticatorModule,
     SwiperModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageCropperModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

@@ -1,0 +1,191 @@
+.menu-button {
+    padding: 0 1em;
+}
+
+ion-content{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: auto !important;
+}
+
+ion-grid {
+    padding: auto !important;
+    max-width: 600px;
+}
+
+ion-segment {
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+    margin: auto !important;
+}
+
+.edit-grid {
+    margin: 3em auto 0 auto;
+    padding: 0 !important;
+    display: flex;
+    justify-content: center;
+    max-width: 400px;
+}
+
+ion-col {
+    padding: 0.05em !important;
+}
+
+ion-label {
+    font-size: 1.1em;
+}
+
+ion-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6em;
+    width: 6em;
+    margin: 2em auto 0em auto;
+}
+
+ion-icon {
+    height: 24px;
+    width: 24px;
+    color: black;
+  
+    --ionicon-stroke-width: 30px !important;
+  }
+
+.username-header {
+    margin-left: 0.25em;
+}
+
+.loading-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .photo-grid {
+      margin-top: 1em;
+  }
+
+  .top-of-profile-edit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .username-header {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        font-size: 1.01em;
+        margin-top: 0.5em;
+        font-weight: 600;
+    }
+
+    .right-top-profile {
+        display: flex;
+        padding: 0em 0em 0em 2em;
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+    }
+
+    .stats-div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 2em;
+
+        .stats-count {
+            font-size: 1.5em;
+            padding-right: 0.25em;
+            padding-top: 0.25em;
+        }
+    }
+  }
+
+  .top-of-profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: auto auto 2em auto;
+    width: 80%;
+
+    .username-header {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        font-size: 1.01em;
+        margin-top: 0.5em;
+        font-weight: 600;
+    }
+
+    .right-top-profile {
+        display: flex;
+        padding: 0em 0em 0em 2em;
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+    }
+
+    .stats-div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 2em;
+
+        .stats-count {
+            font-size: 1.5em;
+            padding-right: 0.25em;
+            padding-top: 0.25em;
+        }
+    }
+  }
+
+.postedphotos {
+    .postedphotos_row {
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        align-items: center;
+        min-width: 100%;
+    }
+
+    .square {
+        width: 99.8%;
+        padding-bottom: 99.8%;
+        background-color: none;
+        background-size: cover;
+        background-position: center;
+        object-fit: contain;
+      }
+
+}
+
+.edit-profile-button {
+    max-width: 200px;
+    display: flex;
+    justify-content: center;
+    margin: 1.5em auto 1em auto;
+    height: 2em;
+    font-weight: 600;
+    color: black;
+}
+
+
+.non-edit-toolbar {
+    display: flex;
+    justify-content: space-around;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: none !important;
+}
+
+ion-icon:hover {
+    cursor: pointer;
+}

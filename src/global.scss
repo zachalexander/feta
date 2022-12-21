@@ -216,8 +216,8 @@
     align-items: center !important;
     justify-content: center !important;
     padding: 1.5em !important;
-    --background: black;
-    --spinner-color: white;
+    --background: var(--ion-color-light) !important;
+    --spinner-color: black;
     border-radius: 50% !important;
 }
 
@@ -225,5 +225,11 @@ ion-spinner {
     display: flex;
     justify-content: center;
     align-items: center;
-    --spinner-color: white;
+    --spinner-color: black;
 }
+
+ion-tab-button {
+    --color: black !important;
+    --color-selected: black !important;
+}
+

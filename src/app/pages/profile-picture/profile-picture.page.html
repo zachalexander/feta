@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <p class="skip" *ngIf="!myImage" (click)="continueToSlider()" slot="end">Back to profile&nbsp; <ion-icon name="arrow-forward"></ion-icon></p>
+    <ion-buttons slot="start" *ngIf="myImage">
+      <ion-button color="danger" fill="clear" (click)="discardChanges()">
+        <ion-icon name="trash-outline"></ion-icon> Try Again
+      </ion-button>
+      <ion-button color="dark" fill="clear" (click)="rotate()">
+        <ion-icon name="refresh-outline"></ion-icon> Rotate
+      </ion-button>
+      <ion-button color="dark" fill="clear" (click)="flipHorizontal()">
+        <ion-icon name="sync-circle-outline"></ion-icon> Flip
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="success" (click)="cropImage()" *ngIf="myImage">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon> Save
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  <div class="slide-one-container" *ngIf="!selected_image_upload">
+    <div class="photo-div">
+      <h5 class="upload-header">Your profile photo</h5>
+      <ion-avatar (click)="selectImage()" class="upload-pic-container" *ngIf="!croppedImage">
+        <img *ngIf="noPicYet" id="avatar" src="../../../assets/avatar.svg">
+        <img *ngIf="!croppedImage && !noPicYet" id="avatar" [src]="profilePic">
+      </ion-avatar>
+      <ion-avatar class="upload-pic-container" *ngIf="croppedImage" >
+        <img id="avatar" class="cropped-image" [src]="croppedImage"/>
+      </ion-avatar>
+      <div class="chip-duo">
+        <ion-chip color="primary" (click)="selectImage()" expand="full" *ngIf="!myImage && !croppedImage">Upload a new photo</ion-chip>
+        <ion-chip color="primary" (click)="selectImage()" expand="full" *ngIf="!myImage && croppedImage">Upload a new photo</ion-chip>
+        <ion-chip color="success" expand="full" *ngIf="!myImage && croppedImage" (click)="saveToS3()">Save</ion-chip>
+      </div>
+    </div>
+  </div>
+
+ 
+  <image-cropper
+    #cropper
+    *ngIf="selected_image_upload"
+    [imageBase64]="myImage"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 3"
+    format="png"
+    [hideResizeSquares]="isMobile"
+    [transform]="transform"
+    [autoCrop]="false"
+    (imageCropped)="imageCropped($event)"
+    (loadImageFailed)="loadImageFailed()"
+    [cropperStaticWidth]="300"
+    [cropperStaticHeight]="300"
+    [roundCropper]="true"
+    [allowMoveImage]="true"
+  ></image-cropper>
+ 
+
+</ion-content>

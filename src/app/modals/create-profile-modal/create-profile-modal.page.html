@@ -1,6 +1,6 @@
 <!-- create-profile-modal.page.html -->
 <ion-content [fullscreen]="true">
-  <swiper [config]="slideOpts" #createProfileSwiper>
+  <swiper [config]="slideOpts" #createProfileSwiper [noSwiping]="true" [allowTouchMove]="false">
     <ng-template swiperSlide>
       <div class="slide-one-container">
         <div class="button-sidebyside-slide-one">
@@ -46,18 +46,17 @@
       </div>
     </ng-template>
     <ng-template swiperSlide>
-      <div class="slide-two-container" style="min-width:100%">
+      <div class="slide-two-container">
         <div class="button-sidebyside-slide-two">
           <ion-button class="previous-button" (click)="previousSlide()" fill="clear" color="dark"><ion-icon name="arrow-back"></ion-icon>&nbsp;Back</ion-button>
           <ion-button class="next-button" (click)="nextSlide()" fill="clear" color="dark">Next&nbsp;<ion-icon name="arrow-forward"></ion-icon></ion-button>
         </div>
         <img class="connection-pic" src="../../../assets/undraw_connection.svg" />
         <div class="affiliation-div">
-          <h5>What is your affiliation to<br> Zach or Katie?</h5>
+          <h5>What is your affiliation to Zach or Katie?</h5>
           <form [formGroup]="createProfileForm">
             <ion-item class="relation-picker" lines="none">
-              <ion-label position="stacked">(optional)</ion-label>
-              <ion-select value="Null" okText="Select" cancelText="Dismiss" formControlName="relation" (ionChange)="relationChange($event)">
+              <ion-select class="select-button" value="Null" okText="Select" cancelText="Dismiss" formControlName="relation" (ionChange)="relationChange($event)">
                 <ion-select-option value="Parent of Katie">Parent of Katie</ion-select-option>
                 <ion-select-option value="Parent of Zach">Parent of Zach</ion-select-option>
                 <ion-select-option value="Grandparent of Katie">Grandparent of Katie</ion-select-option>
@@ -87,7 +86,6 @@
           <h5>What is your family nickname?</h5>
           <form [formGroup]="createProfileForm">
             <ion-item lines="none">
-              <ion-label position="stacked">(optional)</ion-label>
               <ion-input type="text" formControlName="family_name"></ion-input>
             </ion-item>
           </form>
@@ -96,26 +94,26 @@
     </ng-template>
   
     
-
-
-    
-
   <ng-template swiperSlide>
-    <div class="last-page-prereview" *ngIf="!reviewClick" style="min-width: 90%">
-      <ion-button class="previous-button" (click)="previousSlide()" color="light"><ion-icon name="arrow-back-circle-outline"></ion-icon>&nbsp;Back</ion-button>
+    <div class="last-page-prereview" *ngIf="!reviewClick">
+      <div class="button-sidebyside-slide-four">
+        <ion-button class="previous-button" (click)="previousSlide()" fill="clear" color="dark"><ion-icon name="arrow-back"></ion-icon>&nbsp;Back</ion-button>
+      </div>
       <img class="lastpage-pic" src="../../../assets/undraw_certification.svg" />
-      <ion-button color="dark" class="review-button" (click)="reviewEntry()">Review</ion-button>
+      <ion-button color="light" class="review-button" (click)="reviewEntry()">Review</ion-button>
     </div>
 
     <div class="last-page" *ngIf="reviewClick">
-      <h4 class="final-title">Final Review</h4>
+        <ion-tab-bar slot="top" mode="md">
+          <ion-title class="final-title">Final Review</ion-title>
+        </ion-tab-bar>
       <small class="final-instructions">Let's take a quick look to make sure all the information below looks right to you. You will have an opportunity to adjust this information at a later date if desired.</small>
       <form class="submit-form" [formGroup]="createProfileForm" (ngSubmit)="closeModal(createProfileForm.value)">
         <ion-item lines="none">
           <ion-label position="stacked">Username (required<small style="color:darkred; vertical-align: super; text-align: left;">*</small>)</ion-label>
           <div class="username-edit-wrapper">
             <div class="username-wrapper">
-              <ion-input type="text" formControlName="username" required></ion-input>
+              <ion-input class="username-input" type="text" formControlName="username" required></ion-input>
               <ion-icon class="invalid-entry" name="close-circle-outline" *ngIf="(f['username'].invalid && (f['username'].dirty || f['username'].touched)) || 
               (f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)) ||
               f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)"></ion-icon>
@@ -164,7 +162,7 @@
           <ion-label position="stacked">Family Name (optional)</ion-label>
           <ion-input type="text" formControlName="family_name"></ion-input>
         </ion-item>
-        <ion-button class="final-submit-button" color="success" type="button" [disabled]="!createProfileForm.valid" (click)="closeModal(createProfileForm.value)">Finish your profile&nbsp;<ion-icon name="checkmark-circle-outline"></ion-icon></ion-button>
+        <ion-button class="final-submit-button" color="success" type="button" [disabled]="!createProfileForm.valid" (click)="closeModal(createProfileForm.value)">Finish your profile</ion-button>
       </form>
     </div>
   </ng-template>

@@ -1,17 +1,75 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Profile
+      {{profileData.username}}
     </ion-title>
+    <ion-icon (click)="openMenu()" class="menu-button" slot="end" name="menu-outline"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <div class="profile-info">
+    <div *ngIf="!editAccess" class="top-of-profile">
+      <div class="left-top-profile">
+        <ion-avatar *ngIf="!profilePhoto">
+          <img src="../../../assets/avatar.svg">
+        </ion-avatar>
+        <ion-avatar *ngIf="profilePhoto">
+          <img [src]="profilePhoto">
+        </ion-avatar>
+        <small class="username-header">{{profileData.username}}</small>
+      </div>
+      <div class="right-top-profile">
+        <div class="stats-div">
+          <p class="stats-count"><strong>{{photosPostedCount}}</strong></p> <h5 style="font-size: 0.95em">photo posts</h5>
+        </div>
+        <h5 style="font-size: 0.95em"><strong>{{profileData.username}}</strong> is {{profileData.relation}}</h5>
+      </div>
+    </div>
+    <div *ngIf="editAccess" class="top-of-profile-edit">
+      <div class="left-top-profile">
+        <ion-avatar *ngIf="!profilePhoto">
+          <img src="../../../assets/avatar.svg">
+        </ion-avatar>
+        <ion-avatar *ngIf="profilePhoto">
+          <img [src]="profilePhoto">
+        </ion-avatar>
+        <small class="username-header">{{profileData.username}}</small>
+      </div>
+      <div class="right-top-profile">
+        <div class="stats-div">
+          <p class="stats-count"><strong>{{photosPostedCount}}</strong></p> <h5 style="font-size: 0.95em">photo posts</h5>
+        </div>
+        <h5 style="font-size: 0.95em"><strong>{{profileData.username}}</strong> is {{profileData.relation}}</h5>
+      </div>
+    </div>
+    
+    <ion-chip *ngIf="editAccess" color="medium" class="edit-profile-button" expand="full" (click)="updateProfile()">Edit Profile</ion-chip>
     <ion-toolbar>
-      <ion-title size="large">Profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-home name="Profile"></app-home>
+    <ion-segment [(ngModel)]="select_buttons">
+      <ion-segment-button value="photo-uploads" checked>
+        <ion-icon name="camera-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="video-uploads" disabled>
+        <ion-icon name="videocam-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="recipes" disabled>
+        <ion-icon name="restaurant-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="cool-spots" disabled>
+        <ion-icon name="earth-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="notes" disabled>
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+    <ion-grid class="postedphotos" *ngIf="loaded">
+      <ion-row class="postedphotos_row">
+        <ion-col *ngFor="let image of profileImageData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
+          <!-- <div class="square" style="background-image: url({{image.url}})" (click)="photoClick(image.id)" *ngIf="!image.deleted"></div> -->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
