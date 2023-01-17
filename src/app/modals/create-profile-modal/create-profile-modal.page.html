@@ -33,7 +33,7 @@
                       A username is required.
                   </div>
                   <div *ngIf="f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)" class="error-message-characters">
-                      Username must be at least 4 characters long.
+                      Username must be at least 2 characters long.
                   </div>
                   <div *ngIf="f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)" class="error-message-taken">
                       Username is already taken!

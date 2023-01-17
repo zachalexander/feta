@@ -12,18 +12,15 @@ mutation CreateProfilePicture(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -34,7 +31,6 @@ mutation CreateProfilePicture(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -71,18 +67,15 @@ mutation UpdateProfilePicture(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -93,7 +86,6 @@ mutation UpdateProfilePicture(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -130,18 +122,15 @@ mutation DeleteProfilePicture(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -152,7 +141,6 @@ mutation DeleteProfilePicture(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -186,35 +174,9 @@ mutation CreateProfile(
     relation
     cognitoID
     usernameID
-    Images {
-      items {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      nextToken
-    }
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -226,7 +188,6 @@ mutation CreateProfile(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -243,6 +204,7 @@ mutation CreateProfile(
         profileUsernameId
         profileImagePostsId
       }
+      s3_key
       createdAt
       updatedAt
     }
@@ -253,25 +215,14 @@ mutation CreateProfile(
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -289,7 +240,6 @@ mutation CreateProfile(
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     family_name
@@ -331,35 +281,9 @@ mutation UpdateProfile(
     relation
     cognitoID
     usernameID
-    Images {
-      items {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      nextToken
-    }
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -371,7 +295,6 @@ mutation UpdateProfile(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -388,6 +311,7 @@ mutation UpdateProfile(
         profileUsernameId
         profileImagePostsId
       }
+      s3_key
       createdAt
       updatedAt
     }
@@ -398,25 +322,14 @@ mutation UpdateProfile(
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -434,7 +347,6 @@ mutation UpdateProfile(
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     family_name
@@ -476,35 +388,9 @@ mutation DeleteProfile(
     relation
     cognitoID
     usernameID
-    Images {
-      items {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      nextToken
-    }
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -516,7 +402,6 @@ mutation DeleteProfile(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -533,6 +418,7 @@ mutation DeleteProfile(
         profileUsernameId
         profileImagePostsId
       }
+      s3_key
       createdAt
       updatedAt
     }
@@ -543,25 +429,14 @@ mutation DeleteProfile(
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -579,7 +454,6 @@ mutation DeleteProfile(
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     family_name
@@ -611,330 +485,6 @@ mutation DeleteProfile(
     profileImagePostsId
   }
 }
-mutation CreateImages(
-  $input: CreateImagesInput!
-  $condition: ModelImagesConditionInput
-) {
-  createImages(input: $input, condition: $condition) {
-    id
-    imageurl
-    s3_key
-    profileID
-    usernameID
-    username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameImagesId
-      usernameProfileId
-    }
-    ImagePosts {
-      id
-      description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-    }
-    photoPath
-    createdAt
-    updatedAt
-    imagesImagePostsId
-  }
-}
-mutation UpdateImages(
-  $input: UpdateImagesInput!
-  $condition: ModelImagesConditionInput
-) {
-  updateImages(input: $input, condition: $condition) {
-    id
-    imageurl
-    s3_key
-    profileID
-    usernameID
-    username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameImagesId
-      usernameProfileId
-    }
-    ImagePosts {
-      id
-      description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-    }
-    photoPath
-    createdAt
-    updatedAt
-    imagesImagePostsId
-  }
-}
-mutation DeleteImages(
-  $input: DeleteImagesInput!
-  $condition: ModelImagesConditionInput
-) {
-  deleteImages(input: $input, condition: $condition) {
-    id
-    imageurl
-    s3_key
-    profileID
-    usernameID
-    username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameImagesId
-      usernameProfileId
-    }
-    ImagePosts {
-      id
-      description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-    }
-    photoPath
-    createdAt
-    updatedAt
-    imagesImagePostsId
-  }
-}
 mutation CreateImagePost(
   $input: CreateImagePostInput!
   $condition: ModelImagePostConditionInput
@@ -942,40 +492,6 @@ mutation CreateImagePost(
   createImagePost(input: $input, condition: $condition) {
     id
     description
-    imagesID
-    image {
-      id
-      imageurl
-      s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
-      createdAt
-      updatedAt
-      imagesImagePostsId
-    }
     time_posted
     likes
     comments
@@ -987,25 +503,14 @@ mutation CreateImagePost(
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -1023,7 +528,6 @@ mutation CreateImagePost(
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     profileID
@@ -1033,18 +537,15 @@ mutation CreateImagePost(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1055,7 +556,6 @@ mutation CreateImagePost(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1073,6 +573,7 @@ mutation CreateImagePost(
       profileUsernameId
       profileImagePostsId
     }
+    s3_key
     createdAt
     updatedAt
   }
@@ -1084,40 +585,6 @@ mutation UpdateImagePost(
   updateImagePost(input: $input, condition: $condition) {
     id
     description
-    imagesID
-    image {
-      id
-      imageurl
-      s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
-      createdAt
-      updatedAt
-      imagesImagePostsId
-    }
     time_posted
     likes
     comments
@@ -1129,25 +596,14 @@ mutation UpdateImagePost(
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -1165,7 +621,6 @@ mutation UpdateImagePost(
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     profileID
@@ -1175,18 +630,15 @@ mutation UpdateImagePost(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1197,7 +649,6 @@ mutation UpdateImagePost(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1215,6 +666,7 @@ mutation UpdateImagePost(
       profileUsernameId
       profileImagePostsId
     }
+    s3_key
     createdAt
     updatedAt
   }
@@ -1226,40 +678,6 @@ mutation DeleteImagePost(
   deleteImagePost(input: $input, condition: $condition) {
     id
     description
-    imagesID
-    image {
-      id
-      imageurl
-      s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
-      createdAt
-      updatedAt
-      imagesImagePostsId
-    }
     time_posted
     likes
     comments
@@ -1271,25 +689,14 @@ mutation DeleteImagePost(
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -1307,7 +714,6 @@ mutation DeleteImagePost(
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     profileID
@@ -1317,18 +723,15 @@ mutation DeleteImagePost(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1339,7 +742,6 @@ mutation DeleteImagePost(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1357,6 +759,7 @@ mutation DeleteImagePost(
       profileUsernameId
       profileImagePostsId
     }
+    s3_key
     createdAt
     updatedAt
   }
@@ -1414,18 +817,6 @@ mutation CreateUsername(
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -1437,7 +828,6 @@ mutation CreateUsername(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -1454,41 +844,9 @@ mutation CreateUsername(
         profileUsernameId
         profileImagePostsId
       }
-      createdAt
-      updatedAt
-    }
-    Images {
-      id
-      imageurl
       s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
       createdAt
       updatedAt
-      imagesImagePostsId
     }
     Profile {
       id
@@ -1496,18 +854,15 @@ mutation CreateUsername(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1518,7 +873,6 @@ mutation CreateUsername(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1539,7 +893,6 @@ mutation CreateUsername(
     createdAt
     updatedAt
     usernameImagePostsId
-    usernameImagesId
     usernameProfileId
   }
 }
@@ -1554,18 +907,6 @@ mutation UpdateUsername(
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -1577,7 +918,6 @@ mutation UpdateUsername(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -1594,41 +934,9 @@ mutation UpdateUsername(
         profileUsernameId
         profileImagePostsId
       }
-      createdAt
-      updatedAt
-    }
-    Images {
-      id
-      imageurl
       s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
       createdAt
       updatedAt
-      imagesImagePostsId
     }
     Profile {
       id
@@ -1636,18 +944,15 @@ mutation UpdateUsername(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1658,7 +963,6 @@ mutation UpdateUsername(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1679,7 +983,6 @@ mutation UpdateUsername(
     createdAt
     updatedAt
     usernameImagePostsId
-    usernameImagesId
     usernameProfileId
   }
 }
@@ -1694,18 +997,6 @@ mutation DeleteUsername(
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -1717,7 +1008,6 @@ mutation DeleteUsername(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -1734,41 +1024,9 @@ mutation DeleteUsername(
         profileUsernameId
         profileImagePostsId
       }
-      createdAt
-      updatedAt
-    }
-    Images {
-      id
-      imageurl
       s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
       createdAt
       updatedAt
-      imagesImagePostsId
     }
     Profile {
       id
@@ -1776,18 +1034,15 @@ mutation DeleteUsername(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1798,7 +1053,6 @@ mutation DeleteUsername(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1819,7 +1073,6 @@ mutation DeleteUsername(
     createdAt
     updatedAt
     usernameImagePostsId
-    usernameImagesId
     usernameProfileId
   }
 }

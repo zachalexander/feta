@@ -1,0 +1,31 @@
+
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="backToTimeline()" class="cancel">&nbsp;&nbsp;Cancel</ion-buttons>
+    <ion-title>Add content</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!submitted">
+    <ion-grid class="grid-text">
+      <ion-col>
+        <ion-row class="button-row">
+          <div class="photo-add-div">
+            <h4><strong>Add a photo to the timeline</strong></h4>
+            <ion-fab-button color="dark" (click)="addPhotoToGallery()" class="camera-button">
+              <ion-icon name="camera"></ion-icon>
+            </ion-fab-button>
+          </div>
+        </ion-row>
+      </ion-col>
+    </ion-grid>
+  </div>
+
+  <div *ngIf="submitted">
+    <div class = "container"></div>
+  </div>
+</ion-content>
+
+

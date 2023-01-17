@@ -1,0 +1,123 @@
+
+
+<!-- loading spinner -->
+<!-- <div *ngIf="!loaded" class="loading-centered">
+  <ion-spinner name="lines-small"></ion-spinner>
+</div> -->
+
+<!-- pull and refresh option at top -->
+<ion-content id="wall-content" lines="none" #container>
+
+  <ion-refresher lines="none" slot="fixed" (ionRefresh)="refreshData($event)">
+    <ion-refresher-content
+    pullingIcon="chevron-down-circle-outline"
+    pullingText="Pull to refresh"
+    refreshingSpinner="lines-small">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+  <!-- subscription to listen for new posts, will show pop-up when new posts added to wall -->
+  <div class="new-post-button-div">
+    <ion-fab *ngIf="showFabButton" vertical="top" slot="fixed">
+      <ion-fab-button (click)="seeNewPosts()" color="light">See new posts&nbsp;<ion-icon size="small" name="arrow-up-outline"></ion-icon></ion-fab-button>
+    </ion-fab>
+  </div>
+
+  <!-- start of photo grid -->
+  <ion-grid lines="none">
+    <ion-row lines="none" class="ion-padding-vertical">
+
+      <!-- start of iterating through images -->
+      <ion-col lines="none" *ngFor="let image of data;" size-lg="12" size-md="12" size-sm="12" size-xs="12" class="ion-padding-vertical">
+
+        <!-- filter out any posts that were deleted -->
+        <ion-card lines="none" *ngIf="image.postDeleted !== true">
+
+          <!-- display the username and settings for each post at top of card -->
+          <ion-item lines="none">
+            <div class="top-wrapper">
+              <div class="start-top-wrapper">
+                <ion-avatar *ngIf="!image.profilePicture" class="upload-pic-container">
+                  <img id="avatar" src="../../../assets/avatar.svg">
+                </ion-avatar>
+                <ion-avatar *ngIf="image.profilePicture" class="upload-pic-container">
+                  <img id="avatar" [src]="image.profilePicture">
+                </ion-avatar>
+                <ion-label class="top-card"><small class="card-username" routerLink="/profile/{{image.username}}">{{image.username}}</small></ion-label>
+              </div>
+              <!-- <ion-label (click)="presentActionSheet(image.username, image.imagesID, image.id, image.url, image.imageKey)" class="top-card" slot="end"><ion-icon name="ellipsis-horizontal-sharp"></ion-icon></ion-label> -->
+            </div>
+          </ion-item>
+
+          <!-- locate the image url and assign a unique id per post -->
+          <ion-card-header lines="none">
+            <swiper class="mySwiper" effect="fade" [zoom]="true">
+              <ng-template swiperSlide>
+                <div class="swiper-zoom-container">
+                  <img id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.url" loading="lazy" width="100vw" height="400"/>
+                </div>
+              </ng-template>
+            </swiper>
+            <ion-list lines="none" mode= "md">
+              <ion-tab-bar lines="none" id="interaction_{{image.imagesID}}" class="interactions-photos">
+
+                <!-- custom component for like button -->
+                <app-timeline-like-button [version]="image.version" [user]="this.currentUserUsername" [alreadyLiked]="image.userLiked" [imageId] = "image.id" [usernameID]="this.currentUserUsernameID"></app-timeline-like-button>
+
+                <!-- comment chat-bubble button below image -->
+                <!-- <ion-tab-button *ngIf="!disabledButtons" (click)="openModal(image.id)">
+                  <p class="comment-icon">Comment</p><ion-icon name="chatbubble-outline"></ion-icon>
+                </ion-tab-button>
+
+                <ion-tab-button *ngIf="disabledButtons" disabled="true" class="disabledCommentButton" (click)="openModal(image.id)">
+                  <p class="comment-icon">Comment</p><ion-icon name="chatbubbles-outline"></ion-icon>
+                </ion-tab-button> -->
+
+              </ion-tab-bar>
+            </ion-list>
+
+            <!-- shows the number of likes for each post -->
+            <div class="likes-bar">
+              <small *ngIf="image.like_count < 1"><strong>0 likes</strong></small>
+              <small class="likes-count" (click)="showLikesModal([image.url, image.id, image.imagesID])" *ngIf="image.like_count >= 1"><strong>{{image.like_count}} likes</strong></small>
+            </div>
+            <!-- shows the post description and the user that posted the image -->
+            <ion-card-content class="ion-no-padding" lines="none" class="image-description">
+              <strong class="username-description" routerLink="/profile/{{image.username}}">{{image.username}}</strong> {{image.description}}
+              <!-- <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | dateAsAgo}}</small></ion-card-subtitle> -->
+            </ion-card-content>
+
+          </ion-card-header>
+
+          <!-- start of comment section of post -->
+          <ion-item-group lines="none" class="comments" *ngIf="image.comment_count > 0">
+            <!-- if greater than 0 comments, show below -->
+            <ion-item-divider lines="none" class="comment-divider">
+              <!-- <ion-label class="view-all-comments" color="medium" (click)="openModal(image.id)">View all {{image.comment_count}} comments </ion-label> -->
+            </ion-item-divider>
+          </ion-item-group>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="scrollFinished" class="finished-scrolling">
+      <ion-icon color="medium" name="checkmark-circle-outline"></ion-icon>&nbsp;
+      <ion-text color="medium">You are all caught up</ion-text>
+    </div>
+  </ion-grid>
+
+  <ion-fab color="dark" (click)="scrollToTop()" class="arrow-up-outline" slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button color="transparent" class="cycle-up-button">
+      <ion-icon name="arrow-up-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- <ion-infinite-scroll *ngIf="!profileSearch" (ionInfinite)="loadData($event)" position="bottom">
+    <ion-infinite-scroll-content loadingSpinner="lines-small">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+
+</ion-content>
+
+
+

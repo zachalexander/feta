@@ -40,7 +40,7 @@ export class CreateProfileModalPage implements OnInit{
     private customValidator: CustomvalidationService
   ) {
     this.createProfileForm = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.minLength(4)], this.customValidator.userNameValidator.bind(this.customValidator)),
+      username: new FormControl('', [Validators.required, Validators.minLength(2)], this.customValidator.userNameValidator.bind(this.customValidator)),
       family_name: new FormControl(''),
       relation: new FormControl(''),
       email: new FormControl('')

@@ -64,8 +64,6 @@ export class CustomvalidationService {
 
   async validateUserName(userName: string): Promise<any> {
     var UserList = await this.getListOfProfiles()
-    console.log(localStorage.getItem('profileID'))
-
     if(!localStorage.getItem('profileID')){
       return false;
     } else {

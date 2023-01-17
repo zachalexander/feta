@@ -7,6 +7,8 @@ import { MediaService } from 'src/app/services/media.service';
 import { LoadingController } from '@ionic/angular';
 import { ProfileMenuModalPage } from 'src/app/modals/profile-menu-modal/profile-menu-modal.page';
 
+
+
 @Component({
   selector: 'app-profile',
   templateUrl: 'profile.page.html',
@@ -26,7 +28,8 @@ export class ProfilePage {
   select_buttons: string = "photo-uploads";
   photosPostedCount: number;
   profileData: any = {};
-  profileImageData: any = {};
+  profileImageData: Array<any> = new Array();
+  noPhotosYet;
 
   constructor(
     private api: APIService,
@@ -50,8 +53,11 @@ export class ProfilePage {
     // grab the username from the url
     this.activatedRoute.params.subscribe((params) => this.urlUser = params['username']);
 
-    let profileID = localStorage.getItem('profileID')
+    console.log(this.urlUser)
+
+    let profileID = await this.api.GetUsernameProfile(this.urlUser)
     let profile = await this.api.GetProfile(profileID);
+    this.profileData = profile;
 
     // get the url username profile data
     this.urlUserProfile = profile;
@@ -68,18 +74,26 @@ export class ProfilePage {
     let userData: any = await this.api.getUserProfileImageData(this.urlUserProfile.id).then(data => data);
 
     // find number of photos posted by zach or katie
-    this.photosPostedCount = userData[0].length;
+    this.photosPostedCount = userData[1];
+   
+    if(this.photosPostedCount == 0){
+      this.noPhotosYet = true;
+    } else {
+      this.noPhotosYet = false;
+    }
 
-    // sort photos by time posted
-    userData[0] = await this.sortByDate(userData[0]);
+    if(userData){
+      // sort photos by time posted
+      userData[0] = await this.sortByDate(userData[0]);
+  
+      // get actual photo url from storage
+      userData[0] = await this.mediaService.getPhotoUrlsKey(userData[0])
+  
+      // save profile data to object to render
+      this.profileImageData = userData[0];
+      this.profileData.username = await this.api.GetUsernameFromProfileId(this.profileData.id).then(async username => username);
+    }
 
-    // get actual photo url from storage
-    await this.mediaService.getPhotoUrls(userData[0])
-
-    // save profile data to object to render
-    this.profileImageData = userData[0];
-    this.profileData = userData[1]
-    this.profileData.username = await this.api.GetUsernameFromProfileId(this.profileData.id).then(async username => username);
 
     let profilePhotoCall = await new Promise((resolve, reject) => {
       resolve(this.getProfilePicture(this.urlUserProfile.id));
@@ -111,8 +125,8 @@ export class ProfilePage {
     return await this.mediaService.getPhotoUrl(url)
   }
 
-  sortByDate(array){
-    return array.sort((a, b) => b.time_posted - a.time_posted)
+  async sortByDate(array){
+    return await array.sort((a, b) => b.time_posted - a.time_posted);
   }
 
 

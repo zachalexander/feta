@@ -3,7 +3,7 @@
     <ion-title>
       {{profileData.username}}
     </ion-title>
-    <ion-icon (click)="openMenu()" class="menu-button" slot="end" name="menu-outline"></ion-icon>
+    <ion-icon (click)="openMenu()" class="menu-button" slot="end" name="menu"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -48,26 +48,30 @@
     <ion-toolbar>
     <ion-segment [(ngModel)]="select_buttons">
       <ion-segment-button value="photo-uploads" checked>
-        <ion-icon name="camera-outline"></ion-icon>
+        <ion-icon name="camera"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="video-uploads" disabled>
-        <ion-icon name="videocam-outline"></ion-icon>
+        <ion-icon name="videocam"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="recipes" disabled>
-        <ion-icon name="restaurant-outline"></ion-icon>
+        <ion-icon name="restaurant"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="cool-spots" disabled>
-        <ion-icon name="earth-outline"></ion-icon>
+        <ion-icon name="earth"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="notes" disabled>
-        <ion-icon name="chatbubbles-outline"></ion-icon>
+        <ion-icon name="chatbubbles"></ion-icon>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-    <ion-grid class="postedphotos" *ngIf="loaded">
+    <div class="no-photos" *ngIf="noPhotosYet">
+      <h5 color="light">No photos posted yet.</h5>
+    </div>
+    <ion-grid class="postedphotos" *ngIf="!noPhotosYet">
       <ion-row class="postedphotos_row">
         <ion-col *ngFor="let image of profileImageData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-          <!-- <div class="square" style="background-image: url({{image.url}})" (click)="photoClick(image.id)" *ngIf="!image.deleted"></div> -->
+          <div class="square" *ngIf="!image.deleted" style="background-image: url({{image.url}})">
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>

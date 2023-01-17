@@ -9,18 +9,15 @@ query GetProfilePicture($id: ID!) {
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -31,7 +28,6 @@ query GetProfilePicture($id: ID!) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -92,35 +88,9 @@ query GetProfile($id: ID!) {
     relation
     cognitoID
     usernameID
-    Images {
-      items {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      nextToken
-    }
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -132,7 +102,6 @@ query GetProfile($id: ID!) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -149,6 +118,7 @@ query GetProfile($id: ID!) {
         profileUsernameId
         profileImagePostsId
       }
+      s3_key
       createdAt
       updatedAt
     }
@@ -159,25 +129,14 @@ query GetProfile($id: ID!) {
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -195,7 +154,6 @@ query GetProfile($id: ID!) {
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     family_name
@@ -239,18 +197,15 @@ query ListProfiles(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -261,7 +216,6 @@ query ListProfiles(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -282,191 +236,10 @@ query ListProfiles(
     nextToken
   }
 }
-query GetImages($id: ID!) {
-  getImages(id: $id) {
-    id
-    imageurl
-    s3_key
-    profileID
-    usernameID
-    username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameImagesId
-      usernameProfileId
-    }
-    ImagePosts {
-      id
-      description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-    }
-    photoPath
-    createdAt
-    updatedAt
-    imagesImagePostsId
-  }
-}
-query ListImages(
-  $filter: ModelImagesFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listImages(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      imageurl
-      s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
-      createdAt
-      updatedAt
-      imagesImagePostsId
-    }
-    nextToken
-  }
-}
 query GetImagePost($id: ID!) {
   getImagePost(id: $id) {
     id
     description
-    imagesID
-    image {
-      id
-      imageurl
-      s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
-      createdAt
-      updatedAt
-      imagesImagePostsId
-    }
     time_posted
     likes
     comments
@@ -478,25 +251,14 @@ query GetImagePost($id: ID!) {
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -514,7 +276,6 @@ query GetImagePost($id: ID!) {
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     profileID
@@ -524,18 +285,15 @@ query GetImagePost($id: ID!) {
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -546,7 +304,6 @@ query GetImagePost($id: ID!) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -564,6 +321,7 @@ query GetImagePost($id: ID!) {
       profileUsernameId
       profileImagePostsId
     }
+    s3_key
     createdAt
     updatedAt
   }
@@ -577,18 +335,6 @@ query ListImagePosts(
     items {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -600,7 +346,6 @@ query ListImagePosts(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -617,6 +362,7 @@ query ListImagePosts(
         profileUsernameId
         profileImagePostsId
       }
+      s3_key
       createdAt
       updatedAt
     }
@@ -660,18 +406,6 @@ query GetUsername($id: ID!) {
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -683,7 +417,6 @@ query GetUsername($id: ID!) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -700,41 +433,9 @@ query GetUsername($id: ID!) {
         profileUsernameId
         profileImagePostsId
       }
-      createdAt
-      updatedAt
-    }
-    Images {
-      id
-      imageurl
       s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
       createdAt
       updatedAt
-      imagesImagePostsId
     }
     Profile {
       id
@@ -742,18 +443,15 @@ query GetUsername($id: ID!) {
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -764,7 +462,6 @@ query GetUsername($id: ID!) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -785,7 +482,6 @@ query GetUsername($id: ID!) {
     createdAt
     updatedAt
     usernameImagePostsId
-    usernameImagesId
     usernameProfileId
   }
 }
@@ -802,25 +498,14 @@ query ListUsernames(
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -838,7 +523,6 @@ query ListUsernames(
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     nextToken
@@ -864,18 +548,15 @@ query ProfilesByProfilepictureID(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -886,7 +567,6 @@ query ProfilesByProfilepictureID(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -903,169 +583,6 @@ query ProfilesByProfilepictureID(
       updatedAt
       profileUsernameId
       profileImagePostsId
-    }
-    nextToken
-  }
-}
-query ImagesByProfileID(
-  $profileID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelImagesFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  imagesByProfileID(
-    profileID: $profileID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      imageurl
-      s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
-      createdAt
-      updatedAt
-      imagesImagePostsId
-    }
-    nextToken
-  }
-}
-query ImagesByUsernameID(
-  $usernameID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelImagesFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  imagesByUsernameID(
-    usernameID: $usernameID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      imageurl
-      s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
-      createdAt
-      updatedAt
-      imagesImagePostsId
-    }
-    nextToken
-  }
-}
-query ImagePostsByImagesID(
-  $imagesID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelImagePostFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  imagePostsByImagesID(
-    imagesID: $imagesID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
     }
     nextToken
   }
@@ -1087,18 +604,6 @@ query ImagePostsByUsernameID(
     items {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -1110,7 +615,6 @@ query ImagePostsByUsernameID(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -1127,6 +631,7 @@ query ImagePostsByUsernameID(
         profileUsernameId
         profileImagePostsId
       }
+      s3_key
       createdAt
       updatedAt
     }
@@ -1150,18 +655,6 @@ query ImagePostsByProfileID(
     items {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -1173,7 +666,6 @@ query ImagePostsByProfileID(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -1190,6 +682,7 @@ query ImagePostsByProfileID(
         profileUsernameId
         profileImagePostsId
       }
+      s3_key
       createdAt
       updatedAt
     }

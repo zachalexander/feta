@@ -3,8 +3,12 @@
     <ion-title>
       Timeline
     </ion-title>
+    <ion-tab-button (click)="createPhotoModal()" class="button-div" slot="end">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-tab-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <app-timeline [datalength]="timelineDataLength" [data]="timelineData"></app-timeline>
 </ion-content>

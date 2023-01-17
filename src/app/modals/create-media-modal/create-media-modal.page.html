@@ -1,0 +1,22 @@
+
+  <ion-content>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start" (click)="backToWall()" class="cancel">&nbsp;&nbsp;Cancel</ion-buttons>
+        <ion-title>Finish your post</ion-title>
+        <ion-buttons slot="end" (click)="closeModal(postImageForm.value)" class="update">Post&nbsp;&nbsp;</ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <img class="photo-taken" [src]="src">
+    <form [formGroup]="postImageForm" (ngSubmit)="closeModal(postImageForm.value)">
+      <ion-grid>
+        <ion-row>
+          <ion-col size-lg="12" size-md="12" size-sm="12" size="12">
+            <ion-item lines="none">
+              <ion-textarea class="comment-textarea" lines="none" placeholder="Add a description..." formControlName="description" autoGrow="true"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-content>

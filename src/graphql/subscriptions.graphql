@@ -11,18 +11,15 @@ subscription OnCreateProfilePicture(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -33,7 +30,6 @@ subscription OnCreateProfilePicture(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -69,18 +65,15 @@ subscription OnUpdateProfilePicture(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -91,7 +84,6 @@ subscription OnUpdateProfilePicture(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -127,18 +119,15 @@ subscription OnDeleteProfilePicture(
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -149,7 +138,6 @@ subscription OnDeleteProfilePicture(
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -180,35 +168,9 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
     relation
     cognitoID
     usernameID
-    Images {
-      items {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      nextToken
-    }
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -220,7 +182,6 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -237,6 +198,7 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         profileUsernameId
         profileImagePostsId
       }
+      s3_key
       createdAt
       updatedAt
     }
@@ -247,25 +209,14 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -283,7 +234,6 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     family_name
@@ -322,35 +272,9 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
     relation
     cognitoID
     usernameID
-    Images {
-      items {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      nextToken
-    }
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -362,7 +286,6 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -379,6 +302,7 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         profileUsernameId
         profileImagePostsId
       }
+      s3_key
       createdAt
       updatedAt
     }
@@ -389,25 +313,14 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -425,7 +338,6 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     family_name
@@ -464,35 +376,9 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
     relation
     cognitoID
     usernameID
-    Images {
-      items {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      nextToken
-    }
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -504,7 +390,6 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -521,6 +406,7 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         profileUsernameId
         profileImagePostsId
       }
+      s3_key
       createdAt
       updatedAt
     }
@@ -531,25 +417,14 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -567,7 +442,6 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     family_name
@@ -599,359 +473,10 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
     profileImagePostsId
   }
 }
-subscription OnCreateImages($filter: ModelSubscriptionImagesFilterInput) {
-  onCreateImages(filter: $filter) {
-    id
-    imageurl
-    s3_key
-    profileID
-    usernameID
-    username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameImagesId
-      usernameProfileId
-    }
-    ImagePosts {
-      id
-      description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-    }
-    photoPath
-    createdAt
-    updatedAt
-    imagesImagePostsId
-  }
-}
-subscription OnUpdateImages($filter: ModelSubscriptionImagesFilterInput) {
-  onUpdateImages(filter: $filter) {
-    id
-    imageurl
-    s3_key
-    profileID
-    usernameID
-    username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameImagesId
-      usernameProfileId
-    }
-    ImagePosts {
-      id
-      description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-    }
-    photoPath
-    createdAt
-    updatedAt
-    imagesImagePostsId
-  }
-}
-subscription OnDeleteImages($filter: ModelSubscriptionImagesFilterInput) {
-  onDeleteImages(filter: $filter) {
-    id
-    imageurl
-    s3_key
-    profileID
-    usernameID
-    username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameImagesId
-      usernameProfileId
-    }
-    ImagePosts {
-      id
-      description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        family_name
-        profilepictureID
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-    }
-    photoPath
-    createdAt
-    updatedAt
-    imagesImagePostsId
-  }
-}
 subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
   onCreateImagePost(filter: $filter) {
     id
     description
-    imagesID
-    image {
-      id
-      imageurl
-      s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
-      createdAt
-      updatedAt
-      imagesImagePostsId
-    }
     time_posted
     likes
     comments
@@ -963,25 +488,14 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -999,7 +513,6 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     profileID
@@ -1009,18 +522,15 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1031,7 +541,6 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1049,6 +558,7 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileUsernameId
       profileImagePostsId
     }
+    s3_key
     createdAt
     updatedAt
   }
@@ -1057,40 +567,6 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
   onUpdateImagePost(filter: $filter) {
     id
     description
-    imagesID
-    image {
-      id
-      imageurl
-      s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
-      createdAt
-      updatedAt
-      imagesImagePostsId
-    }
     time_posted
     likes
     comments
@@ -1102,25 +578,14 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -1138,7 +603,6 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     profileID
@@ -1148,18 +612,15 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1170,7 +631,6 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1188,6 +648,7 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileUsernameId
       profileImagePostsId
     }
+    s3_key
     createdAt
     updatedAt
   }
@@ -1196,40 +657,6 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
   onDeleteImagePost(filter: $filter) {
     id
     description
-    imagesID
-    image {
-      id
-      imageurl
-      s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
-      createdAt
-      updatedAt
-      imagesImagePostsId
-    }
     time_posted
     likes
     comments
@@ -1241,25 +668,14 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
-        createdAt
-        updatedAt
-      }
-      Images {
-        id
-        imageurl
         s3_key
-        profileID
-        usernameID
-        photoPath
         createdAt
         updatedAt
-        imagesImagePostsId
       }
       Profile {
         id
@@ -1277,7 +693,6 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       createdAt
       updatedAt
       usernameImagePostsId
-      usernameImagesId
       usernameProfileId
     }
     profileID
@@ -1287,18 +702,15 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1309,7 +721,6 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1327,6 +738,7 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileUsernameId
       profileImagePostsId
     }
+    s3_key
     createdAt
     updatedAt
   }
@@ -1372,18 +784,6 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -1395,7 +795,6 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -1412,41 +811,9 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         profileUsernameId
         profileImagePostsId
       }
-      createdAt
-      updatedAt
-    }
-    Images {
-      id
-      imageurl
       s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
       createdAt
       updatedAt
-      imagesImagePostsId
     }
     Profile {
       id
@@ -1454,18 +821,15 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1476,7 +840,6 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1497,7 +860,6 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
     createdAt
     updatedAt
     usernameImagePostsId
-    usernameImagesId
     usernameProfileId
   }
 }
@@ -1509,18 +871,6 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -1532,7 +882,6 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -1549,41 +898,9 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         profileUsernameId
         profileImagePostsId
       }
-      createdAt
-      updatedAt
-    }
-    Images {
-      id
-      imageurl
       s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
       createdAt
       updatedAt
-      imagesImagePostsId
     }
     Profile {
       id
@@ -1591,18 +908,15 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1613,7 +927,6 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1634,7 +947,6 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
     createdAt
     updatedAt
     usernameImagePostsId
-    usernameImagesId
     usernameProfileId
   }
 }
@@ -1646,18 +958,6 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
     ImagePosts {
       id
       description
-      imagesID
-      image {
-        id
-        imageurl
-        s3_key
-        profileID
-        usernameID
-        photoPath
-        createdAt
-        updatedAt
-        imagesImagePostsId
-      }
       time_posted
       likes
       comments
@@ -1669,7 +969,6 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       profileID
@@ -1686,41 +985,9 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         profileUsernameId
         profileImagePostsId
       }
-      createdAt
-      updatedAt
-    }
-    Images {
-      id
-      imageurl
       s3_key
-      profileID
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameImagesId
-        usernameProfileId
-      }
-      ImagePosts {
-        id
-        description
-        imagesID
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-      }
-      photoPath
       createdAt
       updatedAt
-      imagesImagePostsId
     }
     Profile {
       id
@@ -1728,18 +995,15 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
       relation
       cognitoID
       usernameID
-      Images {
-        nextToken
-      }
       ImagePosts {
         id
         description
-        imagesID
         time_posted
         likes
         comments
         usernameID
         profileID
+        s3_key
         createdAt
         updatedAt
       }
@@ -1750,7 +1014,6 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         createdAt
         updatedAt
         usernameImagePostsId
-        usernameImagesId
         usernameProfileId
       }
       family_name
@@ -1771,7 +1034,6 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
     createdAt
     updatedAt
     usernameImagePostsId
-    usernameImagesId
     usernameProfileId
   }
 }

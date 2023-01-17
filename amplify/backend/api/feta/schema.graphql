@@ -15,7 +15,6 @@ type Profile @model @auth(rules: [{allow: public}]) {
   relation: String
   cognitoID: String
   usernameID: String
-  Images: [Images] @hasMany(indexName: "byProfile", fields: ["id"])
   ImagePosts: ImagePost @belongsTo
   Username: Username @hasOne
   family_name: String
@@ -23,22 +22,9 @@ type Profile @model @auth(rules: [{allow: public}]) {
   profilepicture: ProfilePicture @hasOne(fields: ["profilepictureID"])
 }
 
-type Images @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  imageurl: String
-  s3_key: String
-  profileID: ID! @index(name: "byProfile")
-  usernameID: ID! @index(name: "byUsername")
-  username: Username @hasOne(fields: ["usernameID"])
-  ImagePosts: ImagePost @belongsTo
-  photoPath: String
-}
-
 type ImagePost @model @auth(rules: [{allow: public}]) {
   id: ID!
   description: String
-  imagesID: ID! @index(name: "byImages")
-  image: Images @hasOne(fields: ["imagesID"])
   time_posted: AWSDateTime
   likes: AWSJSON
   comments: AWSJSON
@@ -46,6 +32,7 @@ type ImagePost @model @auth(rules: [{allow: public}]) {
   username: Username @hasOne(fields: ["usernameID"])
   profileID: ID! @index(name: "byProfile")
   profile: Profile @hasOne(fields: ["profileID"])
+  s3_key: String
 }
 
 type Comments @model @auth(rules: [{allow: public}]) {
@@ -61,6 +48,5 @@ type Username @model @auth(rules: [{allow: public}]) {
   username: String
   profileID: String
   ImagePosts: ImagePost @belongsTo
-  Images: Images @belongsTo
   Profile: Profile @belongsTo
 }

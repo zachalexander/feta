@@ -1,0 +1,49 @@
+img {
+    max-width: 100%;
+    border: 0;
+    max-height: 300px;
+    display: flex;
+    justify-content: center;
+    margin: 2em auto;
+}
+
+ion-textarea {
+    --background: whitesmoke;
+    --padding: 1em;
+    --padding-start: 1em;
+    --border-radius: 10px;
+}
+
+ion-item {
+    margin: auto 0.5em auto 0em !important;
+}
+
+.comment-textarea {
+    border-radius: 10px;
+    padding: 0.25em 1em;
+    min-width: 100%;
+    min-height: 7em;
+    margin: auto;
+    font-size: 0.85em;
+}
+
+.comment-label {
+    margin: 0em auto 1em auto;
+}
+
+.button-class {
+    display: flex;
+    justify-content: space-between;
+    max-width: 325px !important;
+    margin: auto;
+}
+
+.cancel {
+    font-weight: 600;
+    color: indianred;
+}
+
+.post {
+    font-weight: 600;
+    margin-left: -2em;
+}

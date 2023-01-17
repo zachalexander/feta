@@ -1,0 +1,6 @@
+<ion-tab-button [disabled]="likeclicked" *ngIf="!this.alreadyLiked" (click)="likeEvent(this.imageId)">
+  <p class="like-text-nolike">Like</p><ion-icon name="heart-outline"></ion-icon>
+</ion-tab-button>
+<ion-tab-button [disabled]="likeclicked" *ngIf="this.alreadyLiked" class="already-liked-button" (click)="likeEvent(this.imageId)">
+  <p class="like-text">Like</p><ion-icon name="heart" class="already-liked"></ion-icon>
+</ion-tab-button>

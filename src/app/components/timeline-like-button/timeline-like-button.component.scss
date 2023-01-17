@@ -1,0 +1,57 @@
+.already-liked-button {
+    color: tomato;
+
+    
+    .already-liked {
+        color: tomato;
+        fill: tomato;
+        ;
+
+        .ionicon {
+            stroke: black !important;
+        }
+    }
+}
+
+.already-liked-button:hover {
+    color: tomato;
+    fill: tomato;
+}
+
+ion-tab-button {
+    font-weight: 600;
+    color: black;
+    cursor: pointer;
+
+    ion-icon {
+        --ionicon-stroke-width: 30px !important;
+    
+        #text {
+            font-weight: 600;
+        }
+    }
+}
+
+.like-text {
+    margin: 0;
+    fill: tomato;
+    color: tomato;
+}
+
+.like-text:hover {
+    margin: 0;
+    fill: tomato;
+    color: tomato;
+}
+
+.like-text-nolike {
+    margin: 0;
+    fill: black;
+    color: black;
+}
+
+.like-text-nolike:hover {
+    margin: 0;
+    fill: black;
+    color: black;
+}

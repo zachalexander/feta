@@ -1,0 +1,43 @@
+.username-label {
+    margin-left: 1em;
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+.username-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    .username-label-username, .username-label-family-name {
+        margin-left: 1em;
+        font-weight: 500;
+        font-size: 0.95em;
+    }
+
+    .username-label-family-name {
+        font-weight: 500;
+        font-size: 0.85em;
+        color: darkgray;
+    }
+}
+
+.list-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 100%;
+    margin: 0.2em 0em;
+}
+
+.avatar-names-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.chip-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

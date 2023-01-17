@@ -30,7 +30,7 @@ export class UpdateProfileModalPage implements OnInit {
     public loadingController: LoadingController
     ) {
     this.updateProfileForm = this.fb.group({
-      username: ["", [Validators.required, Validators.minLength(4)], this.customValidator.userNameValidator.bind(this.customValidator)],
+      username: ["", [Validators.required, Validators.minLength(2)], this.customValidator.userNameValidator.bind(this.customValidator)],
       relation: [""],
       family_name: [""]
     });
