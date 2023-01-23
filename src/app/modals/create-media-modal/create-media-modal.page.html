@@ -7,7 +7,8 @@
         <ion-buttons slot="end" (click)="closeModal(postImageForm.value)" class="update">Post&nbsp;&nbsp;</ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <img class="photo-taken" [src]="src">
+    <!-- <img class="photo-taken" [src]="src"> -->
+    <video class="video-div" [src]="src" controls></video>
     <form [formGroup]="postImageForm" (ngSubmit)="closeModal(postImageForm.value)">
       <ion-grid>
         <ion-row>

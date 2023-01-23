@@ -12,6 +12,8 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import write_blob from 'capacitor-blob-writer';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 
+const APP_DIRECTORY = Directory.Documents
+
 @Component({
   selector: 'app-add-photo',
   templateUrl: './add-photo.component.html',
@@ -23,10 +25,13 @@ export class AddPhotoComponent implements OnInit {
   submitted = false;
   dataReturned: any;
   src;
+  blob;
+  filename;
+  selected;
   public image: [];
 
   folderContent = [];
-  currentFolder = '';
+  currentFolder = 'FETA';
   copyFile = null;
   @ViewChild('filepicker') picker: ElementRef;
 
@@ -45,8 +50,7 @@ export class AddPhotoComponent implements OnInit {
     const modal = await this.modalController.create({
       component: CreateMediaModalPage,
       componentProps: {
-        "paramID": 123,
-        "paramTitle": "Test Title"
+        "path": `${this.currentFolder}/${this.selected.name}`
       }
     });
 
@@ -59,12 +63,43 @@ export class AddPhotoComponent implements OnInit {
     return await modal.present();
   }
 
+
+
   addFile(){
+    this.deleteFiles();
     this.picker.nativeElement.click();
   }
 
+  async deleteFiles() {
+    await Filesystem.rmdir({
+      directory: APP_DIRECTORY,
+      path: this.currentFolder,
+      recursive: true
+    });
+  }
+
   async fileSelected($event){
-    console.log($event)
+    this.selected = $event.target.files[0];
+
+    // const savePhotoBase64 = await fetch(selected)
+    // this.blob = await savePhotoBase64.blob()
+    // console.log(this.blob)
+    // this.filename = 'zach-uploads/zach_upload_' + new Date().toJSON() + '.mov'
+
+    // localStorage.setItem('blob-string', URL.createObjectURL(this.blob))
+    // localStorage.setItem('filename-string', this.filename)
+
+ 
+
+    await write_blob({
+      directory: APP_DIRECTORY,
+      path: `${this.currentFolder}/${this.selected.name}`,
+      blob: this.selected
+    })
+
+
+    // this.loadDocuments();
+    this.addPhotoToGallery();
   }
 
   ngOnInit() { 
@@ -72,22 +107,24 @@ export class AddPhotoComponent implements OnInit {
   }
 
   async addPhotoToGallery() {
-    const loading = await this.loadingController.create({
-      spinner: 'lines-sharp-small',
-      translucent: false,
-      cssClass: 'spinner-loading'
-    });
+    // const loading = await this.loadingController.create({
+    //   spinner: 'lines-sharp-small',
+    //   translucent: false,
+    //   cssClass: 'spinner-loading'
+    // });
 
-    loading.present();
+    const status = { status: true}
 
-    let status = await this.mediaService.addNewToGallery();
+    // loading.present();
+
+    // let status = await this.mediaService.addNewToGallery();
 
     if(!status['status']){
       this.submitted = false;
     } else {
       this.openModal();
       this.submitted = true;
-      loading.dismiss();
+      // loading.dismiss();
     }
   }
 
