@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CreateMediaModalPage } from '../../modals/create-media-modal/create-media-modal.page';
 import { Router } from '@angular/router';
@@ -8,7 +8,9 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser
 import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
-import { PreviewAnyFile } from '@awesome-cordova-plugins/preview-any-file/ngx';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import write_blob from 'capacitor-blob-writer';
+import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 
 @Component({
   selector: 'app-add-photo',
@@ -22,6 +24,11 @@ export class AddPhotoComponent implements OnInit {
   dataReturned: any;
   src;
   public image: [];
+
+  folderContent = [];
+  currentFolder = '';
+  copyFile = null;
+  @ViewChild('filepicker') picker: ElementRef;
 
   constructor(
     private router: Router, 
@@ -50,6 +57,14 @@ export class AddPhotoComponent implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  addFile(){
+    this.picker.nativeElement.click();
+  }
+
+  async fileSelected($event){
+    console.log($event)
   }
 
   ngOnInit() { 

@@ -9,6 +9,7 @@ import { TimelineLikeButtonComponent } from 'src/app/components/timeline-like-bu
 import { SwiperModule } from 'swiper/angular';
 
 import { TimelineRoutingModule } from './timeline-routing.module';
+import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { TimelineRoutingModule } from './timeline-routing.module';
     TimelineRoutingModule,
     SwiperModule
   ],
-  declarations: [TimelinePage, TimelineComponent, TimelineLikeButtonComponent]
+  declarations: [TimelinePage, TimelineComponent, TimelineLikeButtonComponent],
+  providers: [PreviewAnyFile]
 })
 export class TimelinePageModule {}
