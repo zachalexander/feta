@@ -25,6 +25,7 @@ import { LikeListModalPage } from './modals/like-list-modal/like-list-modal.page
 import { SwiperModule } from 'swiper/angular';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
+
 Amplify.configure(awsconfig);
 
 @NgModule({

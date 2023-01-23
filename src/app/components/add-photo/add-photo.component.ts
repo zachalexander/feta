@@ -8,6 +8,8 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser
 import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
+import { PreviewAnyFile } from '@awesome-cordova-plugins/preview-any-file/ngx';
+
 @Component({
   selector: 'app-add-photo',
   templateUrl: './add-photo.component.html',
@@ -28,7 +30,8 @@ export class AddPhotoComponent implements OnInit {
     public api: APIService,
     private sanitizer: DomSanitizer,
     public modalController: ModalController,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    private previewAnyFile: PreviewAnyFile
     ) { }
 
   async openModal() {

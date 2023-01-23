@@ -10,6 +10,7 @@ import { SwiperModule } from 'swiper/angular';
 
 import { TimelineRoutingModule } from './timeline-routing.module';
 
+
 @NgModule({
   imports: [
     IonicModule,
