@@ -33,6 +33,8 @@ export class CreateMediaModalPage {
   path;
   blob;
 
+  browser: any;
+
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
@@ -44,8 +46,8 @@ export class CreateMediaModalPage {
   ) {    
     this.postImageForm = new FormGroup({
     description: new FormControl('')
-    }
-  );
+    });
+
   }
 
   get f(){
@@ -67,6 +69,10 @@ export class CreateMediaModalPage {
     this.usernameID = profile.usernameID;
 
     await this.addPhotoToGallery().then(() => loading.dismiss())
+
+    this.browser = localStorage.getItem('User-browser')
+    console.log(this.browser)
+    
   }
 
   async addPhotoToGallery() {
@@ -87,8 +93,10 @@ export class CreateMediaModalPage {
       })
 
       this.blob = this.b64toBlob(file.data)
-      const blobUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.blob));
+      let blobUrl = URL.createObjectURL(this.blob) as any;
+      blobUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl + "#t=0.5")
       this.src = blobUrl;
+      console.log(this.src)
 
     } else {
       Filesystem.getUri({

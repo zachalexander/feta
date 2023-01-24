@@ -8,7 +8,10 @@
       </ion-toolbar>
     </ion-header>
     <!-- <img class="photo-taken" [src]="src"> -->
-    <video class="video-div" [src]="src" controls></video>
+    <video *ngIf="browser === 'chrome'" [src]="src" class="video-div" width="100%" height="100%" autoplay="autoplay" controls="true" preload="metadata" muted playsinline></video>
+    <video *ngIf="browser === 'safari'" class="video-div" width="100%" height="100%" autoplay="autoplay" controls="true" preload="metadata" muted playsinline>
+      <source [src]="src" type="video/mp4">
+    </video>
     <form [formGroup]="postImageForm" (ngSubmit)="closeModal(postImageForm.value)">
       <ion-grid>
         <ion-row>
