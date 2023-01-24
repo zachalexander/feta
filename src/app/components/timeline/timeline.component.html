@@ -52,19 +52,21 @@
 
           <!-- locate the image url and assign a unique id per post -->
           <ion-card-header lines="none">
-            <swiper class="mySwiper" effect="fade" [zoom]="true">
+            <swiper *ngIf="!image.isVideo" class="mySwiper" effect="fade" [zoom]="true">
               <ng-template swiperSlide>
                 <div class="swiper-zoom-container">
-                  <img *ngIf="!image.isVideo" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.url" loading="lazy" width="100vw" height="400"/>
-                  <video *ngIf="browser === 'chrome' && image.isVideo" [src]="image.url" class="video-div" width="100%" height="100%"
-                    autoplay="autoplay" controls="true" preload="metadata" muted playsinline mimeType="audio/mpeg"></video>
-                  <video *ngIf="browser === 'safari' || browser === 'other' && image.isVideo" class="video-div" width="100%" height="100%"
-                    autoplay="autoplay" controls="true" preload="metadata" muted playsinline>
-                    <source [src]="image.url" type="video/mp4">
-                  </video>
+                  <img *ngIf="!image.isVideo" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSource" loading="lazy" width="100vw" height="400"/>
                 </div>
               </ng-template>
             </swiper>
+            <div *ngIf="image.isVideo">
+              <video *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" class="video-div" width="100%"
+                height="100%" autoplay="autoplay" controls="true" preload="metadata" autoplay muted playsinline loop></video>
+              <video *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" class="video-div" width="100%"
+                height="100%" autoplay="autoplay" controls="true" preload="metadata" autoplay muted playsinline loop>
+                <source [src]="image.mediaSource" type="video/mp4">
+              </video>
+            </div>
             <ion-list lines="none" mode= "md">
               <ion-tab-bar lines="none" id="interaction_{{image.imagesID}}" class="interactions-photos">
 

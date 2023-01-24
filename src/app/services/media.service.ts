@@ -5,6 +5,7 @@ import { Auth } from '@aws-amplify/auth';
 import { Router } from '@angular/router';
 import { APIService } from "../API.service";
 import API, { graphqlOperation} from "@aws-amplify/api-graphql";
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class MediaService {
   mediaPosted;
 
   constructor(
-    private api: APIService
+    private api: APIService,
+    private sanitizer: DomSanitizer
   ) { }
 
   async getPhotoUrl(key){
@@ -99,7 +101,7 @@ export class MediaService {
     await Promise.all(array.map(async posts => {
       // if((!posts._deleted)){
         this.mediaPosted.push({
-          url: await this.convertUrlToBase64(await Storage.get(posts.s3_key)),
+          mediaSource: await this.urltoUsableMedia(await Storage.get(posts.s3_key), posts.s3_key),
           isVideo: await this.checkForVideo(posts.s3_key),
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
@@ -120,13 +122,30 @@ export class MediaService {
   }
 
   async checkForVideo(filename){
-    let extension = filename.split('.')[2]
+    let extension = filename.split('.').pop().toLowerCase()
+    console.log(extension)
     if(extension === 'mov' || extension === 'mp4' || extension === 'ogg' || extension === 'webm'){
       return true
     } else {
       return false
     }
   }
+
+  async urltoUsableMedia(url, s3Key){
+
+    let isVideo = this.checkForVideo(s3Key)
+
+    if(isVideo){
+      const response = await fetch(`${url}`);
+      const blob = await response.blob();
+      const final_url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob))
+      return final_url;
+    } else {
+      return this.convertUrlToBase64(url)
+    }
+
+  }
+
 
   async convertUrlToBase64(url){
     const response = await fetch(`${url}`);
