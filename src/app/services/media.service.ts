@@ -100,6 +100,7 @@ export class MediaService {
       // if((!posts._deleted)){
         this.mediaPosted.push({
           url: await this.convertUrlToBase64(await Storage.get(posts.s3_key)),
+          isVideo: await this.checkForVideo(posts.s3_key),
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
           description: posts.description,
@@ -116,6 +117,15 @@ export class MediaService {
     }))
     this.mediaPosted = this.sortByDate(this.mediaPosted)
     return [this.mediaPosted, this.mediaPosted.length]
+  }
+
+  async checkForVideo(filename){
+    let extension = filename.split('.')[2]
+    if(extension === 'mov' || extension === 'mp4' || extension === 'ogg' || extension === 'webm'){
+      return true
+    } else {
+      return false
+    }
   }
 
   async convertUrlToBase64(url){

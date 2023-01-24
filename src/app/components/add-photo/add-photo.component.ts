@@ -12,6 +12,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import write_blob from 'capacitor-blob-writer';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 
+
 const APP_DIRECTORY = Directory.Documents
 
 @Component({
@@ -50,7 +51,8 @@ export class AddPhotoComponent implements OnInit {
     const modal = await this.modalController.create({
       component: CreateMediaModalPage,
       componentProps: {
-        "path": `${this.currentFolder}/${this.selected.name}`
+        "path": `${this.currentFolder}/${this.selected.name}`,
+        "file_name": `${this.selected.name}`
       }
     });
 
@@ -66,7 +68,7 @@ export class AddPhotoComponent implements OnInit {
 
 
   addFile(){
-    this.deleteFiles();
+    // this.deleteFiles();
     this.picker.nativeElement.click();
   }
 
@@ -89,12 +91,16 @@ export class AddPhotoComponent implements OnInit {
     // localStorage.setItem('blob-string', URL.createObjectURL(this.blob))
     // localStorage.setItem('filename-string', this.filename)
 
- 
+  
 
     await write_blob({
       directory: APP_DIRECTORY,
       path: `${this.currentFolder}/${this.selected.name}`,
-      blob: this.selected
+      blob: this.selected,
+      recursive: true,
+      on_fallback(error) {
+        console.log('error: ', error)
+      }
     })
 
 

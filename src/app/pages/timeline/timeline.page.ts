@@ -20,10 +20,9 @@ export class TimelinePage {
 
   async ngOnInit(){
     let data = await this.getMedia();
+    console.log(data[0])
     this.timelineData = data[0];
     this.timelineDataLength = data[1];
-
-    console.log(this.timelineData, this.timelineDataLength)
   }
 
   async createPhotoModal(){

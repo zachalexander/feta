@@ -79,6 +79,7 @@ export class TimelineComponent {
   alreadyLiked: boolean;
   loaded: boolean;
   profileSearch: boolean;
+  browser: any;
 
   dataReturned: any;
   wallListLength: any;
@@ -114,7 +115,7 @@ export class TimelineComponent {
   async ngOnInit() {
 
     this.currentUserUsernameID = localStorage.getItem('usernameID')
-
+    this.browser = localStorage.getItem('User-browser')
     // await Network.addListener('networkStatusChange', async status => {
     //   console.log(status.connected)
     //   this.networkStatus = 'online';
@@ -151,7 +152,6 @@ export class TimelineComponent {
     if(this.data){
       this.loaded = true;
     }
-
 
     this.scrollFinished = true;
   }

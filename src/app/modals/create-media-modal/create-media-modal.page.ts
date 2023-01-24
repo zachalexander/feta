@@ -31,8 +31,10 @@ export class CreateMediaModalPage {
   folderContent = [];
   currentFolder = '';
   path;
+  file_name;
   blob;
-
+  isImage = false;
+  
   browser: any;
 
   constructor(
@@ -63,54 +65,79 @@ export class CreateMediaModalPage {
 
     loading.present();
 
+
+    this.browser = localStorage.getItem('User-browser')
     let profile = await this.api.GetProfile(localStorage.getItem('profileID'));
 
     this.profileID = profile.id;
     this.usernameID = profile.usernameID;
 
-    await this.addPhotoToGallery().then(() => loading.dismiss())
+    await this.loadMediaFromStorage().then(() => loading.dismiss())
 
-    this.browser = localStorage.getItem('User-browser')
-    console.log(this.browser)
     
   }
 
-  async addPhotoToGallery() {
-    // const loading = await this.loadingController.create({
-    //   spinner: 'lines-sharp-small',
-    //   translucent: false,
-    //   cssClass: 'spinner-loading'
-    // });
+  async loadMediaFromStorage() {
+    const loading = await this.loadingController.create({
+      spinner: 'lines-sharp-small',
+      translucent: false,
+      cssClass: 'spinner-loading'
+    });
 
-    // loading.present();
+    loading.present();
 
-    // let file = await this.loadDocuments();
+    const file = await Filesystem.readFile({
+      directory: APP_DIRECTORY,
+      path: this.path
+    })
 
-    if (Capacitor.getPlatform() === "web"){
-      const file = await Filesystem.readFile({
-        directory: APP_DIRECTORY,
-        path: this.path
-      })
+    this.blob = this.b64toBlob(file.data)
 
-      this.blob = this.b64toBlob(file.data)
-      let blobUrl = URL.createObjectURL(this.blob) as any;
-      blobUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl + "#t=0.5")
-      this.src = blobUrl;
-      console.log(this.src)
+    if(this.path.substring(this.path.length - 3) === 'mp4' ||
+      this.path.substring(this.path.length - 3) === 'mov' ||
+      this.path.substring(this.path.length - 3) === 'ogg' ||
+      this.path.substring(this.path.length - 3) === 'ebM'){
 
-    } else {
-      Filesystem.getUri({
-        path: this.path,
-        directory: APP_DIRECTORY
-      }).then(function({uri}){
-        this.src = Capacitor.convertFileSrc(uri)
-      })
-    }
+        if (Capacitor.getPlatform() === "web"){
+    
+          let blobUrl = URL.createObjectURL(this.blob) as any;
+          blobUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl)
+          this.src = blobUrl;
+          loading.dismiss();
+    
+        } else {
+    
+          const file_uri = await Filesystem.getUri({
+            path: this.path,
+            directory: APP_DIRECTORY
+          })
+    
+          this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
+          loading.dismiss();
+        }
+      } else {
+        this.isImage = true;
 
-    // this.src = 
-    // let image = this.sanitizer.bypassSecurityTrustUrl(file)
-    // this.src = image;
-    // loading.dismiss();
+        if (Capacitor.getPlatform() === "web") {
+
+          let blobUrl = URL.createObjectURL(this.blob) as any;
+          blobUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl)
+          this.src = blobUrl;
+          loading.dismiss();
+
+        } else {
+
+          const file_uri = await Filesystem.getUri({
+            path: this.path,
+            directory: APP_DIRECTORY
+          })
+
+          this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
+          loading.dismiss();
+        }
+
+      }
+
   }
 
   b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
@@ -133,19 +160,19 @@ export class CreateMediaModalPage {
     return blob;
   };
 
-  async convertUrlToBase64(url) {
-    const response = await fetch(`${url}`);
-    const blob = await response.blob();
+  // async convertUrlToBase64(url) {
+  //   const response = await fetch(`${url}`);
+  //   const blob = await response.blob();
 
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader;
-      reader.onerror = reject;
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-      reader.readAsDataURL(blob);
-    })
-  }
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader;
+  //     reader.onerror = reject;
+  //     reader.onload = () => {
+  //       resolve(reader.result);
+  //     };
+  //     reader.readAsDataURL(blob);
+  //   })
+  // }
 
   async closeModal(imagepost) {
 
@@ -163,24 +190,24 @@ export class CreateMediaModalPage {
     imagepost.time_posted = new Date().toISOString()
     imagepost.usernameID = usernameID
     imagepost.profileID = this.profileID
-    imagepost.s3_key = localStorage.getItem('filename-string')
+    imagepost.s3_key = `timeline-uploads/${new Date().toISOString()}_${this.file_name}`
 
-    // const blob = await fetch(localStorage.getItem('blob-string')).then(r => r.blob())
-
-    await this.submitToS3('zach-uploads/zach_upload_test.mov', this.blob)
+    await this.submitToS3(`timeline-uploads/${new Date().toISOString()}_${this.file_name}`, this.blob)
 
     loading.dismiss();
 
-    // await this.api.CreateImagePost(imagepost).then((postImage) => {
-    //   // this.cachingService.clearAllCachedData();
-    //   this.router.navigate(['/timeline']).then(() => { window.location.reload()});
-    //   loading.dismiss();
-    // })
+    await this.api.CreateImagePost(imagepost).then((postImage) => {
+      // this.cachingService.clearAllCachedData();
+      this.router.navigate(['/timeline']).then(() => { window.location.reload()});
+      loading.dismiss();
+    })
     
   }
 
-  backToWall(){
-    this.loadingController.dismiss();
+  backToTimeline(){
+    this.modalController.dismiss({
+      'dismissed': true
+    });
   }
 
   async submitToS3(filename, blob){
