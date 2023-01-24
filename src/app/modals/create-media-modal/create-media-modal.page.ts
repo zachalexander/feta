@@ -31,6 +31,7 @@ export class CreateMediaModalPage {
   folderContent = [];
   currentFolder = '';
   path;
+  blob;
 
   constructor(
     private modalController: ModalController,
@@ -80,17 +81,13 @@ export class CreateMediaModalPage {
     // let file = await this.loadDocuments();
 
     if (Capacitor.getPlatform() === "web"){
-      console.log(this.path)
       const file = await Filesystem.readFile({
         directory: APP_DIRECTORY,
         path: this.path
       })
 
-      console.log(file)
-
-      const blob = this.b64toBlob(file.data)
-      console.log(blob)
-      const blobUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
+      this.blob = this.b64toBlob(file.data)
+      const blobUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.blob));
       this.src = blobUrl;
 
     } else {
@@ -160,15 +157,17 @@ export class CreateMediaModalPage {
     imagepost.profileID = this.profileID
     imagepost.s3_key = localStorage.getItem('filename-string')
 
-    const blob = await fetch(localStorage.getItem('blob-string')).then(r => r.blob())
+    // const blob = await fetch(localStorage.getItem('blob-string')).then(r => r.blob())
 
-    await this.submitToS3(localStorage.getItem('filename-string'), blob)
+    await this.submitToS3('zach-uploads/zach_upload_test.mov', this.blob)
 
-    await this.api.CreateImagePost(imagepost).then((postImage) => {
-      // this.cachingService.clearAllCachedData();
-      this.router.navigate(['/timeline']).then(() => { window.location.reload()});
-      loading.dismiss();
-    })
+    loading.dismiss();
+
+    // await this.api.CreateImagePost(imagepost).then((postImage) => {
+    //   // this.cachingService.clearAllCachedData();
+    //   this.router.navigate(['/timeline']).then(() => { window.location.reload()});
+    //   loading.dismiss();
+    // })
     
   }
 
@@ -177,7 +176,7 @@ export class CreateMediaModalPage {
   }
 
   async submitToS3(filename, blob){
-    await Storage.put(filename, blob, {contentType: "image/jpeg"})
+    await Storage.put(filename, blob)
   }
 
 
