@@ -10,6 +10,7 @@ import { SwiperModule } from 'swiper/angular';
 
 import { TimelineRoutingModule } from './timeline-routing.module';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
+import { Storage } from '@ionic/storage-angular';
 
 
 @NgModule({
@@ -22,6 +23,6 @@ import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
     SwiperModule
   ],
   declarations: [TimelinePage, TimelineComponent, TimelineLikeButtonComponent],
-  providers: [PreviewAnyFile]
+  providers: [PreviewAnyFile, Storage]
 })
 export class TimelinePageModule {}

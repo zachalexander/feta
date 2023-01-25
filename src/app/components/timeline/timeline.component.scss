@@ -5,6 +5,15 @@ img {
     height: auto;
 }
 
+.video-playing {
+    width: 100vw;
+    height: auto;
+    max-height: 700px;
+    margin: 0 auto;
+    background-color: black;
+
+}
+
 ion-header {
     box-shadow: none !important;
     cursor: pointer;
@@ -154,7 +163,7 @@ ion-toolbar {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 85vh;
+    min-height: 10vh;
 }
 
 .new-post-button-div {

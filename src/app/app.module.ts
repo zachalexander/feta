@@ -4,6 +4,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,9 @@ import { LikeListModalPage } from './modals/like-list-modal/like-list-modal.page
 
 import { SwiperModule } from 'swiper/angular';
 import { ImageCropperModule } from 'ngx-image-cropper';
+
+import { Drivers } from '@ionic/storage';
+import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 
 
 Amplify.configure(awsconfig);
@@ -47,7 +51,10 @@ Amplify.configure(awsconfig);
     AmplifyAuthenticatorModule,
     SwiperModule,
     ReactiveFormsModule,
-    ImageCropperModule
+    ImageCropperModule,
+    IonicStorageModule.forRoot({
+      driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB]
+    }),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

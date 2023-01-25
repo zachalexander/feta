@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, ViewEncapsulation, Injectable} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, ViewEncapsulation, Injectable, QueryList, ViewChildren} from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 // import { PhotoService } from '../../services/photo.service';
 import { MediaService } from 'src/app/services/media.service';
@@ -70,6 +70,11 @@ export class TimelineComponent {
   @ViewChild('slides') slides: IonItemSliding;
   @Input('data') data = [];
   @Input('datalength') datalength: Number;
+  @ViewChildren('timelineVideo') videos: QueryList<any>
+
+
+  nowPlaying = null;
+  videoOver = false;
   
   onCreateImageSubscription: Subscription | null = null;
   onUpdateImageSubscription: Subscription | null = null;
@@ -112,10 +117,41 @@ export class TimelineComponent {
     return Auth.currentUserInfo().then(user => user.id);
   }
 
+  isElementInViewport(element){
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    )
+  }
+
+  didScroll(){
+    if(this.nowPlaying && this.isElementInViewport(this.nowPlaying)) return;
+    else if(this.nowPlaying && !this.isElementInViewport(this.nowPlaying)){
+      this.nowPlaying.pause();
+      this.nowPlaying = null;
+    }
+
+    this.videos.forEach(player => {
+      if(this.nowPlaying) return;
+
+      const nativeElement = player.nativeElement;
+      const inView = this.isElementInViewport(nativeElement);
+
+      if(inView) {
+        this.nowPlaying = nativeElement;
+        this.nowPlaying.muted = true;
+        this.nowPlaying.play();
+        this.videoOver = false;
+      }
+    })
+  }
+
   async ngOnInit() {
 
-    this.currentUserUsernameID = localStorage.getItem('usernameID')
-    this.browser = localStorage.getItem('User-browser')
+
     // await Network.addListener('networkStatusChange', async status => {
     //   console.log(status.connected)
     //   this.networkStatus = 'online';
@@ -135,25 +171,29 @@ export class TimelineComponent {
     //   }
     // });
 
-    if(this.platform.is('hybrid')){
+
+  }
+
+
+  async ngAfterViewInit() {
+    this.didScroll();
   
-      this.platform.resume.subscribe(async(event) => {
-        document.location.reload();
-        // await this.refreshData(event);
-        this.startSubscriptions();
-      })
-    }
+    this.currentUserUsernameID = localStorage.getItem('usernameID')
+    this.browser = localStorage.getItem('User-browser')
+
+    // if (this.platform.is('hybrid')) {
+
+    //   this.platform.resume.subscribe(async (event) => {
+    //     document.location.reload();
+    //     // await this.refreshData(event);
+    //     this.startSubscriptions();
+    //   })
+    // }
 
     this.currentUserUsername = await localStorage.getItem('username');
     this.currentUserUsernameID = await localStorage.getItem('usernameID');
 
     this.startSubscriptions();
-
-    if(this.data){
-      this.loaded = true;
-    }
-
-    this.scrollFinished = true;
   }
 
   async ngOnDestroy() {

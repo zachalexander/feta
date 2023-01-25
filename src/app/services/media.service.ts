@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { APIService } from "../API.service";
 import API, { graphqlOperation} from "@aws-amplify/api-graphql";
 import { DomSanitizer } from '@angular/platform-browser';
+import { CachingService } from './caching.service';
+import { from, Observable, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,8 @@ export class MediaService {
 
   constructor(
     private api: APIService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public cachingService: CachingService
   ) { }
 
   async getPhotoUrl(key){
@@ -67,6 +71,46 @@ export class MediaService {
       console.log('error occurred saving to local storage: ', error)
       return false;
     }
+  }
+
+
+
+
+
+
+  getTimelineData(): Observable<any> {
+    let currentUser = localStorage.getItem('usernameID');
+    let url = 'family-timeline';
+
+    return this.getData(url, currentUser).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  private getData(url, currentUser): Observable<any> {
+    url = `${url}?={0,n}`
+    const storedValue = from(this.cachingService.getCachedRequest(url));
+    return storedValue.pipe(
+      switchMap(result => {
+        if (!result) {
+          console.log('full api call')
+          return this.callAndCache(url, currentUser);
+        } else {
+          console.log('cached result')
+          return of(result);
+        }
+      })
+    )
+  }
+
+  private callAndCache(url, currentUser): Observable<any> {
+    return from(this.getDataFromGraphQL(currentUser)).pipe(
+      tap(res => {
+        this.cachingService.cacheRequests(url, res);
+      })
+    )
   }
 
   async getDataFromGraphQL(currentUser){
@@ -123,7 +167,6 @@ export class MediaService {
 
   async checkForVideo(filename){
     let extension = filename.split('.').pop().toLowerCase()
-    console.log(extension)
     if(extension === 'mov' || extension === 'mp4' || extension === 'ogg' || extension === 'webm'){
       return true
     } else {
@@ -133,16 +176,17 @@ export class MediaService {
 
   async urltoUsableMedia(url, s3Key){
 
-    let isVideo = this.checkForVideo(s3Key)
+    // let isVideo = await this.checkForVideo(s3Key)
 
-    if(isVideo){
+    // if(isVideo){
+      return await this.convertUrlToBase64(url)
       const response = await fetch(`${url}`);
       const blob = await response.blob();
       const final_url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob))
       return final_url;
-    } else {
-      return this.convertUrlToBase64(url)
-    }
+    // } else {
+    //   return await this.convertUrlToBase64(url)
+    // }
 
   }
 
