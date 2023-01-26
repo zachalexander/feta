@@ -63,7 +63,11 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/theme/variables.scss", "src/global.scss"],
+            "styles": [
+              "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
+              "src/theme/variables.scss", 
+              "src/global.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -143,7 +147,11 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/theme/variables.scss", "src/global.scss"],
+            "styles": [
+              "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
+              "src/theme/variables.scss", 
+              "src/global.scss"
+            ],
             "scripts": []
           },
           "configurations": {

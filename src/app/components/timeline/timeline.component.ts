@@ -140,7 +140,7 @@ export class TimelineComponent {
       const nativeElement = player.nativeElement;
       const inView = this.isElementInViewport(nativeElement);
 
-      if(inView) {
+      if(inView && this.nowPlaying) {
         this.nowPlaying = nativeElement;
         this.nowPlaying.muted = true;
         this.nowPlaying.play();
@@ -150,7 +150,6 @@ export class TimelineComponent {
   }
 
   async ngOnInit() {
-
 
     // await Network.addListener('networkStatusChange', async status => {
     //   console.log(status.connected)

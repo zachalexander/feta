@@ -146,7 +146,7 @@ export class MediaService {
       // if((!posts._deleted)){
         this.mediaPosted.push({
           mediaSource: await this.urltoUsableMedia(await Storage.get(posts.s3_key), posts.s3_key),
-          isVideo: await this.checkForVideo(posts.s3_key),
+          isVideo: true,
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
           description: posts.description,
@@ -176,17 +176,16 @@ export class MediaService {
 
   async urltoUsableMedia(url, s3Key){
 
-    // let isVideo = await this.checkForVideo(s3Key)
+    let isVideo = await this.checkForVideo(s3Key)
 
-    // if(isVideo){
-      return await this.convertUrlToBase64(url)
+    if(isVideo){
       const response = await fetch(`${url}`);
       const blob = await response.blob();
       const final_url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob))
       return final_url;
-    // } else {
-    //   return await this.convertUrlToBase64(url)
-    // }
+    } else {
+      return await this.convertUrlToBase64(url)
+    }
 
   }
 

@@ -34,6 +34,7 @@ export class CreateMediaModalPage {
   file_name;
   blob;
   isImage = false;
+  encoder: any;
   
   browser: any;
 
@@ -64,7 +65,6 @@ export class CreateMediaModalPage {
     });
 
     loading.present();
-
 
     this.browser = localStorage.getItem('User-browser')
     let profile = await this.api.GetProfile(localStorage.getItem('profileID'));
@@ -176,6 +176,17 @@ export class CreateMediaModalPage {
 
   async closeModal(imagepost) {
 
+    let extension = this.file_name.split('.').pop()
+    console.log(extension)
+
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let hour = date.getHours();
+    let mins = date.getMinutes();
+    let secs = date.getSeconds();
+
     const loading = await this.loadingController.create({
       spinner: 'lines-sharp-small',
       translucent: false,
@@ -190,9 +201,9 @@ export class CreateMediaModalPage {
     imagepost.time_posted = new Date().toISOString()
     imagepost.usernameID = usernameID
     imagepost.profileID = this.profileID
-    imagepost.s3_key = `timeline-uploads/${new Date().toISOString()}_${this.file_name}`
-
-    await this.submitToS3(`timeline-uploads/${new Date().toISOString()}_${this.file_name}`, this.blob)
+    imagepost.s3_key = `timeline-uploads-compressed/media_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}_compressed.mp4`
+    
+    await this.submitToS3(`timeline-uploads/media_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob)
 
     loading.dismiss();
 
@@ -211,7 +222,7 @@ export class CreateMediaModalPage {
   }
 
   async submitToS3(filename, blob){
-    await Storage.put(filename, blob)
+    await Storage.put(filename, blob, {contentType: "video/mp4"})
   }
 
 
