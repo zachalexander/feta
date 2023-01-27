@@ -201,7 +201,7 @@ export class CreateMediaModalPage {
     imagepost.time_posted = new Date().toISOString()
     imagepost.usernameID = usernameID
     imagepost.profileID = this.profileID
-    imagepost.s3_key = `timeline-uploads-compressed/media_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}_compressed.mp4`
+    imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/media_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`
     
     await this.submitToS3(`timeline-uploads/media_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob)
 

@@ -145,7 +145,7 @@ export class MediaService {
     await Promise.all(array.map(async posts => {
       // if((!posts._deleted)){
         this.mediaPosted.push({
-          mediaSource: await this.urltoUsableMedia(await Storage.get(posts.s3_key), posts.s3_key),
+          mediaSource: posts.s3_key,
           isVideo: true,
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
