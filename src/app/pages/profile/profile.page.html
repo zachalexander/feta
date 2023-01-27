@@ -21,8 +21,10 @@
       </div>
       <div class="right-top-profile">
         <div class="stats-div">
-          <p class="stats-count"><strong>{{photosPostedCount}}</strong></p> <h5 style="font-size: 0.95em">photo posts</h5>
+          <p class="stats-count"><strong>{{photosPostedCount}}</strong></p> 
+          <p class="stats-count"><strong>{{videosPostedCount}}</strong></p>
         </div>
+        <!-- <h5 style="font-size: 0.95em">photo posts</h5> -->
         <h5 style="font-size: 0.95em"><strong>{{profileData.username}}</strong> is {{profileData.relation}}</h5>
       </div>
     </div>
@@ -36,24 +38,33 @@
         </ion-avatar>
         <small class="username-header">{{profileData.username}}</small>
       </div>
-      <div class="right-top-profile">
-        <div class="stats-div">
-          <p class="stats-count"><strong>{{photosPostedCount}}</strong></p> <h5 style="font-size: 0.95em">photo posts</h5>
+      <div class="right-top-profile-wrapper">
+        <div class="right-top-profile">
+          <div class="stats-div">
+            <p class="stats-count"><strong>{{photosPostedCount}}</strong></p>
+            <div><p class="stats-text">photo posts</p></div>
+          </div>
+          <div class="stats-div">
+            <p class="stats-count"><strong>{{videosPostedCount}}</strong></p>
+            <div><p class="stats-text">video posts</p></div>
+          </div>
         </div>
-        <h5 style="font-size: 0.95em"><strong>{{profileData.username}}</strong> is {{profileData.relation}}</h5>
       </div>
+    </div>
+    <div class="bio">
+      <p class="bio-text">Data Engineer at the Center for Justice Innovation. Married to Katie Friedman. I live and work in New York.</p>
     </div>
     
     <ion-chip *ngIf="editAccess" color="medium" class="edit-profile-button" expand="full" (click)="updateProfile()">Edit Profile</ion-chip>
     <ion-toolbar>
-    <ion-segment [(ngModel)]="select_buttons">
+    <ion-segment [(ngModel)]="select_buttons" (ionChange)="buttonClicked($event)">
       <ion-segment-button value="photo-uploads" checked>
         <ion-icon name="camera"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="video-uploads" disabled>
+      <ion-segment-button value="video-uploads">
         <ion-icon name="videocam"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="recipes" disabled>
+      <!-- <ion-segment-button value="recipes" disabled>
         <ion-icon name="restaurant"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="cool-spots" disabled>
@@ -61,16 +72,31 @@
       </ion-segment-button>
       <ion-segment-button value="notes" disabled>
         <ion-icon name="chatbubbles"></ion-icon>
-      </ion-segment-button>
+      </ion-segment-button> -->
     </ion-segment>
   </ion-toolbar>
-    <div class="no-photos" *ngIf="noPhotosYet">
+    <div class="no-photos" *ngIf="noPhotosYet && photosClicked">
       <h5 color="light">No photos posted yet.</h5>
     </div>
-    <ion-grid class="postedphotos" *ngIf="!noPhotosYet">
+    <ion-grid class="postedphotos" *ngIf="!noPhotosYet && photosClicked">
       <ion-row class="postedphotos_row">
-        <ion-col *ngFor="let image of profileImageData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
+        <ion-col *ngFor="let image of profileMediaData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
           <div class="square" *ngIf="!image.deleted" style="background-image: url({{image.s3_key}})">
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="no-videos" *ngIf="noVideosYet && videosClicked">
+      <h5 color="light">No videos posted yet.</h5>
+    </div>
+    <ion-grid class="postedvideos" *ngIf="!noVideosYet && videosClicked">
+      <ion-row class="postedvideos_row">
+        <ion-col *ngFor="let video of profileMediaData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
+          <div class="square">
+            <video width="100%" height="100px" #timelineVideo type="video/mp4" *ngIf="(browser === 'chrome')" [src]="video.s3_key" class="video-playing" preload="auto" playsinline muted></video>
+            <video width="100%" height="100px" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other')" class="video-playing" preload="auto" muted playsinline>
+              <source [src]="video.s3_key" type="video/mp4">
+            </video>
           </div>
         </ion-col>
       </ion-row>

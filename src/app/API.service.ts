@@ -3420,9 +3420,9 @@ export type GetUsernameDataQuery = {
 })
 export class APIService {
 
-  async getUserProfileImageData(profileID: String): Promise<any>{
+  async getUserProfileMediaData(profileID: String): Promise<any>{
 
-    const statement = `query getUserProfileImageData($profileID: ID!) {
+    const statement = `query getUserProfileMediaData($profileID: ID!) {
       imagePostsByProfileID(profileID: $profileID) {
         items {
           time_posted
@@ -3441,8 +3441,41 @@ export class APIService {
 
     const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     let array: any = response.data.imagePostsByProfileID.items;
-    return [array, array.length];
 
+    let photosPosted = [];
+    let videosPosted = [];
+    await Promise.all(array.map(async posts => {
+      if(await this.checkForVideo(posts.s3_key) === false){
+        photosPosted.push({
+          time_posted: posts.time_posted,
+          s3_key: posts.s3_key,
+          profileID: posts.profileID,
+          description: posts.description,
+          likes: posts.likes,
+          id: posts.id
+        })
+      } else {
+        videosPosted.push({
+          time_posted: posts.time_posted,
+          s3_key: posts.s3_key,
+          profileID: posts.profileID,
+          description: posts.description,
+          likes: posts.likes,
+          id: posts.id
+        })
+      }
+    }))
+    return [photosPosted, photosPosted.length, videosPosted, videosPosted.length];
+  }
+
+  async checkForVideo(filename){
+    console.log(filename)
+    let extension = filename.split('.').pop().toLowerCase()
+    if(extension === 'mov' || extension === 'mp4' || extension === 'ogg' || extension === 'webm'){
+      return true
+    } else {
+      return false
+    }
   }
 
   async GetUsernameFromProfileId(profileID: String): Promise<any>{
