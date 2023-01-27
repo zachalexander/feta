@@ -10,6 +10,7 @@ import { Storage } from '@aws-amplify/storage';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { PassThrough } from 'stream';
 import { Capacitor } from '@capacitor/core';
+import { CachingService } from 'src/app/services/caching.service';
 
 const APP_DIRECTORY = Directory.Documents
 
@@ -45,7 +46,8 @@ export class CreateMediaModalPage {
     private router: Router,
     private mediaService: MediaService,
     private sanitizer: DomSanitizer,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private cachingService: CachingService
   ) {    
     this.postImageForm = new FormGroup({
     description: new FormControl('')
@@ -177,7 +179,6 @@ export class CreateMediaModalPage {
   async closeModal(imagepost) {
 
     let extension = this.file_name.split('.').pop()
-    console.log(extension)
 
     let date = new Date();
     let day = date.getDate();
@@ -201,14 +202,20 @@ export class CreateMediaModalPage {
     imagepost.time_posted = new Date().toISOString()
     imagepost.usernameID = usernameID
     imagepost.profileID = this.profileID
-    imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/media_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`
     
-    await this.submitToS3(`timeline-uploads/media_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob)
+    if(extension === 'mov' || extension === 'mp4' || extension === 'webm' || extension === 'ogg'){
+      imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/videos/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`
+      await this.submitToS3(`timeline-uploads/videos/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob)
+    } else {
+      imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`
+      await this.submitToS3(`timeline-uploads/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob)
+    }
+    
 
     loading.dismiss();
 
-    await this.api.CreateImagePost(imagepost).then((postImage) => {
-      // this.cachingService.clearAllCachedData();
+    await this.api.CreateImagePost(imagepost).then(() => {
+      this.cachingService.clearAllCachedData();
       this.router.navigate(['/timeline']).then(() => { window.location.reload()});
       loading.dismiss();
     })
@@ -222,7 +229,7 @@ export class CreateMediaModalPage {
   }
 
   async submitToS3(filename, blob){
-    await Storage.put(filename, blob, {contentType: "video/mp4"})
+    await Storage.put(filename, blob)
   }
 
 

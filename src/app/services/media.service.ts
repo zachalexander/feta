@@ -146,7 +146,7 @@ export class MediaService {
       // if((!posts._deleted)){
         this.mediaPosted.push({
           mediaSource: posts.s3_key,
-          isVideo: true,
+          isVideo: await this.checkForVideo(posts.s3_key),
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
           description: posts.description,
@@ -157,7 +157,7 @@ export class MediaService {
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),            
-          profilePicture: await this.convertUrlToBase64(await Storage.get(posts.profile.profilepicture.imageurl))
+          profilePicture: posts.profile.profilepicture.imageurl
         })
       // }
     }))
@@ -174,20 +174,20 @@ export class MediaService {
     }
   }
 
-  async urltoUsableMedia(url, s3Key){
+  // async urltoUsableMedia(url, s3Key){
 
-    let isVideo = await this.checkForVideo(s3Key)
+  //   let isVideo = await this.checkForVideo(s3Key)
 
-    if(isVideo){
-      const response = await fetch(`${url}`);
-      const blob = await response.blob();
-      const final_url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob))
-      return final_url;
-    } else {
-      return await this.convertUrlToBase64(url)
-    }
+  //   if(isVideo){
+  //     const response = await fetch(`${url}`);
+  //     const blob = await response.blob();
+  //     const final_url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob))
+  //     return final_url;
+  //   } else {
+  //     return await this.convertUrlToBase64(url)
+  //   }
 
-  }
+  // }
 
 
   async convertUrlToBase64(url){
