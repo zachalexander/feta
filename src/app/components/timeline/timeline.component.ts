@@ -140,7 +140,7 @@ export class TimelineComponent {
       const nativeElement = player.nativeElement;
       const inView = this.isElementInViewport(nativeElement);
 
-      if(inView && this.nowPlaying) {
+      if(inView) {
         this.nowPlaying = nativeElement;
         this.nowPlaying.muted = true;
         this.nowPlaying.play();
