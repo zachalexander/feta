@@ -53,11 +53,11 @@ export class ProfilePage {
     // grab the username from the url
     this.activatedRoute.params.subscribe((params) => this.urlUser = params['username']);
 
-    console.log(this.urlUser)
-
     let profileID = await this.api.GetUsernameProfile(this.urlUser)
     let profile = await this.api.GetProfile(profileID);
     this.profileData = profile;
+
+    console.log(this.profileData)
 
     // get the url username profile data
     this.urlUserProfile = profile;
@@ -85,9 +85,11 @@ export class ProfilePage {
     if(userData){
       // sort photos by time posted
       userData[0] = await this.sortByDate(userData[0]);
+
+      console.log(userData[0])
   
       // get actual photo url from storage
-      userData[0] = await this.mediaService.getPhotoUrlsKey(userData[0])
+      // userData[0] = await this.mediaService.getPhotoUrlsKey(userData[0])
   
       // save profile data to object to render
       this.profileImageData = userData[0];
@@ -95,14 +97,14 @@ export class ProfilePage {
     }
 
 
-    let profilePhotoCall = await new Promise((resolve, reject) => {
-      resolve(this.getProfilePicture(this.urlUserProfile.id));
-    }).catch((error) => 'something went wrong')
+    // let profilePhotoCall = await new Promise((resolve, reject) => {
+    //   resolve(this.getProfilePicture(this.urlUserProfile.id));
+    // }).catch((error) => 'something went wrong')
 
-    this.profileData.profilePictureUrl = profilePhotoCall !== 'something went wrong'? profilePhotoCall: null
+    // this.profileData.profilePictureUrl = profilePhotoCall !== 'something went wrong'? profilePhotoCall: null
 
-    if(this.profileData.profilePictureUrl){
-      this.profilePhoto = this.profileData.profilePictureUrl;
+    if(this.profileData.profilepictureID){
+      this.profilePhoto = this.profileData.profilepicture.imageurl;
     } else {
       this.profilePhoto = false;
     }

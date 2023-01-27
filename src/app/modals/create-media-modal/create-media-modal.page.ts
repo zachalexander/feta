@@ -203,7 +203,7 @@ export class CreateMediaModalPage {
     imagepost.usernameID = usernameID
     imagepost.profileID = this.profileID
     
-    if(extension === 'mov' || extension === 'mp4' || extension === 'webm' || extension === 'ogg'){
+    if(extension === 'mov' || extension === 'mp4' || extension === 'webm' || extension === 'ogg' || extension === 'MOV'){
       imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/videos/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`
       await this.submitToS3(`timeline-uploads/videos/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob)
     } else {

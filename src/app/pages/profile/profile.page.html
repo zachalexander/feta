@@ -70,7 +70,7 @@
     <ion-grid class="postedphotos" *ngIf="!noPhotosYet">
       <ion-row class="postedphotos_row">
         <ion-col *ngFor="let image of profileImageData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-          <div class="square" *ngIf="!image.deleted" style="background-image: url({{image.url}})">
+          <div class="square" *ngIf="!image.deleted" style="background-image: url({{image.s3_key}})">
           </div>
         </ion-col>
       </ion-row>
