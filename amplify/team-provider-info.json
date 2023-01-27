@@ -16,7 +16,11 @@
         "feta": {}
       },
       "storage": {
-        "feta": {}
+        "feta": {},
+        "fetabe6b35e5": {
+          "bucketName": "feta-storage142441-dev",
+          "region": "us-east-1"
+        }
       },
       "api": {
         "feta": {}

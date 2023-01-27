@@ -29,12 +29,6 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { Drivers } from '@ionic/storage';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 
-import { VgCoreModule } from '@videogular/ngx-videogular/core';
-import { VgControlsModule } from '@videogular/ngx-videogular/controls';
-import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
-import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
-
-
 Amplify.configure(awsconfig);
 
 @NgModule({
@@ -59,11 +53,7 @@ Amplify.configure(awsconfig);
     ImageCropperModule,
     IonicStorageModule.forRoot({
       driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB]
-    }),
-    VgCoreModule,
-    VgControlsModule,
-    VgOverlayPlayModule,
-    VgBufferingModule
+    })
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

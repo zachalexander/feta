@@ -12,12 +12,6 @@ import { TimelineRoutingModule } from './timeline-routing.module';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 import { Storage } from '@ionic/storage-angular';
 
-import { VgCoreModule } from '@videogular/ngx-videogular/core';
-import { VgControlsModule } from '@videogular/ngx-videogular/controls';
-import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
-import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
-
-
 @NgModule({
   imports: [
     IonicModule,
@@ -25,11 +19,7 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     FormsModule,
     HomeComponentModule,
     TimelineRoutingModule,
-    SwiperModule,
-    VgCoreModule,
-    VgControlsModule,
-    VgOverlayPlayModule,
-    VgBufferingModule
+    SwiperModule
   ],
   declarations: [TimelinePage, TimelineComponent, TimelineLikeButtonComponent],
   providers: [PreviewAnyFile, Storage]
