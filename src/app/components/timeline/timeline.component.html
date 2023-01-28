@@ -55,9 +55,10 @@
               </ng-template>
             </swiper>
             <div class="video-container" *ngIf="image.isVideo">
-              <video #timelineVideo type="video/mp4" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" class="video-playing" preload="auto" playsinline muted></video>
-              <video #timelineVideo *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" class="video-playing" preload="auto" muted playsinline>
+              <video width="100%" #timelineVideo type="video/mp4" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" class="video-playing" preload="auto" playsinline muted></video>
+              <video width="100%" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" class="video-playing" preload="auto" muted playsinline>
                 <source [src]="image.mediaSource" type="video/mp4">
+                <source [src]="image.mediaSource" type="video/webm">
               </video>
             </div>
             <ion-list lines="none" mode= "md">

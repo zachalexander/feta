@@ -207,7 +207,7 @@ export class CreateMediaModalPage {
       imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/videos/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`
       await this.submitToS3(`timeline-uploads/videos/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob)
     } else {
-      imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`
+      imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/feta-photos/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`
       await this.submitToS3(`timeline-uploads/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob)
     }
     
