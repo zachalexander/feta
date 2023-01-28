@@ -12,6 +12,10 @@ import { TimelineRoutingModule } from './timeline-routing.module';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 import { Storage } from '@ionic/storage-angular';
 
+import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
+import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
+import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
+
 @NgModule({
   imports: [
     IonicModule,
@@ -21,7 +25,7 @@ import { Storage } from '@ionic/storage-angular';
     TimelineRoutingModule,
     SwiperModule
   ],
-  declarations: [TimelinePage, TimelineComponent, TimelineLikeButtonComponent],
+  declarations: [TimelinePage, TimelineComponent, TimelineLikeButtonComponent, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix],
   providers: [PreviewAnyFile, Storage]
 })
 export class TimelinePageModule {}

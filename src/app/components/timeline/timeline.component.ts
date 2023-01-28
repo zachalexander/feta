@@ -25,8 +25,9 @@ import { Auth } from '@aws-amplify/auth';
 
 import { finalize } from 'rxjs/operators';
 
-// import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
-// import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
+import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
+import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
+import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
 
 import SwiperCore, { Zoom, EffectFade } from 'swiper';
 // import { toast } from 'aws-amplify';
@@ -39,8 +40,8 @@ SwiperCore.use([Zoom, EffectFade]);
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
-  encapsulation: ViewEncapsulation.None
-  // providers: [DateAsAgoPipe, DateAsAgoShortPipe]
+  encapsulation: ViewEncapsulation.None,
+  providers: [DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix]
 })
 
 // interface cachedData {
