@@ -87,7 +87,7 @@
             <!-- shows the post description and the user that posted the image -->
             <ion-card-content class="ion-no-padding" lines="none" class="image-description">
               <strong class="username-description" routerLink="/profile/{{image.username}}">{{image.username}}</strong> {{image.description}}
-              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} ({{image.time_posted | dateAsAgo}})</small></ion-card-subtitle>
+              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} | {{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
             </ion-card-content>
 
           </ion-card-header>
@@ -109,7 +109,7 @@
   </ion-grid>
 
   <ion-fab color="dark" (click)="scrollToTop()" class="arrow-up-outline" slot="fixed" horizontal="end" vertical="bottom">
-    <ion-fab-button color="transparent" class="cycle-up-button">
+    <ion-fab-button color="light" class="cycle-up-button">
       <ion-icon name="arrow-up-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

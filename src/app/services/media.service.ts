@@ -161,7 +161,7 @@ export class MediaService {
         })
       } else {
         this.mediaPosted.push({
-          mediaSource: posts.s3_key,
+          mediaSource: posts.s3_key + "?tr=w-500",
           isVideo: false,
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
