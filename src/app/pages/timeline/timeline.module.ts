@@ -16,6 +16,8 @@ import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
 import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
 import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
 
+import {ImagekitioAngularModule} from 'imagekitio-angular'
+
 @NgModule({
   imports: [
     IonicModule,
@@ -23,7 +25,8 @@ import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
     FormsModule,
     HomeComponentModule,
     TimelineRoutingModule,
-    SwiperModule
+    SwiperModule,
+    ImagekitioAngularModule.forRoot({ publicKey: "public_v0ZRYzV4lOI5If5qxln+o4rYx3k=", urlEndpoint: "https://ik.imagekit.io/bkf4g8lrl" })
   ],
   declarations: [TimelineComponent, TimelinePage, TimelineLikeButtonComponent, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix],
   providers: [PreviewAnyFile, Storage],

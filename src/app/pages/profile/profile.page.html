@@ -9,7 +9,7 @@
 
 <ion-content [fullscreen]="true">
   <div class="profile-info">
-    <div *ngIf="!editAccess" class="top-of-profile">
+    <div *ngIf="!editAccess" class="top-of-profile-edit">
       <div class="left-top-profile">
         <ion-avatar *ngIf="!profilePhoto">
           <img src="../../../assets/avatar.svg">
@@ -17,15 +17,22 @@
         <ion-avatar *ngIf="profilePhoto">
           <img [src]="profilePhoto">
         </ion-avatar>
-        <small class="username-header">{{profileData.username}}</small>
       </div>
-      <div class="right-top-profile">
-        <div class="stats-div">
-          <p class="stats-count"><strong>{{photosPostedCount}}</strong></p> 
-          <p class="stats-count"><strong>{{videosPostedCount}}</strong></p>
+      <div class="right-top-profile-wrapper">
+        <div class="right-top-profile">
+          <div class="stats-div">
+            <p class="stats-count"><strong>{{photosPostedCount}}</strong></p>
+            <div>
+              <p class="stats-text">photo posts</p>
+            </div>
+          </div>
+          <div class="stats-div">
+            <p class="stats-count"><strong>{{videosPostedCount}}</strong></p>
+            <div>
+              <p class="stats-text">video posts</p>
+            </div>
+          </div>
         </div>
-        <!-- <h5 style="font-size: 0.95em">photo posts</h5> -->
-        <h5 style="font-size: 0.95em"><strong>{{profileData.username}}</strong> is {{profileData.relation}}</h5>
       </div>
     </div>
     <div *ngIf="editAccess" class="top-of-profile-edit">
@@ -36,7 +43,6 @@
         <ion-avatar *ngIf="profilePhoto">
           <img [src]="profilePhoto">
         </ion-avatar>
-        <small class="username-header">{{profileData.username}}</small>
       </div>
       <div class="right-top-profile-wrapper">
         <div class="right-top-profile">
@@ -52,11 +58,11 @@
       </div>
     </div>
     <div class="bio">
-      <p class="bio-text">Data Engineer at the Center for Justice Innovation. Married to Katie Friedman. I live and work in New York.</p>
+      <p class="bio-text"><strong class="username">{{profileData.username}}</strong> is Data Engineer at the Center for Justice Innovation. Married to Katie Friedman. I live and work in New York.</p>
     </div>
-    
     <ion-chip *ngIf="editAccess" color="medium" class="edit-profile-button" expand="full" (click)="updateProfile()">Edit Profile</ion-chip>
-    <ion-toolbar>
+  
+    <ion-toolbar mode="ios">
     <ion-segment [(ngModel)]="select_buttons" (ionChange)="buttonClicked($event)">
       <ion-segment-button value="photo-uploads" checked>
         <ion-icon name="camera"></ion-icon>

@@ -29,6 +29,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { Drivers } from '@ionic/storage';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 
+import {ImagekitioAngularModule} from 'imagekitio-angular';
+
 Amplify.configure(awsconfig);
 
 @NgModule({
@@ -53,7 +55,8 @@ Amplify.configure(awsconfig);
     ImageCropperModule,
     IonicStorageModule.forRoot({
       driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB]
-    })
+    }),
+    ImagekitioAngularModule.forRoot({publicKey:"public_v0ZRYzV4lOI5If5qxln+o4rYx3k=", urlEndpoint: "https://ik.imagekit.io/bkf4g8lrl"})
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

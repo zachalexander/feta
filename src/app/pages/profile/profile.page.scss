@@ -99,16 +99,17 @@ ion-icon {
     }
 
     .left-top-profile {
-        flex: 45;
+        flex: 50;
     }
 
     .right-top-profile-wrapper {
-        flex: 55;
+        flex: 50;
     
         .right-top-profile{
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;
+            max-width: 150px;
         }
 
     }
@@ -138,7 +139,16 @@ ion-icon {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 1em;
+    padding: 1em 1em 1em 1em;
+    max-width: 500px;
+    margin: auto;
+
+    .bio-text {
+        
+        .username {
+            font-size: 1.20em;
+        }
+    }
 
     p {
         font-size: 0.75em;
@@ -217,7 +227,7 @@ ion-icon {
     max-width: 200px;
     display: flex;
     justify-content: center;
-    margin: 1.5em auto 1em auto;
+    margin: -0.5em auto 1.5em auto;
     height: 2em;
     font-weight: 600;
     color: black;

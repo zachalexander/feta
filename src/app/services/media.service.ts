@@ -143,10 +143,10 @@ export class MediaService {
 
     this.mediaPosted = [];
     await Promise.all(array.map(async posts => {
-      // if((!posts._deleted)){
+      if(await this.checkForVideo(posts.s3_key)){
         this.mediaPosted.push({
-          mediaSource: posts.s3_key,
-          isVideo: await this.checkForVideo(posts.s3_key),
+          mediaSource: posts.s3_key + "?tr=w-500,h-600#t=0.1",
+          isVideo: true,
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
           description: posts.description,
@@ -159,7 +159,23 @@ export class MediaService {
           userLiked: await this.getLikeData(posts.likes, currentUser),            
           profilePicture: posts.profile.profilepicture.imageurl
         })
-      // }
+      } else {
+        this.mediaPosted.push({
+          mediaSource: posts.s3_key,
+          isVideo: false,
+          time_posted: new Date(posts.time_posted),
+          usernameID: posts.usernameID,
+          description: posts.description,
+          id: posts.id,
+          imagesID: posts.imagesID,
+          likes: posts.likes,
+          // comment_count: await this.commentLength(posts.comments),
+          like_count: await this.getLikeCount(posts.likes),
+          username: posts.username.username,
+          userLiked: await this.getLikeData(posts.likes, currentUser),
+          profilePicture: posts.profile.profilepicture.imageurl
+        })
+      }
     }))
     this.mediaPosted = this.sortByDate(this.mediaPosted)
     return [this.mediaPosted, this.mediaPosted.length]

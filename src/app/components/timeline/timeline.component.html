@@ -50,13 +50,13 @@
             <swiper *ngIf="!image.isVideo" class="mySwiper" effect="fade" [zoom]="true">
               <ng-template swiperSlide>
                 <div class="swiper-zoom-container">
-                  <img *ngIf="!image.isVideo" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSource" loading="lazy" width="100vw" height="400"/>
+                  <img *ngIf="!image.isVideo" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSource" loading="lazy" width="100vw"/>
                 </div>
               </ng-template>
             </swiper>
             <div class="video-container" *ngIf="image.isVideo">
-              <video width="100%" #timelineVideo type="video/mp4" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" class="video-playing" preload="auto" playsinline muted></video>
-              <video width="100%" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" class="video-playing" preload="auto" muted playsinline>
+              <video width="100%" #timelineVideo type="video/mp4" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" class="video-playing" preload="auto" playsinline></video>
+              <video width="100%" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" class="video-playing" preload="auto" playsinline>
                 <source [src]="image.mediaSource" type="video/mp4">
                 <source [src]="image.mediaSource" type="video/webm">
               </video>
@@ -87,7 +87,7 @@
             <!-- shows the post description and the user that posted the image -->
             <ion-card-content class="ion-no-padding" lines="none" class="image-description">
               <strong class="username-description" routerLink="/profile/{{image.username}}">{{image.username}}</strong> {{image.description}}
-              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} at {{image.time_posted | date: 'h:mm a'}} | {{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
+              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} ({{image.time_posted | dateAsAgo}})</small></ion-card-subtitle>
             </ion-card-content>
 
           </ion-card-header>
