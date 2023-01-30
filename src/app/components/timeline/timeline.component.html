@@ -1,7 +1,7 @@
 
 
 <!-- pull and refresh option at top -->
-<ion-content [scrollEvents]="true" (ionScroll)="didScroll()" id="wall-content" lines="none" #container>
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="didScroll()" id="wall-content" lines="none" #container>
 
   <ion-refresher lines="none" slot="fixed" (ionRefresh)="refreshData($event)">
     <ion-refresher-content
@@ -24,7 +24,7 @@
     <ion-row lines="none" class="ion-padding-vertical">
 
       <!-- start of iterating through images -->
-      <ion-col lines="none" *ngFor="let image of data;" size-lg="12" size-md="12" size-sm="12" size-xs="12" class="ion-padding-vertical">
+      <ion-col lines="none" *ngFor="let image of data" size-lg="12" size-md="12" size-sm="12" size-xs="12" class="ion-padding-vertical" trackBy:trackItems>
 
         <!-- filter out any posts that were deleted -->
         <ion-card lines="none" *ngIf="image.postDeleted !== true">

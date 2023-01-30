@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/internal/operators/finalize';
 import { AddPhotoComponent } from 'src/app/components/add-photo/add-photo.component';
 import { MediaService } from 'src/app/services/media.service';
 import { CachingService } from 'src/app/services/caching.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-timeline-page',
@@ -88,17 +89,19 @@ export class TimelinePage implements OnInit {
   constructor(
     private modalController: ModalController,
     private mediaService: MediaService,
-    public cachingService: CachingService
+    public cachingService: CachingService,
+    public platform: Platform
   ) {
     this.timelineData;
     this.timelineDataLength;
-    console.log(this.timelineData)
   }
 
   async ngOnInit(){
 
     const cachedData = await this.cachingService.getCachedRequest("family-timeline?={0,n}")
     console.log('cached data: ', cachedData)
+
+    console.log(await this.platform.platforms())
 
     if (!cachedData) {
       this.cachedDataAvailable = false;
@@ -124,6 +127,7 @@ export class TimelinePage implements OnInit {
     })
     return await modal.present();
   }
+
 
   async getMedia(){
     return await this.mediaService.getTimelineData();

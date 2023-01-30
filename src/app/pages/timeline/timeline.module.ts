@@ -25,7 +25,8 @@ import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
     TimelineRoutingModule,
     SwiperModule
   ],
-  declarations: [TimelinePage, TimelineComponent, TimelineLikeButtonComponent, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix],
-  providers: [PreviewAnyFile, Storage]
+  declarations: [TimelineComponent, TimelinePage, TimelineLikeButtonComponent, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix],
+  providers: [PreviewAnyFile, Storage],
+  exports: [TimelineComponent]
 })
 export class TimelinePageModule {}

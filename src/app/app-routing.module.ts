@@ -18,11 +18,6 @@ const routes: Routes = [
     path: '',
     canActivate: [AuthguardGuard],
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
-  },
-  {
-    path: 'profile-picture',
-    canActivate: [AuthguardGuard],
-    component: ProfilePicturePage
   }
 ];
 @NgModule({

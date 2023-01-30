@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, ViewEncapsulation, Injectable, QueryList, ViewChildren} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList, ViewChildren, OnChanges} from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { TimelinePageModule } from 'src/app/pages/timeline/timeline.module';
 import { ModalController, Platform } from '@ionic/angular';
 // import { PhotoService } from '../../services/photo.service';
 import { MediaService } from 'src/app/services/media.service';
@@ -40,7 +42,6 @@ SwiperCore.use([Zoom, EffectFade]);
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   providers: [DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix]
 })
 
@@ -150,7 +151,24 @@ export class TimelineComponent {
     })
   }
 
-  async ngOnInit() {
+  async ngOnChanges() {
+
+    this.currentUserUsernameID = localStorage.getItem('usernameID')
+    this.browser = localStorage.getItem('User-browser')
+
+    // if (this.platform.is('hybrid')) {
+
+    //   this.platform.resume.subscribe(async (event) => {
+    //     document.location.reload();
+    //     // await this.refreshData(event);
+    //     this.startSubscriptions();
+    //   })
+    // }
+
+    this.currentUserUsername = await localStorage.getItem('username');
+    this.currentUserUsernameID = await localStorage.getItem('usernameID');
+
+    this.startSubscriptions();
 
     // await Network.addListener('networkStatusChange', async status => {
     //   console.log(status.connected)
@@ -177,23 +195,6 @@ export class TimelineComponent {
 
   async ngAfterViewInit() {
     this.didScroll();
-  
-    this.currentUserUsernameID = localStorage.getItem('usernameID')
-    this.browser = localStorage.getItem('User-browser')
-
-    // if (this.platform.is('hybrid')) {
-
-    //   this.platform.resume.subscribe(async (event) => {
-    //     document.location.reload();
-    //     // await this.refreshData(event);
-    //     this.startSubscriptions();
-    //   })
-    // }
-
-    this.currentUserUsername = await localStorage.getItem('username');
-    this.currentUserUsernameID = await localStorage.getItem('usernameID');
-
-    this.startSubscriptions();
   }
 
   async ngOnDestroy() {
