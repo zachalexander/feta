@@ -77,6 +77,9 @@ export class TimelineComponent {
 
   nowPlaying = null;
   videoOver = false;
+  muted = true;
+  replay = false;
+  pause;
   
   onCreateImageSubscription: Subscription | null = null;
   onUpdateImageSubscription: Subscription | null = null;
@@ -134,6 +137,8 @@ export class TimelineComponent {
     else if(this.nowPlaying && !this.isElementInViewport(this.nowPlaying)){
       this.nowPlaying.pause();
       this.nowPlaying = null;
+      this.pause = true;
+      this.replay = false;
     }
 
     this.videos.forEach(player => {
@@ -145,10 +150,62 @@ export class TimelineComponent {
       if(inView) {
         this.nowPlaying = nativeElement;
         this.nowPlaying.muted = true;
+        this.pause = false;
+        this.muted = true;
+        this.replay = false;
         this.nowPlaying.play();
         this.videoOver = false;
       }
     })
+  }
+
+  videoEnd(){
+    this.replay = true;
+    this.pause = true;
+  }
+
+  replayVideo(){
+    if(this.nowPlaying){
+      this.nowPlaying.play();
+      this.nowPlaying.muted = false;
+      this.muted = false;
+      this.replay = false;
+      this.pause = false;
+    }
+  }
+
+  pauseVideo(){
+    if(this.nowPlaying){
+      this.nowPlaying.pause();
+      this.nowPlaying.muted = true;
+      this.replay = false;
+      this.muted = true;
+      this.pause = true;
+    }
+  }
+
+  playVideo(){
+    if(this.nowPlaying){
+      this.nowPlaying.play();
+      this.nowPlaying.muted = false;
+      this.replay = false;
+      this.muted = false;
+      this.pause = false;
+    }
+  }
+
+  unmuteClicked(event){
+    if(this.nowPlaying){
+      this.nowPlaying.muted = false;
+      this.muted = false;
+    }
+  }
+
+  muteClicked(event){
+    if(this.nowPlaying){
+      this.nowPlaying.muted = true;
+      this.muted = true;
+    }
   }
 
   async ngOnChanges() {

@@ -54,12 +54,23 @@
                 </div>
               </ng-template>
             </swiper>
-            <div class="video-container" *ngIf="image.isVideo">
-              <video width="100%" #timelineVideo type="video/mp4" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" class="video-playing" preload="auto" playsinline></video>
-              <video width="100%" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" class="video-playing" preload="auto" playsinline>
+            <div id="video-container" *ngIf="image.isVideo">
+              <video (ended)="videoEnd()" class="video_{{image.id}}" width="100%" #timelineVideo type="video/mp4" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video>
+              <video (ended)="videoEnd()" class="video_{{image.id}}" width="100%" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" preload="auto" playsinline>
                 <source [src]="image.mediaSource" type="video/mp4">
                 <source [src]="image.mediaSource" type="video/webm">
               </video>
+              <div id="volume-controls">
+                <ion-icon *ngIf="muted" name="volume-mute" large (click)="unmuteClicked($event)"></ion-icon>
+                <ion-icon *ngIf="!muted" name="volume-high" large (click)="muteClicked($event)"></ion-icon>
+              </div>
+              <div *ngIf="replay" id="replay-controls">
+                <p *ngIf="replay" (click)="replayVideo()">Replay video <ion-icon name="refresh-outline" large></ion-icon></p>
+              </div>
+              <div id="play-controls">
+                <ion-icon *ngIf="!pause" name="pause" large (click)="pauseVideo()"></ion-icon>
+                <ion-icon *ngIf="pause" name="play" large (click)="playVideo()"></ion-icon>
+              </div>
             </div>
             <ion-list lines="none" mode= "md">
               <ion-tab-bar lines="none" id="interaction_{{image.imagesID}}" class="interactions-photos">
