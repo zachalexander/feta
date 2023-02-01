@@ -18,12 +18,6 @@ export type AmplifyDependentResourcesAttributes = {
             "CreatedSNSRole": "string"
         }
     },
-    "storage": {
-        "fetavideouploads": {
-            "BucketName": "string",
-            "Region": "string"
-        }
-    },
     "video": {
         "fetadevvodservice": {
             "oVODInputS3": "string",

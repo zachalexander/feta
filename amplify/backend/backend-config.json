@@ -83,11 +83,6 @@
       "providerPlugin": "awscloudformation",
       "service": "S3",
       "serviceType": "imported"
-    },
-    "fetavideouploads": {
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "S3"
     }
   },
   "video": {
