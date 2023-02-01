@@ -98,11 +98,10 @@
     <ion-grid class="postedvideos" *ngIf="!noVideosYet && videosClicked">
       <ion-row class="postedvideos_row">
         <ion-col *ngFor="let video of profileMediaData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-          <div class="square">
-            <video width="100%" height="100px" #timelineVideo type="video/mp4" *ngIf="(browser === 'chrome')" [src]="video.s3_key" class="video-playing" preload="auto" playsinline muted></video>
-            <video width="100%" height="100px" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other')" class="video-playing" preload="auto" muted playsinline>
-              <source [src]="video.s3_key" type="video/mp4">
-            </video>
+          <div id="video-wrapper" class="square" *ngIf="!video.deleted" style="background-image: url({{video.posterImage}})">
+            <div id="play-controls">
+              <ion-icon name="play" large></ion-icon>
+            </div>
           </div>
         </ion-col>
       </ion-row>

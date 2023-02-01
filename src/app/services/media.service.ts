@@ -151,7 +151,6 @@ export class MediaService {
           usernameID: posts.usernameID,
           description: posts.description,
           id: posts.id,
-          imagesID: posts.imagesID,
           likes: posts.likes,
           // comment_count: await this.commentLength(posts.comments),
           like_count: await this.getLikeCount(posts.likes),
@@ -167,7 +166,6 @@ export class MediaService {
           usernameID: posts.usernameID,
           description: posts.description,
           id: posts.id,
-          imagesID: posts.imagesID,
           likes: posts.likes,
           // comment_count: await this.commentLength(posts.comments),
           like_count: await this.getLikeCount(posts.likes),
@@ -178,6 +176,7 @@ export class MediaService {
       }
     }))
     this.mediaPosted = this.sortByDate(this.mediaPosted)
+    console.log(this.mediaPosted)
     return [this.mediaPosted, this.mediaPosted.length]
   }
 

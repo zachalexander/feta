@@ -64,8 +64,6 @@ export class ProfilePage {
     let profile = await this.api.GetProfile(profileID);
     this.profileData = profile;
 
-    console.log(this.profileData)
-
     // get the url username profile data
     this.urlUserProfile = profile;
 

@@ -206,6 +206,7 @@ export class CreateMediaModalPage {
     if(extension === 'mov' || extension === 'mp4' || extension === 'webm' || extension === 'ogg' || extension === 'MOV'){
       const video = true;
       imagepost.s3_key = `video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.m3u8`
+      imagepost.posterImage = `poster-images/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}_0Poster-Images.0000000.jpg`
       await this.submitToS3(`video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`, this.blob, video, extension)
     } else {
       const video = false;

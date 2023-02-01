@@ -61,7 +61,7 @@
                 <source [src]="image.mediaSource" type="video/webm">
                 <source [src]="image.mediaSource" type="application/x-mpegURL">
               </video> -->
-              <vg-player>
+              <vg-player width="100%">
                 <video width="100%" (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="singleVideo" preload="auto" [playsInline]="true" vg-native-fullscreen="false">
                   <source [vgHls]="image.mediaSource" type="application/x-mpegURL">
                 </video>

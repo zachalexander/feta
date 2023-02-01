@@ -18,6 +18,7 @@ query GetProfilePicture($id: ID!) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -119,6 +120,7 @@ query GetProfile($id: ID!) {
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }
@@ -135,6 +137,7 @@ query GetProfile($id: ID!) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -206,6 +209,7 @@ query ListProfiles(
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -257,6 +261,7 @@ query GetImagePost($id: ID!) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -294,6 +299,7 @@ query GetImagePost($id: ID!) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -322,6 +328,7 @@ query GetImagePost($id: ID!) {
       profileImagePostsId
     }
     s3_key
+    posterImage
     createdAt
     updatedAt
   }
@@ -363,6 +370,7 @@ query ListImagePosts(
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }
@@ -434,6 +442,7 @@ query GetUsername($id: ID!) {
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }
@@ -452,6 +461,7 @@ query GetUsername($id: ID!) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -504,6 +514,7 @@ query ListUsernames(
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -557,6 +568,7 @@ query ProfilesByProfilepictureID(
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -632,6 +644,7 @@ query ImagePostsByUsernameID(
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }
@@ -683,6 +696,7 @@ query ImagePostsByProfileID(
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }

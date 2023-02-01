@@ -96,7 +96,7 @@ export class CreateProfileModalPage implements OnInit{
 
     let newUsername = await this.api.GetUsernameDataFromProfileId(newProfile.id)
 
-    await this.api.UpdateProfile({id: newUsername.profileID, _version: newProfile._version, usernameID: newUsername.id}).then(() => {
+    await this.api.UpdateProfile({id: newUsername.profileID, usernameID: newUsername.id}).then(() => {
       this.router.navigate(['/home']).then(() => { window.location.reload()});
     })
   }
