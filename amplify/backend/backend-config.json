@@ -67,14 +67,34 @@
           "resourceName": "fetabe6b35e5"
         }
       ]
+    },
+    "AMPLIFY_video_fetadevvodservice_s3UUID": {
+      "usedBy": [
+        {
+          "category": "video",
+          "resourceName": "fetadevvodservice"
+        }
+      ]
     }
   },
   "storage": {
     "fetabe6b35e5": {
-      "service": "S3",
-      "serviceType": "imported",
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
-      "dependsOn": []
+      "service": "S3",
+      "serviceType": "imported"
+    },
+    "fetavideouploads": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
+    }
+  },
+  "video": {
+    "fetadevvodservice": {
+      "providerPlugin": "awscloudformation",
+      "service": "video",
+      "serviceType": "video-on-demand"
     }
   }
 }

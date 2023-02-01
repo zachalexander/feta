@@ -145,7 +145,7 @@ export class MediaService {
     await Promise.all(array.map(async posts => {
       if(await this.checkForVideo(posts.s3_key)){
         this.mediaPosted.push({
-          mediaSource: posts.s3_key + "?tr=w-500,h-600#t=0.1",
+          mediaSource: await Storage.get(posts.s3_key, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
           isVideo: true,
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
@@ -161,7 +161,7 @@ export class MediaService {
         })
       } else {
         this.mediaPosted.push({
-          mediaSource: posts.s3_key + "?tr=w-500",
+          mediaSource: posts.s3_key,
           isVideo: false,
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
@@ -183,7 +183,7 @@ export class MediaService {
 
   async checkForVideo(filename){
     let extension = filename.split('.').pop().toLowerCase()
-    if(extension === 'mov' || extension === 'mp4' || extension === 'ogg' || extension === 'webm'){
+    if(extension === 'mov' || extension === 'mp4' || extension === 'ogg' || extension === 'webm' || extension === 'm3u8'){
       return true
     } else {
       return false

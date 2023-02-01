@@ -194,14 +194,14 @@ export class TimelineComponent {
     }
   }
 
-  unmuteClicked(event){
+  unmuteClicked(){
     if(this.nowPlaying){
       this.nowPlaying.muted = false;
       this.muted = false;
     }
   }
 
-  muteClicked(event){
+  muteClicked(){
     if(this.nowPlaying){
       this.nowPlaying.muted = true;
       this.muted = true;
@@ -248,6 +248,8 @@ export class TimelineComponent {
 
 
   }
+
+
 
 
   async ngAfterViewInit() {

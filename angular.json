@@ -64,10 +64,13 @@
               }
             ],
             "styles": [
+              "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
               "src/theme/variables.scss", 
               "src/global.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/hls.js/dist/hls.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -147,6 +150,7 @@
               }
             ],
             "styles": [
+              "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
               "src/theme/variables.scss", 
               "src/global.scss"
             ],

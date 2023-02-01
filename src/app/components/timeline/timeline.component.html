@@ -55,14 +55,20 @@
               </ng-template>
             </swiper>
             <div id="video-container" *ngIf="image.isVideo">
-              <video (ended)="videoEnd()" class="video_{{image.id}}" width="100%" #timelineVideo type="video/mp4" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video>
+              <!-- <video (ended)="videoEnd()" class="video_{{image.id}}" type="application/x-mpegURL" width="100%" #timelineVideo type="video/m3u8" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video>
               <video (ended)="videoEnd()" class="video_{{image.id}}" width="100%" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" preload="auto" playsinline>
                 <source [src]="image.mediaSource" type="video/mp4">
                 <source [src]="image.mediaSource" type="video/webm">
-              </video>
+                <source [src]="image.mediaSource" type="application/x-mpegURL">
+              </video> -->
+              <vg-player>
+                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="singleVideo" preload="auto">
+                  <source [vgHls]="image.mediaSource" type="application/x-mpegURL">
+                </video>
+              </vg-player>
               <div id="volume-controls">
-                <ion-icon *ngIf="muted" name="volume-mute" large (click)="unmuteClicked($event)"></ion-icon>
-                <ion-icon *ngIf="!muted" name="volume-high" large (click)="muteClicked($event)"></ion-icon>
+                <ion-icon *ngIf="muted" name="volume-mute" large (click)="unmuteClicked()"></ion-icon>
+                <ion-icon *ngIf="!muted" name="volume-high" large (click)="muteClicked()"></ion-icon>
               </div>
               <div *ngIf="replay" id="replay-controls">
                 <p *ngIf="replay" (click)="replayVideo()">Replay video <ion-icon name="refresh-outline" large></ion-icon></p>

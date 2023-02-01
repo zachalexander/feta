@@ -204,11 +204,13 @@ export class CreateMediaModalPage {
     imagepost.profileID = this.profileID
     
     if(extension === 'mov' || extension === 'mp4' || extension === 'webm' || extension === 'ogg' || extension === 'MOV'){
-      imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/videos/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`
-      await this.submitToS3(`timeline-uploads/videos/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob)
+      const video = true;
+      imagepost.s3_key = `video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.m3u8`
+      await this.submitToS3(`video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob, video)
     } else {
+      const video = false;
       imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/feta-photos/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`
-      await this.submitToS3(`timeline-uploads/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob)
+      await this.submitToS3(`timeline-uploads/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension}`, this.blob, video)
     }
     
 
@@ -228,8 +230,15 @@ export class CreateMediaModalPage {
     });
   }
 
-  async submitToS3(filename, blob){
-    await Storage.put(filename, blob)
+  async submitToS3(filename, blob, isVideo){
+
+    if(isVideo){
+      await Storage.put(filename, blob, {
+        bucket: "fetadevvodservice-dev-input-nk0sepbg"
+      })
+    } else {
+      await Storage.put(filename, blob, {contentType: "image/jpeg"})
+    }
   }
 
 

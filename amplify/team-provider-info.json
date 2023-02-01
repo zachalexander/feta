@@ -24,6 +24,11 @@
       },
       "api": {
         "feta": {}
+      },
+      "video": {
+        "fetadevvodservice": {
+          "s3UUID": "nk0sepbg"
+        }
       }
     }
   }
