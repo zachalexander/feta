@@ -55,14 +55,12 @@
               </ng-template>
             </swiper>
             <div id="video-container" *ngIf="image.isVideo">
-              <!-- <video (ended)="videoEnd()" class="video_{{image.id}}" type="application/x-mpegURL" width="100%" #timelineVideo type="video/m3u8" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video>
-              <video (ended)="videoEnd()" class="video_{{image.id}}" width="100%" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" preload="auto" playsinline>
-                <source [src]="image.mediaSource" type="video/mp4">
-                <source [src]="image.mediaSource" type="video/webm">
+              <!-- <video (ended)="videoEnd()" class="video_{{image.id}}" type="application/x-mpegURL" width="100%" #timelineVideo type="video/m3u8" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video> -->
+              <!-- <video width="100vw" height="500px" (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" preload="auto" playsinline>
                 <source [src]="image.mediaSource" type="application/x-mpegURL">
               </video> -->
-              <vg-player width="100%">
-                <video width="100%" (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="singleVideo" preload="auto" [playsInline]="true" vg-native-fullscreen="false">
+              <vg-player>
+                <video width="100vw" (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="singleVideo" preload="auto" [playsInline]="true" vg-native-fullscreen="false">
                   <source [vgHls]="image.mediaSource" type="application/x-mpegURL">
                 </video>
               </vg-player>
