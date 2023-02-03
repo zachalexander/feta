@@ -24,7 +24,7 @@
     <ion-row lines="none" class="ion-padding-vertical">
 
       <!-- start of iterating through images -->
-      <ion-col lines="none" *ngFor="let image of data" size-lg="12" size-md="12" size-sm="12" size-xs="12" class="ion-padding-vertical" trackBy:trackItems>
+      <ion-col lines="none" *ngFor="let image of data" size="12" size-lg="12" size-md="12" size-sm="12" size-xs="12" trackBy:trackItems>
 
         <!-- filter out any posts that were deleted -->
         <ion-card lines="none" *ngIf="image.postDeleted !== true">
@@ -56,11 +56,11 @@
             </swiper>
             <div id="video-container" *ngIf="image.isVideo">
               <!-- <video (ended)="videoEnd()" class="video_{{image.id}}" type="application/x-mpegURL" width="100%" #timelineVideo type="video/m3u8" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video> -->
-              <!-- <video width="100vw" height="500px" (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="(browser === 'safari' || browser === 'other') && image.isVideo" preload="auto" playsinline>
+              <video width="1920" height="1080" style="width: 100%; height: 100%; object-position: top left; transform-origin: top left;" poster="{{image.imagePoster}}" (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="(browser === 'other') && image.isVideo" preload="auto" playsinline>
                 <source [src]="image.mediaSource" type="application/x-mpegURL">
-              </video> -->
-              <vg-player>
-                <video width="100vw" (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="singleVideo" preload="auto" [playsInline]="true" vg-native-fullscreen="false">
+              </video>
+              <vg-player *ngIf="(browser === 'chrome' || browser === 'safari')">
+                <video poster="{{image.imagePoster}}" (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="multipleVideos" preload="auto" playsinline webkit-playsinline="webkit-playsinline">
                   <source [vgHls]="image.mediaSource" type="application/x-mpegURL">
                 </video>
               </vg-player>

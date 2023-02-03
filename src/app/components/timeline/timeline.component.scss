@@ -5,30 +5,50 @@ img {
     height: auto;
 }
 
-video {
-    width: 100%;
-    height: 500px;
-    position: relative;
-    object-fit: cover !important;
-}
-
-video:before {
-    background: rgba(0, 0, 0, 0.5); /* You can use here image */
-    width: 100%;
-    height: 500px;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-fit: cover !important;
-    border: none !important;
-}
-
 #video-container {
-    width: 100%;
     position: relative;
+    width: 100%;
+    height: auto;
     border: none !important;
+    overflow: hidden;
+
+    vg-player video {
+        object-fit: cover;
+        margin: 0;
+        padding: 0;
+        // width: 100vw;
+        height: 500px;
+    }
+    
+    // video {
+    //     // width: 100vw;
+    //     height: 500px;
+    //     position: relative;
+    //     object-fit: cover;
+    //     width: 100vw;
+    //     // width: 177.77777778vh;
+    //     // min-width: 100%;
+    //     margin: 0;
+    //     padding: 0;
+    // }
+    
+    // video:before {
+    //     // background: rgba(0, 0, 0, 0.5); /* You can use here image */
+    //     // width: 100vw;
+    //     // height: 500px;
+    //     content: '';
+    //     position: absolute;
+    //     margin: 0;
+    //     padding: 0;
+    //     // top: 0;
+    //     // left: 0;
+    //     // object-fit: cover !important;
+    //     // border: none !important;
+    
+    // }
 }
+
+
 
 #volume-controls {
     position: absolute;
@@ -101,6 +121,7 @@ ion-grid {
 ion-col {
     padding: 0 !important;
     margin: 0 !important;
+    background: none !important;
 }
 
 ion-row {
