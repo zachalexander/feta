@@ -64,7 +64,7 @@ SwiperCore.use([Zoom, EffectFade]);
 
 // }
 
-export class TimelineComponent implements OnInit {
+export class TimelineComponent {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRefresher) ionRefresher: IonRefresher;
@@ -252,53 +252,15 @@ export class TimelineComponent implements OnInit {
 
   }
 
-  resizeVideo(){
-    const VIDEO_WIDTH_PX = 1920.0;
-    const VIDEO_HEIGHT_PX = 1080.0;
-
-    document.addEventListener("DOMContentLoaded", () => {
-      new ResizeObserver(function () {
-        var element = document.getElementById("timelineVideo");
-
-        var scale;
-        var transX, transY;
-        if (element.clientWidth / element.clientHeight > VIDEO_WIDTH_PX / VIDEO_HEIGHT_PX) {
-          // Screen is wide, so video capped on height.
-          let height = element.clientHeight;
-          let width = (VIDEO_WIDTH_PX / VIDEO_HEIGHT_PX) * height;
-          scale = element.clientWidth / width;
-
-          transY = (-(scale - 1) * height * 0.5) / scale;
-          transX = 0.0;
-        } else {
-          let width = element.clientWidth;
-          let height = (VIDEO_HEIGHT_PX / VIDEO_WIDTH_PX) * width;
-          scale = element.clientHeight / height;
-
-          console.log(scale)
-
-          transY = 0.0;
-          transX = (-(scale - 1) * width * 0.5) / scale;
-        }
-
-        element.style.transformOrigin = "top left";
-        element.style.transform = "scale(" + scale + ") translate(" + transX + "px, " + transY + "px)";
-      }).observe(document.getElementById("timelineVideo"));
-    })
-  }
-
-  async ngOnInit(){
-    this.resizeVideo();
-  }
 
 
   async ngAfterViewInit() {
     // this.videos.forEach(video => {
     //   video.nativeElement.width = '177.77777778vh'
     // })
-    this.videos.forEach(video => {
-      video.nativeElement.width = '100vw';
-    })
+    // this.videos.forEach(video => {
+    //   video.nativeElement.width = '100vw';
+    // })
     this.didScroll();
     this.startSubscriptions();
   }

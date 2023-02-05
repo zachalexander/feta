@@ -74,11 +74,13 @@
           },
           "configurations": {
             "production": {
+              "sourceMap": true,
+              "optimization": false,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -154,7 +156,9 @@
               "src/theme/variables.scss", 
               "src/global.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/hls.js/dist/hls.min.js"
+            ]
           },
           "configurations": {
             "ci": {
