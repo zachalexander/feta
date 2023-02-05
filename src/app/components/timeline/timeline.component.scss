@@ -12,44 +12,42 @@
 #video-container {
     position: relative;
     width: 100%;
-    height: auto;
+    height: 500px;
     border: none !important;
-    overflow: hidden;
 
     vg-player video {
         object-fit: cover;
         margin: 0;
         padding: 0;
-        // width: 100vw;
-        height: 500px;
+        width: 100vw;
+        // height: 500px;
+        height: auto;
     }
     
-    video, object {
-        // width: 100vw;
-        height: 500px;
+    video {
+        width: 100vw;
+        // height: 500px;
         // position: relative;
         object-fit: cover;
-        width: 100vw;
-        // width: 177.77777778vh;
-        // min-width: 100%;
         margin: 0;
         padding: 0;
+        height: auto;
     }
     
-    video:before {
-        // background: rgba(0, 0, 0, 0.5); /* You can use here image */
-        // width: 100vw;
-        // height: 500px;
-        content: '';
-        position: absolute;
-        margin: 0;
-        padding: 0;
-        // top: 0;
-        // left: 0;
-        // object-fit: cover !important;
-        // border: none !important;
+    // video:before {
+    //     // background: rgba(0, 0, 0, 0.5); /* You can use here image */
+    //     // width: 100vw;
+    //     // height: 500px;
+    //     content: '';
+    //     position: absolute;
+    //     margin: 0;
+    //     padding: 0;
+    //     // top: 0;
+    //     // left: 0;
+    //     object-fit: cover !important;
+    //     // border: none !important;
     
-    }
+    // }
 }
 
 
