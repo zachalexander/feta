@@ -143,6 +143,12 @@ export class TimelineComponent {
       this.replay = false;
     }
 
+    const videos = document.querySelectorAll('video');
+    for (let i = 0; i < videos.length; i++) {
+      videos[i].style.objectFit = "cover";
+    }
+
+
     this.videos.forEach(player => {
       if(this.nowPlaying) return;
 
@@ -151,7 +157,6 @@ export class TimelineComponent {
 
       if(inView) {
         this.nowPlaying = nativeElement;
-        // this.nowPlaying.style.width = '100%';
         this.nowPlaying.muted = true;
         this.pause = false;
         this.muted = true;
@@ -190,8 +195,8 @@ export class TimelineComponent {
 
   playVideo(){
     if(this.nowPlaying){
-      this.nowPlaying.play();
       this.nowPlaying.muted = false;
+      this.nowPlaying.play();
       this.replay = false;
       this.muted = false;
       this.pause = false;
@@ -252,15 +257,17 @@ export class TimelineComponent {
 
   }
 
+  async ngOnInit(){
+
+    const elems = document.querySelectorAll("video, audio")
+
+    elems.forEach(() => {
+      console.log(elems)
+    })
+  }
 
 
   async ngAfterViewInit() {
-    // this.videos.forEach(video => {
-    //   video.nativeElement.width = '177.77777778vh'
-    // })
-    // this.videos.forEach(video => {
-    //   video.nativeElement.width = '100vw';
-    // })
     this.didScroll();
     this.startSubscriptions();
   }

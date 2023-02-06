@@ -56,7 +56,7 @@
             </swiper>
             <div id="video-container" *ngIf="image.isVideo">
               <!-- <video (ended)="videoEnd()" class="video_{{image.id}}" type="application/x-mpegURL" width="100%" #timelineVideo type="video/m3u8" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video> -->
-              <video poster="{{image.imagePoster}}" (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="(browser === 'other') && image.isVideo" preload="auto" playsinline>
+              <video poster="{{image.imagePoster}}" (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="(browser === 'other') && image.isVideo" preload="none" playsinline webkit-playsinline="webkit-playsinline">
                 <source [src]="image.mediaSource" type="application/x-mpegURL">
               </video>
               <vg-player *ngIf="(browser === 'chrome' || browser === 'safari')">
