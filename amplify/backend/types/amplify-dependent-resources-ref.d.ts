@@ -17,11 +17,5 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientID": "string",
             "CreatedSNSRole": "string"
         }
-    },
-    "storage": {
-        "feta": {
-            "BucketName": "string",
-            "Region": "string"
-        }
     }
 }

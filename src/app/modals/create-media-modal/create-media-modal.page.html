@@ -2,12 +2,16 @@
   <ion-content>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start" (click)="backToWall()" class="cancel">&nbsp;&nbsp;Cancel</ion-buttons>
+        <ion-buttons slot="start" (click)="backToTimeline()" class="cancel">&nbsp;&nbsp;Cancel</ion-buttons>
         <ion-title>Finish your post</ion-title>
         <ion-buttons slot="end" (click)="closeModal(postImageForm.value)" class="update">Post&nbsp;&nbsp;</ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <img class="photo-taken" [src]="src">
+    <img *ngIf="isImage" class="photo-taken" [src]="src">
+    <video *ngIf="browser === 'chrome' && !isImage" [src]="src" class="video-div" width="100%" height="100%" autoplay="autoplay" controls="true" preload="metadata" muted playsinline></video>
+    <video *ngIf="browser === 'safari' || browser === 'other' && !isImage" class="video-div" width="100%" height="100%" autoplay="autoplay" controls="true" preload="metadata" muted playsinline>
+      <source [src]="src" type="video/mp4">
+    </video>
     <form [formGroup]="postImageForm" (ngSubmit)="closeModal(postImageForm.value)">
       <ion-grid>
         <ion-row>

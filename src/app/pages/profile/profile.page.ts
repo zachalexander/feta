@@ -27,9 +27,15 @@ export class ProfilePage {
   button_actions: string = "photos"
   select_buttons: string = "photo-uploads";
   photosPostedCount: number;
+  videosPostedCount: number;
   profileData: any = {};
-  profileImageData: Array<any> = new Array();
+  profileMediaData: Array<any> = new Array();
   noPhotosYet;
+  noVideosYet;
+  browser;
+
+  videosClicked = false;
+  photosClicked = true;
 
   constructor(
     private api: APIService,
@@ -49,11 +55,10 @@ export class ProfilePage {
 
     loading.present();
 
+    this.browser = localStorage.getItem('User-browser')
     
     // grab the username from the url
     this.activatedRoute.params.subscribe((params) => this.urlUser = params['username']);
-
-    console.log(this.urlUser)
 
     let profileID = await this.api.GetUsernameProfile(this.urlUser)
     let profile = await this.api.GetProfile(profileID);
@@ -71,38 +76,48 @@ export class ProfilePage {
     }
 
     // find all (non-deleted) pictures user has posted on the family wall
-    let userData: any = await this.api.getUserProfileImageData(this.urlUserProfile.id).then(data => data);
+    this.userData = await this.api.getUserProfileMediaData(this.urlUserProfile.id).then(data => data);
 
     // find number of photos posted by zach or katie
-    this.photosPostedCount = userData[1];
-   
+    this.photosPostedCount = this.userData[1];
+    this.videosPostedCount = this.userData[3];
+  
     if(this.photosPostedCount == 0){
       this.noPhotosYet = true;
     } else {
       this.noPhotosYet = false;
     }
 
-    if(userData){
+    if(this.videosPostedCount == 0){
+      this.noVideosYet = true;
+    } else {
+      this.noVideosYet = false;
+    }
+
+
+    if(this.userData){
       // sort photos by time posted
-      userData[0] = await this.sortByDate(userData[0]);
+      this.userData[0] = await this.sortByDate(this.userData[0]);
+
+      console.log(this.userData)
   
       // get actual photo url from storage
-      userData[0] = await this.mediaService.getPhotoUrlsKey(userData[0])
+      // userData[0] = await this.mediaService.getPhotoUrlsKey(userData[0])
   
       // save profile data to object to render
-      this.profileImageData = userData[0];
+      this.profileMediaData = this.userData[0];
       this.profileData.username = await this.api.GetUsernameFromProfileId(this.profileData.id).then(async username => username);
     }
 
 
-    let profilePhotoCall = await new Promise((resolve, reject) => {
-      resolve(this.getProfilePicture(this.urlUserProfile.id));
-    }).catch((error) => 'something went wrong')
+    // let profilePhotoCall = await new Promise((resolve, reject) => {
+    //   resolve(this.getProfilePicture(this.urlUserProfile.id));
+    // }).catch((error) => 'something went wrong')
 
-    this.profileData.profilePictureUrl = profilePhotoCall !== 'something went wrong'? profilePhotoCall: null
+    // this.profileData.profilePictureUrl = profilePhotoCall !== 'something went wrong'? profilePhotoCall: null
 
-    if(this.profileData.profilePictureUrl){
-      this.profilePhoto = this.profileData.profilePictureUrl;
+    if(this.profileData.profilepictureID){
+      this.profilePhoto = this.profileData.profilepicture.imageurl;
     } else {
       this.profilePhoto = false;
     }
@@ -111,6 +126,19 @@ export class ProfilePage {
       loading.dismiss();
     }, 2000)
 
+  }
+
+  buttonClicked(event){
+    if(event.detail.value === 'video-uploads'){
+      this.videosClicked = true;
+      this.photosClicked = false;
+      this.profileMediaData = this.userData[2]
+      console.log(this.profileMediaData)
+    } else {
+      this.photosClicked = true;
+      this.videosClicked = false;
+      this.profileMediaData = this.userData[0]
+    }
   }
 
   async updateProfile(){

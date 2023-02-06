@@ -142,7 +142,6 @@ export class ProfilePicturePage {
     try {
       let profileID = localStorage.getItem('profileID')
       let profilepictureID = await (await this.api.GetProfile(profileID)).profilepictureID
-      let profileversion = await (await this.api.GetProfile(profileID))._version
 
       if(!profilepictureID){
 
@@ -163,7 +162,7 @@ export class ProfilePicturePage {
           console.log(profilepictureID)
           
           const updateProfile = new Promise(resolve => {
-            resolve(this.api.UpdateProfile({id: profileID, profilepictureID: profilepictureID, _version: profileversion}))
+            resolve(this.api.UpdateProfile({id: profileID, profilepictureID: profilepictureID}))
           })
 
           updateProfile.then(() => {

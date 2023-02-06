@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { APIService } from "../../API.service";
 import { FormControl, FormGroup } from '@angular/forms';
@@ -7,6 +7,12 @@ import { MediaService } from 'src/app/services/media.service';
 import { DomSanitizer} from '@angular/platform-browser';
 import { LoadingController } from '@ionic/angular';
 import { Storage } from '@aws-amplify/storage';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { PassThrough } from 'stream';
+import { Capacitor } from '@capacitor/core';
+import { CachingService } from 'src/app/services/caching.service';
+
+const APP_DIRECTORY = Directory.Documents
 
 @Component({
   selector: 'app-create-media-modal',
@@ -23,6 +29,15 @@ export class CreateMediaModalPage {
   profileID: any;
   usernameID: any;
   postImageForm = {} as FormGroup;
+  folderContent = [];
+  currentFolder = '';
+  path;
+  file_name;
+  blob;
+  isImage = false;
+  encoder: any;
+  
+  browser: any;
 
   constructor(
     private modalController: ModalController,
@@ -31,12 +46,13 @@ export class CreateMediaModalPage {
     private router: Router,
     private mediaService: MediaService,
     private sanitizer: DomSanitizer,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private cachingService: CachingService
   ) {    
     this.postImageForm = new FormGroup({
     description: new FormControl('')
-    }
-  );
+    });
+
   }
 
   get f(){
@@ -52,16 +68,18 @@ export class CreateMediaModalPage {
 
     loading.present();
 
+    this.browser = localStorage.getItem('User-browser')
     let profile = await this.api.GetProfile(localStorage.getItem('profileID'));
 
     this.profileID = profile.id;
     this.usernameID = profile.usernameID;
 
+    await this.loadMediaFromStorage().then(() => loading.dismiss())
 
-    await this.addPhotoToGallery().then(() => loading.dismiss())
+    
   }
 
-  async addPhotoToGallery() {
+  async loadMediaFromStorage() {
     const loading = await this.loadingController.create({
       spinner: 'lines-sharp-small',
       translucent: false,
@@ -69,13 +87,106 @@ export class CreateMediaModalPage {
     });
 
     loading.present();
-    let src = localStorage.getItem('blob-string')
-    let image = this.sanitizer.bypassSecurityTrustUrl(src)
-    this.src = image;
-    loading.dismiss();
+
+    const file = await Filesystem.readFile({
+      directory: APP_DIRECTORY,
+      path: this.path
+    })
+
+    this.blob = this.b64toBlob(file.data)
+
+    if(this.path.substring(this.path.length - 3) === 'mp4' ||
+      this.path.substring(this.path.length - 3) === 'mov' ||
+      this.path.substring(this.path.length - 3) === 'ogg' ||
+      this.path.substring(this.path.length - 3) === 'ebM'){
+
+        if (Capacitor.getPlatform() === "web"){
+    
+          let blobUrl = URL.createObjectURL(this.blob) as any;
+          blobUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl)
+          this.src = blobUrl;
+          loading.dismiss();
+    
+        } else {
+    
+          const file_uri = await Filesystem.getUri({
+            path: this.path,
+            directory: APP_DIRECTORY
+          })
+    
+          this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
+          loading.dismiss();
+        }
+      } else {
+        this.isImage = true;
+
+        if (Capacitor.getPlatform() === "web") {
+
+          let blobUrl = URL.createObjectURL(this.blob) as any;
+          blobUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl)
+          this.src = blobUrl;
+          loading.dismiss();
+
+        } else {
+
+          const file_uri = await Filesystem.getUri({
+            path: this.path,
+            directory: APP_DIRECTORY
+          })
+
+          this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
+          loading.dismiss();
+        }
+
+      }
+
   }
 
+  b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
+
+  // async convertUrlToBase64(url) {
+  //   const response = await fetch(`${url}`);
+  //   const blob = await response.blob();
+
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader;
+  //     reader.onerror = reject;
+  //     reader.onload = () => {
+  //       resolve(reader.result);
+  //     };
+  //     reader.readAsDataURL(blob);
+  //   })
+  // }
+
   async closeModal(imagepost) {
+
+    let extension = this.file_name.split('.').pop()
+
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let hour = date.getHours();
+    let mins = date.getMinutes();
+    let secs = date.getSeconds();
 
     const loading = await this.loadingController.create({
       spinner: 'lines-sharp-small',
@@ -91,26 +202,45 @@ export class CreateMediaModalPage {
     imagepost.time_posted = new Date().toISOString()
     imagepost.usernameID = usernameID
     imagepost.profileID = this.profileID
-    imagepost.s3_key = localStorage.getItem('filename-string')
+    
+    if(extension === 'mov' || extension === 'mp4' || extension === 'webm' || extension === 'ogg' || extension === 'MOV'){
+      const video = true;
+      imagepost.s3_key = `video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.m3u8`
+      imagepost.posterImage = `poster-images/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}Poster-Images.0000000.jpg`
+      await this.submitToS3(`video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`, this.blob, video, extension)
+    } else {
+      const video = false;
+      imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/feta-photos/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`
+      await this.submitToS3(`timeline-uploads/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`, this.blob, video, extension)
+    }
+    
 
-    const blob = await fetch(localStorage.getItem('blob-string')).then(r => r.blob())
+    loading.dismiss();
 
-    await this.submitToS3(localStorage.getItem('filename-string'), blob)
-
-    await this.api.CreateImagePost(imagepost).then((postImage) => {
-      // this.cachingService.clearAllCachedData();
+    await this.api.CreateImagePost(imagepost).then(() => {
+      this.cachingService.clearAllCachedData();
       this.router.navigate(['/timeline']).then(() => { window.location.reload()});
       loading.dismiss();
     })
     
   }
 
-  backToWall(){
-    this.loadingController.dismiss();
+  backToTimeline(){
+    this.modalController.dismiss({
+      'dismissed': true
+    });
   }
 
-  async submitToS3(filename, blob){
-    await Storage.put(filename, blob, {contentType: "image/jpeg"})
+  async submitToS3(filename, blob, isVideo, extension){
+
+    if(isVideo){
+      await Storage.put(filename, blob, {
+        contentType: "video/" + extension,
+        bucket: "fetadevvodservice-dev-input-nk0sepbg"
+      })
+    } else {
+      await Storage.put(filename, blob, {contentType: "image/jpeg"})
+    }
   }
 
 

@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, ViewEncapsulation, Injectable} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList, ViewChildren, OnChanges} from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { TimelinePageModule } from 'src/app/pages/timeline/timeline.module';
 import { ModalController, Platform } from '@ionic/angular';
 // import { PhotoService } from '../../services/photo.service';
 import { MediaService } from 'src/app/services/media.service';
@@ -25,8 +27,9 @@ import { Auth } from '@aws-amplify/auth';
 
 import { finalize } from 'rxjs/operators';
 
-// import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
-// import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
+import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
+import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
+import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
 
 import SwiperCore, { Zoom, EffectFade } from 'swiper';
 // import { toast } from 'aws-amplify';
@@ -39,8 +42,7 @@ SwiperCore.use([Zoom, EffectFade]);
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
-  encapsulation: ViewEncapsulation.None
-  // providers: [DateAsAgoPipe, DateAsAgoShortPipe]
+  providers: [DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix]
 })
 
 // interface cachedData {
@@ -70,6 +72,15 @@ export class TimelineComponent {
   @ViewChild('slides') slides: IonItemSliding;
   @Input('data') data = [];
   @Input('datalength') datalength: Number;
+  @ViewChildren('timelineVideo') videos: QueryList<any>
+
+
+  nowPlaying = null;
+  videoOver = false;
+  muted = true;
+  replay = false;
+  pause;
+  videoStyle;
   
   onCreateImageSubscription: Subscription | null = null;
   onUpdateImageSubscription: Subscription | null = null;
@@ -79,6 +90,7 @@ export class TimelineComponent {
   alreadyLiked: boolean;
   loaded: boolean;
   profileSearch: boolean;
+  browser: any;
 
   dataReturned: any;
   wallListLength: any;
@@ -105,15 +117,123 @@ export class TimelineComponent {
     private platform: Platform,
     private loadingController: LoadingController,
     private mediaService: MediaService
-  ) {}
+  ) {
+  }
 
   functionGetCognitoUserId(){
     return Auth.currentUserInfo().then(user => user.id);
   }
 
-  async ngOnInit() {
+  isElementInViewport(element){
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    )
+  }
+
+  didScroll(){
+    if(this.nowPlaying && this.isElementInViewport(this.nowPlaying)) return;
+    else if(this.nowPlaying && !this.isElementInViewport(this.nowPlaying)){
+      this.nowPlaying.pause();
+      this.nowPlaying = null;
+      this.pause = true;
+      this.replay = false;
+    }
+
+    const videos = document.querySelectorAll('video');
+    for (let i = 0; i < videos.length; i++) {
+      videos[i].style.objectFit = "cover";
+    }
+
+
+    this.videos.forEach(player => {
+      if(this.nowPlaying) return;
+
+      const nativeElement = player.nativeElement;
+      const inView = this.isElementInViewport(nativeElement);
+
+      if(inView) {
+        this.nowPlaying = nativeElement;
+        this.nowPlaying.muted = true;
+        this.pause = false;
+        this.muted = true;
+        this.replay = false;
+        this.nowPlaying.play();
+        this.videoOver = false;
+      }
+    })
+  }
+
+
+  videoEnd(){
+    this.replay = true;
+    this.pause = true;
+  }
+
+  replayVideo(){
+    if(this.nowPlaying){
+      this.nowPlaying.play();
+      this.nowPlaying.muted = false;
+      this.muted = false;
+      this.replay = false;
+      this.pause = false;
+    }
+  }
+
+  pauseVideo(){
+    if(this.nowPlaying){
+      this.nowPlaying.pause();
+      this.nowPlaying.muted = true;
+      this.replay = false;
+      this.muted = true;
+      this.pause = true;
+    }
+  }
+
+  playVideo(){
+    if(this.nowPlaying){
+      this.nowPlaying.muted = false;
+      this.nowPlaying.play();
+      this.replay = false;
+      this.muted = false;
+      this.pause = false;
+    }
+  }
+
+  unmuteClicked(){
+    if(this.nowPlaying){
+      this.nowPlaying.muted = false;
+      this.muted = false;
+    }
+  }
+
+  muteClicked(){
+    if(this.nowPlaying){
+      this.nowPlaying.muted = true;
+      this.muted = true;
+    }
+  }
+
+  async ngOnChanges() {
 
     this.currentUserUsernameID = localStorage.getItem('usernameID')
+    this.browser = localStorage.getItem('User-browser')
+
+    // if (this.platform.is('hybrid')) {
+
+    //   this.platform.resume.subscribe(async (event) => {
+    //     document.location.reload();
+    //     // await this.refreshData(event);
+    //     this.startSubscriptions();
+    //   })
+    // }
+
+    this.currentUserUsername = await localStorage.getItem('username');
+    this.currentUserUsernameID = await localStorage.getItem('usernameID');
+
 
     // await Network.addListener('networkStatusChange', async status => {
     //   console.log(status.connected)
@@ -134,26 +254,22 @@ export class TimelineComponent {
     //   }
     // });
 
-    if(this.platform.is('hybrid')){
-  
-      this.platform.resume.subscribe(async(event) => {
-        document.location.reload();
-        // await this.refreshData(event);
-        this.startSubscriptions();
-      })
-    }
 
-    this.currentUserUsername = await localStorage.getItem('username');
-    this.currentUserUsernameID = await localStorage.getItem('usernameID');
+  }
 
+  async ngOnInit(){
+
+    const elems = document.querySelectorAll("video, audio")
+
+    elems.forEach(() => {
+      console.log(elems)
+    })
+  }
+
+
+  async ngAfterViewInit() {
+    this.didScroll();
     this.startSubscriptions();
-
-    if(this.data){
-      this.loaded = true;
-    }
-
-
-    this.scrollFinished = true;
   }
 
   async ngOnDestroy() {

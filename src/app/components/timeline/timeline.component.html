@@ -1,12 +1,7 @@
 
 
-<!-- loading spinner -->
-<!-- <div *ngIf="!loaded" class="loading-centered">
-  <ion-spinner name="lines-small"></ion-spinner>
-</div> -->
-
 <!-- pull and refresh option at top -->
-<ion-content id="wall-content" lines="none" #container>
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="didScroll()" id="wall-content" lines="none" #container>
 
   <ion-refresher lines="none" slot="fixed" (ionRefresh)="refreshData($event)">
     <ion-refresher-content
@@ -29,7 +24,7 @@
     <ion-row lines="none" class="ion-padding-vertical">
 
       <!-- start of iterating through images -->
-      <ion-col lines="none" *ngFor="let image of data;" size-lg="12" size-md="12" size-sm="12" size-xs="12" class="ion-padding-vertical">
+      <ion-col lines="none" *ngFor="let image of data" size="12" size-lg="12" size-md="12" size-sm="12" size-xs="12" trackBy:trackItems>
 
         <!-- filter out any posts that were deleted -->
         <ion-card lines="none" *ngIf="image.postDeleted !== true">
@@ -52,13 +47,35 @@
 
           <!-- locate the image url and assign a unique id per post -->
           <ion-card-header lines="none">
-            <swiper class="mySwiper" effect="fade" [zoom]="true">
+            <swiper *ngIf="!image.isVideo" class="mySwiper" effect="fade" [zoom]="true">
               <ng-template swiperSlide>
                 <div class="swiper-zoom-container">
-                  <img id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.url" loading="lazy" width="100vw" height="400"/>
+                  <img *ngIf="!image.isVideo" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSource" loading="lazy"/>
                 </div>
               </ng-template>
             </swiper>
+            <div id="video-container" *ngIf="image.isVideo">
+              <!-- <video (ended)="videoEnd()" class="video_{{image.id}}" type="application/x-mpegURL" width="100%" #timelineVideo type="video/m3u8" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video> -->
+              <video poster="{{image.imagePoster}}" (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="(browser === 'other') && image.isVideo" preload="none" playsinline webkit-playsinline="webkit-playsinline">
+                <source [src]="image.mediaSource" type="application/x-mpegURL">
+              </video>
+              <vg-player *ngIf="(browser === 'chrome' || browser === 'safari')">
+                <video poster="{{image.imagePoster}}" (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="multipleVideos" preload="auto" playsinline webkit-playsinline="webkit-playsinline">
+                  <source [vgHls]="image.mediaSource" type="application/x-mpegURL">
+                </video>
+              </vg-player>
+              <div id="volume-controls">
+                <ion-icon *ngIf="muted" name="volume-mute" large (click)="unmuteClicked()"></ion-icon>
+                <ion-icon *ngIf="!muted" name="volume-high" large (click)="muteClicked()"></ion-icon>
+              </div>
+              <div *ngIf="replay" id="replay-controls">
+                <p *ngIf="replay" (click)="replayVideo()">Replay video <ion-icon name="refresh-outline" large></ion-icon></p>
+              </div>
+              <div id="play-controls">
+                <ion-icon *ngIf="!pause" name="pause" large (click)="pauseVideo()"></ion-icon>
+                <ion-icon *ngIf="pause" name="play" large (click)="playVideo()"></ion-icon>
+              </div>
+            </div>
             <ion-list lines="none" mode= "md">
               <ion-tab-bar lines="none" id="interaction_{{image.imagesID}}" class="interactions-photos">
 
@@ -85,7 +102,7 @@
             <!-- shows the post description and the user that posted the image -->
             <ion-card-content class="ion-no-padding" lines="none" class="image-description">
               <strong class="username-description" routerLink="/profile/{{image.username}}">{{image.username}}</strong> {{image.description}}
-              <!-- <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | dateAsAgo}}</small></ion-card-subtitle> -->
+              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} | {{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
             </ion-card-content>
 
           </ion-card-header>
@@ -107,7 +124,7 @@
   </ion-grid>
 
   <ion-fab color="dark" (click)="scrollToTop()" class="arrow-up-outline" slot="fixed" horizontal="end" vertical="bottom">
-    <ion-fab-button color="transparent" class="cycle-up-button">
+    <ion-fab-button color="light" class="cycle-up-button">
       <ion-icon name="arrow-up-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

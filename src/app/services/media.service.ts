@@ -5,6 +5,10 @@ import { Auth } from '@aws-amplify/auth';
 import { Router } from '@angular/router';
 import { APIService } from "../API.service";
 import API, { graphqlOperation} from "@aws-amplify/api-graphql";
+import { DomSanitizer } from '@angular/platform-browser';
+import { CachingService } from './caching.service';
+import { from, Observable, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +20,9 @@ export class MediaService {
   mediaPosted;
 
   constructor(
-    private api: APIService
+    private api: APIService,
+    private sanitizer: DomSanitizer,
+    public cachingService: CachingService
   ) { }
 
   async getPhotoUrl(key){
@@ -67,6 +73,46 @@ export class MediaService {
     }
   }
 
+
+
+
+
+
+  getTimelineData(): Observable<any> {
+    let currentUser = localStorage.getItem('usernameID');
+    let url = 'family-timeline';
+
+    return this.getData(url, currentUser).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  private getData(url, currentUser): Observable<any> {
+    url = `${url}?={0,n}`
+    const storedValue = from(this.cachingService.getCachedRequest(url));
+    return storedValue.pipe(
+      switchMap(result => {
+        if (!result) {
+          console.log('full api call')
+          return this.callAndCache(url, currentUser);
+        } else {
+          console.log('cached result')
+          return of(result);
+        }
+      })
+    )
+  }
+
+  private callAndCache(url, currentUser): Observable<any> {
+    return from(this.getDataFromGraphQL(currentUser)).pipe(
+      tap(res => {
+        this.cachingService.cacheRequests(url, res);
+      })
+    )
+  }
+
   async getDataFromGraphQL(currentUser){
     const statement = `query MyQuery {
       listImagePosts {
@@ -97,26 +143,67 @@ export class MediaService {
 
     this.mediaPosted = [];
     await Promise.all(array.map(async posts => {
-      // if((!posts._deleted)){
+      if(await this.checkForVideo(posts.s3_key)){
         this.mediaPosted.push({
-          url: await this.convertUrlToBase64(await Storage.get(posts.s3_key)),
+          mediaSource: await Storage.get(posts.s3_key, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
+          isVideo: true,
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
           description: posts.description,
           id: posts.id,
-          imagesID: posts.imagesID,
           likes: posts.likes,
           // comment_count: await this.commentLength(posts.comments),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),            
-          profilePicture: await this.convertUrlToBase64(await Storage.get(posts.profile.profilepicture.imageurl))
+          profilePicture: posts.profile.profilepicture.imageurl
         })
-      // }
+      } else {
+        this.mediaPosted.push({
+          mediaSource: posts.s3_key,
+          isVideo: false,
+          time_posted: new Date(posts.time_posted),
+          usernameID: posts.usernameID,
+          description: posts.description,
+          id: posts.id,
+          likes: posts.likes,
+          // comment_count: await this.commentLength(posts.comments),
+          like_count: await this.getLikeCount(posts.likes),
+          username: posts.username.username,
+          userLiked: await this.getLikeData(posts.likes, currentUser),
+          profilePicture: posts.profile.profilepicture.imageurl
+        })
+      }
     }))
     this.mediaPosted = this.sortByDate(this.mediaPosted)
+    console.log(this.mediaPosted)
     return [this.mediaPosted, this.mediaPosted.length]
   }
+
+  async checkForVideo(filename){
+    let extension = filename.split('.').pop().toLowerCase()
+    if(extension === 'mov' || extension === 'mp4' || extension === 'ogg' || extension === 'webm' || extension === 'm3u8'){
+      return true
+    } else {
+      return false
+    }
+  }
+
+  // async urltoUsableMedia(url, s3Key){
+
+  //   let isVideo = await this.checkForVideo(s3Key)
+
+  //   if(isVideo){
+  //     const response = await fetch(`${url}`);
+  //     const blob = await response.blob();
+  //     const final_url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob))
+  //     return final_url;
+  //   } else {
+  //     return await this.convertUrlToBase64(url)
+  //   }
+
+  // }
+
 
   async convertUrlToBase64(url){
     const response = await fetch(`${url}`);

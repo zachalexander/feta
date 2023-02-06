@@ -9,7 +9,7 @@
 
 <ion-content>
   <div *ngIf="!submitted">
-    <ion-grid class="grid-text">
+    <!-- <ion-grid class="grid-text">
       <ion-col>
         <ion-row class="button-row">
           <div class="photo-add-div">
@@ -20,8 +20,22 @@
           </div>
         </ion-row>
       </ion-col>
-    </ion-grid>
+    </ion-grid> -->
+    <input hidden type="file" #filepicker (change)="fileSelected($event)" />
+  
+    <ion-fab vertical="center" horizontal="center" slot="fixed">
+      <ion-fab-button>
+        Add content<ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list>
+        <ion-fab-button (click)="addFile()">
+          <ion-icon name="document"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
   </div>
+
+
 
   <div *ngIf="submitted">
     <div class = "container"></div>

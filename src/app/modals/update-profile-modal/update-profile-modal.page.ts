@@ -85,14 +85,14 @@ export class UpdateProfileModalPage implements OnInit {
   public async onUpdate(profile: any) {
 
     let usernameData = await this.api.GetUsernameDataFromProfileId(this.currentUserProfile.id);
-    let profileVersion = await (await this.api.GetProfile(localStorage.getItem('profileID')))._version;
+    // let profileVersion = await (await this.api.GetProfile(localStorage.getItem('profileID')))._version;
 
     let updateUsername = new Promise(resolve => {
-      resolve(this.api.UpdateUsername({id: usernameData.id, username: profile.username, _version: usernameData._version}))
+      resolve(this.api.UpdateUsername({id: usernameData.id, username: profile.username}))
     })
     
     let updateProfilePromise = new Promise(resolve => {
-      resolve(updateUsername.then(() => {this.api.UpdateProfile({id: usernameData.profileID, family_name: profile.family_name, relation: profile.relation, _version: profileVersion })}))
+      resolve(updateUsername.then(() => {this.api.UpdateProfile({id: usernameData.profileID, family_name: profile.family_name, relation: profile.relation})}))
     })
 
     await localStorage.removeItem('username')

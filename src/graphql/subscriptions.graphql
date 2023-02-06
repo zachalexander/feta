@@ -20,6 +20,7 @@ subscription OnCreateProfilePicture(
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -74,6 +75,7 @@ subscription OnUpdateProfilePicture(
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -128,6 +130,7 @@ subscription OnDeleteProfilePicture(
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -199,6 +202,7 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }
@@ -215,6 +219,7 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -303,6 +308,7 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }
@@ -319,6 +325,7 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -407,6 +414,7 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }
@@ -423,6 +431,7 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -494,6 +503,7 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -531,6 +541,7 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -559,6 +570,7 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileImagePostsId
     }
     s3_key
+    posterImage
     createdAt
     updatedAt
   }
@@ -584,6 +596,7 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -621,6 +634,7 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -649,6 +663,7 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileImagePostsId
     }
     s3_key
+    posterImage
     createdAt
     updatedAt
   }
@@ -674,6 +689,7 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -711,6 +727,7 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -739,6 +756,7 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileImagePostsId
     }
     s3_key
+    posterImage
     createdAt
     updatedAt
   }
@@ -812,6 +830,7 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }
@@ -830,6 +849,7 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -899,6 +919,7 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }
@@ -917,6 +938,7 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }
@@ -986,6 +1008,7 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         profileImagePostsId
       }
       s3_key
+      posterImage
       createdAt
       updatedAt
     }
@@ -1004,6 +1027,7 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameID
         profileID
         s3_key
+        posterImage
         createdAt
         updatedAt
       }

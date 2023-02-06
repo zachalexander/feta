@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-title>
       Timeline
     </ion-title>
@@ -10,5 +10,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <!-- loading spinner -->
+    <div *ngIf="!loaded" class="loading-centered">
+      <ion-spinner name="lines-small"></ion-spinner>
+    </div>
     <app-timeline [datalength]="timelineDataLength" [data]="timelineData"></app-timeline>
 </ion-content>

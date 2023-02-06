@@ -4,6 +4,7 @@
 import { Injectable } from "@angular/core";
 import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { Observable } from "zen-observable-ts";
+import { Storage } from '@aws-amplify/storage';
 
 export interface SubscriptionResponse<T> {
   value: GraphQLResult<T>;
@@ -139,6 +140,7 @@ export type ImagePost = {
   profileID: string;
   profile?: Profile | null;
   s3_key?: string | null;
+  posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -203,7 +205,6 @@ export type UpdateProfileInput = {
   profilepictureID?: string | null;
   profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
-  _version?: number | null;
 };
 
 export type DeleteProfileInput = {
@@ -219,6 +220,7 @@ export type CreateImagePostInput = {
   usernameID: string;
   profileID: string;
   s3_key?: string | null;
+  posterImage?: string | null;
 };
 
 export type ModelImagePostConditionInput = {
@@ -229,6 +231,7 @@ export type ModelImagePostConditionInput = {
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
+  posterImage?: ModelStringInput | null;
   and?: Array<ModelImagePostConditionInput | null> | null;
   or?: Array<ModelImagePostConditionInput | null> | null;
   not?: ModelImagePostConditionInput | null;
@@ -243,6 +246,7 @@ export type UpdateImagePostInput = {
   usernameID?: string | null;
   profileID?: string | null;
   s3_key?: string | null;
+  posterImage?: string | null;
 };
 
 export type DeleteImagePostInput = {
@@ -314,7 +318,6 @@ export type UpdateUsernameInput = {
   profileID?: string | null;
   usernameImagePostsId?: string | null;
   usernameProfileId?: string | null;
-  _version?: number | null;
 };
 
 export type DeleteUsernameInput = {
@@ -367,6 +370,7 @@ export type ModelImagePostFilterInput = {
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
+  posterImage?: ModelStringInput | null;
   and?: Array<ModelImagePostFilterInput | null> | null;
   or?: Array<ModelImagePostFilterInput | null> | null;
   not?: ModelImagePostFilterInput | null;
@@ -476,6 +480,7 @@ export type ModelSubscriptionImagePostFilterInput = {
   usernameID?: ModelSubscriptionIDInput | null;
   profileID?: ModelSubscriptionIDInput | null;
   s3_key?: ModelSubscriptionStringInput | null;
+  posterImage?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionImagePostFilterInput | null> | null;
   or?: Array<ModelSubscriptionImagePostFilterInput | null> | null;
 };
@@ -519,6 +524,7 @@ export type CreateProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -575,6 +581,7 @@ export type UpdateProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -631,6 +638,7 @@ export type DeleteProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -707,6 +715,7 @@ export type CreateProfileMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -725,6 +734,7 @@ export type CreateProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -819,6 +829,7 @@ export type UpdateProfileMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -837,6 +848,7 @@ export type UpdateProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -931,6 +943,7 @@ export type DeleteProfileMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -949,6 +962,7 @@ export type DeleteProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1025,6 +1039,7 @@ export type CreateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1065,6 +1080,7 @@ export type CreateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1095,6 +1111,7 @@ export type CreateImagePostMutation = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -1122,6 +1139,7 @@ export type UpdateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1162,6 +1180,7 @@ export type UpdateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1192,6 +1211,7 @@ export type UpdateImagePostMutation = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -1219,6 +1239,7 @@ export type DeleteImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1259,6 +1280,7 @@ export type DeleteImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1289,6 +1311,7 @@ export type DeleteImagePostMutation = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -1365,6 +1388,7 @@ export type CreateUsernameMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -1385,6 +1409,7 @@ export type CreateUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1459,6 +1484,7 @@ export type UpdateUsernameMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -1479,6 +1505,7 @@ export type UpdateUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1553,6 +1580,7 @@ export type DeleteUsernameMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -1573,6 +1601,7 @@ export type DeleteUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1629,6 +1658,7 @@ export type GetProfilePictureQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1733,6 +1763,7 @@ export type GetProfileQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -1751,6 +1782,7 @@ export type GetProfileQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1802,7 +1834,6 @@ export type GetProfileQuery = {
   updatedAt: string;
   profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
-  _version?: number | null;
 };
 
 export type ListProfilesQuery = {
@@ -1824,6 +1855,7 @@ export type ListProfilesQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1857,7 +1889,6 @@ export type ListProfilesQuery = {
 };
 
 export type GetImagePostQuery = {
-  map(arg0: (test: any) => void): unknown;
   __typename: "ImagePost";
   id: string;
   description?: string | null;
@@ -1865,7 +1896,6 @@ export type GetImagePostQuery = {
   likes?: string | null;
   comments?: string | null;
   usernameID: string;
-  version: number | null;
   username?: {
     __typename: "Username";
     id: string;
@@ -1881,6 +1911,7 @@ export type GetImagePostQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1921,6 +1952,7 @@ export type GetImagePostQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1951,6 +1983,7 @@ export type GetImagePostQuery = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -1991,11 +2024,11 @@ export type ListImagePostsQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null>;
   nextToken?: string | null;
-  _deleted?: boolean | null;
 };
 
 export type GetCommentsQuery = {
@@ -2063,6 +2096,7 @@ export type GetUsernameQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -2083,6 +2117,7 @@ export type GetUsernameQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2135,6 +2170,7 @@ export type ListUsernamesQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2179,6 +2215,7 @@ export type ProfilesByProfilepictureIDQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2247,6 +2284,7 @@ export type ImagePostsByUsernameIDQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -2289,6 +2327,7 @@ export type ImagePostsByProfileIDQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -2316,6 +2355,7 @@ export type OnCreateProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2372,6 +2412,7 @@ export type OnUpdateProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2428,6 +2469,7 @@ export type OnDeleteProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2504,6 +2546,7 @@ export type OnCreateProfileSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -2522,6 +2565,7 @@ export type OnCreateProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2616,6 +2660,7 @@ export type OnUpdateProfileSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -2634,6 +2679,7 @@ export type OnUpdateProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2728,6 +2774,7 @@ export type OnDeleteProfileSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -2746,6 +2793,7 @@ export type OnDeleteProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2822,6 +2870,7 @@ export type OnCreateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2862,6 +2911,7 @@ export type OnCreateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2892,6 +2942,7 @@ export type OnCreateImagePostSubscription = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -2919,6 +2970,7 @@ export type OnUpdateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2959,6 +3011,7 @@ export type OnUpdateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2989,6 +3042,7 @@ export type OnUpdateImagePostSubscription = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -3016,6 +3070,7 @@ export type OnDeleteImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3056,6 +3111,7 @@ export type OnDeleteImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3086,6 +3142,7 @@ export type OnDeleteImagePostSubscription = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -3162,6 +3219,7 @@ export type OnCreateUsernameSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -3182,6 +3240,7 @@ export type OnCreateUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3256,6 +3315,7 @@ export type OnUpdateUsernameSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -3276,6 +3336,7 @@ export type OnUpdateUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3350,6 +3411,7 @@ export type OnDeleteUsernameSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -3370,6 +3432,7 @@ export type OnDeleteUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3405,14 +3468,15 @@ export type OnDeleteUsernameSubscription = {
   usernameProfileId?: string | null;
 };
 
+// ZACH CREATED
 export type GetUsernameDataQuery = {
   __typename: "Username";
-    id: string;
-    username: string;
-    profileID: string;
-    _version: number;
-    _lastChangedAt?: Date | null;
-    _deleted?: boolean | null;
+  id: string;
+  username: string;
+  profileID: string;
+  _version: number;
+  _lastChangedAt?: Date | null;
+  _deleted?: boolean | null;
 };
 
 @Injectable({
@@ -3420,9 +3484,47 @@ export type GetUsernameDataQuery = {
 })
 export class APIService {
 
-  async getUserProfileImageData(profileID: String): Promise<any>{
+  // ZACH CREATED
 
-    const statement = `query getUserProfileImageData($profileID: ID!) {
+  async GetUsernameProfile(username: string): Promise<any> {
+    const statement = `query getUsernameData($username: String) {
+      listUsernames(filter: {username: {eq: $username}}) {
+        items {
+          profileID
+          id
+          username
+        }
+      }
+    }`;
+    const gqlAPIServiceArguments: any = {
+      username
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return response.data.listUsernames.items[0].profileID;
+  }
+
+  async GetPostLikes(id: string): Promise<GetImagePostQuery> {
+    const statement = `query getImageLikes($id: ID!) {
+      getImagePost(id: $id) {
+        likes
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetImagePostQuery>response.data.getImagePost;
+  }
+
+
+
+  async getUserProfileMediaData(profileID: String): Promise<any> {
+
+    const statement = `query getUserProfileMediaData($profileID: ID!) {
       imagePostsByProfileID(profileID: $profileID) {
         items {
           time_posted
@@ -3431,6 +3533,7 @@ export class APIService {
           description
           likes
           id
+          posterImage
         }
       }
     }`;
@@ -3441,11 +3544,43 @@ export class APIService {
 
     const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     let array: any = response.data.imagePostsByProfileID.items;
-    return [array, array.length];
 
+    let photosPosted = [];
+    let videosPosted = [];
+    await Promise.all(array.map(async posts => {
+      if (await this.checkForVideo(posts.s3_key) === false) {
+        photosPosted.push({
+          time_posted: posts.time_posted,
+          s3_key: posts.s3_key,
+          profileID: posts.profileID,
+          description: posts.description,
+          likes: posts.likes,
+          id: posts.id
+        })
+      } else {
+        videosPosted.push({
+          time_posted: posts.time_posted,
+          posterImage: await Storage.get(posts.posterImage, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+          profileID: posts.profileID,
+          description: posts.description,
+          likes: posts.likes,
+          id: posts.id
+        })
+      }
+    }))
+    return [photosPosted, photosPosted.length, videosPosted, videosPosted.length];
   }
 
-  async GetUsernameFromProfileId(profileID: String): Promise<any>{
+  async checkForVideo(filename) {
+    let extension = filename.split('.').pop().toLowerCase()
+    if (extension === 'mov' || extension === 'mp4' || extension === 'ogg' || extension === 'webm' || extension === 'm3u8') {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  async GetUsernameFromProfileId(profileID: String): Promise<any> {
     const statement = `query getUsernameData($profileID: String) {
       listUsernames(filter: {profileID: {eq: $profileID}}) {
         items {
@@ -3464,7 +3599,7 @@ export class APIService {
     return response.data.listUsernames.items[0].username;
   }
 
-  async GetUsernameDataFromProfileId(profileID: string): Promise<GetUsernameDataQuery>{
+  async GetUsernameDataFromProfileId(profileID: string): Promise<GetUsernameDataQuery> {
     const statement = `query getUsernameData($profileID: String) {
       listUsernames(filter: {profileID: {eq: $profileID}}) {
         items {
@@ -3483,7 +3618,7 @@ export class APIService {
     return <GetUsernameDataQuery>response.data.listUsernames.items[0];
   }
 
-  async GetUserProfileFromCognitoId(cognitoID: String): Promise<any>{
+  async GetUserProfileFromCognitoId(cognitoID: String): Promise<any> {
     const statement = `query getUserProfileData($cognitoID: String) {
       listProfiles(filter: {cognitoID: {eq: $cognitoID}}) {
         items {
@@ -3508,7 +3643,7 @@ export class APIService {
     return <any>response.data.listProfiles.items[0];
   }
 
-  async GetProfilePictureProfileID(profileID: string): Promise<GetProfilePictureQuery>{
+  async GetProfilePictureProfileID(profileID: string): Promise<GetProfilePictureQuery> {
     const statement = `query getProfilePictureProfileID($profileID: String) {
       listProfilePictures(filter: {profileID: {eq: $profileID}}) {
         items {
@@ -3553,6 +3688,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -3625,6 +3761,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -3697,6 +3834,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -3789,6 +3927,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -3807,6 +3946,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -3917,6 +4057,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -3935,6 +4076,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4045,6 +4187,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -4063,6 +4206,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4155,6 +4299,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4195,6 +4340,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4225,6 +4371,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
+          posterImage
           createdAt
           updatedAt
         }
@@ -4268,6 +4415,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4308,6 +4456,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4338,6 +4487,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
+          posterImage
           createdAt
           updatedAt
         }
@@ -4381,6 +4531,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4421,6 +4572,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4451,6 +4603,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
+          posterImage
           createdAt
           updatedAt
         }
@@ -4591,6 +4744,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -4611,6 +4765,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4701,6 +4856,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -4721,6 +4877,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4811,6 +4968,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -4831,6 +4989,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -4900,6 +5059,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -5035,6 +5195,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -5053,6 +5214,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -5139,6 +5301,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -5196,7 +5359,6 @@ export class APIService {
           likes
           comments
           usernameID
-          version
           username {
             __typename
             id
@@ -5212,6 +5374,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -5252,6 +5415,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -5282,6 +5446,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
+          posterImage
           createdAt
           updatedAt
         }
@@ -5336,6 +5501,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -5357,25 +5523,6 @@ export class APIService {
     )) as any;
     return <ListImagePostsQuery>response.data.listImagePosts;
   }
-
-
-  async GetPostLikes(id: string): Promise<GetImagePostQuery> {
-    const statement = `query getImageLikes($id: ID!) {
-      getImagePost(id: $id) {
-        likes
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetImagePostQuery>response.data.getImagePost;
-  }
-
-
-
   async GetComments(id: string): Promise<GetCommentsQuery> {
     const statement = `query GetComments($id: ID!) {
         getComments(id: $id) {
@@ -5474,6 +5621,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -5494,6 +5642,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -5560,6 +5709,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -5627,6 +5777,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -5725,6 +5876,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -5795,6 +5947,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -5850,6 +6003,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -5927,6 +6081,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6004,6 +6159,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6099,6 +6255,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -6117,6 +6274,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6228,6 +6386,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -6246,6 +6405,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6357,6 +6517,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -6375,6 +6536,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6468,6 +6630,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6508,6 +6671,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6538,6 +6702,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
+          posterImage
           createdAt
           updatedAt
         }
@@ -6582,6 +6747,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6622,6 +6788,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6652,6 +6819,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
+          posterImage
           createdAt
           updatedAt
         }
@@ -6696,6 +6864,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6736,6 +6905,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -6766,6 +6936,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
+          posterImage
           createdAt
           updatedAt
         }
@@ -6910,6 +7081,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -6930,6 +7102,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -7021,6 +7194,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -7041,6 +7215,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -7132,6 +7307,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
+            posterImage
             createdAt
             updatedAt
           }
@@ -7152,6 +7328,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              posterImage
               createdAt
               updatedAt
             }
@@ -7196,25 +7373,5 @@ export class APIService {
     ) as Observable<
       SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteUsername">>
     >;
-  }
-
-
-  async GetUsernameProfile(username: string): Promise<any> {
-    const statement = `query getUsernameData($username: String) {
-      listUsernames(filter: {username: {eq: $username}}) {
-        items {
-          profileID
-          id
-          username
-        }
-      }
-    }`;
-    const gqlAPIServiceArguments: any = {
-      username
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return response.data.listUsernames.items[0].profileID;
   }
 }

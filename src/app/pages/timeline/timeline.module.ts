@@ -9,6 +9,20 @@ import { TimelineLikeButtonComponent } from 'src/app/components/timeline-like-bu
 import { SwiperModule } from 'swiper/angular';
 
 import { TimelineRoutingModule } from './timeline-routing.module';
+import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
+import { Storage } from '@ionic/storage-angular';
+
+import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
+import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
+import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
+
+import {ImagekitioAngularModule} from 'imagekitio-angular';
+
+import {VgCoreModule} from '@videogular/ngx-videogular/core';
+import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+import { VgStreamingModule } from '@videogular/ngx-videogular/streaming';
 
 @NgModule({
   imports: [
@@ -17,8 +31,16 @@ import { TimelineRoutingModule } from './timeline-routing.module';
     FormsModule,
     HomeComponentModule,
     TimelineRoutingModule,
-    SwiperModule
+    SwiperModule,
+    ImagekitioAngularModule.forRoot({ publicKey: "public_v0ZRYzV4lOI5If5qxln+o4rYx3k=", urlEndpoint: "https://ik.imagekit.io/bkf4g8lrl" }),
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
+    VgStreamingModule
   ],
-  declarations: [TimelinePage, TimelineComponent, TimelineLikeButtonComponent]
+  declarations: [TimelineComponent, TimelinePage, TimelineLikeButtonComponent, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix],
+  providers: [PreviewAnyFile, Storage],
+  exports: [TimelineComponent]
 })
 export class TimelinePageModule {}

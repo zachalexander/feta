@@ -14,6 +14,11 @@
     }
 }
 
+.separator-toolbar {
+    max-width: 700px;
+    margin: auto;
+}
+
 ion-content{
     display: flex !important;
     justify-content: center !important;
@@ -85,39 +90,76 @@ ion-icon {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+    height: auto;
+    margin: 0 auto;
+    max-width: 600px;
 
     .username-header {
         justify-content: center;
         align-items: center;
         display: flex;
-        font-size: 1.01em;
+        font-size: 1em;
         margin-top: 0.5em;
         font-weight: 600;
     }
 
-    .right-top-profile {
-        display: flex;
-        padding: 0em 0em 0em 2em;
-        flex-direction: column;
-        align-items: flex-start;
-        height: auto;
+    .left-top-profile {
+        flex: 50;
+    }
+
+    .right-top-profile-wrapper {
+        flex: 50;
+    
+        .right-top-profile{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            max-width: 150px;
+        }
+
     }
 
     .stats-div {
         display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        height: 2em;
+        flex-direction: column;
 
         .stats-count {
-            font-size: 1.5em;
-            padding-right: 0.25em;
-            padding-top: 0.25em;
+            font-size: 1.75em;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .stats-text {
+            font-size: 0.65em;
+            margin: -0.5em auto;
+            font-weight: 600;
         }
     }
+
+
   }
+
+  .bio {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1em 1em 1em 1em;
+    max-width: 500px;
+    margin: auto;
+
+    .bio-text {
+        
+        .username {
+            font-size: 1.20em;
+        }
+    }
+
+    p {
+        font-size: 0.75em;
+    }
+}
 
   .top-of-profile {
     display: flex;
@@ -159,8 +201,8 @@ ion-icon {
     }
   }
 
-.postedphotos {
-    .postedphotos_row {
+.postedphotos, .postedvideos {
+    .postedphotos_row, .postedvideos_row {
         display: flex;
         flex-direction: row;
         margin: 0;
@@ -177,6 +219,31 @@ ion-icon {
         object-fit: contain;
         aspect-ratio: 1;
     }
+
+    #video-wrapper {
+        width: 100%;
+        position: relative;
+    }
+    
+    #play-controls {
+        position: absolute;
+        top: calc(50% - 23px);
+        right: calc(50% - 23px);
+        background: rgba(0, 0, 0, 0.70);
+        border-radius: 50%;
+        height: 45px;
+        width: 45px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    
+        ion-icon {
+            width: 25px !important;
+            height: 25px !important;
+            color: var(--ion-color-light) !important;
+        }
+    }
     
 
 }
@@ -185,7 +252,7 @@ ion-icon {
     max-width: 200px;
     display: flex;
     justify-content: center;
-    margin: 1.5em auto 1em auto;
+    margin: -0.5em auto 1.5em auto;
     height: 2em;
     font-weight: 600;
     color: black;
