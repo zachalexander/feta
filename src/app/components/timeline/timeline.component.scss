@@ -31,16 +31,16 @@
         object-fit: cover;
         margin: 0;
         padding: 0;
+        display: block;
     }
 
     video[poster]{
         height: 500px;
         width: 100vw;
-        object-fit: cover;
         position: relative;
         margin: 0;
         padding: 0;
-        background: transparent;
+        background: green;
     }
 }
 

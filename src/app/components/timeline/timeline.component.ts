@@ -143,16 +143,12 @@ export class TimelineComponent {
       this.replay = false;
     }
 
-    const videos = document.querySelectorAll('video');
-    for (let i = 0; i < videos.length; i++) {
-      videos[i].style.objectFit = "cover";
-    }
-
-
     this.videos.forEach(player => {
       if(this.nowPlaying) return;
 
       const nativeElement = player.nativeElement;
+      nativeElement.style.removeProperty("width");
+      nativeElement.style.width = '100vw';
       const inView = this.isElementInViewport(nativeElement);
 
       if(inView) {
@@ -255,15 +251,6 @@ export class TimelineComponent {
     // });
 
 
-  }
-
-  async ngOnInit(){
-
-    const elems = document.querySelectorAll("video, audio")
-
-    elems.forEach(() => {
-      console.log(elems)
-    })
   }
 
 

@@ -20,8 +20,8 @@
   </div>
 
   <!-- start of photo grid -->
-  <ion-grid lines="none">
-    <ion-row lines="none" class="ion-padding-vertical">
+  <ion-grid lines="none" class="ion-no-padding" mode="ios">
+    <ion-row lines="none" class="ion-padding-vertical" mode="ios">
 
       <!-- start of iterating through images -->
       <ion-col lines="none" *ngFor="let image of data" size="12" size-lg="12" size-md="12" size-sm="12" size-xs="12" trackBy:trackItems>
@@ -30,7 +30,7 @@
         <ion-card lines="none" *ngIf="image.postDeleted !== true">
 
           <!-- display the username and settings for each post at top of card -->
-          <ion-item lines="none">
+          <ion-item lines="none" mode="ios">
             <div class="top-wrapper">
               <div class="start-top-wrapper">
                 <ion-avatar *ngIf="!image.profilePicture" class="upload-pic-container">
@@ -46,7 +46,7 @@
           </ion-item>
 
           <!-- locate the image url and assign a unique id per post -->
-          <ion-card-header lines="none">
+          <ion-card-header lines="none" mode="ios">
             <swiper *ngIf="!image.isVideo" class="mySwiper" effect="fade" [zoom]="true">
               <ng-template swiperSlide>
                 <div class="swiper-zoom-container">
@@ -56,7 +56,7 @@
             </swiper>
             <div id="video-container" *ngIf="image.isVideo">
               <!-- <video (ended)="videoEnd()" class="video_{{image.id}}" type="application/x-mpegURL" width="100%" #timelineVideo type="video/m3u8" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video> -->
-              <video poster="{{image.imagePoster}}" (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="(browser === 'other') && image.isVideo" preload="none" playsinline webkit-playsinline="webkit-playsinline">
+              <video poster="{{image.imagePoster}}" (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="(browser === 'other') && image.isVideo" preload="auto" playsinline webkit-playsinline="webkit-playsinline">
                 <source [src]="image.mediaSource" type="application/x-mpegURL">
               </video>
               <vg-player *ngIf="(browser === 'chrome' || browser === 'safari')">
