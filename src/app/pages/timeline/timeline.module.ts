@@ -23,6 +23,10 @@ import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { VgStreamingModule } from '@videogular/ngx-videogular/streaming';
+import { ImageResizer } from '@awesome-cordova-plugins/image-resizer/ngx';
+import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
+
+
 
 @NgModule({
   imports: [
@@ -40,7 +44,7 @@ import { VgStreamingModule } from '@videogular/ngx-videogular/streaming';
     VgStreamingModule
   ],
   declarations: [TimelineComponent, TimelinePage, TimelineLikeButtonComponent, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix],
-  providers: [PreviewAnyFile, Storage],
+  providers: [PreviewAnyFile, Storage, ImageResizer, VideoEditor],
   exports: [TimelineComponent]
 })
 export class TimelinePageModule {}

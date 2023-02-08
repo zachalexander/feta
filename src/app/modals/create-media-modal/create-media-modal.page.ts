@@ -12,6 +12,9 @@ import { PassThrough } from 'stream';
 import { Capacitor } from '@capacitor/core';
 import { CachingService } from 'src/app/services/caching.service';
 
+import { ImageResizer, ImageResizerOptions } from '@awesome-cordova-plugins/image-resizer/ngx';
+import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
+
 const APP_DIRECTORY = Directory.Documents
 
 @Component({
@@ -47,7 +50,9 @@ export class CreateMediaModalPage {
     private mediaService: MediaService,
     private sanitizer: DomSanitizer,
     private loadingController: LoadingController,
-    private cachingService: CachingService
+    private cachingService: CachingService,
+    private imageResizer: ImageResizer,
+    private videoEditor: VideoEditor
   ) {    
     this.postImageForm = new FormGroup({
     description: new FormControl('')
@@ -133,6 +138,8 @@ export class CreateMediaModalPage {
             path: this.path,
             directory: APP_DIRECTORY
           })
+
+          console.log(file_uri)
 
           this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
           loading.dismiss();

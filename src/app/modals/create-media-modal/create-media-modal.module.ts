@@ -8,6 +8,8 @@ import { CreateMediaModalPageRoutingModule } from './create-media-modal-routing.
 
 import { CreateMediaModalPage } from './create-media-modal.page';
 
+import { ImageResizer, ImageResizerOptions } from '@awesome-cordova-plugins/image-resizer/ngx';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +18,7 @@ import { CreateMediaModalPage } from './create-media-modal.page';
     ReactiveFormsModule,
     CreateMediaModalPageRoutingModule
   ],
-  declarations: [CreateMediaModalPage]
+  declarations: [CreateMediaModalPage],
+  providers: [ImageResizer]
 })
 export class CreatePhotoModalPageModule {}
