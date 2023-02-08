@@ -90,19 +90,20 @@ export class MediaService {
   }
 
   private getData(url, currentUser): Observable<any> {
-    url = `${url}?={0,n}`
-    const storedValue = from(this.cachingService.getCachedRequest(url));
-    return storedValue.pipe(
-      switchMap(result => {
-        if (!result) {
-          console.log('full api call')
-          return this.callAndCache(url, currentUser);
-        } else {
-          console.log('cached result')
-          return of(result);
-        }
-      })
-    )
+    // url = `${url}?={0,n}`
+    // const storedValue = from(this.cachingService.getCachedRequest(url));
+    // return storedValue.pipe(
+    //   switchMap(result => {
+    //     if (!result) {
+    //       console.log('full api call')
+    //       return this.callAndCache(url, currentUser);
+    //     } else {
+    //       console.log('cached result')
+    //       return of(result);
+    //     }
+    //   })
+    // )
+    return from(this.getDataFromGraphQL(currentUser))
   }
 
   private callAndCache(url, currentUser): Observable<any> {
