@@ -212,17 +212,7 @@ export class TimelineComponent {
     }
   }
 
-  async ngOnInit(){
-    setTimeout(() => {
-      this.data.forEach(posts => {
-        console.log(posts)
-        this.videos.forEach(video => {
-          console.log(video.nativeElement)
-          video.native.poster = ''
-        })
-      })
-    }, 2000)
-  }
+
   async ngOnChanges() {
 
     this.currentUserUsernameID = localStorage.getItem('usernameID')

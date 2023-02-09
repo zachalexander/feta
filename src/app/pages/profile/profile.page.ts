@@ -3,11 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { APIService } from 'src/app/API.service';
 import { ModalController } from '@ionic/angular';
 import { UpdateProfileModalPage } from 'src/app/modals/update-profile-modal/update-profile-modal.page';
+import { ProfileMediaClickPage } from '../../modals/profile-media-click/profile-media-click.page';
 import { MediaService } from 'src/app/services/media.service';
 import { LoadingController } from '@ionic/angular';
 import { ProfileMenuModalPage } from 'src/app/modals/profile-menu-modal/profile-menu-modal.page';
-
-
 
 @Component({
   selector: 'app-profile',
@@ -128,6 +127,16 @@ export class ProfilePage {
 
   }
 
+  async openClickModal(id){
+    const modal = await this.modalController.create({
+      component: ProfileMediaClickPage,
+      componentProps: {
+        mediaId: id
+      }
+    })
+    return await modal.present();
+  }
+
   buttonClicked(event){
     if(event.detail.value === 'video-uploads'){
       this.videosClicked = true;
@@ -143,7 +152,7 @@ export class ProfilePage {
 
   async updateProfile(){
     const modal = await this.modalController.create({
-      component: UpdateProfileModalPage
+      component: UpdateProfileModalPage,
     })
     return await modal.present();
   }

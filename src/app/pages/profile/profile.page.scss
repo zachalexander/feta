@@ -2,7 +2,7 @@
     padding: 0 1em;
 }
 
-.no-photos {
+.no-photos, .no-videos {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,7 +27,7 @@ ion-content{
 }
 
 ion-grid {
-    padding: auto !important;
+    padding: 0 !important;
     max-width: 600px;
 }
 
@@ -229,7 +229,7 @@ ion-icon {
         position: absolute;
         top: calc(50% - 23px);
         right: calc(50% - 23px);
-        background: rgba(0, 0, 0, 0.70);
+        background: transparent;
         border-radius: 50%;
         height: 45px;
         width: 45px;

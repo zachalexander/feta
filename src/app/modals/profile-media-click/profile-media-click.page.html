@@ -1,0 +1,9 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start" (click)="backToProfile()" class="cancel"><ion-icon name="chevron-back-outline"></ion-icon>Back</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-timeline [datalength]="timelineDataLength" [data]="timelineData"></app-timeline>
+</ion-content>

@@ -1,3 +1,4 @@
+import { getImagePost } from './../graphql/queries';
 /* tslint:disable */
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
@@ -3519,6 +3520,215 @@ export class APIService {
     )) as any;
     return <GetImagePostQuery>response.data.getImagePost;
   }
+
+  async getSpecificTimelineMedia(id: String): Promise<any> {
+
+    const statement = `query GetImagePost($id: ID!) {
+      getImagePost(id: $id) {
+        __typename
+        id
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        username {
+          __typename
+          id
+          username
+          profileID
+          ImagePosts {
+            __typename
+            id
+            description
+            time_posted
+            likes
+            comments
+            usernameID
+            profileID
+            s3_key
+            posterImage
+            createdAt
+            updatedAt
+          }
+          Profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            family_name
+            profilepictureID
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+          }
+          createdAt
+          updatedAt
+          usernameImagePostsId
+          usernameProfileId
+        }
+        profileID
+        profile {
+          __typename
+          id
+          email
+          relation
+          cognitoID
+          usernameID
+          ImagePosts {
+            __typename
+            id
+            description
+            time_posted
+            likes
+            comments
+            usernameID
+            profileID
+            s3_key
+            posterImage
+            createdAt
+            updatedAt
+          }
+          Username {
+            __typename
+            id
+            username
+            profileID
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+          }
+          family_name
+          profilepictureID
+          profilepicture {
+            __typename
+            id
+            imageurl
+            profileID
+            createdAt
+            updatedAt
+            profilePictureProfileId
+          }
+          createdAt
+          updatedAt
+          profileUsernameId
+          profileImagePostsId
+        }
+        s3_key
+        posterImage
+        createdAt
+        updatedAt
+      }
+    }`;
+  const gqlAPIServiceArguments: any = {
+    id
+  };
+  const response = (await API.graphql(
+    graphqlOperation(statement, gqlAPIServiceArguments)
+  )) as any;
+
+  let array: any = response.data.getImagePost;
+  let currentUser = localStorage.getItem('usernameID');
+
+  let finalArray = [];
+  if(!array.posterImage){
+    finalArray.push({
+      mediaSource: array.s3_key,
+      isVideo: false,
+      time_posted: new Date(array.time_posted),
+      usernameID: array.usernameID,
+      description: array.description,
+      id: array.id,
+      likes: array.likes,
+      // comment_count: await this.commentLength(posts.comments),
+      like_count: await this.getLikeCount(array.likes),
+      username: array.username.username,
+      userLiked: await this.getLikeData(array.likes, currentUser),
+      profilePicture: array.profile.profilepicture.imageurl
+    })
+  } else {
+    finalArray.push({
+      mediaSource: await Storage.get(array.s3_key, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
+      isVideo: true,
+      time_posted: new Date(array.time_posted),
+      usernameID: array.usernameID,
+      description: array.description,
+      id: array.id,
+      likes: array.likes,
+      posterImage: "https://ik.imagekit.io/bkf4g8lrl/poster-images/" + array.posterImage,
+      // comment_count: await this.commentLength(posts.comments),
+      like_count: await this.getLikeCount(array.likes),
+      username: array.username.username,
+      userLiked: await this.getLikeData(array.likes, currentUser),            
+      profilePicture: array.profile.profilepicture.imageurl
+    })
+  }
+  return [1, finalArray[0]];
+}
+
+async getLikeData(likes, usernameID) {
+  if(!JSON.parse(likes)){
+    return false;
+  } else {
+    if(!JSON.parse(likes)['usernames']){
+      return false;
+    } else {
+      let usersThatLike = [];
+      usersThatLike = JSON.parse(likes)['usernames'];
+      if(usersThatLike.indexOf(usernameID) > -1){
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+}
+
+async getLikeCount(likesArray) {
+  if (JSON.parse(likesArray)) {
+    if (JSON.parse(likesArray)['usernames']) {
+      likesArray = JSON.parse(likesArray)['usernames']
+      return likesArray.length;
+    } else {
+      return 0;
+    }
+  } else {
+    return 0;
+  }
+}
+
+  //       const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
+  //   let array: any = response.data.imagePostsByProfileID.items;
+
+  //   let photosPosted = [];
+  //   let videosPosted = [];
+  //   await Promise.all(array.map(async posts => {
+  //     if (await this.checkForVideo(posts.s3_key) === false) {
+  //       photosPosted.push({
+  //         time_posted: posts.time_posted,
+  //         s3_key: posts.s3_key,
+  //         profileID: posts.profileID,
+  //         description: posts.description,
+  //         likes: posts.likes,
+  //         id: posts.id
+  //       })
+  //     } else {
+  //       videosPosted.push({
+  //         time_posted: posts.time_posted,
+  //         posterImage: await Storage.get(posts.posterImage, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+  //         profileID: posts.profileID,
+  //         description: posts.description,
+  //         likes: posts.likes,
+  //         id: posts.id
+  //       })
+  //     }
+  //   }))
+  //   return [photosPosted, photosPosted.length, videosPosted, videosPosted.length];
+  // }
 
 
 

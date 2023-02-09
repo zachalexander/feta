@@ -65,10 +65,10 @@
     <ion-toolbar class="separator-toolbar">
     <ion-segment [(ngModel)]="select_buttons" (ionChange)="buttonClicked($event)">
       <ion-segment-button value="photo-uploads" checked>
-        <ion-icon name="camera"></ion-icon>
+        <ion-icon name="camera-outline"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="video-uploads">
-        <ion-icon name="videocam"></ion-icon>
+        <ion-icon name="videocam-outline"></ion-icon>
       </ion-segment-button>
       <!-- <ion-segment-button value="recipes" disabled>
         <ion-icon name="restaurant"></ion-icon>
@@ -87,7 +87,7 @@
     <ion-grid class="postedphotos" *ngIf="!noPhotosYet && photosClicked">
       <ion-row class="postedphotos_row">
         <ion-col *ngFor="let image of profileMediaData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-          <div class="square" *ngIf="!image.deleted" style="background-image: url({{image.s3_key}})">
+          <div (click)="openClickModal(image.id)" class="square" *ngIf="!image.deleted" style="background-image: url({{image.s3_key}})">
           </div>
         </ion-col>
       </ion-row>
@@ -98,9 +98,9 @@
     <ion-grid class="postedvideos" *ngIf="!noVideosYet && videosClicked">
       <ion-row class="postedvideos_row">
         <ion-col *ngFor="let video of profileMediaData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-          <div id="video-wrapper" class="square" *ngIf="!video.deleted" style="background-image: url({{video.posterImage}})">
+          <div (click)="openClickModal(video.id)" id="video-wrapper" class="square" *ngIf="!video.deleted" style="background-image: url({{video.posterImage}})">
             <div id="play-controls">
-              <ion-icon name="play" large></ion-icon>
+              <ion-icon name="play-outline" large></ion-icon>
             </div>
           </div>
         </ion-col>
