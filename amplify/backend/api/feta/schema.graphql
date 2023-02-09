@@ -22,9 +22,7 @@ type Profile @model @auth(rules: [{allow: public}]) {
   profilepicture: ProfilePicture @hasOne(fields: ["profilepictureID"])
 }
 
-type ImagePost @model @auth(rules: [{allow: public}]) 
-@index(name: "byTimePosted", queryField: "postsByDate", sortKeyFields: ["time_posted"])
-{
+type ImagePost @model @auth(rules: [{allow: public}]) {
   id: ID!
   description: String
   time_posted: AWSDateTime
