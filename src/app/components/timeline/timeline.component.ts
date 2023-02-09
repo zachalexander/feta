@@ -6,6 +6,7 @@ import { ModalController, Platform } from '@ionic/angular';
 import { MediaService } from 'src/app/services/media.service';
 // import { CachingService } from '../../services/caching.service';
 import { APIService } from "../../API.service";
+import { Router } from '@angular/router';
 // import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
 // import { EditPhotoModalPage } from '../../modals/edit-photo-modal/edit-photo-modal.page';
 import { LikeListModalPage } from '../../modals/like-list-modal/like-list-modal.page';
@@ -99,9 +100,9 @@ export class TimelineComponent {
     public navController: NavController,
     private platform: Platform,
     private loadingController: LoadingController,
-    private mediaService: MediaService
-  ) {
-  }
+    private mediaService: MediaService,
+    private router: Router
+  ) {}
 
   functionGetCognitoUserId(){
     return Auth.currentUserInfo().then(user => user.id);
@@ -201,6 +202,7 @@ export class TimelineComponent {
     this.browser = localStorage.getItem('User-browser')
     this.platformView = await this.platform.platforms();
 
+    await this.didScroll();
 
 
     // if (this.platform.is('hybrid')) {
@@ -293,8 +295,6 @@ export class TimelineComponent {
 
   async presentActionSheet(username, mediaId, mediaKey, downloadableVideo, isVideo) {
 
-    console.log(username, mediaId, mediaKey, downloadableVideo, isVideo)
-
     if(this.currentUserUsername === username){
       this.currentUserEditPost = true;
       const actionSheet = await this.actionSheetController.create({
@@ -349,7 +349,6 @@ export class TimelineComponent {
             let media = await this.api.GetImagePost(mediaId)
             if(isVideo){
               let video = await Storage.get(media.downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
-              console.log(video)
 
               if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
                 const fileName = 'feta-download-' + new Date().getTime() + '.mov' 
@@ -453,7 +452,6 @@ export class TimelineComponent {
     let media = await this.api.GetImagePost(id)
     if(isVideo){
       let video = await Storage.get(media.downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
-      console.log(video)
 
       if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
         const fileName = 'feta-download-' + new Date().getTime() + '.mov' 
@@ -520,7 +518,6 @@ export class TimelineComponent {
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    console.log(url)
     a.href = url;
     a.download = filename || 'download';
     const clickHandler = () => {
@@ -658,6 +655,7 @@ export class TimelineComponent {
     if(this.platform.is('hybrid')){
       await Haptics.impact({ style: ImpactStyle.Medium})
     }
+
 
     // setTimeout(async () => {
     let callback = this.mediaService.getDataFromGraphQL(this.currentUserUsernameID).then((res) =>

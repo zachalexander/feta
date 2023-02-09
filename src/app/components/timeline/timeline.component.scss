@@ -7,6 +7,13 @@
     }
 }
 
+ion-refresher.refresher-active {
+    display: flex;
+    justify-content: center;
+    padding: 2em;
+    z-index: 5;
+}
+
 
 #video-container {
     position: relative;
