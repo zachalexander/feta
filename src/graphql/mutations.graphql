@@ -21,6 +21,8 @@ mutation CreateProfilePicture(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -77,6 +79,8 @@ mutation UpdateProfilePicture(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -133,6 +137,8 @@ mutation DeleteProfilePicture(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -208,6 +214,8 @@ mutation CreateProfile(
         profileImagePostsId
       }
       s3_key
+      mediaSource
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -225,6 +233,8 @@ mutation CreateProfile(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -317,6 +327,8 @@ mutation UpdateProfile(
         profileImagePostsId
       }
       s3_key
+      mediaSource
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -334,6 +346,8 @@ mutation UpdateProfile(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -426,6 +440,8 @@ mutation DeleteProfile(
         profileImagePostsId
       }
       s3_key
+      mediaSource
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -443,6 +459,8 @@ mutation DeleteProfile(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -518,6 +536,8 @@ mutation CreateImagePost(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -556,6 +576,8 @@ mutation CreateImagePost(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -585,6 +607,8 @@ mutation CreateImagePost(
       profileImagePostsId
     }
     s3_key
+    mediaSource
+    downloadableVideo
     posterImage
     createdAt
     updatedAt
@@ -614,6 +638,8 @@ mutation UpdateImagePost(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -652,6 +678,8 @@ mutation UpdateImagePost(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -681,6 +709,8 @@ mutation UpdateImagePost(
       profileImagePostsId
     }
     s3_key
+    mediaSource
+    downloadableVideo
     posterImage
     createdAt
     updatedAt
@@ -710,6 +740,8 @@ mutation DeleteImagePost(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -748,6 +780,8 @@ mutation DeleteImagePost(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -777,6 +811,8 @@ mutation DeleteImagePost(
       profileImagePostsId
     }
     s3_key
+    mediaSource
+    downloadableVideo
     posterImage
     createdAt
     updatedAt
@@ -863,6 +899,8 @@ mutation CreateUsername(
         profileImagePostsId
       }
       s3_key
+      mediaSource
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -882,6 +920,8 @@ mutation CreateUsername(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -955,6 +995,8 @@ mutation UpdateUsername(
         profileImagePostsId
       }
       s3_key
+      mediaSource
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -974,6 +1016,8 @@ mutation UpdateUsername(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -1047,6 +1091,8 @@ mutation DeleteUsername(
         profileImagePostsId
       }
       s3_key
+      mediaSource
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -1066,6 +1112,8 @@ mutation DeleteUsername(
         usernameID
         profileID
         s3_key
+        mediaSource
+        downloadableVideo
         posterImage
         createdAt
         updatedAt

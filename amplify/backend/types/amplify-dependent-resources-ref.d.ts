@@ -17,5 +17,12 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientID": "string",
             "CreatedSNSRole": "string"
         }
+    },
+    "video": {
+        "fetadevvodservice": {
+            "oVODInputS3": "string",
+            "oVODOutputS3": "string",
+            "oVodOutputUrl": "string"
+        }
     }
 }

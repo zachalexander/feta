@@ -23,6 +23,7 @@ import { IonContent } from '@ionic/angular';
 import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Auth } from '@aws-amplify/auth';
+import { Share } from '@capacitor/share';
 // import { Network } from '@capacitor/network';
 
 import { finalize } from 'rxjs/operators';
@@ -44,25 +45,6 @@ SwiperCore.use([Zoom, EffectFade]);
   styleUrls: ['./timeline.component.scss'],
   providers: [DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix]
 })
-
-// interface cachedData {
-//   comment_count: number,
-//   description: string,
-//   id: string,
-//   imageDeteled: boolean,
-//   imageKey: string,
-//   imagesID: string,
-//   like_count: number,
-//   likes: string,
-//   profilePicture: string,
-//   time_posted: Date,
-//   url: string,
-//   userLiked: boolean,
-//   username: string,
-//   usernameID: string,
-//   version: number
-
-// }
 
 export class TimelineComponent {
 
@@ -291,213 +273,280 @@ export class TimelineComponent {
 
   // This is for editing and sharing posts on wall
 
-  // async clickEditPost(imageUrl, imagePostId, imageId) {
-  //   const modal = await this.modalController.create({
-  //     component: EditPhotoModalPage
-  //   })
+  async clickEditPost(mediaUrl, mediaId) {
+    // const modal = await this.modalController.create({
+    //   component: EditPhotoModalPage
+    // })
 
-  //   let imageData = [imageUrl, imagePostId, imageId]
-  //   // await this.photoService.getImagesID(imageData);
-  //   // await this.photoService.getImagePostDescription();
+    let imageData = [mediaUrl, mediaId]
+    // await this.photoService.getImagesID(imageData);
+    // await this.photoService.getImagePostDescription();
 
-  //   modal.onDidDismiss().then((dataReturned) => {
-  //     if (dataReturned !== null) {
-  //       this.dataReturned = dataReturned.data;
-  //     }
-  //   });
+    // modal.onDidDismiss().then((dataReturned) => {
+    //   if (dataReturned !== null) {
+    //     this.dataReturned = dataReturned.data;
+    //   }
+    // });
 
-  //   return await modal.present();
-  // }
+    // return await modal.present();
+  }
 
-  // async presentActionSheet(username, imageId, imagePostId, imageUrl, imageKey) {
+  async presentActionSheet(username, mediaId, mediaKey, downloadableVideo, isVideo) {
 
-  //   if(this.currentUserUsername === username){
-  //     this.currentUserEditPost = true;
-  //     const actionSheet = await this.actionSheetController.create({
-  //       header: 'Post Settings',
-  //       cssClass: 'my-custom-class',
-  //       buttons: [{
-  //         text: 'Edit Post',
-  //         icon: 'pencil-outline',
-  //         handler: () => {
+    console.log(username, mediaId, mediaKey, downloadableVideo, isVideo)
 
-  //             this.clickEditPost(imageUrl, imagePostId, imageId);
+    if(this.currentUserUsername === username){
+      this.currentUserEditPost = true;
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Post Settings',
+        cssClass: 'my-custom-class',
+        buttons: [{
+          text: 'Edit Post',
+          icon: 'pencil-outline',
+          handler: () => {
+
+              this.clickEditPost(mediaKey, mediaId);
               
-  //           }
-  //       },
-  //       {
-  //         text: 'Delete Post',
-  //         role: 'destructive',
-  //         icon: 'trash-outline',
-  //         handler: async () => {
-  //           const alert = await this.alertController.create({
-  //             cssClass: 'my-custom-class',
-  //             header: 'Delete Post',
-  //             message: 'Are you sure you want to delete this post?',
-  //             buttons: [
-  //               {
-  //                 text: 'No',
-  //               },
-  //               {
-  //                 text: 'Delete',
-  //                 handler: async () => {
+            }
+        },
+        {
+          text: 'Delete Post',
+          role: 'destructive',
+          icon: 'trash-outline',
+          handler: async () => {
+            const alert = await this.alertController.create({
+              cssClass: 'my-custom-class',
+              header: 'Delete Post',
+              message: 'Are you sure you want to delete this post?',
+              buttons: [
+                {
+                  text: 'No',
+                },
+                {
+                  text: 'Delete',
+                  handler: async () => {
 
-  //                   let imagePostData = await this.api.GetImagePost(imagePostId)
-       
-  //                   // await this.api.DeleteImagePost({id: imagePostData.id, _version: imagePostData._version})
+                    await this.api.DeleteImagePost({id: mediaId})
 
-  //                   // let imageData = await this.api.GetImages(imageId)
-
-  //                   // await this.api.DeleteImages({id: imageData.id, _version: imageData._version})
-
-  //                   await Storage.remove(imageKey)
-
-  //                   await this.presentToast();
-
-  //                 }
-  //             }
-  //             ]
-  //           });
+                    if(isVideo){
+                      await Storage.remove(downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
+                    } else {
+                      await Storage.remove(mediaKey)
+                    }
+                    await this.presentToast();
+                  }
+              }
+              ]
+            });
         
-  //           await alert.present();
-  //         }
-  //       }, {
-  //         text: 'Share',
-  //         icon: 'share-outline',
-  //         handler: async () => {
+            await alert.present();
+          }
+        }, {
+          text: 'Share',
+          icon: 'share-outline',
+          handler: async () => {
 
-  //           // let s3image = await this.api.GetImages(imageId)
-  //           let photo = await Storage.get(s3image.imageurl, { download: true})
- 
-  //           if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
-  //             const fileName = 'feta-download-' + new Date().getTime() + '.jpeg' 
-  //             this.downloadBlob(photo.Body, fileName)
-  //           }
+            let media = await this.api.GetImagePost(mediaId)
+            if(isVideo){
+              let video = await Storage.get(media.downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
+              console.log(video)
 
-  //           if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
-  //             const base64Data = await this.readAsBase64(photo.Body)
-  //             const fileName = new Date().getTime() + '.jpeg';
-  
-  //             await Filesystem.writeFile({
-  //               path: fileName,
-  //               data: base64Data,
-  //               directory: Directory.Cache
-  //             }).then(() => {
-  //               return Filesystem.getUri({
-  //                 directory: Directory.Cache,
-  //                 path: fileName
-  //               });
-  //             }).then((uriResult) => {
-  //               return Share.share({
-  //                 title: 'Share this photo',
-  //                 text: "Look at this photo from Zach & Katie's Feta app",
-  //                 url: uriResult.uri,
-  //                 dialogTitle: 'Share this photo',
-  //               });
-  //             })
-  //           }
-  //         }
-  //       }, {
-  //         text: 'Cancel',
-  //         icon: 'close',
-  //         role: 'cancel',
-  //         handler: () => {}
-  //       }]
-  //     });
-  //     await actionSheet.present();
-  
-  //     const { role } = await actionSheet.onDidDismiss();
+              if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
+                const fileName = 'feta-download-' + new Date().getTime() + '.mov' 
+                this.downloadBlob(video, fileName)
+              }
 
-  //   } else {
-  //     const actionSheet = await this.actionSheetController.create({
-  //       header: 'Post Settings',
-  //       cssClass: 'my-custom-class',
-  //       buttons: [{
-  //         text: 'Share',
-  //         icon: 'share-outline',
-  //         handler: () => {
+              if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
+                const base64Data = await this.readAsBase64(video)
+                const fileName = new Date().getTime() + '.jpeg';
     
-  //           this.shareButtonClicked(imageId)
-            
-  //         }
-  //       }, 
-  //       {
-  //         text: 'Cancel',
-  //         icon: 'close',
-  //         role: 'cancel',
-  //         handler: () => {}
-  //       }]
-  //     });
-  //     await actionSheet.present();
+                await Filesystem.writeFile({
+                  path: fileName,
+                  data: base64Data,
+                  directory: Directory.Cache
+                }).then(() => {
+                  return Filesystem.getUri({
+                    directory: Directory.Cache,
+                    path: fileName
+                  });
+                }).then((uriResult) => {
+                  return Share.share({
+                    title: 'Share content',
+                    text: "Look at this content from Zach & Katie's Feta app",
+                    url: uriResult.uri,
+                    dialogTitle: 'Share this content',
+                  });
+                })
+              }
+            } else {
+
+              let photo = await Storage.get(mediaKey, { download: true})
+
+              if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
+                const fileName = 'feta-download-' + new Date().getTime() + '.jpeg' 
+                this.downloadBlob(photo.Body, fileName)
+              }
+
+              if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
+                const base64Data = await this.readAsBase64(photo.Body)
+                const fileName = new Date().getTime() + '.jpeg';
+    
+                await Filesystem.writeFile({
+                  path: fileName,
+                  data: base64Data,
+                  directory: Directory.Cache
+                }).then(() => {
+                  return Filesystem.getUri({
+                    directory: Directory.Cache,
+                    path: fileName
+                  });
+                }).then((uriResult) => {
+                  return Share.share({
+                    title: 'Share content',
+                    text: "Look at this content from Zach & Katie's Feta app",
+                    url: uriResult.uri,
+                    dialogTitle: 'Share this content',
+                  });
+                })
+              }
+            }            
+          }
+        }, {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {}
+        }]
+      });
+      await actionSheet.present();
   
-  //     const { role } = await actionSheet.onDidDismiss();
+      const { role } = await actionSheet.onDidDismiss();
 
-  //   }
-  // }
+    } else {
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Post Settings',
+        cssClass: 'my-custom-class',
+        buttons: [{
+          text: 'Share',
+          icon: 'share-outline',
+          handler: () => {
+    
+            this.shareButtonClicked(mediaId, isVideo, mediaKey)
+            
+          }
+        }, 
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {}
+        }]
+      });
+      await actionSheet.present();
+  
+      const { role } = await actionSheet.onDidDismiss();
 
-  // async shareButtonClicked(imageId){
-  //   let s3image = await this.api.GetImages(imageId)
-  //   let photo = await Storage.get(s3image.imageurl, { download: true})
+    }
+  }
 
-  //   if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
-  //     const fileName = 'feta-download-' + new Date().getTime() + '.jpeg' 
-  //     this.downloadBlob(photo.Body, fileName)
-  //   }
+  async shareButtonClicked(id, isVideo, mediaKey){
+    let media = await this.api.GetImagePost(id)
+    if(isVideo){
+      let video = await Storage.get(media.downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
+      console.log(video)
 
-  //   if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
-  //     const base64Data = await this.readAsBase64(photo.Body)
-  //     const fileName = new Date().getTime() + '.jpeg';
+      if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
+        const fileName = 'feta-download-' + new Date().getTime() + '.mov' 
+        this.downloadBlob(video, fileName)
+      }
 
-  //     await Filesystem.writeFile({
-  //       path: fileName,
-  //       data: base64Data,
-  //       directory: Directory.Cache
-  //     }).then(() => {
-  //       return Filesystem.getUri({
-  //         directory: Directory.Cache,
-  //         path: fileName
-  //       });
-  //     }).then((uriResult) => {
-  //       return Share.share({
-  //         title: 'Share this photo',
-  //         text: "Look at this photo from Zach & Katie's Feta app",
-  //         url: uriResult.uri,
-  //         dialogTitle: 'Share this photo',
-  //       });
-  //     })
+      if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
+        const base64Data = await this.readAsBase64(video)
+        const fileName = new Date().getTime() + '.jpeg';
 
-  //   }
-  // }
+        await Filesystem.writeFile({
+          path: fileName,
+          data: base64Data,
+          directory: Directory.Cache
+        }).then(() => {
+          return Filesystem.getUri({
+            directory: Directory.Cache,
+            path: fileName
+          });
+        }).then((uriResult) => {
+          return Share.share({
+            title: 'Share content',
+            text: "Look at this content from Zach & Katie's Feta app",
+            url: uriResult.uri,
+            dialogTitle: 'Share this content',
+          });
+        })     
+      }
+    } else {
+        let photo = await Storage.get(mediaKey, { download: true})
 
-  // downloadBlob(blob, filename) {
-  //   const url = URL.createObjectURL(blob);
-  //   const a = document.createElement('a');
-  //   a.href = url;
-  //   a.download = filename || 'download';
-  //   const clickHandler = () => {
-  //     setTimeout(() => {
-  //       URL.revokeObjectURL(url);
-  //       a.removeEventListener('click', clickHandler);
-  //     }, 10);
-  //   };
-  //   a.addEventListener('click', clickHandler, false);
-  //   a.click();
-  //   return a;
-  // }
+        if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
+          const fileName = 'feta-download-' + new Date().getTime() + '.jpeg' 
+          this.downloadBlob(photo.Body, fileName)
+        }
+
+        if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
+          const base64Data = await this.readAsBase64(photo.Body)
+          const fileName = new Date().getTime() + '.jpeg';
+
+          await Filesystem.writeFile({
+            path: fileName,
+            data: base64Data,
+            directory: Directory.Cache
+          }).then(() => {
+            return Filesystem.getUri({
+              directory: Directory.Cache,
+              path: fileName
+            });
+          }).then((uriResult) => {
+            return Share.share({
+              title: 'Share content',
+              text: "Look at this content from Zach & Katie's Feta app",
+              url: uriResult.uri,
+              dialogTitle: 'Share this content',
+            });
+          })
+        }
+      }            
+  }
+
+  async downloadBlob(link, filename) {
+    const response = await fetch(`${link}`)
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    console.log(url)
+    a.href = url;
+    a.download = filename || 'download';
+    const clickHandler = () => {
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        a.removeEventListener('click', clickHandler);
+      }, 10);
+    };
+    a.addEventListener('click', clickHandler, false);
+    a.click();
+    return a;
+  }
 
 
-  // async readAsBase64(photo) { 
-  //   return await this.convertBlobToBase64(photo) as string;
-  // }
+  async readAsBase64(photo) { 
+    return await this.convertBlobToBase64(photo) as string;
+  }
 
-  // convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
-  //   const reader = new FileReader();
-  //   reader.onerror = reject;
-  //   reader.onload = () => {
-  //     resolve(reader.result);
-  //   };
-  //   reader.readAsDataURL(blob)
-  // })
+  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob)
+  })
 
   // toast messages
 

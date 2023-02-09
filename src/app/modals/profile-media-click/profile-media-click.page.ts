@@ -20,10 +20,8 @@ export class ProfileMediaClickPage implements OnInit {
 
   async ngOnInit() {
     let data = await this.api.getSpecificTimelineMedia(this.mediaId)
-
     this.timelineData = [data[1]];
     this.timelineDataLength = data[0]
-    console.log(this.timelineDataLength, this.timelineData)
   }
 
   

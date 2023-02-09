@@ -97,8 +97,9 @@ export class ProfilePage {
     if(this.userData){
       // sort photos by time posted
       this.userData[0] = await this.sortByDate(this.userData[0]);
+      this.userData[2] = await this.sortByDate(this.userData[2]);
 
-      console.log(this.userData)
+      console.log(this.userData[2])
   
       // get actual photo url from storage
       // userData[0] = await this.mediaService.getPhotoUrlsKey(userData[0])
@@ -141,7 +142,7 @@ export class ProfilePage {
     if(event.detail.value === 'video-uploads'){
       this.videosClicked = true;
       this.photosClicked = false;
-      this.profileMediaData = this.userData[2]
+      this.profileMediaData = this.userData[2];
       console.log(this.profileMediaData)
     } else {
       this.photosClicked = true;
@@ -163,7 +164,8 @@ export class ProfilePage {
   }
 
   async sortByDate(array){
-    return await array.sort((a, b) => b.time_posted - a.time_posted);
+    console.log(array)
+    return await array.sort((a, b) => Date.parse(b.time_posted) - Date.parse(a.time_posted));
   }
 
 

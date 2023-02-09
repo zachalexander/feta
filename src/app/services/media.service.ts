@@ -128,6 +128,8 @@ export class MediaService {
           updatedAt
           s3_key
           posterImage
+          mediaSource
+          downloadableVideo
           profile {
             profilepicture {
               imageurl
@@ -148,6 +150,8 @@ export class MediaService {
       if(await this.checkForVideo(posts.s3_key)){
         this.mediaPosted.push({
           mediaSource: await Storage.get(posts.s3_key, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
+          s3_key: posts.s3_key,
+          downloadableVideo: posts.downloadableVideo,
           isVideo: true,
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
@@ -163,7 +167,9 @@ export class MediaService {
         })
       } else {
         this.mediaPosted.push({
-          mediaSource: posts.s3_key,
+          mediaSource: posts.mediaSource,
+          s3_key: posts.s3_key,
+          downloadableVideo: posts.downloadableVideo,
           isVideo: false,
           time_posted: new Date(posts.time_posted),
           usernameID: posts.usernameID,
@@ -191,22 +197,6 @@ export class MediaService {
       return false
     }
   }
-
-  // async urltoUsableMedia(url, s3Key){
-
-  //   let isVideo = await this.checkForVideo(s3Key)
-
-  //   if(isVideo){
-  //     const response = await fetch(`${url}`);
-  //     const blob = await response.blob();
-  //     const final_url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob))
-  //     return final_url;
-  //   } else {
-  //     return await this.convertUrlToBase64(url)
-  //   }
-
-  // }
-
 
   async convertUrlToBase64(url){
     const response = await fetch(`${url}`);

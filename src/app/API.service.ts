@@ -1,4 +1,3 @@
-import { getImagePost } from './../graphql/queries';
 /* tslint:disable */
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
@@ -141,6 +140,8 @@ export type ImagePost = {
   profileID: string;
   profile?: Profile | null;
   s3_key?: string | null;
+  mediaSource?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -221,6 +222,8 @@ export type CreateImagePostInput = {
   usernameID: string;
   profileID: string;
   s3_key?: string | null;
+  mediaSource?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
 };
 
@@ -232,6 +235,8 @@ export type ModelImagePostConditionInput = {
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
+  mediaSource?: ModelStringInput | null;
+  downloadableVideo?: ModelStringInput | null;
   posterImage?: ModelStringInput | null;
   and?: Array<ModelImagePostConditionInput | null> | null;
   or?: Array<ModelImagePostConditionInput | null> | null;
@@ -247,6 +252,8 @@ export type UpdateImagePostInput = {
   usernameID?: string | null;
   profileID?: string | null;
   s3_key?: string | null;
+  mediaSource?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
 };
 
@@ -371,6 +378,8 @@ export type ModelImagePostFilterInput = {
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
+  mediaSource?: ModelStringInput | null;
+  downloadableVideo?: ModelStringInput | null;
   posterImage?: ModelStringInput | null;
   and?: Array<ModelImagePostFilterInput | null> | null;
   or?: Array<ModelImagePostFilterInput | null> | null;
@@ -481,6 +490,8 @@ export type ModelSubscriptionImagePostFilterInput = {
   usernameID?: ModelSubscriptionIDInput | null;
   profileID?: ModelSubscriptionIDInput | null;
   s3_key?: ModelSubscriptionStringInput | null;
+  mediaSource?: ModelSubscriptionStringInput | null;
+  downloadableVideo?: ModelSubscriptionStringInput | null;
   posterImage?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionImagePostFilterInput | null> | null;
   or?: Array<ModelSubscriptionImagePostFilterInput | null> | null;
@@ -525,6 +536,8 @@ export type CreateProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -582,6 +595,8 @@ export type UpdateProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -639,6 +654,8 @@ export type DeleteProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -716,6 +733,8 @@ export type CreateProfileMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -735,6 +754,8 @@ export type CreateProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -830,6 +851,8 @@ export type UpdateProfileMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -849,6 +872,8 @@ export type UpdateProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -944,6 +969,8 @@ export type DeleteProfileMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -963,6 +990,8 @@ export type DeleteProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1040,6 +1069,8 @@ export type CreateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1081,6 +1112,8 @@ export type CreateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1112,6 +1145,8 @@ export type CreateImagePostMutation = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSource?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -1140,6 +1175,8 @@ export type UpdateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1181,6 +1218,8 @@ export type UpdateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1212,6 +1251,8 @@ export type UpdateImagePostMutation = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSource?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -1240,6 +1281,8 @@ export type DeleteImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1281,6 +1324,8 @@ export type DeleteImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1312,6 +1357,8 @@ export type DeleteImagePostMutation = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSource?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -1389,6 +1436,8 @@ export type CreateUsernameMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1410,6 +1459,8 @@ export type CreateUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1485,6 +1536,8 @@ export type UpdateUsernameMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1506,6 +1559,8 @@ export type UpdateUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1581,6 +1636,8 @@ export type DeleteUsernameMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1602,6 +1659,8 @@ export type DeleteUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1659,6 +1718,8 @@ export type GetProfilePictureQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1764,6 +1825,8 @@ export type GetProfileQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1783,6 +1846,8 @@ export type GetProfileQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1856,6 +1921,8 @@ export type ListProfilesQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1912,6 +1979,8 @@ export type GetImagePostQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1953,6 +2022,8 @@ export type GetImagePostQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1984,6 +2055,8 @@ export type GetImagePostQuery = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSource?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -2025,6 +2098,8 @@ export type ListImagePostsQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2097,6 +2172,8 @@ export type GetUsernameQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2118,6 +2195,8 @@ export type GetUsernameQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2171,6 +2250,8 @@ export type ListUsernamesQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2216,6 +2297,8 @@ export type ProfilesByProfilepictureIDQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2285,6 +2368,8 @@ export type ImagePostsByUsernameIDQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2328,6 +2413,8 @@ export type ImagePostsByProfileIDQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2356,6 +2443,8 @@ export type OnCreateProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2413,6 +2502,8 @@ export type OnUpdateProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2470,6 +2561,8 @@ export type OnDeleteProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2547,6 +2640,8 @@ export type OnCreateProfileSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2566,6 +2661,8 @@ export type OnCreateProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2661,6 +2758,8 @@ export type OnUpdateProfileSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2680,6 +2779,8 @@ export type OnUpdateProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2775,6 +2876,8 @@ export type OnDeleteProfileSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2794,6 +2897,8 @@ export type OnDeleteProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2871,6 +2976,8 @@ export type OnCreateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2912,6 +3019,8 @@ export type OnCreateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2943,6 +3052,8 @@ export type OnCreateImagePostSubscription = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSource?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -2971,6 +3082,8 @@ export type OnUpdateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3012,6 +3125,8 @@ export type OnUpdateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3043,6 +3158,8 @@ export type OnUpdateImagePostSubscription = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSource?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -3071,6 +3188,8 @@ export type OnDeleteImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3112,6 +3231,8 @@ export type OnDeleteImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3143,6 +3264,8 @@ export type OnDeleteImagePostSubscription = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSource?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -3220,6 +3343,8 @@ export type OnCreateUsernameSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -3241,6 +3366,8 @@ export type OnCreateUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3316,6 +3443,8 @@ export type OnUpdateUsernameSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -3337,6 +3466,8 @@ export type OnUpdateUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3412,6 +3543,8 @@ export type OnDeleteUsernameSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -3433,6 +3566,8 @@ export type OnDeleteUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3484,6 +3619,8 @@ export type GetUsernameDataQuery = {
   providedIn: "root"
 })
 export class APIService {
+
+  finalArray;
 
   // ZACH CREATED
 
@@ -3547,6 +3684,7 @@ export class APIService {
             usernameID
             profileID
             s3_key
+            mediaSource
             posterImage
             createdAt
             updatedAt
@@ -3620,6 +3758,7 @@ export class APIService {
         }
         s3_key
         posterImage
+        mediaSource
         createdAt
         updatedAt
       }
@@ -3634,10 +3773,10 @@ export class APIService {
   let array: any = response.data.getImagePost;
   let currentUser = localStorage.getItem('usernameID');
 
-  let finalArray = [];
+  this.finalArray = [];
   if(!array.posterImage){
-    finalArray.push({
-      mediaSource: array.s3_key,
+    this.finalArray.push({
+      mediaSource: array.mediaSource,
       isVideo: false,
       time_posted: new Date(array.time_posted),
       usernameID: array.usernameID,
@@ -3651,7 +3790,7 @@ export class APIService {
       profilePicture: array.profile.profilepicture.imageurl
     })
   } else {
-    finalArray.push({
+    this.finalArray.push({
       mediaSource: await Storage.get(array.s3_key, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
       isVideo: true,
       time_posted: new Date(array.time_posted),
@@ -3667,7 +3806,14 @@ export class APIService {
       profilePicture: array.profile.profilepicture.imageurl
     })
   }
-  return [1, finalArray[0]];
+  this.finalArray = this.finalArray[0]
+  return [1, this.finalArray];
+}
+
+
+sortByDate(array) {
+  console.log(array)
+  return array.sort((a, b) => Date.parse(b.time_posted) - Date.parse(a.time_posted))
 }
 
 async getLikeData(likes, usernameID) {
@@ -3701,37 +3847,7 @@ async getLikeCount(likesArray) {
   }
 }
 
-  //       const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
-  //   let array: any = response.data.imagePostsByProfileID.items;
-
-  //   let photosPosted = [];
-  //   let videosPosted = [];
-  //   await Promise.all(array.map(async posts => {
-  //     if (await this.checkForVideo(posts.s3_key) === false) {
-  //       photosPosted.push({
-  //         time_posted: posts.time_posted,
-  //         s3_key: posts.s3_key,
-  //         profileID: posts.profileID,
-  //         description: posts.description,
-  //         likes: posts.likes,
-  //         id: posts.id
-  //       })
-  //     } else {
-  //       videosPosted.push({
-  //         time_posted: posts.time_posted,
-  //         posterImage: await Storage.get(posts.posterImage, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
-  //         profileID: posts.profileID,
-  //         description: posts.description,
-  //         likes: posts.likes,
-  //         id: posts.id
-  //       })
-  //     }
-  //   }))
-  //   return [photosPosted, photosPosted.length, videosPosted, videosPosted.length];
-  // }
-
-
-
+  
   async getUserProfileMediaData(profileID: String): Promise<any> {
 
     const statement = `query getUserProfileMediaData($profileID: ID!) {
@@ -3739,6 +3855,7 @@ async getLikeCount(likesArray) {
         items {
           time_posted
           s3_key
+          mediaSource
           profileID
           description
           likes
@@ -3762,6 +3879,7 @@ async getLikeCount(likesArray) {
         photosPosted.push({
           time_posted: posts.time_posted,
           s3_key: posts.s3_key,
+          mediaSource: posts.mediaSource,
           profileID: posts.profileID,
           description: posts.description,
           likes: posts.likes,
@@ -3898,6 +4016,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -3971,6 +4091,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4044,6 +4166,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4137,6 +4261,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -4156,6 +4282,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4267,6 +4395,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -4286,6 +4416,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4397,6 +4529,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -4416,6 +4550,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4509,6 +4645,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4550,6 +4688,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4581,6 +4721,8 @@ async getLikeCount(likesArray) {
             profileImagePostsId
           }
           s3_key
+          mediaSource
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -4625,6 +4767,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4666,6 +4810,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4697,6 +4843,8 @@ async getLikeCount(likesArray) {
             profileImagePostsId
           }
           s3_key
+          mediaSource
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -4741,6 +4889,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4782,6 +4932,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4813,6 +4965,8 @@ async getLikeCount(likesArray) {
             profileImagePostsId
           }
           s3_key
+          mediaSource
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -4954,6 +5108,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -4975,6 +5131,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5066,6 +5224,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -5087,6 +5247,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5178,6 +5340,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -5199,6 +5363,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5269,6 +5435,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5405,6 +5573,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -5424,6 +5594,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5511,6 +5683,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5584,6 +5758,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5625,6 +5801,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5656,6 +5834,8 @@ async getLikeCount(likesArray) {
             profileImagePostsId
           }
           s3_key
+          mediaSource
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -5711,6 +5891,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -5831,6 +6013,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -5852,6 +6036,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5919,6 +6105,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5987,6 +6175,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6086,6 +6276,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -6157,6 +6349,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -6213,6 +6407,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6291,6 +6487,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6369,6 +6567,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6465,6 +6665,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -6484,6 +6686,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6596,6 +6800,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -6615,6 +6821,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6727,6 +6935,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -6746,6 +6956,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6840,6 +7052,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6881,6 +7095,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6912,6 +7128,8 @@ async getLikeCount(likesArray) {
             profileImagePostsId
           }
           s3_key
+          mediaSource
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -6957,6 +7175,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6998,6 +7218,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -7029,6 +7251,8 @@ async getLikeCount(likesArray) {
             profileImagePostsId
           }
           s3_key
+          mediaSource
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -7074,6 +7298,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -7115,6 +7341,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -7146,6 +7374,8 @@ async getLikeCount(likesArray) {
             profileImagePostsId
           }
           s3_key
+          mediaSource
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -7291,6 +7521,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -7312,6 +7544,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -7404,6 +7638,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -7425,6 +7661,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -7517,6 +7755,8 @@ async getLikeCount(likesArray) {
               profileImagePostsId
             }
             s3_key
+            mediaSource
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -7538,6 +7778,8 @@ async getLikeCount(likesArray) {
               usernameID
               profileID
               s3_key
+              mediaSource
+              downloadableVideo
               posterImage
               createdAt
               updatedAt

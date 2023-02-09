@@ -41,7 +41,7 @@
                 </ion-avatar>
                 <ion-label class="top-card"><small class="card-username" routerLink="/profile/{{image.username}}">{{image.username}}</small></ion-label>
               </div>
-              <!-- <ion-label (click)="presentActionSheet(image.username, image.imagesID, image.id, image.url, image.imageKey)" class="top-card" slot="end"><ion-icon name="ellipsis-horizontal-sharp"></ion-icon></ion-label> -->
+              <ion-label (click)="presentActionSheet(image.username, image.id, image.s3_key, image.downloadableVideo, image.isVideo)" class="top-card" slot="end"><ion-icon name="ellipsis-horizontal-sharp"></ion-icon></ion-label>
             </div>
           </ion-item>
 

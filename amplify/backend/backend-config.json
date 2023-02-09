@@ -79,10 +79,10 @@
   },
   "storage": {
     "fetabe6b35e5": {
-      "service": "S3",
-      "serviceType": "imported",
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
-      "dependsOn": []
+      "service": "S3",
+      "serviceType": "imported"
     }
   },
   "video": {
