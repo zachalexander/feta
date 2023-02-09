@@ -148,8 +148,6 @@ export class TimelineComponent {
       if(this.nowPlaying) return;
 
       const nativeElement = player.nativeElement;
-      nativeElement.style.removeProperty("width");
-      nativeElement.style.width = '100vw';
       const inView = this.isElementInViewport(nativeElement);
 
       if(inView) {
@@ -214,16 +212,24 @@ export class TimelineComponent {
     }
   }
 
+  async ngOnInit(){
+    setTimeout(() => {
+      this.data.forEach(posts => {
+        console.log(posts)
+        this.videos.forEach(video => {
+          console.log(video.nativeElement)
+          video.native.poster = ''
+        })
+      })
+    }, 2000)
+  }
   async ngOnChanges() {
 
     this.currentUserUsernameID = localStorage.getItem('usernameID')
     this.browser = localStorage.getItem('User-browser')
-
-    console.log(await this.platform.platforms())
-
     this.platformView = await this.platform.platforms();
 
-    console.log(this.platformView.includes('ios'))
+
 
     // if (this.platform.is('hybrid')) {
 

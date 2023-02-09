@@ -22,7 +22,9 @@ type Profile @model @auth(rules: [{allow: public}]) {
   profilepicture: ProfilePicture @hasOne(fields: ["profilepictureID"])
 }
 
-type ImagePost @model @auth(rules: [{allow: public}]) {
+type ImagePost @model @auth(rules: [{allow: public}]) 
+@index(name: "byTimePosted", queryField: "postsByDate", sortKeyFields: ["time_posted"])
+{
   id: ID!
   description: String
   time_posted: AWSDateTime
@@ -32,7 +34,7 @@ type ImagePost @model @auth(rules: [{allow: public}]) {
   username: Username @hasOne(fields: ["usernameID"])
   profileID: ID! @index(name: "byProfile")
   profile: Profile @hasOne(fields: ["profileID"])
-  s3_key: String @index(name: "byTimePosted", queryField: "postsByDate", sortKeyFields: ["time_posted"])
+  s3_key: String
   posterImage: String
 }
 
