@@ -58,6 +58,7 @@
     "imagekitio-angular": "^1.0.2",
     "ionicons": "^6.0.3",
     "localforage-cordovasqlitedriver": "^1.8.0",
+    "ng-in-viewport": "^15.0.0",
     "ngx-image-cropper": "^6.3.2",
     "objectFitPolyfill": "^2.3.5",
     "rxjs": "~7.5.0",

@@ -159,7 +159,6 @@ export class ProfilePicturePage {
           }))
 
           profilepictureID = findNewProfilePictureID.toString();
-          console.log(profilepictureID)
           
           const updateProfile = new Promise(resolve => {
             resolve(this.api.UpdateProfile({id: profileID, profilepictureID: profilepictureID}))
@@ -194,7 +193,6 @@ export class ProfilePicturePage {
   }
 
   async getProfilePicture(profileID){
-    const url = await (await this.api.GetProfilePictureProfileID(profileID))?.imageurl
-    return this.mediaService.getPhotoUrl(url);
+    return await (await this.api.GetProfilePictureProfileID(profileID))?.imageurl;
   }
 }

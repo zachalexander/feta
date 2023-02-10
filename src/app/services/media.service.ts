@@ -158,7 +158,7 @@ export class MediaService {
           description: posts.description,
           id: posts.id,
           likes: posts.likes,
-          posterImage: "https://ik.imagekit.io/bkf4g8lrl/poster-images/" + posts.posterImage,
+          posterImage: await Storage.get(posts.posterImage, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
           // comment_count: await this.commentLength(posts.comments),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,

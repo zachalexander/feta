@@ -26,6 +26,8 @@ import { VgStreamingModule } from '@videogular/ngx-videogular/streaming';
 import { ImageResizer } from '@awesome-cordova-plugins/image-resizer/ngx';
 import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
 
+import { InViewportDirective } from 'ng-in-viewport';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -38,10 +40,11 @@ import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    VgStreamingModule
+    VgStreamingModule,
+    InViewportDirective
   ],
   declarations: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent],
-  exports: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent]
+  exports: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent, InViewportDirective]
 })
 export class SharedmodulePageModule {
   static forRoot() {

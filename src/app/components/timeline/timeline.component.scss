@@ -35,27 +35,32 @@ ion-refresher.refresher-active {
         width: 100vw;
         height: 500px;
     }
+
+    .video-background {
+        position: relative;
+        background-size: cover;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-position: center;
+        aspect-ratio: 4/5;
+        overflow: hidden;
+        width: 100%;
+    }
     
     video {
-        max-height: 100%;
-        max-width: 100vw;
-        min-height: 100%;
-        min-width: 100vw;
-        // width: 100vw;
-        // height: 100%;
+        height: 100%;
+        width: 100%;
         position: relative;
         object-fit: cover;
-        // margin: 0;
-        // padding: 0;
-        // display: block;
+        z-index: 1;
     }
 
-    video[poster]{
-        height: 100%;
-        width: 100vw;
-        position: absolute;
-        background-color: black;
-    }
+    // video[poster]{
+    //     position: relative;
+    //     object-fit: cover;
+    //     z-index: 2;
+    // }
 }
 
 
@@ -73,6 +78,7 @@ ion-refresher.refresher-active {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    z-index: 5;
 
     ion-icon {
         width: 15px !important;
@@ -91,6 +97,7 @@ ion-refresher.refresher-active {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    z-index: 5;
 
     p {
         margin: 0.5em 1em;
@@ -111,6 +118,7 @@ ion-refresher.refresher-active {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    z-index: 5;
 
     ion-icon {
         width: 15px !important;

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList, ViewChildren, OnChanges} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList, ViewChildren, OnChanges, AfterViewInit} from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { TimelinePageModule } from 'src/app/pages/timeline/timeline.module';
 import { ModalController, Platform } from '@ionic/angular';
@@ -47,7 +47,7 @@ SwiperCore.use([Zoom, EffectFade]);
   providers: [DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix]
 })
 
-export class TimelineComponent {
+export class TimelineComponent implements AfterViewInit{
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRefresher) ionRefresher: IonRefresher;
@@ -111,7 +111,7 @@ export class TimelineComponent {
   isElementInViewport(element){
     const rect = element.getBoundingClientRect();
     return (
-      rect.top >= 0 &&
+      rect.top >= -20 &&
       rect.left >= 0 &&
       rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
@@ -129,17 +129,16 @@ export class TimelineComponent {
 
     this.videos.forEach(player => {
       if(this.nowPlaying) return;
-
       const nativeElement = player.nativeElement;
       const inView = this.isElementInViewport(nativeElement);
 
       if(inView) {
         this.nowPlaying = nativeElement;
+        this.nowPlaying.play();
         this.nowPlaying.muted = true;
         this.pause = false;
         this.muted = true;
         this.replay = false;
-        this.nowPlaying.play();
         this.videoOver = false;
       }
     })
@@ -245,6 +244,7 @@ export class TimelineComponent {
     this.didScroll();
     this.startSubscriptions();
   }
+
 
   async ngOnDestroy() {
     if(this.onCreateImageSubscription){

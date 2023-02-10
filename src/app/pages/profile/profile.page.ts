@@ -98,23 +98,11 @@ export class ProfilePage {
       // sort photos by time posted
       this.userData[0] = await this.sortByDate(this.userData[0]);
       this.userData[2] = await this.sortByDate(this.userData[2]);
-
-      console.log(this.userData[2])
-  
-      // get actual photo url from storage
-      // userData[0] = await this.mediaService.getPhotoUrlsKey(userData[0])
   
       // save profile data to object to render
       this.profileMediaData = this.userData[0];
       this.profileData.username = await this.api.GetUsernameFromProfileId(this.profileData.id).then(async username => username);
     }
-
-
-    // let profilePhotoCall = await new Promise((resolve, reject) => {
-    //   resolve(this.getProfilePicture(this.urlUserProfile.id));
-    // }).catch((error) => 'something went wrong')
-
-    // this.profileData.profilePictureUrl = profilePhotoCall !== 'something went wrong'? profilePhotoCall: null
 
     if(this.profileData.profilepictureID){
       this.profilePhoto = this.profileData.profilepicture.imageurl;
@@ -154,14 +142,13 @@ export class ProfilePage {
   async updateProfile(){
     const modal = await this.modalController.create({
       component: UpdateProfileModalPage,
+      componentProps: {
+        profile: this.profileData
+      }
     })
     return await modal.present();
   }
 
-  async getProfilePicture(profileID){
-    let url = await (await this.api.GetProfilePictureProfileID(profileID)).imageurl
-    return await this.mediaService.getPhotoUrl(url)
-  }
 
   async sortByDate(array){
     console.log(array)

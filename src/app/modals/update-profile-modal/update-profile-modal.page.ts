@@ -20,6 +20,7 @@ export class UpdateProfileModalPage implements OnInit {
   relation: String;
   currentUserProfile: any;
   profilePic: any;
+  profile;
 
   constructor(private modalController: ModalController, 
     private customValidator: CustomvalidationService, 
@@ -41,7 +42,6 @@ export class UpdateProfileModalPage implements OnInit {
   }
 
   async ngOnInit() {
-
     const loading = await this.loadingController.create({
       spinner: 'lines-sharp-small',
       translucent: false,
@@ -51,9 +51,9 @@ export class UpdateProfileModalPage implements OnInit {
     loading.present();
 
     // get current user information
-    this.currentUserProfile = await this.api.GetProfile(localStorage.getItem('profileID'));
+    this.currentUserProfile = this.profile;
 
-    this.username = await localStorage.getItem('username');
+    this.username = this.profile.username;
     this.family_name = this.currentUserProfile.family_name;
     this.relation = this.currentUserProfile.relation;
 
@@ -61,17 +61,14 @@ export class UpdateProfileModalPage implements OnInit {
     this.updateProfileForm.controls['family_name'].setValue(this.family_name)
     this.updateProfileForm.controls['relation'].setValue(this.relation)
 
-    let imageurl = await (await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'))).imageurl
+    let imageurl = this.currentUserProfile.profilepicture.imageurl;
 
     if(imageurl){
-      this.profilePic = await this.mediaService.getPhotoUrl(imageurl)
+      this.profilePic = imageurl;
+      loading.dismiss();
     } else {
       this.profilePic = false;
     }
-
-    setTimeout(() => {
-      loading.dismiss();
-    }, 2000)
   }
 
   async backToProfile(){
@@ -84,15 +81,20 @@ export class UpdateProfileModalPage implements OnInit {
 
   public async onUpdate(profile: any) {
 
-    let usernameData = await this.api.GetUsernameDataFromProfileId(this.currentUserProfile.id);
-    // let profileVersion = await (await this.api.GetProfile(localStorage.getItem('profileID')))._version;
+    const loading = await this.loadingController.create({
+      spinner: 'lines-sharp-small',
+      translucent: false,
+      cssClass: 'spinner-loading'
+    });
+
+    loading.present();
 
     let updateUsername = new Promise(resolve => {
-      resolve(this.api.UpdateUsername({id: usernameData.id, username: profile.username}))
+      resolve(this.api.UpdateUsername({id: this.profile.usernameID, username: profile.username}))
     })
     
     let updateProfilePromise = new Promise(resolve => {
-      resolve(updateUsername.then(() => {this.api.UpdateProfile({id: usernameData.profileID, family_name: profile.family_name, relation: profile.relation})}))
+      resolve(updateUsername.then(() => {this.api.UpdateProfile({id: this.profile.id, family_name: profile.family_name, relation: profile.relation})}))
     })
 
     await localStorage.removeItem('username')
@@ -100,6 +102,7 @@ export class UpdateProfileModalPage implements OnInit {
     
     updateProfilePromise.then(() => {
       this.router.navigate(['/profile', profile.username]).then(() => { window.location.reload()});
+      loading.dismiss();
     }).catch((e) => {
       console.log("error updating profile...", e);
     });

@@ -56,11 +56,13 @@
             </swiper>
             <div id="video-container" *ngIf="image.isVideo">
               <!-- <video (ended)="videoEnd()" class="video_{{image.id}}" type="application/x-mpegURL" width="100%" #timelineVideo type="video/m3u8" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video> -->
-              <video poster="{{image.imagePoster}}" (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="((browser === 'other') || (platformView.includes('capacitor'))) && image.isVideo" preload="auto" playsinline muted webkit-playsinline="webkit-playsinline">
-                <source [src]="image.mediaSource" type="application/x-mpegURL">
-              </video>
+              <div class="video-background" *ngIf="((browser === 'other') || (platformView.includes('capacitor'))) && image.isVideo" style="background-image: url({{image.posterImage}})">
+                <video (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="((browser === 'other') || (platformView.includes('capacitor'))) && image.isVideo" preload="auto" playsinline muted webkit-playsinline>
+                  <source [src]="image.mediaSource" type="application/x-mpegURL">
+                </video>
+              </div>
               <vg-player *ngIf="(browser === 'chrome' || browser === 'safari')">
-                <video poster="{{image.imagePoster}}" (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="multipleVideos" preload="auto" playsinline webkit-playsinline="webkit-playsinline">
+                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="multipleVideos" preload="auto" playsinline webkit-playsinline="webkit-playsinline">
                   <source [vgHls]="image.mediaSource" type="application/x-mpegURL">
                 </video>
               </vg-player>

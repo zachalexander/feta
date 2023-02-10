@@ -37,8 +37,9 @@ export class LikeListModalPage implements OnInit {
 
         if(profile.profilepictureID !== null){
           let profilePicUrl = await this.api.GetProfilePictureProfileID(user.profileID)
+          console.log(profilePicUrl)
           if(profilePicUrl){
-            photoUrl = await this.mediaService.getPhotoUrl(profilePicUrl.imageurl)
+            photoUrl = profilePicUrl.imageurl;
             this.image = true;
           } else {
             photoUrl = '../../../assets/avatar.svg';
