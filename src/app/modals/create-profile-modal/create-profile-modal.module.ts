@@ -10,6 +10,7 @@ import { CreateProfileModalPage } from './create-profile-modal.page';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { SwiperModule } from 'swiper/angular';
+import { SharedmodulePageModule } from 'src/app/pages/sharedmodule/sharedmodule.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { SwiperModule } from 'swiper/angular';
     ReactiveFormsModule,
     CreateProfileModalPageRoutingModule,
     ImageCropperModule,
-    SwiperModule
+    SwiperModule,
+    SharedmodulePageModule
   ],
   declarations: [CreateProfileModalPage]
 })

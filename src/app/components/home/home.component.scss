@@ -30,3 +30,32 @@ img {
   justify-content: center;
   align-items: center;
 }
+
+.create-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  margin-bottom: 10em;
+}
+
+ion-grid {
+  height: 100%;
+}
+
+ion-row {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-card {
+
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+
+}

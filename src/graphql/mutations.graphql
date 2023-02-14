@@ -36,7 +36,8 @@ mutation CreateProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -46,6 +47,8 @@ mutation CreateProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -94,7 +97,8 @@ mutation UpdateProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -104,6 +108,8 @@ mutation UpdateProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -152,7 +158,8 @@ mutation DeleteProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -162,6 +169,8 @@ mutation DeleteProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -206,8 +215,11 @@ mutation CreateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -245,8 +257,11 @@ mutation CreateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -257,7 +272,8 @@ mutation CreateProfile(
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -268,8 +284,11 @@ mutation CreateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -280,6 +299,8 @@ mutation CreateProfile(
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -319,8 +340,11 @@ mutation UpdateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -358,8 +382,11 @@ mutation UpdateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -370,7 +397,8 @@ mutation UpdateProfile(
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -381,8 +409,11 @@ mutation UpdateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -393,6 +424,8 @@ mutation UpdateProfile(
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -432,8 +465,11 @@ mutation DeleteProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -471,8 +507,11 @@ mutation DeleteProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -483,7 +522,8 @@ mutation DeleteProfile(
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -494,8 +534,11 @@ mutation DeleteProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -506,6 +549,8 @@ mutation DeleteProfile(
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -548,8 +593,11 @@ mutation CreateImagePost(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -591,7 +639,8 @@ mutation CreateImagePost(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -601,6 +650,8 @@ mutation CreateImagePost(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -650,8 +701,11 @@ mutation UpdateImagePost(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -693,7 +747,8 @@ mutation UpdateImagePost(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -703,6 +758,8 @@ mutation UpdateImagePost(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -752,8 +809,11 @@ mutation DeleteImagePost(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -795,7 +855,8 @@ mutation DeleteImagePost(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -805,6 +866,8 @@ mutation DeleteImagePost(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -891,8 +954,11 @@ mutation CreateUsername(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -935,7 +1001,8 @@ mutation CreateUsername(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -945,6 +1012,8 @@ mutation CreateUsername(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -987,8 +1056,11 @@ mutation UpdateUsername(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -1031,7 +1103,8 @@ mutation UpdateUsername(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -1041,6 +1114,8 @@ mutation UpdateUsername(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -1083,8 +1158,11 @@ mutation DeleteUsername(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -1127,7 +1205,8 @@ mutation DeleteUsername(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -1137,6 +1216,8 @@ mutation DeleteUsername(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId

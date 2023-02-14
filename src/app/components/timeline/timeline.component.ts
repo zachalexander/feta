@@ -346,6 +346,14 @@ export class TimelineComponent implements AfterViewInit{
           icon: 'share-outline',
           handler: async () => {
 
+            const loading = await this.loadingController.create({
+              spinner: 'lines-sharp-small',
+              translucent: false,
+              cssClass: 'spinner-loading'
+            });
+
+            loading.present();
+
             let media = await this.api.GetImagePost(mediaId)
             if(isVideo){
               let video = await Storage.get(media.downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
@@ -353,11 +361,14 @@ export class TimelineComponent implements AfterViewInit{
               if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
                 const fileName = 'feta-download-' + new Date().getTime() + '.mov' 
                 this.downloadBlob(video, fileName)
+                loading.dismiss()
               }
 
               if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
-                const base64Data = await this.readAsBase64(video)
-                const fileName = new Date().getTime() + '.jpeg';
+                const response = await fetch(`${video}`)
+                const blob = await response.blob();
+                const base64Data = await this.convertBlobToBase64(blob) as string;
+                const fileName = new Date().getTime() + '.mov';
     
                 await Filesystem.writeFile({
                   path: fileName,
@@ -369,6 +380,7 @@ export class TimelineComponent implements AfterViewInit{
                     path: fileName
                   });
                 }).then((uriResult) => {
+                  loading.dismiss()
                   return Share.share({
                     title: 'Share content',
                     text: "Look at this content from Zach & Katie's Feta app",
@@ -384,6 +396,7 @@ export class TimelineComponent implements AfterViewInit{
               if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
                 const fileName = 'feta-download-' + new Date().getTime() + '.jpeg' 
                 this.downloadBlob(photo.Body, fileName)
+                loading.dismiss();
               }
 
               if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
@@ -400,6 +413,7 @@ export class TimelineComponent implements AfterViewInit{
                     path: fileName
                   });
                 }).then((uriResult) => {
+                  loading.dismiss();
                   return Share.share({
                     title: 'Share content',
                     text: "Look at this content from Zach & Katie's Feta app",
@@ -449,6 +463,15 @@ export class TimelineComponent implements AfterViewInit{
   }
 
   async shareButtonClicked(id, isVideo, mediaKey){
+
+    const loading = await this.loadingController.create({
+      spinner: 'lines-sharp-small',
+      translucent: false,
+      cssClass: 'spinner-loading'
+    });
+
+    loading.present();
+
     let media = await this.api.GetImagePost(id)
     if(isVideo){
       let video = await Storage.get(media.downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
@@ -456,11 +479,14 @@ export class TimelineComponent implements AfterViewInit{
       if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
         const fileName = 'feta-download-' + new Date().getTime() + '.mov' 
         this.downloadBlob(video, fileName)
+        loading.dismiss();
       }
 
       if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
-        const base64Data = await this.readAsBase64(video)
-        const fileName = new Date().getTime() + '.jpeg';
+        const response = await fetch(`${video}`)
+        const blob = await response.blob();
+        const base64Data = await this.convertBlobToBase64(blob) as string;
+        const fileName = new Date().getTime() + '.mov';
 
         await Filesystem.writeFile({
           path: fileName,
@@ -472,6 +498,7 @@ export class TimelineComponent implements AfterViewInit{
             path: fileName
           });
         }).then((uriResult) => {
+          loading.dismiss();
           return Share.share({
             title: 'Share content',
             text: "Look at this content from Zach & Katie's Feta app",
@@ -486,6 +513,7 @@ export class TimelineComponent implements AfterViewInit{
         if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
           const fileName = 'feta-download-' + new Date().getTime() + '.jpeg' 
           this.downloadBlob(photo.Body, fileName)
+          loading.dismiss();
         }
 
         if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
@@ -502,6 +530,7 @@ export class TimelineComponent implements AfterViewInit{
               path: fileName
             });
           }).then((uriResult) => {
+            loading.dismiss();
             return Share.share({
               title: 'Share content',
               text: "Look at this content from Zach & Katie's Feta app",

@@ -30,15 +30,34 @@
       </ion-card>
 
       <!-- if user is not registered -->
-      <ion-card *ngIf="createProfile">
-        <img src="../../../assets/undraw_having_fun.svg" />
-        <ion-card-header>
-          <ion-card-title>Welcome to feta!</ion-card-title>
-          <ion-card-subtitle>Let's get started by creating a profile</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content class="ion-padding">
-          <ion-button color="light" class="lets-go-button" (click)="openModal()">Let's Go&nbsp;<ion-icon name="arrow-forward-circle-outline"></ion-icon> </ion-button>
-        </ion-card-content>
-      </ion-card>
+      <ion-grid *ngIf="createProfile">
+        <ion-row *ngIf="createProfile">
+          <ion-card *ngIf="createProfile" class="create-profile">
+            <img src="../../../assets/undraw_having_fun.svg" />
+            <ion-card-header>
+              <ion-card-title>Welcome to feta!</ion-card-title>
+              <ion-card-subtitle>Let's get started by creating a profile</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="ion-padding">
+              <ion-button color="light" class="lets-go-button" (click)="openModal()">Let's Go&nbsp;<ion-icon name="arrow-forward-circle-outline"></ion-icon> </ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+      </ion-grid>
+
+      <!-- if there was an error -->
+      <ion-grid *ngIf="errorPage">
+        <ion-row *ngIf="errorPage">
+          <ion-card *ngIf="errorPage" color="danger" class="error-card">
+            <ion-card-header>
+              <ion-card-subtitle>Login Error</ion-card-subtitle>
+              <ion-card-title>Oh no! Looks like there was an error. </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-padding">
+              <a href="mailto: alexander.d.zachary@gmail.com"><ion-button fill="light">Contact Zach</ion-button></a>
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+      </ion-grid>
 
   </ion-content>

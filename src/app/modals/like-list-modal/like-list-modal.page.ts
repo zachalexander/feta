@@ -50,7 +50,7 @@ export class LikeListModalPage implements OnInit {
           this.image = false;
         }
 
-        usernames.push([user.username, profile.family_name, photoUrl, this.image])
+        usernames.push([user.username, profile.first_name, photoUrl, this.image])
       })
       this.likes = usernames;
     })

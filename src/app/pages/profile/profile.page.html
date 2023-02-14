@@ -57,6 +57,12 @@
         </div>
       </div>
     </div>
+    <div class="full_name">
+      <p>{{profileData.first_name}}&nbsp;{{profileData.last_name}}</p>
+    </div>
+    <div class="birthday">
+      <p>Birthday: {{profileData.birthday | date: 'MMMM d'}}{{(profileData.birthday | date: 'MMMM d') | dateSuffix}}</p>
+    </div>
     <div class="bio">
       <p class="bio-text"><strong class="username">{{profileData.username}}</strong> is Data Engineer at the Center for Justice Innovation. Married to Katie Friedman. I live and work in New York.</p>
     </div>

@@ -33,7 +33,8 @@ query GetProfilePicture($id: ID!) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -43,6 +44,8 @@ query GetProfilePicture($id: ID!) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -69,8 +72,11 @@ query ListProfilePictures(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -114,8 +120,11 @@ query GetProfile($id: ID!) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -153,8 +162,11 @@ query GetProfile($id: ID!) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -165,7 +177,8 @@ query GetProfile($id: ID!) {
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -176,8 +189,11 @@ query GetProfile($id: ID!) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -188,6 +204,8 @@ query GetProfile($id: ID!) {
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -230,7 +248,8 @@ query ListProfiles(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -240,6 +259,8 @@ query ListProfiles(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -281,8 +302,11 @@ query GetImagePost($id: ID!) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -324,7 +348,8 @@ query GetImagePost($id: ID!) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -334,6 +359,8 @@ query GetImagePost($id: ID!) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -376,8 +403,11 @@ query ListImagePosts(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -450,8 +480,11 @@ query GetUsername($id: ID!) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -494,7 +527,8 @@ query GetUsername($id: ID!) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -504,6 +538,8 @@ query GetUsername($id: ID!) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -546,8 +582,11 @@ query ListUsernames(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -605,7 +644,8 @@ query ProfilesByProfilepictureID(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -615,6 +655,8 @@ query ProfilesByProfilepictureID(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -660,8 +702,11 @@ query ImagePostsByUsernameID(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -714,8 +759,11 @@ query ImagePostsByProfileID(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId

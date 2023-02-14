@@ -238,3 +238,23 @@ ion-tab-button {
     justify-content: space-around;
     margin: 0;
 }
+
+alert-wrapper.sc-ion-alert-ios {
+    border-radius: 0px;
+    box-shadow: none;
+    overflow: hidden;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 90vw;
+    min-width: var(--min-width);
+    max-width: 500px;
+    height: var(--height);
+    min-height: var(--min-height);
+    max-height: var(--max-height);
+    background: var(--background);
+    contain: content;
+    opacity: 0;
+    z-index: 10;
+}

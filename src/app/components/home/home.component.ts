@@ -16,6 +16,7 @@ export class HomeComponent {
   @Input() name?: string;
   already_registered;
   createProfile = false;
+  errorPage = false;
   username;
   profilepicid;
   browserName = '';
@@ -113,7 +114,9 @@ export class HomeComponent {
       }
     }
     catch (error) {
-       await this.router.navigate(['/login']).then(() => { window.location.reload()})
+      console.log(error)
+      this.errorPage = true;
+      //  await this.router.navigate(['/login']).then(() => { window.location.reload()})
     }
 
 }

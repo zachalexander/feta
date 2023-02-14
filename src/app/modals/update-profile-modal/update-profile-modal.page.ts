@@ -94,7 +94,7 @@ export class UpdateProfileModalPage implements OnInit {
     })
     
     let updateProfilePromise = new Promise(resolve => {
-      resolve(updateUsername.then(() => {this.api.UpdateProfile({id: this.profile.id, family_name: profile.family_name, relation: profile.relation})}))
+      resolve(updateUsername.then(() => {this.api.UpdateProfile({id: this.profile.id, first_name: profile.first_name, relation: profile.relation})}))
     })
 
     await localStorage.removeItem('username')

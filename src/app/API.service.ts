@@ -119,9 +119,12 @@ export type Profile = {
   usernameID?: string | null;
   ImagePosts?: ImagePost | null;
   Username?: Username | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: ProfilePicture | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -177,8 +180,11 @@ export type CreateProfileInput = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
+  bio?: string | null;
+  birthday?: string | null;
   profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
 };
@@ -188,8 +194,11 @@ export type ModelProfileConditionInput = {
   relation?: ModelStringInput | null;
   cognitoID?: ModelStringInput | null;
   usernameID?: ModelStringInput | null;
-  family_name?: ModelStringInput | null;
+  first_name?: ModelStringInput | null;
+  last_name?: ModelStringInput | null;
   profilepictureID?: ModelIDInput | null;
+  bio?: ModelStringInput | null;
+  birthday?: ModelStringInput | null;
   and?: Array<ModelProfileConditionInput | null> | null;
   or?: Array<ModelProfileConditionInput | null> | null;
   not?: ModelProfileConditionInput | null;
@@ -203,8 +212,11 @@ export type UpdateProfileInput = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
+  bio?: string | null;
+  birthday?: string | null;
   profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
 };
@@ -354,8 +366,11 @@ export type ModelProfileFilterInput = {
   relation?: ModelStringInput | null;
   cognitoID?: ModelStringInput | null;
   usernameID?: ModelStringInput | null;
-  family_name?: ModelStringInput | null;
+  first_name?: ModelStringInput | null;
+  last_name?: ModelStringInput | null;
   profilepictureID?: ModelIDInput | null;
+  bio?: ModelStringInput | null;
+  birthday?: ModelStringInput | null;
   and?: Array<ModelProfileFilterInput | null> | null;
   or?: Array<ModelProfileFilterInput | null> | null;
   not?: ModelProfileFilterInput | null;
@@ -475,8 +490,11 @@ export type ModelSubscriptionProfileFilterInput = {
   relation?: ModelSubscriptionStringInput | null;
   cognitoID?: ModelSubscriptionStringInput | null;
   usernameID?: ModelSubscriptionStringInput | null;
-  family_name?: ModelSubscriptionStringInput | null;
+  first_name?: ModelSubscriptionStringInput | null;
+  last_name?: ModelSubscriptionStringInput | null;
   profilepictureID?: ModelSubscriptionIDInput | null;
+  bio?: ModelSubscriptionStringInput | null;
+  birthday?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionProfileFilterInput | null> | null;
   or?: Array<ModelSubscriptionProfileFilterInput | null> | null;
 };
@@ -552,7 +570,8 @@ export type CreateProfilePictureMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -563,6 +582,8 @@ export type CreateProfilePictureMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -611,7 +632,8 @@ export type UpdateProfilePictureMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -622,6 +644,8 @@ export type UpdateProfilePictureMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -670,7 +694,8 @@ export type DeleteProfilePictureMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -681,6 +706,8 @@ export type DeleteProfilePictureMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -725,8 +752,11 @@ export type CreateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -767,8 +797,11 @@ export type CreateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -779,7 +812,8 @@ export type CreateProfileMutation = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -792,8 +826,11 @@ export type CreateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -804,6 +841,8 @@ export type CreateProfileMutation = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -843,8 +882,11 @@ export type UpdateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -885,8 +927,11 @@ export type UpdateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -897,7 +942,8 @@ export type UpdateProfileMutation = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -910,8 +956,11 @@ export type UpdateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -922,6 +971,8 @@ export type UpdateProfileMutation = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -961,8 +1012,11 @@ export type DeleteProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1003,8 +1057,11 @@ export type DeleteProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1015,7 +1072,8 @@ export type DeleteProfileMutation = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -1028,8 +1086,11 @@ export type DeleteProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1040,6 +1101,8 @@ export type DeleteProfileMutation = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -1082,8 +1145,11 @@ export type CreateImagePostMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1128,7 +1194,8 @@ export type CreateImagePostMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1139,6 +1206,8 @@ export type CreateImagePostMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1188,8 +1257,11 @@ export type UpdateImagePostMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1234,7 +1306,8 @@ export type UpdateImagePostMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1245,6 +1318,8 @@ export type UpdateImagePostMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1294,8 +1369,11 @@ export type DeleteImagePostMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1340,7 +1418,8 @@ export type DeleteImagePostMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1351,6 +1430,8 @@ export type DeleteImagePostMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1428,8 +1509,11 @@ export type CreateUsernameMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1475,7 +1559,8 @@ export type CreateUsernameMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1486,6 +1571,8 @@ export type CreateUsernameMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1528,8 +1615,11 @@ export type UpdateUsernameMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1575,7 +1665,8 @@ export type UpdateUsernameMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1586,6 +1677,8 @@ export type UpdateUsernameMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1628,8 +1721,11 @@ export type DeleteUsernameMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1675,7 +1771,8 @@ export type DeleteUsernameMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1686,6 +1783,8 @@ export type DeleteUsernameMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1734,7 +1833,8 @@ export type GetProfilePictureQuery = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1745,6 +1845,8 @@ export type GetProfilePictureQuery = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1769,8 +1871,11 @@ export type ListProfilePicturesQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1817,8 +1922,11 @@ export type GetProfileQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1859,8 +1967,11 @@ export type GetProfileQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1871,7 +1982,8 @@ export type GetProfileQuery = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -1884,8 +1996,11 @@ export type GetProfileQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1896,6 +2011,8 @@ export type GetProfileQuery = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -1937,7 +2054,8 @@ export type ListProfilesQuery = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1948,6 +2066,8 @@ export type ListProfilesQuery = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1992,8 +2112,11 @@ export type GetImagePostQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2038,7 +2161,8 @@ export type GetImagePostQuery = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2049,6 +2173,8 @@ export type GetImagePostQuery = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2090,8 +2216,11 @@ export type ListImagePostsQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2164,8 +2293,11 @@ export type GetUsernameQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2211,7 +2343,8 @@ export type GetUsernameQuery = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2222,6 +2355,8 @@ export type GetUsernameQuery = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2263,8 +2398,11 @@ export type ListUsernamesQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2313,7 +2451,8 @@ export type ProfilesByProfilepictureIDQuery = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2324,6 +2463,8 @@ export type ProfilesByProfilepictureIDQuery = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2360,8 +2501,11 @@ export type ImagePostsByUsernameIDQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2405,8 +2549,11 @@ export type ImagePostsByProfileIDQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2459,7 +2606,8 @@ export type OnCreateProfilePictureSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2470,6 +2618,8 @@ export type OnCreateProfilePictureSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2518,7 +2668,8 @@ export type OnUpdateProfilePictureSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2529,6 +2680,8 @@ export type OnUpdateProfilePictureSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2577,7 +2730,8 @@ export type OnDeleteProfilePictureSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2588,6 +2742,8 @@ export type OnDeleteProfilePictureSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2632,8 +2788,11 @@ export type OnCreateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2674,8 +2833,11 @@ export type OnCreateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2686,7 +2848,8 @@ export type OnCreateProfileSubscription = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -2699,8 +2862,11 @@ export type OnCreateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2711,6 +2877,8 @@ export type OnCreateProfileSubscription = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -2750,8 +2918,11 @@ export type OnUpdateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2792,8 +2963,11 @@ export type OnUpdateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2804,7 +2978,8 @@ export type OnUpdateProfileSubscription = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -2817,8 +2992,11 @@ export type OnUpdateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2829,6 +3007,8 @@ export type OnUpdateProfileSubscription = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -2868,8 +3048,11 @@ export type OnDeleteProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2910,8 +3093,11 @@ export type OnDeleteProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2922,7 +3108,8 @@ export type OnDeleteProfileSubscription = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -2935,8 +3122,11 @@ export type OnDeleteProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2947,6 +3137,8 @@ export type OnDeleteProfileSubscription = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -2989,8 +3181,11 @@ export type OnCreateImagePostSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -3035,7 +3230,8 @@ export type OnCreateImagePostSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3046,6 +3242,8 @@ export type OnCreateImagePostSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -3095,8 +3293,11 @@ export type OnUpdateImagePostSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -3141,7 +3342,8 @@ export type OnUpdateImagePostSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3152,6 +3354,8 @@ export type OnUpdateImagePostSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -3201,8 +3405,11 @@ export type OnDeleteImagePostSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -3247,7 +3454,8 @@ export type OnDeleteImagePostSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3258,6 +3466,8 @@ export type OnDeleteImagePostSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -3335,8 +3545,11 @@ export type OnCreateUsernameSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -3382,7 +3595,8 @@ export type OnCreateUsernameSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3393,6 +3607,8 @@ export type OnCreateUsernameSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -3435,8 +3651,11 @@ export type OnUpdateUsernameSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -3482,7 +3701,8 @@ export type OnUpdateUsernameSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3493,6 +3713,8 @@ export type OnUpdateUsernameSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -3535,8 +3757,11 @@ export type OnDeleteUsernameSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -3582,7 +3807,8 @@ export type OnDeleteUsernameSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3593,6 +3819,8 @@ export type OnDeleteUsernameSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -3763,91 +3991,91 @@ export class APIService {
         updatedAt
       }
     }`;
-  const gqlAPIServiceArguments: any = {
-    id
-  };
-  const response = (await API.graphql(
-    graphqlOperation(statement, gqlAPIServiceArguments)
-  )) as any;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
 
-  let array: any = response.data.getImagePost;
-  let currentUser = localStorage.getItem('usernameID');
+    let array: any = response.data.getImagePost;
+    let currentUser = localStorage.getItem('usernameID');
 
-  this.finalArray = [];
-  if(!array.posterImage){
-    this.finalArray.push({
-      mediaSource: array.mediaSource,
-      isVideo: false,
-      time_posted: new Date(array.time_posted),
-      usernameID: array.usernameID,
-      description: array.description,
-      id: array.id,
-      likes: array.likes,
-      // comment_count: await this.commentLength(posts.comments),
-      like_count: await this.getLikeCount(array.likes),
-      username: array.username.username,
-      userLiked: await this.getLikeData(array.likes, currentUser),
-      profilePicture: array.profile.profilepicture.imageurl
-    })
-  } else {
-    this.finalArray.push({
-      mediaSource: await Storage.get(array.s3_key, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
-      isVideo: true,
-      time_posted: new Date(array.time_posted),
-      usernameID: array.usernameID,
-      description: array.description,
-      id: array.id,
-      likes: array.likes,
-      posterImage: "https://ik.imagekit.io/bkf4g8lrl/poster-images/" + array.posterImage,
-      // comment_count: await this.commentLength(posts.comments),
-      like_count: await this.getLikeCount(array.likes),
-      username: array.username.username,
-      userLiked: await this.getLikeData(array.likes, currentUser),            
-      profilePicture: array.profile.profilepicture.imageurl
-    })
+    this.finalArray = [];
+    if (!array.posterImage) {
+      this.finalArray.push({
+        mediaSource: array.mediaSource,
+        isVideo: false,
+        time_posted: new Date(array.time_posted),
+        usernameID: array.usernameID,
+        description: array.description,
+        id: array.id,
+        likes: array.likes,
+        // comment_count: await this.commentLength(posts.comments),
+        like_count: await this.getLikeCount(array.likes),
+        username: array.username.username,
+        userLiked: await this.getLikeData(array.likes, currentUser),
+        profilePicture: array.profile.profilepicture.imageurl
+      })
+    } else {
+      this.finalArray.push({
+        mediaSource: await Storage.get(array.s3_key, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+        isVideo: true,
+        time_posted: new Date(array.time_posted),
+        usernameID: array.usernameID,
+        description: array.description,
+        id: array.id,
+        likes: array.likes,
+        posterImage: "https://ik.imagekit.io/bkf4g8lrl/poster-images/" + array.posterImage,
+        // comment_count: await this.commentLength(posts.comments),
+        like_count: await this.getLikeCount(array.likes),
+        username: array.username.username,
+        userLiked: await this.getLikeData(array.likes, currentUser),
+        profilePicture: array.profile.profilepicture.imageurl
+      })
+    }
+    this.finalArray = this.finalArray[0]
+    return [1, this.finalArray];
   }
-  this.finalArray = this.finalArray[0]
-  return [1, this.finalArray];
-}
 
 
-sortByDate(array) {
-  console.log(array)
-  return array.sort((a, b) => Date.parse(b.time_posted) - Date.parse(a.time_posted))
-}
+  sortByDate(array) {
+    console.log(array)
+    return array.sort((a, b) => Date.parse(b.time_posted) - Date.parse(a.time_posted))
+  }
 
-async getLikeData(likes, usernameID) {
-  if(!JSON.parse(likes)){
-    return false;
-  } else {
-    if(!JSON.parse(likes)['usernames']){
+  async getLikeData(likes, usernameID) {
+    if (!JSON.parse(likes)) {
       return false;
     } else {
-      let usersThatLike = [];
-      usersThatLike = JSON.parse(likes)['usernames'];
-      if(usersThatLike.indexOf(usernameID) > -1){
-        return true;
-      } else {
+      if (!JSON.parse(likes)['usernames']) {
         return false;
+      } else {
+        let usersThatLike = [];
+        usersThatLike = JSON.parse(likes)['usernames'];
+        if (usersThatLike.indexOf(usernameID) > -1) {
+          return true;
+        } else {
+          return false;
+        }
       }
     }
   }
-}
 
-async getLikeCount(likesArray) {
-  if (JSON.parse(likesArray)) {
-    if (JSON.parse(likesArray)['usernames']) {
-      likesArray = JSON.parse(likesArray)['usernames']
-      return likesArray.length;
+  async getLikeCount(likesArray) {
+    if (JSON.parse(likesArray)) {
+      if (JSON.parse(likesArray)['usernames']) {
+        likesArray = JSON.parse(likesArray)['usernames']
+        return likesArray.length;
+      } else {
+        return 0;
+      }
     } else {
       return 0;
     }
-  } else {
-    return 0;
   }
-}
 
-  
+
   async getUserProfileMediaData(profileID: String): Promise<any> {
 
     const statement = `query getUserProfileMediaData($profileID: ID!) {
@@ -3953,7 +4181,9 @@ async getLikeCount(likesArray) {
           cognitoID
           createdAt
           email
-          family_name
+          first_name
+          last_name
+          bio
           id
           relation
           updatedAt
@@ -4032,7 +4262,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4043,6 +4274,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -4107,7 +4340,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4118,6 +4352,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -4182,7 +4418,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4193,6 +4430,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -4253,8 +4492,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4295,8 +4537,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4307,7 +4552,8 @@ async getLikeCount(likesArray) {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -4320,8 +4566,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4332,6 +4581,8 @@ async getLikeCount(likesArray) {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -4387,8 +4638,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4429,8 +4683,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4441,7 +4698,8 @@ async getLikeCount(likesArray) {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -4454,8 +4712,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4466,6 +4727,8 @@ async getLikeCount(likesArray) {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -4521,8 +4784,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4563,8 +4829,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4575,7 +4844,8 @@ async getLikeCount(likesArray) {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -4588,8 +4858,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4600,6 +4873,8 @@ async getLikeCount(likesArray) {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -4658,8 +4933,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4704,7 +4982,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4715,6 +4994,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -4780,8 +5061,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4826,7 +5110,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4837,6 +5122,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -4902,8 +5189,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4948,7 +5238,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4959,6 +5250,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5100,8 +5393,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5147,7 +5443,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5158,6 +5455,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5216,8 +5515,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5263,7 +5565,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5274,6 +5577,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5332,8 +5637,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5379,7 +5687,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5390,6 +5699,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5451,7 +5762,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5462,6 +5774,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5500,8 +5814,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5565,8 +5882,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5607,8 +5927,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5619,7 +5942,8 @@ async getLikeCount(likesArray) {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -5632,8 +5956,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5644,6 +5971,8 @@ async getLikeCount(likesArray) {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -5699,7 +6028,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5710,6 +6040,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5771,8 +6103,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5817,7 +6152,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5828,6 +6164,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5883,8 +6221,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6005,8 +6346,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6052,7 +6396,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6063,6 +6408,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -6118,8 +6465,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6191,7 +6541,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6202,6 +6553,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -6268,8 +6621,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6341,8 +6697,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6423,7 +6782,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6434,6 +6794,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -6503,7 +6865,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6514,6 +6877,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -6583,7 +6948,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6594,6 +6960,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -6657,8 +7025,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6699,8 +7070,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6711,7 +7085,8 @@ async getLikeCount(likesArray) {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -6724,8 +7099,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6736,6 +7114,8 @@ async getLikeCount(likesArray) {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -6792,8 +7172,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6834,8 +7217,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6846,7 +7232,8 @@ async getLikeCount(likesArray) {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -6859,8 +7246,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6871,6 +7261,8 @@ async getLikeCount(likesArray) {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -6927,8 +7319,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6969,8 +7364,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6981,7 +7379,8 @@ async getLikeCount(likesArray) {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -6994,8 +7393,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -7006,6 +7408,8 @@ async getLikeCount(likesArray) {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -7065,8 +7469,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -7111,7 +7518,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -7122,6 +7530,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -7188,8 +7598,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -7234,7 +7647,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -7245,6 +7659,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -7311,8 +7727,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -7357,7 +7776,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -7368,6 +7788,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -7513,8 +7935,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -7560,7 +7985,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -7571,6 +7997,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -7630,8 +8058,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -7677,7 +8108,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -7688,6 +8120,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -7747,8 +8181,11 @@ async getLikeCount(likesArray) {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -7794,7 +8231,8 @@ async getLikeCount(likesArray) {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -7805,6 +8243,8 @@ async getLikeCount(likesArray) {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId

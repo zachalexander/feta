@@ -35,7 +35,8 @@ subscription OnCreateProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -45,6 +46,8 @@ subscription OnCreateProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -92,7 +95,8 @@ subscription OnUpdateProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -102,6 +106,8 @@ subscription OnUpdateProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -149,7 +155,8 @@ subscription OnDeleteProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -159,6 +166,8 @@ subscription OnDeleteProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -200,8 +209,11 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -239,8 +251,11 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -251,7 +266,8 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -262,8 +278,11 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -274,6 +293,8 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -310,8 +331,11 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -349,8 +373,11 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -361,7 +388,8 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -372,8 +400,11 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -384,6 +415,8 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -420,8 +453,11 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -459,8 +495,11 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -471,7 +510,8 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -482,8 +522,11 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -494,6 +537,8 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -533,8 +578,11 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -576,7 +624,8 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -586,6 +635,8 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -632,8 +683,11 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -675,7 +729,8 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -685,6 +740,8 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -731,8 +788,11 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -774,7 +834,8 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -784,6 +845,8 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -858,8 +921,11 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -902,7 +968,8 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -912,6 +979,8 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -951,8 +1020,11 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -995,7 +1067,8 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -1005,6 +1078,8 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -1044,8 +1119,11 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -1088,7 +1166,8 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -1098,6 +1177,8 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId

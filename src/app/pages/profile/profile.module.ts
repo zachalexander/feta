@@ -1,4 +1,3 @@
-import { SharedmodulePage } from './../sharedmodule/sharedmodule.page';
 import { SharedmodulePageModule } from './../sharedmodule/sharedmodule.module';
 import { ProfileMediaClickPage } from './../../modals/profile-media-click/profile-media-click.page';
 import { IonicModule } from '@ionic/angular';
@@ -9,9 +8,6 @@ import { ProfilePage } from './profile.page';
 import { HomeComponentModule } from '../../components/home/home.module';
 
 import { ProfilePageRoutingModule } from './profile-routing.module';
-import { DateSuffix } from './../../pipes/date-suffix.pipe';
-import { DateAsAgoShortPipe } from './../../pipes/date-as-ago-short.pipe';
-import { DateAsAgoPipe } from './../../pipes/date-as-ago.pipe';
 
 
 @NgModule({

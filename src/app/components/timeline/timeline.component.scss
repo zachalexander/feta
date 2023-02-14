@@ -46,6 +46,7 @@ ion-refresher.refresher-active {
         aspect-ratio: 4/5;
         overflow: hidden;
         width: 100%;
+        height: 100%;
     }
     
     video {
@@ -55,12 +56,6 @@ ion-refresher.refresher-active {
         object-fit: cover;
         z-index: 1;
     }
-
-    // video[poster]{
-    //     position: relative;
-    //     object-fit: cover;
-    //     z-index: 2;
-    // }
 }
 
 
