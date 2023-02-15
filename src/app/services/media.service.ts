@@ -147,6 +147,7 @@ export class MediaService {
 
     this.mediaPosted = [];
     await Promise.all(array.map(async posts => {
+      console.log(posts)
       if(await this.checkForVideo(posts.s3_key)){
         this.mediaPosted.push({
           mediaSource: await Storage.get(posts.s3_key, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
@@ -163,7 +164,7 @@ export class MediaService {
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),            
-          profilePicture: 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + posts.profile.profilepicture.imageurl
+          profilePicture: await this.checkForProfilePhoto(posts.profile.profilepicture)
         })
       } else {
         this.mediaPosted.push({
@@ -180,7 +181,7 @@ export class MediaService {
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),
-          profilePicture: 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + posts.profile.profilepicture.imageurl
+          profilePicture: await this.checkForProfilePhoto(posts.profile.profilepicture)
         })
       }
     }))
@@ -241,6 +242,19 @@ export class MediaService {
     } else {
       return 0;
     }
+  }
+
+  async checkForProfilePhoto(url){
+
+    console.log(url)
+
+    if(url){
+      return 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + url.imageurl;
+    } else {
+      return false;
+    }
+
+
   }
 
   sortByDate(array) {
