@@ -63,6 +63,8 @@ export class ProfilePage {
     let profile = await this.api.GetProfile(profileID);
     this.profileData = profile;
 
+    console.log(this.profileData)
+
     // get the url username profile data
     this.urlUserProfile = profile;
 
@@ -76,6 +78,8 @@ export class ProfilePage {
 
     // find all (non-deleted) pictures user has posted on the family wall
     this.userData = await this.api.getUserProfileMediaData(this.urlUserProfile.id).then(data => data);
+
+    console.log(this.userData)
 
     // find number of photos posted by zach or katie
     this.photosPostedCount = this.userData[1];
@@ -105,7 +109,7 @@ export class ProfilePage {
     }
 
     if(this.profileData.profilepictureID){
-      this.profilePhoto = this.profileData.profilepicture.imageurl;
+      this.profilePhoto = 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + this.profileData.profilepicture.imageurl;
     } else {
       this.profilePhoto = false;
     }

@@ -120,6 +120,32 @@ ion-icon {
 
     }
 
+    .birthday-div {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        padding: 0em 0em 1em 0em;
+        max-width: 200px;
+        align-items: center;
+        justify-content: flex-start;
+
+        .birthday {
+            font-size: 0.95em;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            margin: 0em 0.35em 0em 0em;
+        }
+
+        .birthday-text {
+            font-size: 0.65em;
+            margin: -0.5em auto;
+            color: var(--ion-color-medium);
+            font-weight: 600;
+            text-align: center;
+        }
+    }
+
     .stats-div {
         display: flex;
         flex-direction: column;
@@ -135,6 +161,7 @@ ion-icon {
             font-size: 0.65em;
             margin: -0.5em auto;
             font-weight: 600;
+            text-align: center;
         }
     }
 
@@ -145,7 +172,7 @@ ion-icon {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 1em 1em 1em 1em;
+    padding: 0em 1.25em 1.25em 1.25em;
     max-width: 500px;
     margin: auto;
 
@@ -158,6 +185,7 @@ ion-icon {
 
     p {
         font-size: 0.75em;
+        margin: 0em 0.5em 0.5em 0.5em;
     }
 }
 
@@ -269,4 +297,22 @@ ion-icon {
 
 ion-icon:hover {
     cursor: pointer;
+}
+
+.name-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 0.85em;
+
+    .username {
+        color: var(--ion-color-dark);
+        font-weight: 600;
+    }
+
+    .fullname {
+        color: var(--ion-color-medium);
+        font-size: 0.95em;
+        text-align: center;
+    }
 }

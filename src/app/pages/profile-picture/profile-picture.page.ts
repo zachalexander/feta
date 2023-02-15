@@ -46,10 +46,13 @@ export class ProfilePicturePage {
     });
     await loading.present();
 
-    this.profilePic = await this.getProfilePicture(localStorage.getItem('profileID'))
+    this.profilePic = 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + await this.getProfilePicture(localStorage.getItem('profileID'))
+
+    console.log(this.profilePic)
 
     if(!this.profilePic){
       this.noPicYet = true;
+      loading.dismiss();
     } else {
       setTimeout(() => {
         loading.dismiss();
@@ -138,6 +141,7 @@ export class ProfilePicturePage {
     const blob = await fetch(this.croppedImage).then(res => res.blob())
     const username = await localStorage.getItem('username')
     const filename = 'profile-pictures/' + localStorage.getItem('profileID') + '.jpg'
+    const imagekitFilename = localStorage.getItem('profileID') + '.jpg'
 
     try {
       let profileID = localStorage.getItem('profileID')
@@ -149,7 +153,7 @@ export class ProfilePicturePage {
 
           const createProfilePicture = new Promise(resolve => {
             resolve(this.api.CreateProfilePicture({
-              imageurl: filename,
+              imageurl: imagekitFilename,
               profileID: profileID
             }))
           })

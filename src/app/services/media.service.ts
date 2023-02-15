@@ -163,7 +163,7 @@ export class MediaService {
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),            
-          profilePicture: posts.profile.profilepicture.imageurl
+          profilePicture: 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + posts.profile.profilepicture.imageurl
         })
       } else {
         this.mediaPosted.push({
@@ -180,7 +180,7 @@ export class MediaService {
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),
-          profilePicture: posts.profile.profilepicture.imageurl
+          profilePicture: 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + posts.profile.profilepicture.imageurl
         })
       }
     }))

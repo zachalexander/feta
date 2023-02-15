@@ -43,8 +43,15 @@
         <ion-avatar *ngIf="profilePhoto">
           <img [src]="profilePhoto">
         </ion-avatar>
+        <div class="name-info">
+          <p class="username">{{profileData.username}}</p>&nbsp;<p class="fullname">({{profileData.first_name}}&nbsp;{{profileData.last_name}})</p>
+        </div>
       </div>
       <div class="right-top-profile-wrapper">
+        <div class="birthday-div">
+          <p class="birthday"><strong>{{profileData.birthday | date: 'MMMM d'}}{{(profileData.birthday | date: 'd') | dateSuffix}}</strong></p>
+          <div><p class="birthday-text">(birthday)</p></div>
+        </div>
         <div class="right-top-profile">
           <div class="stats-div">
             <p class="stats-count"><strong>{{photosPostedCount}}</strong></p>
@@ -57,14 +64,8 @@
         </div>
       </div>
     </div>
-    <div class="full_name">
-      <p>{{profileData.first_name}}&nbsp;{{profileData.last_name}}</p>
-    </div>
-    <div class="birthday">
-      <p>Birthday: {{profileData.birthday | date: 'MMMM d'}}{{(profileData.birthday | date: 'MMMM d') | dateSuffix}}</p>
-    </div>
     <div class="bio">
-      <p class="bio-text"><strong class="username">{{profileData.username}}</strong> is Data Engineer at the Center for Justice Innovation. Married to Katie Friedman. I live and work in New York.</p>
+      <p class="bio-text">{{profileData.bio}}</p>
     </div>
     <ion-chip *ngIf="editAccess" color="medium" class="edit-profile-button" expand="full" (click)="updateProfile()">Edit Profile</ion-chip>
   

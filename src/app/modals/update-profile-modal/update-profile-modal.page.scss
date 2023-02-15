@@ -1,46 +1,72 @@
 
+.edit-grid {
+    height: 45vh;
+    display: flex;
+    flex-direction: row;
+    max-width: 400px;
+}
+
+.update-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 80%;
+
+    ion-item {
+        display: flex;
+        flex-direction: column;
+        min-width: 100%;
+        font-size: 16px;
+    }
+}
+
 .profile-pic-div {
-    height: 20vh;
+    height: auto;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .profile-photo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 200px;
+        font-size: 75%;
+        padding: -1em 1em;
+        text-align: center;
+        margin-top: -0.5em;
+    }
 }
 
-form {
-    height: 25vh;
+.update-form {
     display: flex;
     align-items: center;
-    border-top: 1px solid whitesmoke;
-    border-bottom: 1px solid whitesmoke;
 }
 
-.profile-photo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    max-width: 200px;
-    font-size: 75%;
+.select-button {
+    padding: 5px 10px;
+    background-color: var(--ion-color-light) !important;
+    border: 0.5px solid var(--ion-color-light) !important;
+    border-radius: 5px;
+    font-size: 0.75em;
+    margin: 0.25em 0em;
 }
+
+
 
 ion-text {
-
     font-weight: 600;
 }
 
 
 ion-avatar {
-    height: 120px;
-    width: 120px;
+    height: 50px;
+    width: 50px;
     align-items: center;
     display: flex;
     justify-content: center;
     margin: 1em auto;
-
-}
-
-ion-row {
-    margin: 1em auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .username-edit-wrapper {
@@ -53,30 +79,13 @@ ion-row {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    justify-items: center;
     width: 100%;
 
-
     ion-input {
-        padding: 0em 0.5em !important;
-        border-bottom: 1px solid whitesmoke;
         text-transform: lowercase !important;
     }
 }
 
-.familyname-wrapper {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    ion-input {
-        // background: whitesmoke;
-        padding: 0em 0.5em !important;
-        border-bottom: 1px solid whitesmoke;
-    }
-}
 
 .error-message, .error-message-taken, .error-message-characters {
     color: indianred;
@@ -88,22 +97,22 @@ ion-row {
 }
 
 .error-message {
-    margin: 0.25em auto 1em 8.25em;
+    margin: 0.25em auto 1em 9.25em;
 }
 
 .error-message-characters {
-    margin: 0.25em auto 1em 8.25em;
+    margin: 0.25em auto 1em 9.25em;
 }
 
 .error-message-taken {
-    margin: 0.25em auto 1em 8.25em;
+    margin: 0.25em auto 1em 9.25em;
 }
 
 .success-message {
     color: mediumseagreen;
     font-size: 0.65em;
     font-weight: 600;
-    margin: 0.25em auto 1em 8.25em;
+    margin: 0.25em auto 1em 9.25em;
     display: flex;
     justify-content: flex-start;
 }
@@ -159,4 +168,45 @@ ion-row {
     display: flex;
     font-size: 0.75em;
     width: 90px;
+    margin: 0.25em 0em;
+}
+
+.name-input {
+    display: flex;
+    font-size: 0.75em;
+    margin: 0.25em 0em;
+}
+
+ion-input,
+ion-input:active,
+ion-input:focus,
+ion-input:hover {
+    font-size: 0.75em;
+    background-color: var(--ion-color-light) !important;
+    border-radius: 0.5em;
+    border: 0.5px solid var(--ion-color-light) !important;
+    --padding-start: 10px !important;
+}
+
+ion-textarea,
+ion-textarea:active,
+ion-textarea:focus,
+ion-textarea:hover {
+    font-size: 0.75em;
+    background-color: var(--ion-color-light) !important;
+    border-radius: 0.5em;
+    border: 0.5px solid var(--ion-color-light) !important;
+    --padding-start: 10px !important;
+    margin-bottom: 0.25em;
+}
+
+.date-button {
+    background: var(--ion-color-light);
+    border-radius: 5px;
+    height: 70%;
+    margin: 0em 0.25em 0em 0em;
+}
+
+.text-area-wrapper {
+    margin: 0.5em 0em !important;
 }
