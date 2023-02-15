@@ -13,6 +13,7 @@ export class TabsPage {
   timelineclick;
   messageclick;
   profileclick;
+  needRegister;
 
   constructor(
     private router: Router
@@ -21,15 +22,21 @@ export class TabsPage {
   async ngOnInit(){
     this.username = localStorage.getItem('username');
 
-    if(this.router.url == '/home'){
-      this.homeclick = true;
-    } else if(this.router.url == '/timeline'){
-      this.timelineclick = true;
-    } else if(this.router.url == '/message-board'){
-      this.messageclick = true;
+    if(this.username){
+      this.needRegister = false;
+      if(this.router.url == '/home'){
+        this.homeclick = true;
+      } else if(this.router.url == '/timeline'){
+        this.timelineclick = true;
+      } else if(this.router.url == '/message-board'){
+        this.messageclick = true;
+      } else {
+        this.profileclick = true;
+      }
     } else {
-      this.profileclick = true;
+      this.needRegister = true;
     }
+
   }
 
   homeClick(){

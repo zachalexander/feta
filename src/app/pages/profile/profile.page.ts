@@ -79,8 +79,6 @@ export class ProfilePage {
     // find all (non-deleted) pictures user has posted on the family wall
     this.userData = await this.api.getUserProfileMediaData(this.urlUserProfile.id).then(data => data);
 
-    console.log(this.userData)
-
     // find number of photos posted by zach or katie
     this.photosPostedCount = this.userData[1];
     this.videosPostedCount = this.userData[3];
@@ -116,7 +114,7 @@ export class ProfilePage {
     
     setTimeout(() => {
       loading.dismiss();
-    }, 2000)
+    }, 1000)
 
   }
 

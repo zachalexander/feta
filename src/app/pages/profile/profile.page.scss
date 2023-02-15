@@ -124,7 +124,7 @@ ion-icon {
         display: flex;
         flex-direction: row;
         height: 100%;
-        padding: 0em 2em 1em 0em;
+        padding: 0em 2em 0.25em 0em;
         max-width: 200px;
         align-items: center;
         justify-content: center;
@@ -313,7 +313,6 @@ ion-icon:hover {
 
     .fullname {
         color: var(--ion-color-medium);
-        font-size: 0.95em;
         text-align: center;
     }
 }

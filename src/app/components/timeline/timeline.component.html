@@ -1,7 +1,7 @@
 
 
 <!-- pull and refresh option at top -->
-<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="didScroll()" id="wall-content" lines="none" #container>
+<ion-content class="no-scroll" [fullscreen]="true" [scrollEvents]="true" (ionScroll)="didScroll()" id="wall-content" lines="none" #container>
 
   <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
     <ion-refresher-content

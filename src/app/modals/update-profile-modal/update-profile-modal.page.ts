@@ -213,10 +213,8 @@ export class UpdateProfileModalPage implements OnInit {
     this.updateProfileForm.controls['relation'].setValue(this.relation)
     this.updateProfileForm.controls['bio'].setValue(this.bio)
 
-    let imageurl = 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + this.currentUserProfile.profilepicture.imageurl;
-    console.log(imageurl)
-
-    if(imageurl){
+    if(this.currentUserProfile.profilepicture){
+      let imageurl = 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + this.currentUserProfile.profilepicture.imageurl;
       this.profilePic = imageurl;
       loading.dismiss();
     } else {

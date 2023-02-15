@@ -1,4 +1,4 @@
-<ion-tabs mode="ios">
+<ion-tabs mode="ios" *ngIf="!needRegister">
   <ion-tab-bar class="footer-scroll" slot="bottom">
     <ion-tab-button (click)="homeClick()" tab="home">
       <ion-icon *ngIf="!homeclick" name="home-outline"></ion-icon>
@@ -18,6 +18,26 @@
     <ion-tab-button class="profile-button" (click)="profileClick()" tab="profile/{{username}}">
       <ion-icon *ngIf="!profileclick" name="person-circle-outline"></ion-icon>
       <ion-icon *ngIf="profileclick" name="person-circle"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+
+<ion-tabs mode="ios" *ngIf="needRegister">
+  <ion-tab-bar class="footer-scroll" slot="bottom">
+    <ion-tab-button tab="home" disabled="true">
+      <ion-icon name="home-outline"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="timeline" disabled="true">
+      <ion-icon name="image-outline"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="message-board" disabled="true">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="profile/{{username}}" disabled="true">
+      <ion-icon name="person-circle-outline"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
