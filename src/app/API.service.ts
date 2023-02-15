@@ -3924,7 +3924,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            family_name
+            first_name
+            last_name
+            bio
             profilepictureID
             createdAt
             updatedAt
@@ -3968,7 +3970,9 @@ export class APIService {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
+          bio
           profilepictureID
           profilepicture {
             __typename
@@ -4015,7 +4019,7 @@ export class APIService {
         like_count: await this.getLikeCount(array.likes),
         username: array.username.username,
         userLiked: await this.getLikeData(array.likes, currentUser),
-        profilePicture: array.profile.profilepicture.imageurl
+        profilePicture: "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + array.profile.profilepicture.imageurl
       })
     } else {
       this.finalArray.push({
@@ -4031,7 +4035,7 @@ export class APIService {
         like_count: await this.getLikeCount(array.likes),
         username: array.username.username,
         userLiked: await this.getLikeData(array.likes, currentUser),
-        profilePicture: array.profile.profilepicture.imageurl
+        profilePicture: "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + array.profile.profilepicture.imageurl
       })
     }
     this.finalArray = this.finalArray[0]
