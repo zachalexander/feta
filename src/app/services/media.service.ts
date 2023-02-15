@@ -186,7 +186,6 @@ export class MediaService {
       }
     }))
     this.mediaPosted = this.sortByDate(this.mediaPosted)
-    console.log(this.mediaPosted)
     return [this.mediaPosted, this.mediaPosted.length]
   }
 
@@ -245,16 +244,11 @@ export class MediaService {
   }
 
   async checkForProfilePhoto(url){
-
-    console.log(url)
-
     if(url){
       return 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + url.imageurl;
     } else {
       return false;
     }
-
-
   }
 
   sortByDate(array) {
