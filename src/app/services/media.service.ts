@@ -147,7 +147,6 @@ export class MediaService {
 
     this.mediaPosted = [];
     await Promise.all(array.map(async posts => {
-      console.log(posts)
       if(await this.checkForVideo(posts.s3_key)){
         this.mediaPosted.push({
           mediaSource: await Storage.get(posts.s3_key, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),

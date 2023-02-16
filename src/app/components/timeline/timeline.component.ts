@@ -111,7 +111,7 @@ export class TimelineComponent implements AfterViewInit{
   isElementInViewport(element){
     const rect = element.getBoundingClientRect();
     return (
-      rect.top >= -20 &&
+      rect.top >= 0 &&
       rect.left >= 0 &&
       rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
@@ -781,20 +781,20 @@ export class TimelineComponent implements AfterViewInit{
       })
     )
   
-    // this.onDeleteImageSubscription = <Subscription>(
-    //   this.api.OnDeleteImagePostListener.subscribe((event: any) => {
-    //     const imageId = event.value.data.onDeleteImagePost.id;
-    //     const delete_status = event.value.data.onDeleteImagePost._deleted
+  //   this.onDeleteImageSubscription = <Subscription>(
+  //     this.api.OnDeleteImagePostListener().subscribe((event: any) => {
+  //       const imageId = event.value.data.onDeleteImagePost.id;
+  //       const delete_status = event.value.data.onDeleteImagePost._deleted
 
-    //     this.cachingService.clearAllCachedData();
+  //       // this.cachingService.clearAllCachedData();
   
-    //     this.data.forEach(async photos => {
-    //       if((photos.id == imageId)){
-    //         photos.postDeleted = delete_status;
-    //       }
-    //     })
-    //   })
-    // );
+  //       this.data.forEach(async photos => {
+  //         if((photos.id == imageId)){
+  //           photos.postDeleted = delete_status;
+  //         }
+  //       })
+  //     })
+  //   );
 
   }
 
