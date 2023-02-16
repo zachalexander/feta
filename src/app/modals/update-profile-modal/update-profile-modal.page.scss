@@ -1,31 +1,32 @@
 
 .edit-grid {
-    height: 45vh;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     max-width: 400px;
+    padding-top: 0.5em;
 }
 
-.update-form {
+.upper-wrapper{
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 80%;
+    flex-direction: row;
+}
 
-    ion-item {
-        display: flex;
-        flex-direction: column;
-        min-width: 100%;
-        font-size: 16px;
-    }
+.upper-left {
+    flex: 70;
 }
 
 .profile-pic-div {
     height: auto;
-    width: 20%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: 1em;
+    margin: 0em 0.25em;
+    border: 1px solid var(--ion-color-light);
+    // background: var(--ion-color-light);
+    // border-radius: 5px;
 
     .profile-photo {
         display: flex;
@@ -38,6 +39,32 @@
         margin-top: -0.5em;
     }
 }
+
+ion-avatar {
+    height: 70px;
+    width: 70px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0.5em auto;
+}
+
+
+.update-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+
+    ion-item {
+        display: flex;
+        flex-direction: column;
+        min-width: 100%;
+        font-size: 16px;
+    }
+}
+
+
 
 .update-form {
     display: flex;
@@ -60,14 +87,7 @@ ion-text {
 }
 
 
-ion-avatar {
-    height: 50px;
-    width: 50px;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    margin: 1em auto;
-}
+
 
 .username-edit-wrapper {
     display: flex;

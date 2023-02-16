@@ -256,7 +256,7 @@ export class UpdateProfileModalPage implements OnInit {
     profile.birthday_actual = new Date(2000, (this.monthShown.date.value), this.dateShown.date.value)
     
     await new Promise(resolve => {
-      resolve(updateUsername.then(() => {this.api.UpdateProfile({id: this.profile.id, first_name: profile.first_name, last_name: profile.last_name, birthday: profile.birthday_actual, relation: profile.relation, bio: profile.bio})}))
+      resolve(updateUsername.then(async () => {await this.api.UpdateProfile({id: this.profile.id, first_name: profile.first_name, last_name: profile.last_name, birthday: profile.birthday_actual, relation: profile.relation, bio: profile.bio})}))
     }).then(() => {
       this.router.navigate(['/profile', profile.username]).then(() => { window.location.reload()});
       loading.dismiss();

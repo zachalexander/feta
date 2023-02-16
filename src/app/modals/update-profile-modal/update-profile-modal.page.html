@@ -9,55 +9,71 @@
 
 <ion-content>
   <ion-grid class="edit-grid">
-      <div class = "profile-pic-div">
-        <ion-avatar class="upload-pic-container" *ngIf="!profilePic">
-          <img id="avatar" src="../../../assets/avatar.svg">
-        </ion-avatar>
-        <ion-avatar class="upload-pic-container" *ngIf="profilePic">
-          <img id="avatar" class="cropped-image" [src]="profilePic" />
-        </ion-avatar>
-        <ion-text class="profile-photo" (click)="changeProfilePhoto()" color="primary"><strong>Change photo</strong></ion-text>
-      </div>
-
     <form class="update-form" [formGroup]="updateProfileForm" (ngSubmit)="onUpdate(updateProfileForm.value)">
-      <ion-item>
-        <div class="username-edit-wrapper">
-          <div class="username-wrapper">
-            <div class="name-input">Username</div><ion-input type="text" formControlName="username" required></ion-input>
-            <ion-icon class="invalid-entry" name="close-circle-outline" *ngIf="(f['username'].invalid && (f['username'].dirty || f['username'].touched)) || 
-            (f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)) ||
-            f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)"></ion-icon>
-            <ion-icon *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].pending)" class="valid-entry" name="checkmark-circle-outline"></ion-icon>
-            <ion-spinner class="validate-spinner" size="small" *ngIf="(f['username'].pending)"></ion-spinner>
-          </div>
-          <div *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && ((f['username'].touched) || (f['username'].dirty)) && !(f['username'].pending)" class="success-message">
-            Username looks good.
-          </div>
-          <div *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].dirty) && !(f['username'].touched) && (f['username'].pending)" class="pending-message">
-          </div>
-          <div *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].dirty) && !(f['username'].touched)" class="initial-message">
-          </div>
-          <div *ngIf="f['username'].invalid && (f['username'].dirty || f['username'].touched)" class="alert-danger">
-            <div *ngIf="f['username'].hasError('required')" class="error-message">
-                A username is required.
+      <div class="upper-wrapper">
+        <div class="upper-left">
+
+          <ion-item>
+            <div class="username-edit-wrapper">
+              <div class="username-wrapper">
+                <div class="name-input">Username</div><ion-input type="text" formControlName="username" required></ion-input>
+                <ion-icon class="invalid-entry" name="close-circle-outline" *ngIf="(f['username'].invalid && (f['username'].dirty || f['username'].touched)) || 
+                      (f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)) ||
+                      f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)"></ion-icon>
+                <ion-icon
+                  *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].pending)"
+                  class="valid-entry" name="checkmark-circle-outline"></ion-icon>
+                <ion-spinner class="validate-spinner" size="small" *ngIf="(f['username'].pending)"></ion-spinner>
+              </div>
+              <div
+                *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && ((f['username'].touched) || (f['username'].dirty)) && !(f['username'].pending)"
+                class="success-message">
+                Username looks good.
+              </div>
+              <div
+                *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].dirty) && !(f['username'].touched) && (f['username'].pending)"
+                class="pending-message">
+              </div>
+              <div
+                *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].dirty) && !(f['username'].touched)"
+                class="initial-message">
+              </div>
+              <div *ngIf="f['username'].invalid && (f['username'].dirty || f['username'].touched)" class="alert-danger">
+                <div *ngIf="f['username'].hasError('required')" class="error-message">
+                  A username is required.
+                </div>
+                <div *ngIf="f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)"
+                  class="error-message-characters">
+                  Username must be at least 2 characters long.
+                </div>
+                <div *ngIf="f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)"
+                  class="error-message-taken">
+                  Username is already taken!
+                </div>
+              </div>
             </div>
-            <div *ngIf="f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)" class="error-message-characters">
-                Username must be at least 2 characters long.
-            </div>
-            <div *ngIf="f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)" class="error-message-taken">
-                Username is already taken!
-            </div>
-          </div>
+          </ion-item>
+          <ion-item>
+            <div class="name-input">First Name</div>
+            <ion-input type="text" formControlName="first_name" class="name-input"></ion-input>
+          </ion-item>
+          <ion-item>
+            <div class="name-input">Last Name</div>
+            <ion-input type="text" formControlName="last_name" class="name-input"></ion-input>
+          </ion-item>
         </div>
-      </ion-item>
-      <ion-item>
-        <div class="name-input">First Name</div>
-        <ion-input type="text" formControlName="first_name" class="name-input"></ion-input>
-      </ion-item>
-      <ion-item>
-        <div class="name-input">Last Name</div>
-        <ion-input type="text" formControlName="last_name" class="name-input"></ion-input>
-      </ion-item>
+        <div class="profile-pic-div">
+          <ion-avatar class="upload-pic-container" *ngIf="!profilePic">
+            <img id="avatar" src="../../../assets/avatar.svg">
+          </ion-avatar>
+          <ion-avatar class="upload-pic-container" *ngIf="profilePic">
+            <img id="avatar" class="cropped-image" [src]="profilePic" />
+          </ion-avatar>
+          <ion-text class="profile-photo" (click)="changeProfilePhoto()" color="primary"><strong>Change
+              photo</strong></ion-text>
+        </div>
+      </div>
+      
       <ion-item>
         <div class="name-input">Birthday</div>
         <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerMonth()" *ngIf="!monthSelected">Select Month</ion-button>
