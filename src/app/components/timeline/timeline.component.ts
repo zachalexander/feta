@@ -54,7 +54,7 @@ export class TimelineComponent implements AfterViewInit{
   @ViewChild(IonContent) ionContent: IonContent;
   @ViewChild('slides') slides: IonItemSliding;
   @Input('data') data = [];
-  @Input('datalength') datalength: Number;
+  @Input('token') token: String;
   @ViewChildren('timelineVideo') videos: QueryList<any>
 
 
@@ -650,34 +650,23 @@ export class TimelineComponent implements AfterViewInit{
 
   // when user scrolls to bottom, invoke this function
 
-  // loadData(event) {
+  loadData(event) {
+      try {
+        this.mediaService.getTimelineDataPaginated(this.token).subscribe((data) => {
+          let dataPull = data[0]
+          this.token = data[2]
 
-  //     setTimeout(async () => {
-
-  //       this.counter_init = this.data.length;
-  //       this.counter_end = this.counter_init + 10;
-
-  //       try {
-  //         this.wallService.getFamilyWallData(this.counter_init, this.counter_end).subscribe((data) => {
-  //           let dataPull = data[0]
-  //           this.dataScrolledLength = data[1];
-  //           Object.entries(dataPull).forEach(([key, value]) => { this.data[this.data.length] = value })
-  //         });
-  //       } catch (error) {
-  //         console.log(error)
-  //       }
-  
-  //       this.counter_init = this.counter_init + 10;
-  //       this.counter_end = this.counter_end + 10;
-  //       event.target.complete();
-  
-  //       if (this.data.length == this.datalength) {
-  //         event.target.disabled = true;
-  //         this.scrollFinished = true;
-  //       } 
-  //     }, 100);
- 
-  // }
+          if (this.token === null) {
+            event.target.disabled = true;
+            this.scrollFinished = true;
+          } 
+          Object.entries(dataPull).forEach(([key, value]) => { this.data[this.data.length] = value })
+        });
+      } catch (error) {
+        console.log(error)
+      }
+      event.target.complete();
+  }
 
   async refreshData(event){
 
@@ -685,9 +674,17 @@ export class TimelineComponent implements AfterViewInit{
       await Haptics.impact({ style: ImpactStyle.Medium})
     }
 
+    await this.mediaService.getTimelineData().pipe(
+      finalize(() => {
+        this.loaded = true;
+      })
+    ).subscribe(data => {
+      this.data = data[0];
+      this.token = data[2];
+    })
 
     // setTimeout(async () => {
-    let callback = this.mediaService.getDataFromGraphQL(this.currentUserUsernameID).then((res) =>
+    let callback = this.mediaService.getDataFromGraphQLPaginated(this.currentUserUsernameID, null).then((res) =>
       this.data = res[0]
     );
 

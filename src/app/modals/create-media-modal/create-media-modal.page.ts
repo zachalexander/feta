@@ -209,6 +209,7 @@ export class CreateMediaModalPage {
     imagepost.time_posted = new Date().toISOString()
     imagepost.usernameID = usernameID
     imagepost.profileID = this.profileID
+    imagepost.sorterValue = "media"
     
     if(extension === 'mov' || extension === 'mp4' || extension === 'webm' || extension === 'ogg' || extension === 'MOV'){
       const video = true;

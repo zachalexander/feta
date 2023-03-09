@@ -5,8 +5,6 @@ import { Injectable } from "@angular/core";
 import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { Observable } from "zen-observable-ts";
 import { Storage } from '@aws-amplify/storage';
-import { from, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
 
 export interface SubscriptionResponse<T> {
   value: GraphQLResult<T>;
@@ -136,7 +134,6 @@ export type Profile = {
 export type ImagePost = {
   __typename: "ImagePost";
   id: string;
-  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -230,7 +227,6 @@ export type DeleteProfileInput = {
 
 export type CreateImagePostInput = {
   id?: string | null;
-  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -244,7 +240,6 @@ export type CreateImagePostInput = {
 };
 
 export type ModelImagePostConditionInput = {
-  sorterValue?: ModelStringInput | null;
   description?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
   likes?: ModelStringInput | null;
@@ -262,7 +257,6 @@ export type ModelImagePostConditionInput = {
 
 export type UpdateImagePostInput = {
   id: string;
-  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -390,14 +384,8 @@ export type ModelProfileConnection = {
   nextToken?: string | null;
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC"
-}
-
 export type ModelImagePostFilterInput = {
   id?: ModelIDInput | null;
-  sorterValue?: ModelStringInput | null;
   description?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
   likes?: ModelStringInput | null;
@@ -417,16 +405,6 @@ export type ModelImagePostConnection = {
   __typename: "ModelImagePostConnection";
   items: Array<ImagePost | null>;
   nextToken?: string | null;
-};
-
-export type ModelStringKeyConditionInput = {
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
 };
 
 export type ModelCommentsFilterInput = {
@@ -462,6 +440,11 @@ export type ModelUsernameConnection = {
   items: Array<Username | null>;
   nextToken?: string | null;
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC"
+}
 
 export type ModelSubscriptionProfilePictureFilterInput = {
   id?: ModelSubscriptionIDInput | null;
@@ -518,7 +501,6 @@ export type ModelSubscriptionProfileFilterInput = {
 
 export type ModelSubscriptionImagePostFilterInput = {
   id?: ModelSubscriptionIDInput | null;
-  sorterValue?: ModelSubscriptionStringInput | null;
   description?: ModelSubscriptionStringInput | null;
   time_posted?: ModelSubscriptionStringInput | null;
   likes?: ModelSubscriptionStringInput | null;
@@ -565,7 +547,6 @@ export type CreateProfilePictureMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -628,7 +609,6 @@ export type UpdateProfilePictureMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -691,7 +671,6 @@ export type DeleteProfilePictureMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -750,7 +729,6 @@ export type CreateProfileMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -799,7 +777,6 @@ export type CreateProfileMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -882,7 +859,6 @@ export type UpdateProfileMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -931,7 +907,6 @@ export type UpdateProfileMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1014,7 +989,6 @@ export type DeleteProfileMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -1063,7 +1037,6 @@ export type DeleteProfileMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1139,7 +1112,6 @@ export type DeleteProfileMutation = {
 export type CreateImagePostMutation = {
   __typename: "ImagePost";
   id: string;
-  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -1153,7 +1125,6 @@ export type CreateImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1200,7 +1171,6 @@ export type CreateImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1254,7 +1224,6 @@ export type CreateImagePostMutation = {
 export type UpdateImagePostMutation = {
   __typename: "ImagePost";
   id: string;
-  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -1268,7 +1237,6 @@ export type UpdateImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1315,7 +1283,6 @@ export type UpdateImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1369,7 +1336,6 @@ export type UpdateImagePostMutation = {
 export type DeleteImagePostMutation = {
   __typename: "ImagePost";
   id: string;
-  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -1383,7 +1349,6 @@ export type DeleteImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1430,7 +1395,6 @@ export type DeleteImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1522,7 +1486,6 @@ export type CreateUsernameMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -1573,7 +1536,6 @@ export type CreateUsernameMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1630,7 +1592,6 @@ export type UpdateUsernameMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -1681,7 +1642,6 @@ export type UpdateUsernameMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1738,7 +1698,6 @@ export type DeleteUsernameMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -1789,7 +1748,6 @@ export type DeleteUsernameMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1852,7 +1810,6 @@ export type GetProfilePictureQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1942,7 +1899,6 @@ export type GetProfileQuery = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -1991,7 +1947,6 @@ export type GetProfileQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2076,65 +2031,6 @@ export type ListProfilesQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSource?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-    } | null;
-    first_name?: string | null;
-    last_name?: string | null;
-    profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-    } | null;
-    bio?: string | null;
-    birthday?: string | null;
-    createdAt: string;
-    updatedAt: string;
-    profileUsernameId?: string | null;
-    profileImagePostsId?: string | null;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type ProfilesByProfilepictureIDQuery = {
-  __typename: "ModelProfileConnection";
-  items: Array<{
-    __typename: "Profile";
-    id: string;
-    email?: string | null;
-    relation?: string | null;
-    cognitoID?: string | null;
-    usernameID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2183,7 +2079,6 @@ export type ProfilesByProfilepictureIDQuery = {
 export type GetImagePostQuery = {
   __typename: "ImagePost";
   id: string;
-  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -2197,7 +2092,6 @@ export type GetImagePostQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2244,7 +2138,6 @@ export type GetImagePostQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2300,154 +2193,6 @@ export type ListImagePostsQuery = {
   items: Array<{
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
-    description?: string | null;
-    time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
-    usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-    } | null;
-    profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-    } | null;
-    s3_key?: string | null;
-    mediaSource?: string | null;
-    downloadableVideo?: string | null;
-    posterImage?: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type ImagePostsBySorterValueAndTime_postedQuery = {
-  __typename: "ModelImagePostConnection";
-  items: Array<{
-    __typename: "ImagePost";
-    id: string;
-    sorterValue?: string | null;
-    description?: string | null;
-    time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
-    usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-    } | null;
-    profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-    } | null;
-    s3_key?: string | null;
-    mediaSource?: string | null;
-    downloadableVideo?: string | null;
-    posterImage?: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type ImagePostsByUsernameIDQuery = {
-  __typename: "ModelImagePostConnection";
-  items: Array<{
-    __typename: "ImagePost";
-    id: string;
-    sorterValue?: string | null;
-    description?: string | null;
-    time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
-    usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-    } | null;
-    profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-    } | null;
-    s3_key?: string | null;
-    mediaSource?: string | null;
-    downloadableVideo?: string | null;
-    posterImage?: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type ImagePostsByProfileIDQuery = {
-  __typename: "ModelImagePostConnection";
-  items: Array<{
-    __typename: "ImagePost";
-    id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -2525,7 +2270,6 @@ export type GetUsernameQuery = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -2576,7 +2320,6 @@ export type GetUsernameQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2635,7 +2378,6 @@ export type ListUsernamesQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2674,6 +2416,159 @@ export type ListUsernamesQuery = {
   nextToken?: string | null;
 };
 
+export type ProfilesByProfilepictureIDQuery = {
+  __typename: "ModelProfileConnection";
+  items: Array<{
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      description?: string | null;
+      time_posted?: string | null;
+      likes?: string | null;
+      comments?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type ImagePostsByUsernameIDQuery = {
+  __typename: "ModelImagePostConnection";
+  items: Array<{
+    __typename: "ImagePost";
+    id: string;
+    description?: string | null;
+    time_posted?: string | null;
+    likes?: string | null;
+    comments?: string | null;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+    } | null;
+    s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
+    posterImage?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type ImagePostsByProfileIDQuery = {
+  __typename: "ModelImagePostConnection";
+  items: Array<{
+    __typename: "ImagePost";
+    id: string;
+    description?: string | null;
+    time_posted?: string | null;
+    likes?: string | null;
+    comments?: string | null;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+    } | null;
+    s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
+    posterImage?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
 export type OnCreateProfilePictureSubscription = {
   __typename: "ProfilePicture";
   id: string;
@@ -2688,7 +2583,6 @@ export type OnCreateProfilePictureSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2751,7 +2645,6 @@ export type OnUpdateProfilePictureSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2814,7 +2707,6 @@ export type OnDeleteProfilePictureSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2873,7 +2765,6 @@ export type OnCreateProfileSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -2922,7 +2813,6 @@ export type OnCreateProfileSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3005,7 +2895,6 @@ export type OnUpdateProfileSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -3054,7 +2943,6 @@ export type OnUpdateProfileSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3137,7 +3025,6 @@ export type OnDeleteProfileSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -3186,7 +3073,6 @@ export type OnDeleteProfileSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3262,7 +3148,6 @@ export type OnDeleteProfileSubscription = {
 export type OnCreateImagePostSubscription = {
   __typename: "ImagePost";
   id: string;
-  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -3276,7 +3161,6 @@ export type OnCreateImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3323,7 +3207,6 @@ export type OnCreateImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3377,7 +3260,6 @@ export type OnCreateImagePostSubscription = {
 export type OnUpdateImagePostSubscription = {
   __typename: "ImagePost";
   id: string;
-  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -3391,7 +3273,6 @@ export type OnUpdateImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3438,7 +3319,6 @@ export type OnUpdateImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3492,7 +3372,6 @@ export type OnUpdateImagePostSubscription = {
 export type OnDeleteImagePostSubscription = {
   __typename: "ImagePost";
   id: string;
-  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -3506,7 +3385,6 @@ export type OnDeleteImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3553,7 +3431,6 @@ export type OnDeleteImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3645,7 +3522,6 @@ export type OnCreateUsernameSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -3696,7 +3572,6 @@ export type OnCreateUsernameSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3753,7 +3628,6 @@ export type OnUpdateUsernameSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -3804,7 +3678,6 @@ export type OnUpdateUsernameSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3861,7 +3734,6 @@ export type OnDeleteUsernameSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
-    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -3912,7 +3784,6 @@ export type OnDeleteUsernameSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
-      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3960,6 +3831,7 @@ export type OnDeleteUsernameSubscription = {
   usernameImagePostsId?: string | null;
   usernameProfileId?: string | null;
 };
+
 // ZACH CREATED
 export type GetUsernameDataQuery = {
   __typename: "Username";
@@ -3977,17 +3849,8 @@ export type GetUsernameDataQuery = {
 export class APIService {
 
   finalArray;
-  mediaPosted;
 
-  // ZACH CREATED  
-
-  async checkForProfilePhoto(url) {
-    if (url) {
-      return 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + url.imageurl;
-    } else {
-      return false;
-    }
-  }
+  // ZACH CREATED
 
   async GetUsernameProfile(username: string): Promise<any> {
     const statement = `query getUsernameData($username: String) {
@@ -4380,7 +4243,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -4459,7 +4321,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -4538,7 +4399,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -4613,7 +4473,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -4662,7 +4521,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -4761,7 +4619,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -4810,7 +4667,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -4909,7 +4765,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -4958,7 +4813,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -5050,7 +4904,6 @@ export class APIService {
         createImagePost(input: $input, condition: $condition) {
           __typename
           id
-          sorterValue
           description
           time_posted
           likes
@@ -5064,7 +4917,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -5111,7 +4963,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -5181,7 +5032,6 @@ export class APIService {
         updateImagePost(input: $input, condition: $condition) {
           __typename
           id
-          sorterValue
           description
           time_posted
           likes
@@ -5195,7 +5045,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -5242,7 +5091,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -5312,7 +5160,6 @@ export class APIService {
         deleteImagePost(input: $input, condition: $condition) {
           __typename
           id
-          sorterValue
           description
           time_posted
           likes
@@ -5326,7 +5173,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -5373,7 +5219,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -5529,7 +5374,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -5580,7 +5424,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -5653,7 +5496,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -5704,7 +5546,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -5777,7 +5618,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -5828,7 +5668,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -5904,7 +5743,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -6025,7 +5863,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -6074,7 +5911,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -6173,7 +6009,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -6234,100 +6069,11 @@ export class APIService {
     )) as any;
     return <ListProfilesQuery>response.data.listProfiles;
   }
-  async ProfilesByProfilepictureID(
-    profilepictureID: string,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelProfileFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ProfilesByProfilepictureIDQuery> {
-    const statement = `query ProfilesByProfilepictureID($profilepictureID: ID!, $sortDirection: ModelSortDirection, $filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
-        profilesByProfilepictureID(profilepictureID: $profilepictureID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            email
-            relation
-            cognitoID
-            usernameID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              likes
-              comments
-              usernameID
-              profileID
-              s3_key
-              mediaSource
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-            }
-            first_name
-            last_name
-            profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-            }
-            bio
-            birthday
-            createdAt
-            updatedAt
-            profileUsernameId
-            profileImagePostsId
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      profilepictureID
-    };
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ProfilesByProfilepictureIDQuery>(
-      response.data.profilesByProfilepictureID
-    );
-  }
   async GetImagePost(id: string): Promise<GetImagePostQuery> {
     const statement = `query GetImagePost($id: ID!) {
         getImagePost(id: $id) {
           __typename
           id
-          sorterValue
           description
           time_posted
           likes
@@ -6341,7 +6087,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -6388,7 +6133,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -6458,7 +6202,6 @@ export class APIService {
           items {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -6517,21 +6260,73 @@ export class APIService {
     )) as any;
     return <ListImagePostsQuery>response.data.listImagePosts;
   }
-  async ImagePostsBySorterValueAndTime_posted(
-    sorterValue: string,
-    time_posted?: ModelStringKeyConditionInput,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelImagePostFilterInput,
+  async GetComments(id: string): Promise<GetCommentsQuery> {
+    const statement = `query GetComments($id: ID!) {
+        getComments(id: $id) {
+          __typename
+          id
+          usernameID
+          comment
+          time_posted
+          imagePostsID
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetCommentsQuery>response.data.getComments;
+  }
+  async ListComments(
+    filter?: ModelCommentsFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ImagePostsBySorterValueAndTime_postedQuery> {
-    const statement = `query ImagePostsBySorterValueAndTime_posted($sorterValue: String!, $time_posted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
-        imagePostsBySorterValueAndTime_posted(sorterValue: $sorterValue, time_posted: $time_posted, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<ListCommentsQuery> {
+    const statement = `query ListComments($filter: ModelCommentsFilterInput, $limit: Int, $nextToken: String) {
+        listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
             id
-            sorterValue
+            usernameID
+            comment
+            time_posted
+            imagePostsID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListCommentsQuery>response.data.listComments;
+  }
+  async GetUsername(id: string): Promise<GetUsernameQuery> {
+    const statement = `query GetUsername($id: ID!) {
+        getUsername(id: $id) {
+          __typename
+          id
+          username
+          profileID
+          ImagePosts {
+            __typename
+            id
             description
             time_posted
             likes
@@ -6572,15 +6367,209 @@ export class APIService {
             createdAt
             updatedAt
           }
+          Profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              description
+              time_posted
+              likes
+              comments
+              usernameID
+              profileID
+              s3_key
+              mediaSource
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+          }
+          createdAt
+          updatedAt
+          usernameImagePostsId
+          usernameProfileId
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetUsernameQuery>response.data.getUsername;
+  }
+  async ListUsernames(
+    filter?: ModelUsernameFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListUsernamesQuery> {
+    const statement = `query ListUsernames($filter: ModelUsernameFilterInput, $limit: Int, $nextToken: String) {
+        listUsernames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              description
+              time_posted
+              likes
+              comments
+              usernameID
+              profileID
+              s3_key
+              mediaSource
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListUsernamesQuery>response.data.listUsernames;
+  }
+  async ProfilesByProfilepictureID(
+    profilepictureID: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelProfileFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ProfilesByProfilepictureIDQuery> {
+    const statement = `query ProfilesByProfilepictureID($profilepictureID: ID!, $sortDirection: ModelSortDirection, $filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
+        profilesByProfilepictureID(profilepictureID: $profilepictureID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              description
+              time_posted
+              likes
+              comments
+              usernameID
+              profileID
+              s3_key
+              mediaSource
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+          }
           nextToken
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      sorterValue
+      profilepictureID
     };
-    if (time_posted) {
-      gqlAPIServiceArguments.time_posted = time_posted;
-    }
     if (sortDirection) {
       gqlAPIServiceArguments.sortDirection = sortDirection;
     }
@@ -6596,8 +6585,8 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ImagePostsBySorterValueAndTime_postedQuery>(
-      response.data.imagePostsBySorterValueAndTime_posted
+    return <ProfilesByProfilepictureIDQuery>(
+      response.data.profilesByProfilepictureID
     );
   }
   async ImagePostsByUsernameID(
@@ -6613,7 +6602,6 @@ export class APIService {
           items {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -6690,7 +6678,6 @@ export class APIService {
           items {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -6754,251 +6741,6 @@ export class APIService {
     )) as any;
     return <ImagePostsByProfileIDQuery>response.data.imagePostsByProfileID;
   }
-  async GetComments(id: string): Promise<GetCommentsQuery> {
-    const statement = `query GetComments($id: ID!) {
-        getComments(id: $id) {
-          __typename
-          id
-          usernameID
-          comment
-          time_posted
-          imagePostsID
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetCommentsQuery>response.data.getComments;
-  }
-  async ListComments(
-    filter?: ModelCommentsFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListCommentsQuery> {
-    const statement = `query ListComments($filter: ModelCommentsFilterInput, $limit: Int, $nextToken: String) {
-        listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            usernameID
-            comment
-            time_posted
-            imagePostsID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListCommentsQuery>response.data.listComments;
-  }
-  async GetUsername(id: string): Promise<GetUsernameQuery> {
-    const statement = `query GetUsername($id: ID!) {
-        getUsername(id: $id) {
-          __typename
-          id
-          username
-          profileID
-          ImagePosts {
-            __typename
-            id
-            sorterValue
-            description
-            time_posted
-            likes
-            comments
-            usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-            }
-            profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-            }
-            s3_key
-            mediaSource
-            downloadableVideo
-            posterImage
-            createdAt
-            updatedAt
-          }
-          Profile {
-            __typename
-            id
-            email
-            relation
-            cognitoID
-            usernameID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              likes
-              comments
-              usernameID
-              profileID
-              s3_key
-              mediaSource
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-            }
-            first_name
-            last_name
-            profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-            }
-            bio
-            birthday
-            createdAt
-            updatedAt
-            profileUsernameId
-            profileImagePostsId
-          }
-          createdAt
-          updatedAt
-          usernameImagePostsId
-          usernameProfileId
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetUsernameQuery>response.data.getUsername;
-  }
-  async ListUsernames(
-    filter?: ModelUsernameFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListUsernamesQuery> {
-    const statement = `query ListUsernames($filter: ModelUsernameFilterInput, $limit: Int, $nextToken: String) {
-        listUsernames(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            username
-            profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              likes
-              comments
-              usernameID
-              profileID
-              s3_key
-              mediaSource
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-            }
-            createdAt
-            updatedAt
-            usernameImagePostsId
-            usernameProfileId
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListUsernamesQuery>response.data.listUsernames;
-  }
   OnCreateProfilePictureListener(
     filter?: ModelSubscriptionProfilePictureFilterInput
   ): Observable<
@@ -7021,7 +6763,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -7105,7 +6846,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -7189,7 +6929,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -7267,7 +7006,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -7316,7 +7054,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -7416,7 +7153,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -7465,7 +7201,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -7565,7 +7300,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -7614,7 +7348,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -7707,7 +7440,6 @@ export class APIService {
         onCreateImagePost(filter: $filter) {
           __typename
           id
-          sorterValue
           description
           time_posted
           likes
@@ -7721,7 +7453,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -7768,7 +7499,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -7839,7 +7569,6 @@ export class APIService {
         onUpdateImagePost(filter: $filter) {
           __typename
           id
-          sorterValue
           description
           time_posted
           likes
@@ -7853,7 +7582,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -7900,7 +7628,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -7971,7 +7698,6 @@ export class APIService {
         onDeleteImagePost(filter: $filter) {
           __typename
           id
-          sorterValue
           description
           time_posted
           likes
@@ -7985,7 +7711,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -8032,7 +7757,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -8192,7 +7916,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -8243,7 +7966,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -8317,7 +8039,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -8368,7 +8089,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes
@@ -8442,7 +8162,6 @@ export class APIService {
           ImagePosts {
             __typename
             id
-            sorterValue
             description
             time_posted
             likes
@@ -8493,7 +8212,6 @@ export class APIService {
             ImagePosts {
               __typename
               id
-              sorterValue
               description
               time_posted
               likes

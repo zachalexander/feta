@@ -14,5 +14,5 @@
     <div *ngIf="!loaded" class="loading-centered">
       <ion-spinner name="lines-small"></ion-spinner>
     </div>
-    <app-timeline [datalength]="timelineDataLength" [data]="timelineData"></app-timeline>
+    <app-timeline [data]="timelineData" [token]="nextToken"></app-timeline>
 </ion-content>

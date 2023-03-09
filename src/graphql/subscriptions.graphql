@@ -13,6 +13,7 @@ subscription OnCreateProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -73,6 +74,7 @@ subscription OnUpdateProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -133,6 +135,7 @@ subscription OnDeleteProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -188,6 +191,7 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -232,6 +236,7 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -310,6 +315,7 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -354,6 +360,7 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -432,6 +439,7 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -476,6 +484,7 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -548,6 +557,7 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
 subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
   onCreateImagePost(filter: $filter) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -559,6 +569,7 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -602,6 +613,7 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -653,6 +665,7 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
 subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
   onUpdateImagePost(filter: $filter) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -664,6 +677,7 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -707,6 +721,7 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -758,6 +773,7 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
 subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
   onDeleteImagePost(filter: $filter) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -769,6 +785,7 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -812,6 +829,7 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -900,6 +918,7 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -946,6 +965,7 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -999,6 +1019,7 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -1045,6 +1066,7 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -1098,6 +1120,7 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -1144,6 +1167,7 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes

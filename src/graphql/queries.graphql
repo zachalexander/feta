@@ -11,6 +11,7 @@ query GetProfilePicture($id: ID!) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -99,6 +100,7 @@ query GetProfile($id: ID!) {
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -143,6 +145,7 @@ query GetProfile($id: ID!) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -226,6 +229,73 @@ query ListProfiles(
       usernameID
       ImagePosts {
         id
+        sorterValue
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        s3_key
+        mediaSource
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+    }
+    nextToken
+  }
+}
+query ProfilesByProfilepictureID(
+  $profilepictureID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelProfileFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  profilesByProfilepictureID(
+    profilepictureID: $profilepictureID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
         description
         time_posted
         likes
@@ -272,6 +342,7 @@ query ListProfiles(
 query GetImagePost($id: ID!) {
   getImagePost(id: $id) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -283,6 +354,7 @@ query GetImagePost($id: ID!) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -326,6 +398,7 @@ query GetImagePost($id: ID!) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -382,6 +455,183 @@ query ListImagePosts(
   listImagePosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      sorterValue
+      description
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      s3_key
+      mediaSource
+      downloadableVideo
+      posterImage
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query ImagePostsBySorterValueAndTime_posted(
+  $sorterValue: String!
+  $time_posted: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelImagePostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  imagePostsBySorterValueAndTime_posted(
+    sorterValue: $sorterValue
+    time_posted: $time_posted
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      sorterValue
+      description
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      s3_key
+      mediaSource
+      downloadableVideo
+      posterImage
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query ImagePostsByUsernameID(
+  $usernameID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelImagePostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  imagePostsByUsernameID(
+    usernameID: $usernameID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      sorterValue
+      description
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      s3_key
+      mediaSource
+      downloadableVideo
+      posterImage
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query ImagePostsByProfileID(
+  $profileID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelImagePostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  imagePostsByProfileID(
+    profileID: $profileID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      sorterValue
       description
       time_posted
       likes
@@ -459,6 +709,7 @@ query GetUsername($id: ID!) {
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -505,6 +756,7 @@ query GetUsername($id: ID!) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -563,6 +815,7 @@ query ListUsernames(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -596,185 +849,6 @@ query ListUsernames(
       updatedAt
       usernameImagePostsId
       usernameProfileId
-    }
-    nextToken
-  }
-}
-query ProfilesByProfilepictureID(
-  $profilepictureID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelProfileFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  profilesByProfilepictureID(
-    profilepictureID: $profilepictureID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      email
-      relation
-      cognitoID
-      usernameID
-      ImagePosts {
-        id
-        description
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        s3_key
-        mediaSource
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-      }
-      first_name
-      last_name
-      profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-      }
-      bio
-      birthday
-      createdAt
-      updatedAt
-      profileUsernameId
-      profileImagePostsId
-    }
-    nextToken
-  }
-}
-query ImagePostsByUsernameID(
-  $usernameID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelImagePostFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  imagePostsByUsernameID(
-    usernameID: $usernameID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      description
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      s3_key
-      mediaSource
-      downloadableVideo
-      posterImage
-      createdAt
-      updatedAt
-    }
-    nextToken
-  }
-}
-query ImagePostsByProfileID(
-  $profileID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelImagePostFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  imagePostsByProfileID(
-    profileID: $profileID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      description
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      s3_key
-      mediaSource
-      downloadableVideo
-      posterImage
-      createdAt
-      updatedAt
     }
     nextToken
   }

@@ -27,6 +27,7 @@ type Profile @model @auth(rules: [{allow: public}]) {
 
 type ImagePost @model @auth(rules: [{allow: public}]) {
   id: ID!
+  sorterValue: String @index(name: "byTimePosted", sortKeyFields: ["time_posted"])
   description: String
   time_posted: AWSDateTime
   likes: AWSJSON

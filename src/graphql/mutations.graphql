@@ -14,6 +14,7 @@ mutation CreateProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -75,6 +76,7 @@ mutation UpdateProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -136,6 +138,7 @@ mutation DeleteProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -194,6 +197,7 @@ mutation CreateProfile(
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -238,6 +242,7 @@ mutation CreateProfile(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -319,6 +324,7 @@ mutation UpdateProfile(
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -363,6 +369,7 @@ mutation UpdateProfile(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -444,6 +451,7 @@ mutation DeleteProfile(
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -488,6 +496,7 @@ mutation DeleteProfile(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -563,6 +572,7 @@ mutation CreateImagePost(
 ) {
   createImagePost(input: $input, condition: $condition) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -574,6 +584,7 @@ mutation CreateImagePost(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -617,6 +628,7 @@ mutation CreateImagePost(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -671,6 +683,7 @@ mutation UpdateImagePost(
 ) {
   updateImagePost(input: $input, condition: $condition) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -682,6 +695,7 @@ mutation UpdateImagePost(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -725,6 +739,7 @@ mutation UpdateImagePost(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -779,6 +794,7 @@ mutation DeleteImagePost(
 ) {
   deleteImagePost(input: $input, condition: $condition) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -790,6 +806,7 @@ mutation DeleteImagePost(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -833,6 +850,7 @@ mutation DeleteImagePost(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -933,6 +951,7 @@ mutation CreateUsername(
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -979,6 +998,7 @@ mutation CreateUsername(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -1035,6 +1055,7 @@ mutation UpdateUsername(
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -1081,6 +1102,7 @@ mutation UpdateUsername(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -1137,6 +1159,7 @@ mutation DeleteUsername(
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -1183,6 +1206,7 @@ mutation DeleteUsername(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
