@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Storage } from '@aws-amplify/storage';
-import { Auth } from '@aws-amplify/auth';
-import { Router } from '@angular/router';
 import { APIService } from "../API.service";
 import API, { graphqlOperation} from "@aws-amplify/api-graphql";
 import { DomSanitizer } from '@angular/platform-browser';
@@ -143,7 +141,8 @@ export class MediaService {
           updatedAt
           s3_key
           posterImage
-          mediaSource
+          mediaSourceMobile
+          mediaSourceDesktop
           downloadableVideo
           profile {
             profilepicture {
@@ -165,7 +164,8 @@ export class MediaService {
     await Promise.all(array.map(async posts => {
       if (await this.checkForVideo(posts.s3_key)) {
         this.mediaPosted.push({
-          mediaSource: await Storage.get(posts.s3_key, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+          mediaSourceMobile: await Storage.get(posts.s3_key, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+          mediaSourceDesktop: null,
           s3_key: posts.s3_key,
           downloadableVideo: posts.downloadableVideo,
           isVideo: true,
@@ -183,7 +183,8 @@ export class MediaService {
         })
       } else {
         this.mediaPosted.push({
-          mediaSource: posts.mediaSource,
+          mediaSourceMobile: posts.mediaSourceMobile,
+          mediaSourceDesktop: posts.mediaSourceDesktop,
           s3_key: posts.s3_key,
           downloadableVideo: posts.downloadableVideo,
           isVideo: false,
@@ -200,7 +201,7 @@ export class MediaService {
         })
       }
     }))
-    this.mediaPosted = this.sortByDate(this.mediaPosted)
+    // this.mediaPosted = this.sortByDate(this.mediaPosted)
     return [this.mediaPosted, this.mediaPosted.length, response.data.imagePostsBySorterValueAndTime_posted.nextToken]
   }
 
@@ -218,7 +219,8 @@ export class MediaService {
           updatedAt
           s3_key
           posterImage
-          mediaSource
+          mediaSourceMobile
+          mediaSourceDesktop
           downloadableVideo
           profile {
             profilepicture {
@@ -240,7 +242,8 @@ export class MediaService {
     await Promise.all(array.map(async posts => {
       if(await this.checkForVideo(posts.s3_key)){
         this.mediaPosted.push({
-          mediaSource: await Storage.get(posts.s3_key, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
+          mediaSourceMobile: await Storage.get(posts.s3_key, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
+          mediaSourceDesktop: null,
           s3_key: posts.s3_key,
           downloadableVideo: posts.downloadableVideo,
           isVideo: true,
@@ -258,7 +261,8 @@ export class MediaService {
         })
       } else {
         this.mediaPosted.push({
-          mediaSource: posts.mediaSource,
+          mediaSourceMobile: posts.mediaSourceMobile,
+          mediaSourceDesktop: posts.mediaSourceDesktop,
           s3_key: posts.s3_key,
           downloadableVideo: posts.downloadableVideo,
           isVideo: false,
@@ -336,10 +340,14 @@ export class MediaService {
 
   async checkForProfilePhoto(url){
     if(url){
-      return 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + url.imageurl;
+      return await Storage.get('profile-pictures/' + url.imageurl)
     } else {
       return false;
     }
+  }
+
+  async getProfilePicture(profileID) {
+    return await this.api.GetProfilePictureProfileID(profileID.imageurl);
   }
 
   sortByDate(array) {

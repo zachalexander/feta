@@ -10,6 +10,6 @@ import { TimelinePageModule } from './pages/timeline/timeline.module';
 })
 export class AppComponent {
   constructor(private cachingService: CachingService) {
-    this.cachingService.initStorage();
+    // this.cachingService.initStorage();
   }
 }

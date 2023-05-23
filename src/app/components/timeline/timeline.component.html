@@ -50,14 +50,15 @@
             <swiper *ngIf="!image.isVideo" class="mySwiper" effect="fade" [zoom]="true">
               <ng-template swiperSlide>
                 <div class="swiper-zoom-container">
-                  <img *ngIf="!image.isVideo" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSource" loading="lazy"/>
+                  <img *ngIf="!image.isVideo && mobilePlatform" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSourceMobile" loading="lazy"/>
+                  <img *ngIf="!image.isVideo && !mobilePlatform" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSourceDesktop" loading="lazy" />
                 </div>
               </ng-template>
             </swiper>
             <div id="video-container" *ngIf="image.isVideo">
               <vg-player>
-                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="multipleVideos" preload="auto" playsinline webkit-playsinline="webkit-playsinline" muted>
-                  <source [vgHls]="image.mediaSource" type="application/x-mpegURL">
+                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSourceMobile" #media id="multipleVideos" preload="metadata" playsinline webkit-playsinline="webkit-playsinline" muted="true">
+                  <source [vgHls]="image.mediaSourceMobile" type="application/x-mpegURL">
                 </video>
               </vg-player>
               <div id="volume-controls">
@@ -98,7 +99,7 @@
             <!-- shows the post description and the user that posted the image -->
             <ion-card-content class="ion-no-padding" lines="none" class="image-description">
               <strong class="username-description" routerLink="/profile/{{image.username}}">{{image.username}}</strong> {{image.description}}
-              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} | {{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
+              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} | {{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
             </ion-card-content>
 
           </ion-card-header>
@@ -125,7 +126,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-infinite-scroll threshold="60%" (ionInfinite)="loadData($event)" position="bottom">
+  <ion-infinite-scroll threshold="40%" (ionInfinite)="loadData($event)" position="bottom">
     <ion-infinite-scroll-content loadingSpinner="lines-small">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

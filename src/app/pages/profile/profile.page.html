@@ -113,7 +113,7 @@
     <ion-grid class="postedphotos" *ngIf="!noPhotosYet && photosClicked">
       <ion-row class="postedphotos_row">
         <ion-col *ngFor="let image of profileMediaData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-          <div (click)="openClickModal(image.id)" class="square" *ngIf="!image.deleted" style="background-image: url({{image.mediaSource}})">
+          <div (click)="openClickModal(image.id)" class="square" *ngIf="!image.deleted" style="background-image: url({{image.mediaSourceDesktop}})">
           </div>
         </ion-col>
       </ion-row>

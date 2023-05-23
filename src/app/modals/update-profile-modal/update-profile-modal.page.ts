@@ -6,6 +6,7 @@ import { CustomvalidationService } from '../../services/customvalidation.service
 import { MediaService } from 'src/app/services/media.service';
 import { APIService } from 'src/app/API.service';
 import { Router } from '@angular/router';
+import { Storage } from 'aws-amplify';
 
 
 @Component({
@@ -214,7 +215,7 @@ export class UpdateProfileModalPage implements OnInit {
     this.updateProfileForm.controls['bio'].setValue(this.bio)
 
     if(this.currentUserProfile.profilepicture){
-      let imageurl = 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + this.currentUserProfile.profilepicture.imageurl;
+      let imageurl = await Storage.get('profile-pictures/' + await this.getProfilePicture(localStorage.getItem('profileID')))
       this.profilePic = imageurl;
       loading.dismiss();
     } else {
@@ -276,6 +277,10 @@ export class UpdateProfileModalPage implements OnInit {
 
   changeProfilePhoto() {
     this.router.navigate(['/profile-picture']).then(() => { window.location.reload()})
+  }
+
+  async getProfilePicture(profileID) {
+    return await (await this.api.GetProfilePictureProfileID(profileID))?.imageurl;
   }
 
 }

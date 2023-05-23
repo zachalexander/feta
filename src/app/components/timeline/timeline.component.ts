@@ -6,7 +6,7 @@ import { ModalController, Platform } from '@ionic/angular';
 import { MediaService } from 'src/app/services/media.service';
 // import { CachingService } from '../../services/caching.service';
 import { APIService } from "../../API.service";
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
 // import { EditPhotoModalPage } from '../../modals/edit-photo-modal/edit-photo-modal.page';
 import { LikeListModalPage } from '../../modals/like-list-modal/like-list-modal.page';
@@ -65,6 +65,7 @@ export class TimelineComponent implements AfterViewInit{
   pause;
   videoStyle;
   platformView;
+  mobilePlatform;
   
   onCreateImageSubscription: Subscription | null = null;
   onUpdateImageSubscription: Subscription | null = null;
@@ -101,8 +102,12 @@ export class TimelineComponent implements AfterViewInit{
     private platform: Platform,
     private loadingController: LoadingController,
     private mediaService: MediaService,
+    private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.mobilePlatform = this.platform.is("mobile");
+  }
 
   functionGetCognitoUserId(){
     return Auth.currentUserInfo().then(user => user.id);
@@ -134,8 +139,17 @@ export class TimelineComponent implements AfterViewInit{
 
       if(inView) {
         this.nowPlaying = nativeElement;
-        this.nowPlaying.play();
         this.nowPlaying.muted = true;
+        let playPromise = this.nowPlaying.play();
+
+        if (playPromise !== undefined) {
+          playPromise.then(_ => {
+            this.nowPlaying.play();
+          })
+          .catch(error => {
+            this.nowPlaying.play();
+          })
+        }
         this.pause = false;
         this.muted = true;
         this.replay = false;
@@ -201,7 +215,7 @@ export class TimelineComponent implements AfterViewInit{
     this.browser = localStorage.getItem('User-browser')
     this.platformView = await this.platform.platforms();
 
-    await this.didScroll();
+    this.didScroll();
 
 
     // if (this.platform.is('hybrid')) {
@@ -674,25 +688,7 @@ export class TimelineComponent implements AfterViewInit{
       await Haptics.impact({ style: ImpactStyle.Medium})
     }
 
-    await this.mediaService.getTimelineData().pipe(
-      finalize(() => {
-        this.loaded = true;
-      })
-    ).subscribe(data => {
-      this.data = data[0];
-      this.token = data[2];
-    })
-
-    // setTimeout(async () => {
-    let callback = this.mediaService.getDataFromGraphQLPaginated(this.currentUserUsernameID, null).then((res) =>
-      this.data = res[0]
-    );
-
-    callback.then(() => {
-      event.target.complete();
-    })
-
-
+    window.location.reload();
   }
 
   scrollToTop(){
@@ -710,11 +706,11 @@ export class TimelineComponent implements AfterViewInit{
   }
 
   startSubscriptions(){
-    // this.onCreateImageSubscription = <Subscription>(
-    //   this.api.OnCreateImagePostListener.subscribe(async (event: any) => {
-    //     this.presentToastNewPost();
-    //   })
-    // );
+    this.onCreateImageSubscription = <Subscription>(
+      this.api.OnCreateImagePostListener().subscribe(async (event: any) => {
+        this.presentToastNewPost();
+      })
+    );
 
     this.onUpdateImageSubscription = <Subscription>(
       this.api.OnUpdateImagePostListener().subscribe({
@@ -778,21 +774,13 @@ export class TimelineComponent implements AfterViewInit{
       })
     )
   
-  //   this.onDeleteImageSubscription = <Subscription>(
-  //     this.api.OnDeleteImagePostListener().subscribe((event: any) => {
-  //       const imageId = event.value.data.onDeleteImagePost.id;
-  //       const delete_status = event.value.data.onDeleteImagePost._deleted
-
-  //       // this.cachingService.clearAllCachedData();
-  
-  //       this.data.forEach(async photos => {
-  //         if((photos.id == imageId)){
-  //           photos.postDeleted = delete_status;
-  //         }
-  //       })
-  //     })
-  //   );
-
+    this.onDeleteImageSubscription = <Subscription>(
+      this.api.OnDeleteImagePostListener().subscribe((event: any) => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      })
+    )
   }
 
 }

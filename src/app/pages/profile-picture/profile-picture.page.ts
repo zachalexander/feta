@@ -46,9 +46,8 @@ export class ProfilePicturePage {
     });
     await loading.present();
 
-    this.profilePic = 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + await this.getProfilePicture(localStorage.getItem('profileID'))
+    this.profilePic = await Storage.get('profile-pictures/' + await this.getProfilePicture(localStorage.getItem('profileID')))
 
-    console.log(this.profilePic)
 
     if(!this.profilePic){
       this.noPicYet = true;
@@ -146,6 +145,8 @@ export class ProfilePicturePage {
     try {
       let profileID = localStorage.getItem('profileID')
       let profilepictureID = await (await this.api.GetProfile(profileID)).profilepictureID
+
+      console.log(profilepictureID)
 
       if(!profilepictureID){
 

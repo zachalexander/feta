@@ -10,10 +10,10 @@
       <ion-icon *ngIf="timelineclick" name="image"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button (click)="messageClick()" tab="message-board">
+    <!-- <ion-tab-button (click)="messageClick()" tab="message-board">
       <ion-icon *ngIf="!messageclick" name="chatbubbles-outline"></ion-icon>
       <ion-icon *ngIf="messageclick" name="chatbubbles"></ion-icon>
-    </ion-tab-button>
+    </ion-tab-button> -->
 
     <ion-tab-button class="profile-button" (click)="profileClick()" tab="profile/{{username}}">
       <ion-icon *ngIf="!profileclick" name="person-circle-outline"></ion-icon>

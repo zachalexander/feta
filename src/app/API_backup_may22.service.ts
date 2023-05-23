@@ -5,6 +5,8 @@ import { Injectable } from "@angular/core";
 import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { Observable } from "zen-observable-ts";
 import { Storage } from '@aws-amplify/storage';
+import { from, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 export interface SubscriptionResponse<T> {
   value: GraphQLResult<T>;
@@ -144,8 +146,7 @@ export type ImagePost = {
   profileID: string;
   profile?: Profile | null;
   s3_key?: string | null;
-  mediaSourceMobile?: string | null;
-  mediaSourceDesktop?: string | null;
+  mediaSource?: string | null;
   downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
@@ -237,8 +238,7 @@ export type CreateImagePostInput = {
   usernameID: string;
   profileID: string;
   s3_key?: string | null;
-  mediaSourceMobile?: string | null;
-  mediaSourceDesktop?: string | null;
+  mediaSource?: string | null;
   downloadableVideo?: string | null;
   posterImage?: string | null;
 };
@@ -252,8 +252,7 @@ export type ModelImagePostConditionInput = {
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
-  mediaSourceMobile?: ModelStringInput | null;
-  mediaSourceDesktop?: ModelStringInput | null;
+  mediaSource?: ModelStringInput | null;
   downloadableVideo?: ModelStringInput | null;
   posterImage?: ModelStringInput | null;
   and?: Array<ModelImagePostConditionInput | null> | null;
@@ -271,8 +270,7 @@ export type UpdateImagePostInput = {
   usernameID?: string | null;
   profileID?: string | null;
   s3_key?: string | null;
-  mediaSourceMobile?: string | null;
-  mediaSourceDesktop?: string | null;
+  mediaSource?: string | null;
   downloadableVideo?: string | null;
   posterImage?: string | null;
 };
@@ -392,6 +390,11 @@ export type ModelProfileConnection = {
   nextToken?: string | null;
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC"
+}
+
 export type ModelImagePostFilterInput = {
   id?: ModelIDInput | null;
   sorterValue?: ModelStringInput | null;
@@ -402,8 +405,7 @@ export type ModelImagePostFilterInput = {
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
-  mediaSourceMobile?: ModelStringInput | null;
-  mediaSourceDesktop?: ModelStringInput | null;
+  mediaSource?: ModelStringInput | null;
   downloadableVideo?: ModelStringInput | null;
   posterImage?: ModelStringInput | null;
   and?: Array<ModelImagePostFilterInput | null> | null;
@@ -415,6 +417,16 @@ export type ModelImagePostConnection = {
   __typename: "ModelImagePostConnection";
   items: Array<ImagePost | null>;
   nextToken?: string | null;
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
 };
 
 export type ModelCommentsFilterInput = {
@@ -449,21 +461,6 @@ export type ModelUsernameConnection = {
   __typename: "ModelUsernameConnection";
   items: Array<Username | null>;
   nextToken?: string | null;
-};
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC"
-}
-
-export type ModelStringKeyConditionInput = {
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
 };
 
 export type ModelSubscriptionProfilePictureFilterInput = {
@@ -529,8 +526,7 @@ export type ModelSubscriptionImagePostFilterInput = {
   usernameID?: ModelSubscriptionIDInput | null;
   profileID?: ModelSubscriptionIDInput | null;
   s3_key?: ModelSubscriptionStringInput | null;
-  mediaSourceMobile?: ModelSubscriptionStringInput | null;
-  mediaSourceDesktop?: ModelSubscriptionStringInput | null;
+  mediaSource?: ModelSubscriptionStringInput | null;
   downloadableVideo?: ModelSubscriptionStringInput | null;
   posterImage?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionImagePostFilterInput | null> | null;
@@ -577,8 +573,7 @@ export type CreateProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -641,8 +636,7 @@ export type UpdateProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -705,8 +699,7 @@ export type DeleteProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -792,8 +785,7 @@ export type CreateProfileMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -815,8 +807,7 @@ export type CreateProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -926,8 +917,7 @@ export type UpdateProfileMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -949,8 +939,7 @@ export type UpdateProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1060,8 +1049,7 @@ export type DeleteProfileMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -1083,8 +1071,7 @@ export type DeleteProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1174,8 +1161,7 @@ export type CreateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1222,8 +1208,7 @@ export type CreateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1259,8 +1244,7 @@ export type CreateImagePostMutation = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
-  mediaSourceMobile?: string | null;
-  mediaSourceDesktop?: string | null;
+  mediaSource?: string | null;
   downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
@@ -1292,8 +1276,7 @@ export type UpdateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1340,8 +1323,7 @@ export type UpdateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1377,8 +1359,7 @@ export type UpdateImagePostMutation = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
-  mediaSourceMobile?: string | null;
-  mediaSourceDesktop?: string | null;
+  mediaSource?: string | null;
   downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
@@ -1410,8 +1391,7 @@ export type DeleteImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1458,8 +1438,7 @@ export type DeleteImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1495,8 +1474,7 @@ export type DeleteImagePostMutation = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
-  mediaSourceMobile?: string | null;
-  mediaSourceDesktop?: string | null;
+  mediaSource?: string | null;
   downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
@@ -1579,8 +1557,7 @@ export type CreateUsernameMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -1604,8 +1581,7 @@ export type CreateUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1689,8 +1665,7 @@ export type UpdateUsernameMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -1714,8 +1689,7 @@ export type UpdateUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1799,8 +1773,7 @@ export type DeleteUsernameMutation = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -1824,8 +1797,7 @@ export type DeleteUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -1888,8 +1860,7 @@ export type GetProfilePictureQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -2006,8 +1977,7 @@ export type GetProfileQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -2029,8 +1999,7 @@ export type GetProfileQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -2115,8 +2084,65 @@ export type ListProfilesQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type ProfilesByProfilepictureIDQuery = {
+  __typename: "ModelProfileConnection";
+  items: Array<{
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      likes?: string | null;
+      comments?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -2179,8 +2205,7 @@ export type GetImagePostQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -2227,8 +2252,7 @@ export type GetImagePostQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -2264,8 +2288,7 @@ export type GetImagePostQuery = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
-  mediaSourceMobile?: string | null;
-  mediaSourceDesktop?: string | null;
+  mediaSource?: string | null;
   downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
@@ -2312,8 +2335,154 @@ export type ListImagePostsQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
+    posterImage?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type ImagePostsBySorterValueAndTime_postedQuery = {
+  __typename: "ModelImagePostConnection";
+  items: Array<{
+    __typename: "ImagePost";
+    id: string;
+    sorterValue?: string | null;
+    description?: string | null;
+    time_posted?: string | null;
+    likes?: string | null;
+    comments?: string | null;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+    } | null;
+    s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
+    posterImage?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type ImagePostsByUsernameIDQuery = {
+  __typename: "ModelImagePostConnection";
+  items: Array<{
+    __typename: "ImagePost";
+    id: string;
+    sorterValue?: string | null;
+    description?: string | null;
+    time_posted?: string | null;
+    likes?: string | null;
+    comments?: string | null;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+    } | null;
+    s3_key?: string | null;
+    mediaSource?: string | null;
+    downloadableVideo?: string | null;
+    posterImage?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type ImagePostsByProfileIDQuery = {
+  __typename: "ModelImagePostConnection";
+  items: Array<{
+    __typename: "ImagePost";
+    id: string;
+    sorterValue?: string | null;
+    description?: string | null;
+    time_posted?: string | null;
+    likes?: string | null;
+    comments?: string | null;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+    } | null;
+    s3_key?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -2391,8 +2560,7 @@ export type GetUsernameQuery = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -2416,8 +2584,7 @@ export type GetUsernameQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -2476,8 +2643,7 @@ export type ListUsernamesQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -2508,215 +2674,6 @@ export type ListUsernamesQuery = {
   nextToken?: string | null;
 };
 
-export type ProfilesByProfilepictureIDQuery = {
-  __typename: "ModelProfileConnection";
-  items: Array<{
-    __typename: "Profile";
-    id: string;
-    email?: string | null;
-    relation?: string | null;
-    cognitoID?: string | null;
-    usernameID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-    } | null;
-    first_name?: string | null;
-    last_name?: string | null;
-    profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-    } | null;
-    bio?: string | null;
-    birthday?: string | null;
-    createdAt: string;
-    updatedAt: string;
-    profileUsernameId?: string | null;
-    profileImagePostsId?: string | null;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type ImagePostsBySorterValueAndTime_postedQuery = {
-  __typename: "ModelImagePostConnection";
-  items: Array<{
-    __typename: "ImagePost";
-    id: string;
-    sorterValue?: string | null;
-    description?: string | null;
-    time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
-    usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-    } | null;
-    profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-    } | null;
-    s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
-    downloadableVideo?: string | null;
-    posterImage?: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type ImagePostsByUsernameIDQuery = {
-  __typename: "ModelImagePostConnection";
-  items: Array<{
-    __typename: "ImagePost";
-    id: string;
-    sorterValue?: string | null;
-    description?: string | null;
-    time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
-    usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-    } | null;
-    profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-    } | null;
-    s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
-    downloadableVideo?: string | null;
-    posterImage?: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type ImagePostsByProfileIDQuery = {
-  __typename: "ModelImagePostConnection";
-  items: Array<{
-    __typename: "ImagePost";
-    id: string;
-    sorterValue?: string | null;
-    description?: string | null;
-    time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
-    usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-    } | null;
-    profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-    } | null;
-    s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
-    downloadableVideo?: string | null;
-    posterImage?: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
 export type OnCreateProfilePictureSubscription = {
   __typename: "ProfilePicture";
   id: string;
@@ -2739,8 +2696,7 @@ export type OnCreateProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -2803,8 +2759,7 @@ export type OnUpdateProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -2867,8 +2822,7 @@ export type OnDeleteProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -2954,8 +2908,7 @@ export type OnCreateProfileSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -2977,8 +2930,7 @@ export type OnCreateProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3088,8 +3040,7 @@ export type OnUpdateProfileSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -3111,8 +3062,7 @@ export type OnUpdateProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3222,8 +3172,7 @@ export type OnDeleteProfileSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -3245,8 +3194,7 @@ export type OnDeleteProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3336,8 +3284,7 @@ export type OnCreateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3384,8 +3331,7 @@ export type OnCreateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3421,8 +3367,7 @@ export type OnCreateImagePostSubscription = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
-  mediaSourceMobile?: string | null;
-  mediaSourceDesktop?: string | null;
+  mediaSource?: string | null;
   downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
@@ -3454,8 +3399,7 @@ export type OnUpdateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3502,8 +3446,7 @@ export type OnUpdateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3539,8 +3482,7 @@ export type OnUpdateImagePostSubscription = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
-  mediaSourceMobile?: string | null;
-  mediaSourceDesktop?: string | null;
+  mediaSource?: string | null;
   downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
@@ -3572,8 +3514,7 @@ export type OnDeleteImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3620,8 +3561,7 @@ export type OnDeleteImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3657,8 +3597,7 @@ export type OnDeleteImagePostSubscription = {
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
-  mediaSourceMobile?: string | null;
-  mediaSourceDesktop?: string | null;
+  mediaSource?: string | null;
   downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
@@ -3741,8 +3680,7 @@ export type OnCreateUsernameSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -3766,8 +3704,7 @@ export type OnCreateUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3851,8 +3788,7 @@ export type OnUpdateUsernameSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -3876,8 +3812,7 @@ export type OnUpdateUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -3961,8 +3896,7 @@ export type OnDeleteUsernameSubscription = {
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
-    mediaSourceMobile?: string | null;
-    mediaSourceDesktop?: string | null;
+    mediaSource?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
@@ -3986,8 +3920,7 @@ export type OnDeleteUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
+      mediaSource?: string | null;
       downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
@@ -4027,8 +3960,6 @@ export type OnDeleteUsernameSubscription = {
   usernameImagePostsId?: string | null;
   usernameProfileId?: string | null;
 };
-
-
 // ZACH CREATED
 export type GetUsernameDataQuery = {
   __typename: "Username";
@@ -4118,8 +4049,7 @@ export class APIService {
             usernameID
             profileID
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             posterImage
             createdAt
             updatedAt
@@ -4197,8 +4127,7 @@ export class APIService {
         }
         s3_key
         posterImage
-        mediaSourceMobile
-        mediaSourceDesktop
+        mediaSource
         createdAt
         updatedAt
       }
@@ -4216,8 +4145,7 @@ export class APIService {
     this.finalArray = [];
     if (!array.posterImage) {
       this.finalArray.push({
-        mediaSourceMobile: array.mediaSourceMobile,
-        mediaSourceDesktop: array.mediaSourceDesktop,
+        mediaSource: array.mediaSource,
         isVideo: false,
         time_posted: new Date(array.time_posted),
         usernameID: array.usernameID,
@@ -4232,8 +4160,7 @@ export class APIService {
       })
     } else {
       this.finalArray.push({
-        mediaSourceMobile: await Storage.get(array.s3_key, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
-        mediaSourceDesktop: null,
+        mediaSource: await Storage.get(array.s3_key, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
         isVideo: true,
         time_posted: new Date(array.time_posted),
         usernameID: array.usernameID,
@@ -4297,8 +4224,7 @@ export class APIService {
         items {
           time_posted
           s3_key
-          mediaSourceMobile
-          mediaSourceDesktop
+          mediaSource
           profileID
           description
           likes
@@ -4322,8 +4248,7 @@ export class APIService {
         photosPosted.push({
           time_posted: posts.time_posted,
           s3_key: posts.s3_key,
-          mediaSourceMobile: posts.mediaSourceMobile,
-          mediaSourceDesktop: posts.mediaSourceDesktop,
+          mediaSource: posts.mediaSource,
           profileID: posts.profileID,
           description: posts.description,
           likes: posts.likes,
@@ -4463,8 +4388,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -4543,8 +4467,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -4623,8 +4546,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -4726,8 +4648,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -4749,8 +4670,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -4876,8 +4796,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -4899,8 +4818,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -5026,8 +4944,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -5049,8 +4966,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -5156,8 +5072,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -5204,8 +5119,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -5241,8 +5155,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
-          mediaSourceMobile
-          mediaSourceDesktop
+          mediaSource
           downloadableVideo
           posterImage
           createdAt
@@ -5290,8 +5203,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -5338,8 +5250,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -5375,8 +5286,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
-          mediaSourceMobile
-          mediaSourceDesktop
+          mediaSource
           downloadableVideo
           posterImage
           createdAt
@@ -5424,8 +5334,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -5472,8 +5381,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -5509,8 +5417,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
-          mediaSourceMobile
-          mediaSourceDesktop
+          mediaSource
           downloadableVideo
           posterImage
           createdAt
@@ -5657,8 +5564,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -5682,8 +5588,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -5783,8 +5688,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -5808,8 +5712,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -5909,8 +5812,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -5934,8 +5836,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -6011,8 +5912,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -6160,8 +6060,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -6183,8 +6082,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -6283,8 +6181,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -6337,6 +6234,94 @@ export class APIService {
     )) as any;
     return <ListProfilesQuery>response.data.listProfiles;
   }
+  async ProfilesByProfilepictureID(
+    profilepictureID: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelProfileFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ProfilesByProfilepictureIDQuery> {
+    const statement = `query ProfilesByProfilepictureID($profilepictureID: ID!, $sortDirection: ModelSortDirection, $filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
+        profilesByProfilepictureID(profilepictureID: $profilepictureID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              likes
+              comments
+              usernameID
+              profileID
+              s3_key
+              mediaSource
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      profilepictureID
+    };
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ProfilesByProfilepictureIDQuery>(
+      response.data.profilesByProfilepictureID
+    );
+  }
   async GetImagePost(id: string): Promise<GetImagePostQuery> {
     const statement = `query GetImagePost($id: ID!) {
         getImagePost(id: $id) {
@@ -6364,8 +6349,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -6412,8 +6396,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -6449,8 +6432,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
-          mediaSourceMobile
-          mediaSourceDesktop
+          mediaSource
           downloadableVideo
           posterImage
           createdAt
@@ -6511,8 +6493,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -6535,6 +6516,243 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListImagePostsQuery>response.data.listImagePosts;
+  }
+  async ImagePostsBySorterValueAndTime_posted(
+    sorterValue: string,
+    time_posted?: ModelStringKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelImagePostFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ImagePostsBySorterValueAndTime_postedQuery> {
+    const statement = `query ImagePostsBySorterValueAndTime_posted($sorterValue: String!, $time_posted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
+        imagePostsBySorterValueAndTime_posted(sorterValue: $sorterValue, time_posted: $time_posted, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            sorterValue
+            description
+            time_posted
+            likes
+            comments
+            usernameID
+            username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+            }
+            profileID
+            profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+            }
+            s3_key
+            mediaSource
+            downloadableVideo
+            posterImage
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      sorterValue
+    };
+    if (time_posted) {
+      gqlAPIServiceArguments.time_posted = time_posted;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ImagePostsBySorterValueAndTime_postedQuery>(
+      response.data.imagePostsBySorterValueAndTime_posted
+    );
+  }
+  async ImagePostsByUsernameID(
+    usernameID: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelImagePostFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ImagePostsByUsernameIDQuery> {
+    const statement = `query ImagePostsByUsernameID($usernameID: ID!, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
+        imagePostsByUsernameID(usernameID: $usernameID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            sorterValue
+            description
+            time_posted
+            likes
+            comments
+            usernameID
+            username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+            }
+            profileID
+            profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+            }
+            s3_key
+            mediaSource
+            downloadableVideo
+            posterImage
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      usernameID
+    };
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ImagePostsByUsernameIDQuery>response.data.imagePostsByUsernameID;
+  }
+  async ImagePostsByProfileID(
+    profileID: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelImagePostFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ImagePostsByProfileIDQuery> {
+    const statement = `query ImagePostsByProfileID($profileID: ID!, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
+        imagePostsByProfileID(profileID: $profileID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            sorterValue
+            description
+            time_posted
+            likes
+            comments
+            usernameID
+            username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+            }
+            profileID
+            profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+            }
+            s3_key
+            mediaSource
+            downloadableVideo
+            posterImage
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      profileID
+    };
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ImagePostsByProfileIDQuery>response.data.imagePostsByProfileID;
   }
   async GetComments(id: string): Promise<GetCommentsQuery> {
     const statement = `query GetComments($id: ID!) {
@@ -6638,8 +6856,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -6663,8 +6880,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -6737,8 +6953,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -6784,335 +6999,6 @@ export class APIService {
     )) as any;
     return <ListUsernamesQuery>response.data.listUsernames;
   }
-  async ProfilesByProfilepictureID(
-    profilepictureID: string,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelProfileFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ProfilesByProfilepictureIDQuery> {
-    const statement = `query ProfilesByProfilepictureID($profilepictureID: ID!, $sortDirection: ModelSortDirection, $filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
-        profilesByProfilepictureID(profilepictureID: $profilepictureID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            email
-            relation
-            cognitoID
-            usernameID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              likes
-              comments
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-            }
-            first_name
-            last_name
-            profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-            }
-            bio
-            birthday
-            createdAt
-            updatedAt
-            profileUsernameId
-            profileImagePostsId
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      profilepictureID
-    };
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ProfilesByProfilepictureIDQuery>(
-      response.data.profilesByProfilepictureID
-    );
-  }
-  async ImagePostsBySorterValueAndTime_posted(
-    sorterValue: string,
-    time_posted?: ModelStringKeyConditionInput,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelImagePostFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ImagePostsBySorterValueAndTime_postedQuery> {
-    const statement = `query ImagePostsBySorterValueAndTime_posted($sorterValue: String!, $time_posted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
-        imagePostsBySorterValueAndTime_posted(sorterValue: $sorterValue, time_posted: $time_posted, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            sorterValue
-            description
-            time_posted
-            likes
-            comments
-            usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-            }
-            profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-            }
-            s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
-            downloadableVideo
-            posterImage
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      sorterValue
-    };
-    if (time_posted) {
-      gqlAPIServiceArguments.time_posted = time_posted;
-    }
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ImagePostsBySorterValueAndTime_postedQuery>(
-      response.data.imagePostsBySorterValueAndTime_posted
-    );
-  }
-  async ImagePostsByUsernameID(
-    usernameID: string,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelImagePostFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ImagePostsByUsernameIDQuery> {
-    const statement = `query ImagePostsByUsernameID($usernameID: ID!, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
-        imagePostsByUsernameID(usernameID: $usernameID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            sorterValue
-            description
-            time_posted
-            likes
-            comments
-            usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-            }
-            profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-            }
-            s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
-            downloadableVideo
-            posterImage
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      usernameID
-    };
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ImagePostsByUsernameIDQuery>response.data.imagePostsByUsernameID;
-  }
-  async ImagePostsByProfileID(
-    profileID: string,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelImagePostFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ImagePostsByProfileIDQuery> {
-    const statement = `query ImagePostsByProfileID($profileID: ID!, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
-        imagePostsByProfileID(profileID: $profileID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            sorterValue
-            description
-            time_posted
-            likes
-            comments
-            usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-            }
-            profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-            }
-            s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
-            downloadableVideo
-            posterImage
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      profileID
-    };
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ImagePostsByProfileIDQuery>response.data.imagePostsByProfileID;
-  }
   OnCreateProfilePictureListener(
     filter?: ModelSubscriptionProfilePictureFilterInput
   ): Observable<
@@ -7143,8 +7029,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -7228,8 +7113,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -7313,8 +7197,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -7419,8 +7302,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -7442,8 +7324,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -7570,8 +7451,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -7593,8 +7473,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -7721,8 +7600,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -7744,8 +7622,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -7852,8 +7729,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -7900,8 +7776,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -7937,8 +7812,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
-          mediaSourceMobile
-          mediaSourceDesktop
+          mediaSource
           downloadableVideo
           posterImage
           createdAt
@@ -7987,8 +7861,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -8035,8 +7908,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -8072,8 +7944,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
-          mediaSourceMobile
-          mediaSourceDesktop
+          mediaSource
           downloadableVideo
           posterImage
           createdAt
@@ -8122,8 +7993,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -8170,8 +8040,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -8207,8 +8076,7 @@ export class APIService {
             profileImagePostsId
           }
           s3_key
-          mediaSourceMobile
-          mediaSourceDesktop
+          mediaSource
           downloadableVideo
           posterImage
           createdAt
@@ -8359,8 +8227,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -8384,8 +8251,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -8486,8 +8352,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -8511,8 +8376,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt
@@ -8613,8 +8477,7 @@ export class APIService {
               profileImagePostsId
             }
             s3_key
-            mediaSourceMobile
-            mediaSourceDesktop
+            mediaSource
             downloadableVideo
             posterImage
             createdAt
@@ -8638,8 +8501,7 @@ export class APIService {
               usernameID
               profileID
               s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
+              mediaSource
               downloadableVideo
               posterImage
               createdAt

@@ -7,6 +7,7 @@ import { ProfileMediaClickPage } from '../../modals/profile-media-click/profile-
 import { MediaService } from 'src/app/services/media.service';
 import { LoadingController } from '@ionic/angular';
 import { ProfileMenuModalPage } from 'src/app/modals/profile-menu-modal/profile-menu-modal.page';
+import { Storage } from 'aws-amplify';
 
 @Component({
   selector: 'app-profile',
@@ -107,7 +108,7 @@ export class ProfilePage {
     }
 
     if(this.profileData.profilepictureID){
-      this.profilePhoto = 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + this.profileData.profilepicture.imageurl;
+      this.profilePhoto = await Storage.get('profile-pictures/' + await this.getProfilePicture(profileID))
     } else {
       this.profilePhoto = false;
     }
@@ -155,6 +156,10 @@ export class ProfilePage {
   async sortByDate(array){
     console.log(array)
     return await array.sort((a, b) => Date.parse(b.time_posted) - Date.parse(a.time_posted));
+  }
+
+  async getProfilePicture(profileID) {
+    return await (await this.api.GetProfilePictureProfileID(profileID))?.imageurl;
   }
 
 

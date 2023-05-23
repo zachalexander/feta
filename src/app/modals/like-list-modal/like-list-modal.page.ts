@@ -3,6 +3,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { APIService } from "../../API.service";
 import { MediaService } from 'src/app/services/media.service';
 import { Router } from '@angular/router';
+import { Storage } from 'aws-amplify';
 
 @Component({
   selector: 'app-like-list-modal',
@@ -39,7 +40,7 @@ export class LikeListModalPage implements OnInit {
           let profilePicUrl = await this.api.GetProfilePictureProfileID(user.profileID)
           console.log(profilePicUrl)
           if(profilePicUrl){
-            photoUrl = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + profilePicUrl.imageurl;
+            photoUrl = await Storage.get('profile-pictures/' + await this.getProfilePicture(profile.id))
             this.image = true;
           } else {
             photoUrl = '../../../assets/avatar.svg';
@@ -69,5 +70,9 @@ export class LikeListModalPage implements OnInit {
     this.modalController.dismiss({
       'dismissed': true
     });
+  }
+
+  async getProfilePicture(profileID) {
+    return await (await this.api.GetProfilePictureProfileID(profileID))?.imageurl;
   }
 }
