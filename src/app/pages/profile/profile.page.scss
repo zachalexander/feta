@@ -1,3 +1,5 @@
+
+
 .menu-button {
     padding: 0 1em;
 }
@@ -105,6 +107,10 @@ ion-icon {
     height: auto;
     margin: 0 auto;
     max-width: 600px;
+
+    .edit-birthday {
+        margin-bottom: 0.25em;
+    }
 
     .username-header {
         justify-content: center;
@@ -322,4 +328,9 @@ ion-icon:hover {
         text-align: center;
         font-weight: 600;
     }
+}
+
+.birthday-icon {
+    height: 20px;
+    width: 20px;
 }

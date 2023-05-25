@@ -1,13 +1,15 @@
-<ion-tabs mode="ios" *ngIf="!needRegister">
+<ion-tabs mode="md" *ngIf="!needRegister">
   <ion-tab-bar class="footer-scroll" slot="bottom">
     <ion-tab-button (click)="homeClick()" tab="home">
-      <ion-icon *ngIf="!homeclick" name="home-outline"></ion-icon>
-      <ion-icon *ngIf="homeclick" name="home"></ion-icon>
+      <!-- <ion-icon *ngIf="!homeclick" name="home-outline"></ion-icon> -->
+      <ion-icon *ngIf="!homeclick" src="../../../assets/streamline/interface-home-3.svg"></ion-icon>Home
+      <ion-icon *ngIf="homeclick" src="../../../assets/streamline/home-4.svg"></ion-icon>
     </ion-tab-button>
 
     <ion-tab-button (click)="timelineClick()" tab="timeline">
-      <ion-icon *ngIf="!timelineclick" name="image-outline"></ion-icon>
-      <ion-icon *ngIf="timelineclick" name="image"></ion-icon>
+      <!-- <ion-icon *ngIf="!timelineclick" name="image-outline"></ion-icon> -->
+      <ion-icon *ngIf="!timelineclick" src="../../../assets/streamline/image-photo-polaroid.svg"></ion-icon>Timeline
+      <ion-icon *ngIf="timelineclick" src="../../../assets/streamline/polaroid.svg"></ion-icon>
     </ion-tab-button>
 
     <!-- <ion-tab-button (click)="messageClick()" tab="message-board">
@@ -16,8 +18,9 @@
     </ion-tab-button> -->
 
     <ion-tab-button class="profile-button" (click)="profileClick()" tab="profile/{{username}}">
-      <ion-icon *ngIf="!profileclick" name="person-circle-outline"></ion-icon>
-      <ion-icon *ngIf="profileclick" name="person-circle"></ion-icon>
+      <!-- <ion-icon *ngIf="!profileclick" name="person-circle-outline"></ion-icon> -->
+      <ion-icon *ngIf="!profileclick" src="../../../assets/streamline/interface-user-square-alternate.svg"></ion-icon>Profile
+      <ion-icon *ngIf="profileclick" src="../../../assets/streamline/user-square-single.svg"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

@@ -237,6 +237,11 @@ ion-tab-button {
     display: flex;
     justify-content: space-around;
     margin: 0;
+    padding-top: 0.5em;
+}
+
+ion-title {
+    color: black;
 }
 
 alert-wrapper.sc-ion-alert-ios {

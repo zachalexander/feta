@@ -99,7 +99,7 @@
             <!-- shows the post description and the user that posted the image -->
             <ion-card-content class="ion-no-padding" lines="none" class="image-description">
               <strong class="username-description" routerLink="/profile/{{image.username}}">{{image.username}}</strong> {{image.description}}
-              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} | {{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
+              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} - {{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
             </ion-card-content>
 
           </ion-card-header>

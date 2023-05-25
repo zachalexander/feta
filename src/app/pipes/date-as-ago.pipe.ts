@@ -12,7 +12,7 @@ export class DateAsAgoPipe implements PipeTransform {
       return 'a moment ago';
     }
     const divider = [60, 60, 24, 30, 12];
-    const string = [' sec', ' min', ' hr', ' day', ' month', ' year'];
+    const string = [' sec', ' min', ' hour', ' day', ' month', ' year'];
     let i;
     for (i = 0; Math.floor(time / divider[i]) > 0; i++) {
       time /= divider[i];
