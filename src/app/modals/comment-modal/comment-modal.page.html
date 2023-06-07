@@ -1,0 +1,101 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-icon slot="start" (click)="backToTimeline()" class="close-comment-icon" name="close-outline"></ion-icon>
+      <ion-title>Comments</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list>
+    <ion-item>
+      <div class="post-wrapper" *ngIf="postDetails.username">
+        <ion-avatar class="comment-post-pic">
+          <img id="avatar" src="{{postDetails.profilePicture}}">
+        </ion-avatar>
+        <p class="description-text"><strong>{{postDetails.username}}</strong>&nbsp;{{postDetails.description}}</p>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <div class="loading-centered" *ngIf="spinner">
+    <ion-spinner name="lines-small"></ion-spinner>
+  </div>
+
+  <ion-list lines="none" *ngIf="comments" class="full-list">
+    <ion-item *ngFor="let comment of comments" class="comment-full-wrapper">
+      <ion-item-sliding *ngIf="comment.usernameID == this.userNameID" #editSlider class="comment-full-slider">
+        <ion-item>
+          <div class="comment-wrapper">
+            <div class="comment-box">
+              <ion-avatar class="comment-user-pic">
+                <img id="avatar" src="{{comment.profilePic}}">
+              </ion-avatar>
+              <p class="comment-text"><strong
+                  routerLink="/profile/{{comment.username}}">{{comment.username}}</strong>&nbsp;{{comment.comment}}</p>
+            </div>
+
+            <div class="commentAgoDivUser">
+              <small class="commentAgoUser">{{comment.time_posted | dateAsAgoShort}}</small>
+            </div>
+          </div>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option class="edit-button" (click)="updateComment(comment.id, editSlider, comment.comment)"><small
+              *ngIf="comment.usernameID == this.userNameID" class="commentEdit"><ion-icon
+                name="create-outline"></ion-icon></small></ion-item-option>
+          <ion-item-option class="delete-button" (click)="deleteComment(comment.id)"><small
+              *ngIf="comment.usernameID == this.userNameID" class="commentDelete"><ion-icon
+                name="trash-outline"></ion-icon></small></ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+
+      <ion-item *ngIf="comment.usernameID !== this.userNameID" class="comment-full-wrapper">
+        <div class="comment-wrapper">
+          <div class="comment-box">
+            <ion-avatar class="comment-user-pic">
+              <img id="avatar" src="{{comment.profilePic}}">
+            </ion-avatar>
+            <p class="comment-text"><strong
+                routerLink="/profile/{{comment.username}}">{{comment.username}}</strong>&nbsp;{{comment.comment}}</p>
+          </div>
+
+          <div class="commentAgoDivUser">
+            <small class="commentAgoUser">{{comment.time_posted | dateAsAgoShort}}</small>
+          </div>
+        </div>
+      </ion-item>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer lines="none" *ngIf="!noInput && !editComment" class="comment-footer">
+  <form [formGroup]="writeCommentForm">
+    <p class="comment-text-edit-card">
+      <ion-avatar class="comment-input-user-pic">
+        <img id="avatar" src="{{currentUserProfilePicture}}">
+      </ion-avatar>
+      <ion-textarea #commentInput class="form-text-area" lines="none" #userEditComment placeholder="Add a comment..."
+        formControlName="comment" rows="1" minLength="300" autoGrow="true">
+        <ion-button color="clear" class="comment-submit" [disabled]="!writeCommentForm.valid"
+          (click)="postWrittenComment(writeCommentForm.value)">Post</ion-button>
+      </ion-textarea>
+    </p>
+  </form>
+</ion-footer>
+
+<ion-footer lines="none" *ngIf="!noInput && editComment" class="comment-footer">
+  <form [formGroup]="updateCommentForm" (ngSubmit)="postUpdatedComment(updateCommentForm.value)">
+    <p class="comment-text-edit-card">
+      <ion-avatar class="comment-input-user-pic">
+        <img id="avatar" src="{{currentUserProfilePicture}}">
+      </ion-avatar>
+      <ion-textarea #editCommentInput class="form-text-area" lines="none" formControlName="comment" id="userEditComment"
+        rows="1" minLength="300" autoGrow="true">
+        <ion-button color="clear" class="comment-submit"
+          (click)="postUpdatedComment(updateCommentForm.value)">Post</ion-button>
+      </ion-textarea>
+    </p>
+  </form>
+</ion-footer>

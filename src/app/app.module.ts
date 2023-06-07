@@ -51,7 +51,7 @@ Amplify.configure(awsvideoconfig);
     ProfileMenuModalPage,
     ProfilePicturePage,
     CreateMediaModalPage,
-    LikeListModalPage
+    LikeListModalPage,
   ],
   imports: [
     BrowserModule, 

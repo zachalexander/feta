@@ -10,7 +10,6 @@ import { Storage } from '@aws-amplify/storage';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { PassThrough } from 'stream';
 import { Capacitor } from '@capacitor/core';
-import { CachingService } from 'src/app/services/caching.service';
 
 import { ImageResizer, ImageResizerOptions } from '@awesome-cordova-plugins/image-resizer/ngx';
 import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
@@ -50,7 +49,6 @@ export class CreateMediaModalPage {
     private mediaService: MediaService,
     private sanitizer: DomSanitizer,
     private loadingController: LoadingController,
-    private cachingService: CachingService,
     private imageResizer: ImageResizer,
     private videoEditor: VideoEditor
   ) {    
@@ -229,7 +227,6 @@ export class CreateMediaModalPage {
     loading.dismiss();
 
     await this.api.CreateImagePost(imagepost).then(() => {
-      this.cachingService.clearAllCachedData();
       this.router.navigate(['/timeline']).then(() => { window.location.reload()});
       loading.dismiss();
     })

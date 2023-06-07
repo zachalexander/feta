@@ -80,11 +80,11 @@
                 <app-timeline-like-button [version]="image.version" [user]="this.currentUserUsername" [alreadyLiked]="image.userLiked" [imageId] = "image.id" [usernameID]="this.currentUserUsernameID"></app-timeline-like-button>
 
                 <!-- comment chat-bubble button below image -->
-                <!-- <ion-tab-button *ngIf="!disabledButtons" (click)="openModal(image.id)">
+                <ion-tab-button (click)="openModal(image.id)">
                   <p class="comment-icon">Comment</p><ion-icon name="chatbubble-outline"></ion-icon>
                 </ion-tab-button>
 
-                <ion-tab-button *ngIf="disabledButtons" disabled="true" class="disabledCommentButton" (click)="openModal(image.id)">
+                <!-- <ion-tab-button *ngIf="disabledButtons" disabled="true" class="disabledCommentButton" (click)="openModal(image.id)">
                   <p class="comment-icon">Comment</p><ion-icon name="chatbubbles-outline"></ion-icon>
                 </ion-tab-button> -->
 
@@ -108,7 +108,7 @@
           <ion-item-group lines="none" class="comments" *ngIf="image.comment_count > 0">
             <!-- if greater than 0 comments, show below -->
             <ion-item-divider lines="none" class="comment-divider">
-              <!-- <ion-label class="view-all-comments" color="medium" (click)="openModal(image.id)">View all {{image.comment_count}} comments </ion-label> -->
+              <ion-label class="view-all-comments" color="medium" (click)="openModal(image.id)">View all {{image.comment_count}} comments </ion-label>
             </ion-item-divider>
           </ion-item-group>
         </ion-card>

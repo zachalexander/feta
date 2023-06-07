@@ -2,7 +2,7 @@ import { TimelineLikeButtonComponent } from './../../components/timeline-like-bu
 import { TimelineComponent } from './../../components/timeline/timeline.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -27,10 +27,12 @@ import { ImageResizer } from '@awesome-cordova-plugins/image-resizer/ngx';
 import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
 
 import { InViewportDirective } from 'ng-in-viewport';
+import { CommentModalPage } from 'src/app/modals/comment-modal/comment-modal.page';
 
 @NgModule({
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     FormsModule,
     IonicModule,
     SharedmodulePageRoutingModule,
@@ -43,8 +45,8 @@ import { InViewportDirective } from 'ng-in-viewport';
     VgStreamingModule,
     InViewportDirective
   ],
-  declarations: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent],
-  exports: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent, InViewportDirective]
+  declarations: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent, CommentModalPage],
+  exports: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent, InViewportDirective, CommentModalPage]
 })
 export class SharedmodulePageModule {
   static forRoot() {

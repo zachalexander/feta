@@ -4050,9 +4050,36 @@ export class APIService {
 
   // ZACH CREATED  
 
+  async getImageComments(id: string): Promise<any> {
+    const statement = `query listImageComments($id: String) {
+      listComments(filter: {imagePostsID: {eq: $id}}) {
+        items {
+          id
+          time_posted
+          usernameID
+          imagePostsID
+          comment
+        }
+      }
+    }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+
+    let data = this.sortByDate(response.data.listComments.items)
+    data.map(async values => {
+      values.username = await (await this.GetUsername(values.usernameID))?.username
+      values.profilePic = await this.checkForProfilePhoto(await(await this.GetProfilePictureProfileID(await (await this.GetUsername(values.usernameID))?.profileID)))
+    })
+    return data;
+  }
+
   async checkForProfilePhoto(url) {
     if (url) {
-      return 'https://ik.imagekit.io/bkf4g8lrl/profile-photos/' + url.imageurl;
+      return await Storage.get('profile-pictures/' + url.imageurl)
     } else {
       return false;
     }
@@ -4254,7 +4281,6 @@ export class APIService {
 
 
   sortByDate(array) {
-    console.log(array)
     return array.sort((a, b) => Date.parse(b.time_posted) - Date.parse(a.time_posted))
   }
 

@@ -1,0 +1,394 @@
+ion-textarea {
+    --background: whitesmoke;
+    --padding: 1em;
+    --padding-start: 1em;
+    --border-radius: 10px;
+    width: 100% !important;
+}
+
+.comment-box {
+    display: flex;
+    align-items: center;
+}
+
+ion-item {
+    width: 100% !important;
+}
+
+img {
+    min-width: 1.5em;
+}
+
+.description-text {
+    margin-left: 0.5em;
+}
+
+.comment-full-wrapper {
+    margin: auto 0em auto 0em;
+}
+
+.comment-full-slider {
+    margin: auto 0em auto 0em;
+}
+
+.form-text-area {
+    min-width: 80%;
+
+    textarea-wrapper {
+        min-width: 80%;
+    }
+}
+
+.textarea-wrapper {
+    width: 100% !important;
+}
+
+.comment-textarea {
+    border-radius: 10px;
+    padding: 0.25em 1em;
+    width: 100%;
+    min-height: 7em;
+    margin: auto;
+    font-size: 0.85em;
+}
+
+.button-class {
+    display: flex;
+    justify-content: space-between;
+    max-width: 325px !important;
+    margin: auto;
+}
+
+.cancel {
+    color: indianred;
+}
+
+.post {
+    margin-left: -2em;
+}
+
+.comment-wrapper {
+    min-width: 100%;
+    font-size: 0.85em;
+    color: #333;
+    margin-top: 0.5em;
+}
+
+
+ion-footer {
+    padding-bottom: 0.75em !important;
+    --border-width: 0 !important;
+}
+
+ion-toolbar {
+    --border-width: 0 !important;
+}
+
+.write-comment-close {
+    padding: 1em 1em 0em 1em;
+}
+
+.close-comment-icon {
+    font-size: 20px;
+    --ionicon-stroke-width: 48px;
+    margin-left: 1em;
+}
+
+.comment-footer {
+    padding-bottom: 0.75em !important;
+    --border-width: 0 !important;
+    border-top: 1px solid #ddd;
+}
+
+.write-comment-form {
+    --inner-padding-end: 0 !important;
+    --inner-padding-start: 0.5em;
+}
+
+.comment-user {
+    margin: 0em -0.5em 0em 1em;
+}
+
+
+.comment-text-edit-card {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: center !important;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 0.85em;
+    min-width: 200px;
+
+    ion-textarea {
+        --background: whitesmoke;
+        --padding: 1em;
+        --padding-start: 1em;
+        border-radius: 10px;
+        margin: 1em 1em 1em 0.5em;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .comment-submit {
+        --background: transparent !important;
+        --color: rgb(107, 157, 199) !important;
+        --padding-start: 0.5em !important;
+        --padding-end: 1em !important;
+        font-weight: 500;
+    }
+}
+
+.commentAgoDiv,
+.commentAgoDivUser {
+    display: flex;
+    justify-content: left;
+    margin-top: -0.35em;
+}
+
+.comments {
+
+    .commentEdit {
+        font-size: 0.85em;
+        font-weight: 600;
+        color: royalblue;
+    }
+
+
+    ion-item {
+        min-height: 2em;
+        display: flex;
+        align-items: center;
+    }
+
+    ion-text-wrap {
+        width: 85% !important
+    }
+
+    .comment-label-area {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        min-width: 75%;
+    }
+
+    .comment-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-width: 100%;
+        margin-top: 0.5em;
+    }
+
+
+    .label-wrapper {
+        margin: 0 .5em 0 0 !important;
+        font-size: 0.85em;
+    }
+
+    .comment-area {
+        display: flex;
+        flex-direction: row;
+        min-height: 1em;
+        margin-bottom: 0.25em;
+
+        strong {
+            height: 100%;
+        }
+    }
+
+    .comment-box {
+        display: flex;
+        flex-direction: row;
+        // justify-content: space-between;
+        min-width: 100%;
+    }
+
+    .commentDelete,
+    .commentEdit {
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        color: white;
+        font-size: 1.25em;
+        max-width: 1em;
+        margin-left: auto;
+    }
+
+
+    .commentDelete:hover,
+    .commentEdit:hover {
+        cursor: pointer;
+    }
+
+    .small-comment-box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+        margin: -0.2em 0 1em 0;
+
+    }
+
+
+    .commentAgo,
+    .commentAgoUser {
+        font-size: 0.65em;
+        color: #595959;
+        margin: -0.4em 0 0 0;
+        padding-left: 0.25em;
+    }
+
+    .commentAgoReplyUser {
+        font-size: 0.65em;
+        color: #595959;
+        margin: -0.4em 0 0 1em;
+        padding-left: 0.25em;
+    }
+
+    .comment-text {
+        margin: 0.25em 0em 0.25em 0.5em !important;
+        color: #595959;
+        height: 100%;
+        font-size: 0.85em;
+        padding-right: 0.5em;
+    }
+
+    .comment-text-edit {
+        margin: 0 0 0 0.25em;
+        color: #333;
+        height: 100%;
+        font-size: 0.85em;
+        padding-right: 0.5em;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .delete-button {
+        background: indianred;
+    }
+
+    ion-textarea {
+        --background: whitesmoke;
+        --padding: 1em;
+        --padding-start: 1em;
+    }
+
+    #userEditComment {
+        min-width: 200px;
+        border-radius: 10px;
+    }
+
+    .edit-submit,
+    .comment-submit {
+        margin-left: 1em;
+    }
+
+    .reply-text {
+        font-size: 0.75em;
+    }
+}
+
+.post-wrapper {
+    font-size: 0.95em;
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    align-items: center;
+}
+
+.comment-text {
+    margin: 0.25em 0em 0.25em 0.5em;
+    ;
+    color: #595959;
+}
+
+.commentAgoUser {
+    margin-right: 1em;
+    margin-left: 2.65em;
+}
+
+.add-comment-text {
+    margin-left: -0.5em;
+}
+
+.delete-button {
+    background: indianred;
+}
+
+.reply-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.reply-wrapper-time {
+    padding: 0.25em 0em;
+    width: 100%;
+}
+
+.replies {
+    font-size: 0.9em;
+    color: #595959;
+}
+
+.replyAgoUser {
+    margin-top: 0.2em;
+    margin-left: 2em;
+}
+
+.replyDelete {
+    margin-top: 0.2em;
+    margin-left: 1em;
+}
+
+
+.loading-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+
+.commentReply {
+    margin: -0.4em 0 0 0.15em;
+    font-size: 0.75em;
+    padding-left: 0 !important;
+    font-weight: 600 !important;
+}
+
+.replies-total-wrapper {
+    margin: 0.5em 0em 0.5em -1em;
+}
+
+.reply-box {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+}
+
+.reply-text {
+    text-indent: -1.5em;
+}
+
+.full-list {
+    margin-bottom: 3em;
+}
+
+.comment-user-pic {
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.comment-post-pic {
+    height: 2.0em;
+    width: 2.0em;
+}
+
+.comment-input-user-pic {
+    margin: 0 0 0 0.5em;
+}

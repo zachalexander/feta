@@ -4,7 +4,6 @@ import { Storage } from '@aws-amplify/storage';
 import { APIService } from "../API.service";
 import API, { graphqlOperation} from "@aws-amplify/api-graphql";
 import { DomSanitizer } from '@angular/platform-browser';
-import { CachingService } from './caching.service';
 import { from, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
@@ -19,8 +18,7 @@ export class MediaService {
 
   constructor(
     private api: APIService,
-    private sanitizer: DomSanitizer,
-    public cachingService: CachingService
+    private sanitizer: DomSanitizer
   ) { }
 
   async getPhotoUrl(key){
@@ -119,13 +117,6 @@ export class MediaService {
     return from(this.getDataFromGraphQLPaginated(currentUser, token))
   }
 
-  private callAndCache(url, currentUser): Observable<any> {
-    return from(this.getDataFromGraphQL(currentUser)).pipe(
-      tap(res => {
-        this.cachingService.cacheRequests(url, res);
-      })
-    )
-  }
 
   async getDataFromGraphQLPaginated(currentUser, tokenNext: string) {
     const statement = `query timelineSorted($tokenNext: String)  {
@@ -175,7 +166,7 @@ export class MediaService {
           id: posts.id,
           likes: posts.likes,
           posterImage: await Storage.get(posts.posterImage, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
-          // comment_count: await this.commentLength(posts.comments),
+          comment_count: await this.commentLength(posts.id),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),
@@ -193,7 +184,7 @@ export class MediaService {
           description: posts.description,
           id: posts.id,
           likes: posts.likes,
-          // comment_count: await this.commentLength(posts.comments),
+          comment_count: await this.commentLength(posts.id),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),
@@ -253,7 +244,7 @@ export class MediaService {
           id: posts.id,
           likes: posts.likes,
           posterImage: await Storage.get(posts.posterImage, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
-          // comment_count: await this.commentLength(posts.comments),
+          comment_count: await this.commentLength(posts.id),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),            
@@ -271,7 +262,7 @@ export class MediaService {
           description: posts.description,
           id: posts.id,
           likes: posts.likes,
-          // comment_count: await this.commentLength(posts.comments),
+          comment_count: await this.commentLength(posts.id),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),
@@ -281,6 +272,11 @@ export class MediaService {
     }))
     this.mediaPosted = this.sortByDate(this.mediaPosted)
     return [this.mediaPosted, this.mediaPosted.length, response.data.imagePostsBySorterValueAndTime_posted.nextToken]
+  }
+
+  async commentLength(imageID){
+    let commentArray: [] = await this.api.getImageComments(imageID)
+    return commentArray.length
   }
 
 

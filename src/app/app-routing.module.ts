@@ -18,11 +18,11 @@ const routes: Routes = [
     path: '',
     canActivate: [AuthguardGuard],
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
-  },  {
+  },
+  {
     path: 'sharedmodule',
     loadChildren: () => import('./pages/sharedmodule/sharedmodule.module').then( m => m.SharedmodulePageModule)
   }
-
 ];
 @NgModule({
   imports: [

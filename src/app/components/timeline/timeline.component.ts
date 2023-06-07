@@ -4,10 +4,9 @@ import { TimelinePageModule } from 'src/app/pages/timeline/timeline.module';
 import { ModalController, Platform } from '@ionic/angular';
 // import { PhotoService } from '../../services/photo.service';
 import { MediaService } from 'src/app/services/media.service';
-// import { CachingService } from '../../services/caching.service';
 import { APIService } from "../../API.service";
 import { ActivatedRoute, Router } from '@angular/router';
-// import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
+import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
 // import { EditPhotoModalPage } from '../../modals/edit-photo-modal/edit-photo-modal.page';
 import { LikeListModalPage } from '../../modals/like-list-modal/like-list-modal.page';
 import { Storage } from '@aws-amplify/storage';
@@ -627,21 +626,23 @@ export class TimelineComponent implements AfterViewInit{
 
   // modal functions
 
-  // async openModal(id) {
-  //   console.log(id)
-  //   const modal = await this.modalController.create({
-  //     component: CommentModalPage
-  //   });
+  async openModal(id) {
+    const modal = await this.modalController.create({
+      component: CommentModalPage,
+      componentProps: {
+        imageID: id
+      }
+    });
 
-  //   await this.photoService.getPostImageID(id)
+    // await this.photoService.getPostImageID(id)
 
-  //   modal.onDidDismiss().then((dataReturned) => {
-  //     if (dataReturned !== null) {
-  //       this.dataReturned = dataReturned.data;
-  //     }
-  //   });
-  //   return await modal.present();
-  // }
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        this.dataReturned = dataReturned.data;
+      }
+    });
+    return await modal.present();
+  }
 
   async showLikesModal(url) {
     const modal = await this.modalController.create({
@@ -650,8 +651,6 @@ export class TimelineComponent implements AfterViewInit{
         imageID: url[1]
       }
     });
-
-    // await this.photoService.getImagesID(url)
 
     modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null) {
@@ -692,7 +691,9 @@ export class TimelineComponent implements AfterViewInit{
   }
 
   scrollToTop(){
-    this.ionContent.scrollToTop(400)
+    this.ionContent.scrollToTop(400).then(() => {
+      window.location.reload();
+    })
   }
 
   // disabling toggles
