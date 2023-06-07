@@ -166,7 +166,7 @@ export class MediaService {
           id: posts.id,
           likes: posts.likes,
           posterImage: await Storage.get(posts.posterImage, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
-          comment_count: await this.commentLength(posts.id),
+          comments: +await this.commentLength(posts.id),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),
@@ -184,7 +184,7 @@ export class MediaService {
           description: posts.description,
           id: posts.id,
           likes: posts.likes,
-          comment_count: await this.commentLength(posts.id),
+          comments: +await this.commentLength(posts.id),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),
@@ -229,6 +229,7 @@ export class MediaService {
     const response = (await API.graphql(graphqlOperation(statement))) as any;
     let array: any = response.data.imagePostsBySorterValueAndTime_posted.items;
 
+
     this.mediaPosted = [];
     await Promise.all(array.map(async posts => {
       if(await this.checkForVideo(posts.s3_key)){
@@ -244,7 +245,7 @@ export class MediaService {
           id: posts.id,
           likes: posts.likes,
           posterImage: await Storage.get(posts.posterImage, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
-          comment_count: await this.commentLength(posts.id),
+          comments: +(await this.commentLength(posts.id)).toString(),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),            
@@ -262,7 +263,7 @@ export class MediaService {
           description: posts.description,
           id: posts.id,
           likes: posts.likes,
-          comment_count: await this.commentLength(posts.id),
+          comments: +(await this.commentLength(posts.id)).toString(),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),

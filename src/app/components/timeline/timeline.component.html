@@ -105,10 +105,10 @@
           </ion-card-header>
 
           <!-- start of comment section of post -->
-          <ion-item-group lines="none" class="comments" *ngIf="image.comment_count > 0">
+          <ion-item-group lines="none" class="comments" *ngIf="image.comments > 0">
             <!-- if greater than 0 comments, show below -->
             <ion-item-divider lines="none" class="comment-divider">
-              <ion-label class="view-all-comments" color="medium" (click)="openModal(image.id)">View all {{image.comment_count}} comments </ion-label>
+              <ion-label class="view-all-comments" color="medium" (click)="openModal(image.id)">View all {{image.comments}} comments </ion-label>
             </ion-item-divider>
           </ion-item-group>
         </ion-card>

@@ -10,7 +10,7 @@ import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page'
 // import { EditPhotoModalPage } from '../../modals/edit-photo-modal/edit-photo-modal.page';
 import { LikeListModalPage } from '../../modals/like-list-modal/like-list-modal.page';
 import { Storage } from '@aws-amplify/storage';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, map } from 'rxjs';
 import { IonInfiniteScroll, IonRefresher, IonRefresherContent} from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { IonItemSliding} from '@ionic/angular';
@@ -33,6 +33,7 @@ import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
 import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
 
 import SwiperCore, { Zoom, EffectFade } from 'swiper';
+import { timeline } from 'console';
 // import { toast } from 'aws-amplify';
 // import { async } from '@angular/core/testing';
 // import { Timestamp } from 'rxjs/internal/operators/timestamp';
@@ -69,7 +70,8 @@ export class TimelineComponent implements AfterViewInit{
   onCreateImageSubscription: Subscription | null = null;
   onUpdateImageSubscription: Subscription | null = null;
   onDeleteImageSubscription: Subscription | null = null;
-  onUpdateCommentSubscription: Subscription | null = null;
+  onCreateCommentsSubscription: Subscription | null = null;
+  onDeleteCommentsSubscription: Subscription | null = null;
 
   alreadyLiked: boolean;
   loaded: boolean;
@@ -216,6 +218,10 @@ export class TimelineComponent implements AfterViewInit{
 
     this.didScroll();
 
+    setTimeout(() => {
+      console.log(this.data)
+    }, 2000)
+
 
     // if (this.platform.is('hybrid')) {
 
@@ -268,6 +274,12 @@ export class TimelineComponent implements AfterViewInit{
     }
     if(this.onDeleteImageSubscription){
       await this.onDeleteImageSubscription.unsubscribe();
+    }
+    if (this.onCreateCommentsSubscription) {
+      await this.onCreateCommentsSubscription.unsubscribe();
+    }
+    if (this.onDeleteCommentsSubscription) {
+      await this.onDeleteCommentsSubscription.unsubscribe();
     }
     this.platform.pause.subscribe(async () => {
       console.log('pausing subscription')
@@ -716,9 +728,7 @@ export class TimelineComponent implements AfterViewInit{
     this.onUpdateImageSubscription = <Subscription>(
       this.api.OnUpdateImagePostListener().subscribe({
         next: async (event: any) => {
-
           const imageId = event.value.data.onUpdateImagePost.id;
-
 
           if((JSON.parse(event.value.data.onUpdateImagePost.likes))){
             let post = await this.api.GetPostLikes(imageId)
@@ -730,47 +740,6 @@ export class TimelineComponent implements AfterViewInit{
               return media;
             })
           }
-  
-        //   if((JSON.parse(event.value.data.onUpdateImagePost.likes)) && (JSON.parse(event.value.data.onUpdateImagePost.comments))){
-  
-        //     const likes_updated = await JSON.parse(event.value.data.onUpdateImagePost.likes).usernames.length
-        //     const comments_updated = await JSON.parse(event.value.data.onUpdateImagePost.comments)
-  
-            
-  
-        //     await this.data.forEach(async photos => {
-        //       if((photos.id == imageId) && (comments_updated)){
-        //         photos.like_count = likes_updated;
-        //         photos.comments = await this.wallService.formatComments(JSON.stringify(comments_updated), imageId);
-        //         photos.comment_count = await (await this.wallService.formatComments(JSON.stringify(comments_updated), imageId)).length;
-        //       }
-        //     })
-        //   } 
-          
-        //   else if(JSON.parse(event.value.data.onUpdateImagePost.likes)) {
-        //     const likes_updated = JSON.parse(event.value.data.onUpdateImagePost.likes).usernames.length
-        //     this.data.forEach(async photos => {
-        //       if((photos.id == imageId)){
-        //         photos.like_count = likes_updated;
-        //       }
-        //     })
-        //   } else {
-        //     const likes_updated = JSON.parse(event.value.data.onUpdateImagePost.likes).usernames.length
-        //     const comments_updated = JSON.parse(event.value.data.onUpdateImagePost.comments)
-  
-        //     comments_updated.map(async comments => {
-        //       comments.username = localStorage.getItem('username');
-        //     })
-  
-        //     this.data.forEach(async photos => {
-        //       if((photos.id == imageId) && (comments_updated)){
-        //         photos.like_count = likes_updated;
-        //         photos.comments = await this.wallService.formatComments(JSON.stringify(comments_updated), imageId);
-        //         photos.comment_count = await (await this.wallService.formatComments(JSON.stringify(comments_updated), imageId)).length;
-        //       }
-        //     })
-        //   }
-        //   // this.commentLoading = false;
         }
       })
     )
@@ -782,6 +751,64 @@ export class TimelineComponent implements AfterViewInit{
         }, 1000);
       })
     )
+
+    this.onCreateCommentsSubscription = <Subscription>(
+      this.api.OnCreateCommentsListener().subscribe({
+        next: async (event: any) => {
+          const imageId = event.value.data.onCreateComments.imagePostsID;
+
+          let commentsArray: [] = await this.api.getImageComments(imageId)
+          let commentLength: string = commentsArray.length.toString()
+
+          await this.api.UpdateImagePost({ id: imageId, comments: commentLength })
+
+          let timelineData = await this.api.ListImagePosts();
+
+          timelineData.items.map(values => {
+            if (values.id === imageId) {
+              values.comments = commentLength
+            }
+          })
+
+          this.data.filter((media) => {
+            if (media.id === imageId) {
+              media.comments = commentLength
+            }
+          })
+        }
+      })
+    )
+
+    this.onDeleteCommentsSubscription = <Subscription>(
+      this.api.OnDeleteCommentsListener().subscribe({
+        next: async (event: any) => {
+          const imageId = event.value.data.onDeleteComments.imagePostsID;
+          let commentsArray: [] = await this.api.getImageComments(imageId)
+          let commentLength: string = commentsArray.length.toString()
+
+          await this.api.UpdateImagePost({id: imageId, comments: commentLength})
+
+          let timelineData = await this.api.ListImagePosts();
+
+          timelineData.items.map(values => {
+            if(values.id === imageId){
+              values.comments = commentLength
+            }
+          })
+
+          this.data.filter(values => {
+            if(values.id === imageId){
+              values.comments = commentLength
+            }
+          })
+        }
+      })
+    )
+  }
+
+  async commentLength(imageID) {
+    let commentArray: [] = await this.api.getImageComments(imageID)
+    return commentArray.length
   }
 
 }
