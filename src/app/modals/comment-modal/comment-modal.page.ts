@@ -187,6 +187,14 @@ export class CommentModalPage implements OnInit {
     });
   }
 
+  async closeModal() {
+    this.modalController.dismiss({
+      'dismissed': true,
+      'formStatus': 'markAsUntouched',
+      'noInput': true
+    });
+  }
+
   async ngOnDestroy() {
     if (this.onCreateCommentsSubscription) {
       await this.onCreateCommentsSubscription.unsubscribe();

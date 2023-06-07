@@ -11,7 +11,8 @@
         <ion-avatar class="comment-post-pic">
           <img id="avatar" src="{{postDetails.profilePicture}}">
         </ion-avatar>
-        <p class="description-text"><strong>{{postDetails.username}}</strong>&nbsp;{{postDetails.description}}</p>
+        <p class="description-text"><strong (click)="closeModal()"
+                  routerLink="/profile/{{postDetails.username}}">{{postDetails.username}}</strong>&nbsp;{{postDetails.description}}</p>
       </div>
     </ion-item>
   </ion-list>
@@ -29,7 +30,7 @@
               <ion-avatar class="comment-user-pic">
                 <img id="avatar" src="{{comment.profilePic}}">
               </ion-avatar>
-              <p class="comment-text"><strong
+              <p class="comment-text"><strong (click)="closeModal()"
                   routerLink="/profile/{{comment.username}}">{{comment.username}}</strong>&nbsp;{{comment.comment}}</p>
             </div>
 
@@ -55,7 +56,7 @@
             <ion-avatar class="comment-user-pic">
               <img id="avatar" src="{{comment.profilePic}}">
             </ion-avatar>
-            <p class="comment-text"><strong
+            <p class="comment-text"><strong (click)="closeModal()"
                 routerLink="/profile/{{comment.username}}">{{comment.username}}</strong>&nbsp;{{comment.comment}}</p>
           </div>
 
