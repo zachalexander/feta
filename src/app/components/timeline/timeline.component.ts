@@ -38,7 +38,7 @@ import { timeline } from 'console';
 // import { async } from '@angular/core/testing';
 // import { Timestamp } from 'rxjs/internal/operators/timestamp';
 SwiperCore.use([Zoom, EffectFade]);
-
+declare var Hls;
 
 @Component({
   selector: 'app-timeline',
@@ -47,7 +47,7 @@ SwiperCore.use([Zoom, EffectFade]);
   providers: [DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix]
 })
 
-export class TimelineComponent implements AfterViewInit{
+export class TimelineComponent implements OnInit {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRefresher) ionRefresher: IonRefresher;
@@ -113,6 +113,34 @@ export class TimelineComponent implements AfterViewInit{
 
   functionGetCognitoUserId(){
     return Auth.currentUserInfo().then(user => user.id);
+  }
+
+
+  async ngAfterViewInit() {
+    this.didScroll();
+    this.startSubscriptions();
+  }
+
+
+  async ngOnDestroy() {
+    if (this.onCreateImageSubscription) {
+      await this.onCreateImageSubscription.unsubscribe();
+    }
+    if (this.onUpdateImageSubscription) {
+      await this.onUpdateImageSubscription.unsubscribe();
+    }
+    if (this.onDeleteImageSubscription) {
+      await this.onDeleteImageSubscription.unsubscribe();
+    }
+    if (this.onCreateCommentsSubscription) {
+      await this.onCreateCommentsSubscription.unsubscribe();
+    }
+    if (this.onDeleteCommentsSubscription) {
+      await this.onDeleteCommentsSubscription.unsubscribe();
+    }
+    this.platform.pause.subscribe(async () => {
+      console.log('pausing subscription')
+    });
   }
 
   isElementInViewport(element){
@@ -210,6 +238,9 @@ export class TimelineComponent implements AfterViewInit{
     }
   }
 
+  ngOnInit(): void {
+  
+  }
 
   async ngOnChanges() {
 
@@ -218,11 +249,7 @@ export class TimelineComponent implements AfterViewInit{
     this.platformView = await this.platform.platforms();
 
     this.didScroll();
-
-    setTimeout(() => {
-      console.log(this.data)
-    }, 2000)
-
+    this.startSubscriptions();
 
     // if (this.platform.is('hybrid')) {
 
@@ -257,34 +284,6 @@ export class TimelineComponent implements AfterViewInit{
     // });
 
 
-  }
-
-
-  async ngAfterViewInit() {
-    this.didScroll();
-    this.startSubscriptions();
-  }
-
-
-  async ngOnDestroy() {
-    if(this.onCreateImageSubscription){
-      await this.onCreateImageSubscription.unsubscribe();
-    }
-    if(this.onUpdateImageSubscription){
-      await this.onUpdateImageSubscription.unsubscribe();
-    }
-    if(this.onDeleteImageSubscription){
-      await this.onDeleteImageSubscription.unsubscribe();
-    }
-    if (this.onCreateCommentsSubscription) {
-      await this.onCreateCommentsSubscription.unsubscribe();
-    }
-    if (this.onDeleteCommentsSubscription) {
-      await this.onDeleteCommentsSubscription.unsubscribe();
-    }
-    this.platform.pause.subscribe(async () => {
-      console.log('pausing subscription')
-    });
   }
 
   async presentToastNewPost(){
@@ -707,18 +706,15 @@ export class TimelineComponent implements AfterViewInit{
     this.ionContent.scrollToTop(400).then(() => {
       this.refresh = true;
 
-      this.data = [];
-
       this.mediaService.getTimelineData().pipe(
         finalize(() => {
           this.loaded = true;
         })
       ).subscribe(data => {
         this.data = data[0];
-        this.refresh = false;
-        this.didScroll();
-        })
-
+        this.refresh = true;
+        window.location.reload();
+      })
     })
   }
 
