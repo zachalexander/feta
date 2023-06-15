@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { TimelinePageModule } from './pages/timeline/timeline.module';
+import { CachingService } from './services/caching.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,7 @@ import { TimelinePageModule } from './pages/timeline/timeline.module';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private cachingService: CachingService) {
+    this.cachingService.initStorage();
+  }
 }

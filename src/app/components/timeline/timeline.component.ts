@@ -76,6 +76,7 @@ export class TimelineComponent implements AfterViewInit{
   alreadyLiked: boolean;
   loaded: boolean;
   profileSearch: boolean;
+  refresh: boolean;
   browser: any;
 
   dataReturned: any;
@@ -704,7 +705,20 @@ export class TimelineComponent implements AfterViewInit{
 
   scrollToTop(){
     this.ionContent.scrollToTop(400).then(() => {
-      window.location.reload();
+      this.refresh = true;
+
+      this.data = [];
+
+      this.mediaService.getTimelineData().pipe(
+        finalize(() => {
+          this.loaded = true;
+        })
+      ).subscribe(data => {
+        this.data = data[0];
+        this.refresh = false;
+        this.didScroll();
+        })
+
     })
   }
 

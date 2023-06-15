@@ -28,6 +28,24 @@
           </div>
         </ion-card-content>
       </ion-card>
+      <div class="row-1">
+        <ion-card *ngIf="already_registered" class="members_card">
+          <img class="members" src="../../../assets/undraw_community.svg" />
+          <ion-card-content>
+            <div class="members_div">
+              <ion-button class="members_button" color="light">View all <strong>&nbsp;{{fetaProfileCount}}&nbsp;members</strong></ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+        <ion-card *ngIf="already_registered" class="terms_card">
+          <img class="terms" src="../../../assets/undraw_terms.svg" />
+          <ion-card-content>
+            <div class="terms_div">
+              <ion-button class="terms_button" color="light">Read our terms</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
 
       <!-- if user is not registered -->
       <ion-grid *ngIf="createProfile">

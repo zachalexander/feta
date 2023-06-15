@@ -10,6 +10,66 @@ ion-title {
   justify-content: flex-start;
 }
 
+small {
+  font-size: 1em;
+}
+
+.row-1 {
+
+  display: flex;
+  flex-direction: row;
+  flex-basis: 50%;
+  max-width: 500px;
+  margin: auto;
+
+  ion-card {
+    width: 50%;
+    margin: 0em 1.25em;
+  }
+
+  .terms_card {
+    padding: 0em 0em 0em 0em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 0.25em;
+    margin-top: 0em;
+  }
+
+  .members_card {
+    padding: 0em 0em 0em 0em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 0.25em;
+    margin-top: 0em;
+  }
+
+  .members, .terms {
+    display: flex;
+    margin: 1em auto -1em auto;
+    width: 100%;
+    height: 100%;
+  }
+
+  .members_div, .terms_div {
+    max-width: 100%;
+  }
+
+  .members_button, .terms_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    text-align: center;
+    font-size: .85em;
+  }
+}
+
+
+
 .loading-top {
   display: flex;
   align-items: center;

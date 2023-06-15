@@ -4,6 +4,10 @@
     padding: 0 1em;
 }
 
+.username-toolbar {
+    font-size: 1em;
+}
+
 
 .no-photos, .no-videos {
     display: flex;
@@ -17,14 +21,18 @@
     }
 }
 
-.relation {
-    margin: -1.25em auto 1em auto;
+.relationship-div {
     display: flex;
+    margin: -2em auto 1em auto;
     justify-content: center;
     align-items: center;
     font-size: 0.75em;
     color: var(--ion-color-medium);
     font-weight: 600;
+
+    .star {
+        height: 15px;
+    }
 }
 
 .separator-toolbar {

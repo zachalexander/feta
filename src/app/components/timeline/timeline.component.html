@@ -11,6 +11,10 @@
     </ion-refresher-content>
   </ion-refresher>
 
+  <div *ngIf="refresh" class="spinner-test" style="height: 5em; border-bottom: 1px solid var(--ion-color-light); display: flex; justify-content: center; align-items: center;">
+      <ion-spinner name="lines-sharp-small"></ion-spinner>
+  </div>
+
 
   <!-- subscription to listen for new posts, will show pop-up when new posts added to wall -->
   <div class="new-post-button-div">
@@ -57,7 +61,7 @@
             </swiper>
             <div id="video-container" *ngIf="image.isVideo">
               <vg-player>
-                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSourceMobile" #media id="multipleVideos" preload="metadata" playsinline webkit-playsinline="webkit-playsinline" muted="true">
+                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSourceMobile" #media preload="metadata" playsinline webkit-playsinline="webkit-playsinline" muted="true">
                   <source [vgHls]="image.mediaSourceMobile" type="application/x-mpegURL">
                 </video>
               </vg-player>

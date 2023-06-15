@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { APIService } from 'src/app/API.service';
+import { CachingService } from 'src/app/services/caching.service';
 import { ModalController } from '@ionic/angular';
 import { UpdateProfileModalPage } from 'src/app/modals/update-profile-modal/update-profile-modal.page';
 import { ProfileMediaClickPage } from '../../modals/profile-media-click/profile-media-click.page';
@@ -8,6 +9,7 @@ import { MediaService } from 'src/app/services/media.service';
 import { LoadingController } from '@ionic/angular';
 import { ProfileMenuModalPage } from 'src/app/modals/profile-menu-modal/profile-menu-modal.page';
 import { Storage } from 'aws-amplify';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -23,16 +25,19 @@ export class ProfilePage {
   relationship_change: any;
   profilePhoto: any;
   editAccess: boolean;
-  loaded = false;
+  loaded: boolean;
+  useCache: boolean;
   button_actions: string = "photos"
   select_buttons: string = "photo-uploads";
   photosPostedCount: number;
   videosPostedCount: number;
   profileData: any = {};
   profileMediaData: Array<any> = new Array();
+  profileImageData: Array<any> = new Array();
   noPhotosYet;
   noVideosYet;
   browser;
+  admin;
 
   videosClicked = false;
   photosClicked = true;
@@ -42,7 +47,9 @@ export class ProfilePage {
     private activatedRoute: ActivatedRoute,
     private modalController: ModalController,
     private mediaService: MediaService,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    private cf: ChangeDetectorRef,
+    private cachingService: CachingService
   ) {}
 
   async ngOnInit() {
@@ -54,17 +61,34 @@ export class ProfilePage {
     });
 
     loading.present();
+    this.loaded = false;
 
     this.browser = localStorage.getItem('User-browser')
+
     
     // grab the username from the url
     this.activatedRoute.params.subscribe((params) => this.urlUser = params['username']);
-
+    
     let profileID = await this.api.GetUsernameProfile(this.urlUser)
     let profile = await this.api.GetProfile(profileID);
     this.profileData = profile;
+    this.profileData.username = await this.api.GetUsernameFromProfileId(this.profileData.id).then(async username => username);
+    let mediaCountCheck = await this.mediaService.getUserProfileMediaCount(this.profileData.id)
+    let cachedUrl = 'profile-data-' + this.profileData.id + '?={0,n}'
+    let cachedData = await this.cachingService.getCachedRequest(cachedUrl);
 
-    console.log(this.profileData)
+    if (this.profileData.profilepictureID) {
+      this.profilePhoto = await Storage.get('profile-pictures/' + await this.getProfilePicture(profileID))
+    } else {
+      this.profilePhoto = false;
+    }
+
+    if(this.profileData.relation === 'Feta Creator'){
+      this.admin = true;
+    } else {
+      this.admin = false;
+    }
+
 
     // get the url username profile data
     this.urlUserProfile = profile;
@@ -77,46 +101,46 @@ export class ProfilePage {
       this.editAccess = true;
     }
 
-    // find all (non-deleted) pictures user has posted on the family wall
-    this.userData = await this.api.getUserProfileMediaData(this.urlUserProfile.id).then(data => data);
-
-    // find number of photos posted by zach or katie
-    this.photosPostedCount = this.userData[1];
-    this.videosPostedCount = this.userData[3];
-  
-    if(this.photosPostedCount == 0){
-      this.noPhotosYet = true;
-    } else {
-      this.noPhotosYet = false;
-    }
-
-    if(this.videosPostedCount == 0){
-      this.noVideosYet = true;
-    } else {
-      this.noVideosYet = false;
+    if (cachedData) {
+      if (cachedData[1] + cachedData[3] === mediaCountCheck.length) {
+        this.useCache = true;
+      } else {
+        this.useCache = false;
+      }
     }
 
 
-    if(this.userData){
+    this.mediaService.getProfileData(this.urlUserProfile.id, this.useCache).pipe(
+      finalize(() => {
+        loading.dismiss();
+        this.loaded = true;
+      })
+    ).subscribe(res => {
+      this.userData = res;
+
+      // find number of photos posted by zach or katie
+      this.photosPostedCount = this.userData[1];
+      this.videosPostedCount = this.userData[3];
+
+      if (this.photosPostedCount == 0) {
+        this.noPhotosYet = true;
+      } else {
+        this.noPhotosYet = false;
+      }
+
+      if (this.videosPostedCount == 0) {
+        this.noVideosYet = true;
+      } else {
+        this.noVideosYet = false;
+      }
       // sort photos by time posted
-      this.userData[0] = await this.sortByDate(this.userData[0]);
-      this.userData[2] = await this.sortByDate(this.userData[2]);
-  
+      this.userData[0] = this.sortByDate(this.userData[0]);
+      this.userData[2] = this.sortByDate(this.userData[2]);
+
       // save profile data to object to render
-      this.profileMediaData = this.userData[0];
-      this.profileData.username = await this.api.GetUsernameFromProfileId(this.profileData.id).then(async username => username);
-    }
-
-    if(this.profileData.profilepictureID){
-      this.profilePhoto = await Storage.get('profile-pictures/' + await this.getProfilePicture(profileID))
-    } else {
-      this.profilePhoto = false;
-    }
-    
-    setTimeout(() => {
-      loading.dismiss();
-    }, 1000)
-
+      this.profileImageData = this.userData[0];
+      this.profileMediaData = this.userData[2];
+    }) 
   }
 
   async openClickModal(id){
@@ -130,15 +154,13 @@ export class ProfilePage {
   }
 
   buttonClicked(event){
+    this.cf.detectChanges();
     if(event.detail.value === 'video-uploads'){
       this.videosClicked = true;
       this.photosClicked = false;
-      this.profileMediaData = this.userData[2];
-      console.log(this.profileMediaData)
     } else {
       this.photosClicked = true;
       this.videosClicked = false;
-      this.profileMediaData = this.userData[0]
     }
   }
 
@@ -153,9 +175,8 @@ export class ProfilePage {
   }
 
 
-  async sortByDate(array){
-    console.log(array)
-    return await array.sort((a, b) => Date.parse(b.time_posted) - Date.parse(a.time_posted));
+  sortByDate(array){
+    return array.sort((a, b) => Date.parse(b.time_posted) - Date.parse(a.time_posted));
   }
 
   async getProfilePicture(profileID) {

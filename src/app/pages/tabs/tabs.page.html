@@ -8,19 +8,23 @@
 
     <ion-tab-button (click)="timelineClick()" tab="timeline">
       <!-- <ion-icon *ngIf="!timelineclick" name="image-outline"></ion-icon> -->
-      <ion-icon *ngIf="!timelineclick" src="../../../assets/streamline/image-photo-polaroid.svg"></ion-icon>Timeline
+      <ion-icon *ngIf="!timelineclick" src="../../../assets/streamline/image-photo-polaroid.svg"></ion-icon>FA Timeline
       <ion-icon *ngIf="timelineclick" src="../../../assets/streamline/polaroid.svg"></ion-icon>
     </ion-tab-button>
 
-    <!-- <ion-tab-button (click)="messageClick()" tab="message-board">
-      <ion-icon *ngIf="!messageclick" name="chatbubbles-outline"></ion-icon>
-      <ion-icon *ngIf="messageclick" name="chatbubbles"></ion-icon>
-    </ion-tab-button> -->
+    <ion-tab-button (click)="messageClick()" tab="message-board">
+      <ion-icon *ngIf="!messageclick" src="../../../assets/streamline/imessage.svg"></ion-icon>Bulletin
+      <ion-icon *ngIf="messageclick" src="../../../assets/streamline/imessage_fill.svg"></ion-icon>
+    </ion-tab-button>
 
     <ion-tab-button class="profile-button" (click)="profileClick()" tab="profile/{{username}}">
       <!-- <ion-icon *ngIf="!profileclick" name="person-circle-outline"></ion-icon> -->
-      <ion-icon *ngIf="!profileclick" src="../../../assets/streamline/interface-user-square-alternate.svg"></ion-icon>Profile
-      <ion-icon *ngIf="profileclick" src="../../../assets/streamline/user-square-single.svg"></ion-icon>
+      <!-- <ion-icon *ngIf="!profileclick" src="../../../assets/streamline/interface-user-square-alternate.svg"></ion-icon>Profile
+      <ion-icon *ngIf="profileclick" src="../../../assets/streamline/user-square-single.svg"></ion-icon> -->
+      <ion-avatar class="profile-pic-avatar">
+        <img *ngIf="hasProfilePic" [src]="profilePicture" />
+        <img *ngIf="!hasProfilePic" src="../../../assets/profile_placeholder_avatar.png" />
+      </ion-avatar><small>{{username}}</small>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

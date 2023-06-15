@@ -1,6 +1,7 @@
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { APIService } from "../../API.service";
+import { CachingService } from 'src/app/services/caching.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MediaService } from 'src/app/services/media.service';
@@ -50,7 +51,8 @@ export class CreateMediaModalPage {
     private sanitizer: DomSanitizer,
     private loadingController: LoadingController,
     private imageResizer: ImageResizer,
-    private videoEditor: VideoEditor
+    private videoEditor: VideoEditor,
+    private cachingService: CachingService
   ) {    
     this.postImageForm = new FormGroup({
     description: new FormControl('')

@@ -6,6 +6,7 @@ import API, { graphqlOperation} from "@aws-amplify/api-graphql";
 import { DomSanitizer } from '@angular/platform-browser';
 import { from, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
+import { CachingService } from './caching.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class MediaService {
 
   constructor(
     private api: APIService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private cachingService: CachingService
   ) { }
 
   async getPhotoUrl(key){
@@ -70,6 +72,39 @@ export class MediaService {
   }
 
 
+  getProfileData(profileID, cache) {
+    let url = 'profile-data-' + profileID;
+    return this.checkCache(url, profileID, cache)
+  }
+
+  private checkCache(url, profileID, cache): Observable<any> {
+    url = `${url}?={0,n}`;
+
+    if(!cache){
+      return this.callAndCacheProfile(url, profileID)
+    } else {
+      const storedValue = from(this.cachingService.getCachedRequest(url));
+      return storedValue.pipe(
+        switchMap(result => {
+          if (!result) {
+            console.log('full api call')
+            return this.callAndCacheProfile(url, profileID);
+          } else {
+            console.log('cached result')
+            return of(result);
+          }
+        })
+      )
+    }
+  }
+
+  private callAndCacheProfile(url, profileID): Observable<any> {
+    return from(this.getUserProfileMediaData(profileID)).pipe(
+      tap(res => {
+        this.cachingService.cacheRequests(url, res);
+      })
+    )
+  }
 
 
 
@@ -111,6 +146,109 @@ export class MediaService {
     //   })
     // )
     return from(this.getDataFromGraphQL(currentUser))
+  }
+
+
+  async getUserProfileMediaCount(profileID: String): Promise<any> {
+
+    const statement = `query getUserProfileMediaData($profileID: ID!) {
+      imagePostsByProfileID(profileID: $profileID) {
+        items {
+          mediaSourceMobile
+          mediaSourceDesktop
+          profileID
+          id
+          posterImage
+        }
+      }
+    }`;
+
+    const gqlAPIServiceArguments: any = {
+      profileID
+    };
+
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
+    let array: any = response.data.imagePostsByProfileID.items;
+
+    console.log(array)
+    return array;
+  }
+
+
+  async getUserProfileMediaData(profileID: String): Promise<any> {
+
+    const statement = `query getUserProfileMediaData($profileID: ID!) {
+      imagePostsByProfileID(profileID: $profileID) {
+        items {
+          time_posted
+          s3_key
+          mediaSourceMobile
+          mediaSourceDesktop
+          profileID
+          description
+          likes
+          id
+          posterImage
+        }
+      }
+    }`;
+
+    const gqlAPIServiceArguments: any = {
+      profileID
+    };
+
+    const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
+    let array: any = response.data.imagePostsByProfileID.items;
+
+    let photosPosted = [];
+    let videosPosted = [];
+    await Promise.all(array.map(async posts => {
+      if (await this.checkForVideo(posts.s3_key) === false) {
+        photosPosted.push({
+          time_posted: posts.time_posted,
+          s3_key: posts.s3_key,
+          mediaSourceMobile: posts.mediaSourceMobile,
+          mediaSourceDesktop: posts.mediaSourceDesktop,
+          base64: await this.imageUrlToBase64(posts.mediaSourceMobile),
+          profileID: posts.profileID,
+          description: posts.description,
+          likes: posts.likes,
+          id: posts.id
+        })
+      } else {
+        videosPosted.push({
+          time_posted: posts.time_posted,
+          posterImage: await Storage.get(posts.posterImage, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+          profileID: posts.profileID,
+          description: posts.description,
+          likes: posts.likes,
+          id: posts.id
+        })
+      }
+    }))
+    return [photosPosted, photosPosted.length, videosPosted, videosPosted.length];
+  }
+
+  async imageUrlToBase64(url) {
+    const response = await fetch(`${url}`)
+    const blob = await response.blob();
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader;
+      reader.onerror = reject;
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(blob);
+    })
+  }
+
+  private callAndCache(url, currentUser): Observable<any> {
+    return from(this.getDataFromGraphQL(currentUser)).pipe(
+      tap(res => {
+        this.cachingService.cacheRequests(url, res);
+      })
+    )
   }
 
   private getDataPaginated(currentUser, token): Observable<any> {
