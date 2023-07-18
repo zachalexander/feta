@@ -3,13 +3,13 @@
 <!-- pull and refresh option at top -->
 <ion-content class="no-scroll" [fullscreen]="true" [scrollEvents]="true" (ionScroll)="didScroll()" id="wall-content" lines="none" #container>
 
-  <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
     <ion-refresher-content
     pullingIcon="chevron-down-outline"
     pullingText="Refresh timeline"
     refreshingSpinner="lines-sharp-small">
     </ion-refresher-content>
-  </ion-refresher>
+  </ion-refresher> -->
 
   <div *ngIf="refresh" class="spinner-test" style="height: 5em; border-bottom: 1px solid var(--ion-color-light); display: flex; justify-content: center; align-items: center;">
       <ion-spinner name="lines-sharp-small"></ion-spinner>
@@ -54,8 +54,8 @@
             <swiper *ngIf="!image.isVideo" class="mySwiper" effect="fade" [zoom]="true">
               <ng-template swiperSlide>
                 <div class="swiper-zoom-container">
-                  <img *ngIf="!image.isVideo && mobilePlatform" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSourceMobile" loading="lazy"/>
-                  <img *ngIf="!image.isVideo && !mobilePlatform" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSourceDesktop" loading="lazy" />
+                  <img *ngIf="!image.isVideo && mobilePlatform" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSourceMobile" loading="lazy" style="background: var(--ion-color-light)"/>
+                  <img *ngIf="!image.isVideo && !mobilePlatform" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSourceDesktop" loading="lazy" style="background: var(--ion-color-light)" />
                 </div>
               </ng-template>
             </swiper>
@@ -130,7 +130,12 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-infinite-scroll threshold="40%" (ionInfinite)="loadData($event)" position="bottom">
+  <ion-infinite-scroll *ngIf="mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
+    <ion-infinite-scroll-content loadingSpinner="lines-small">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-infinite-scroll *ngIf="!mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
     <ion-infinite-scroll-content loadingSpinner="lines-small">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

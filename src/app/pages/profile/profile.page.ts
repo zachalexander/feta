@@ -109,7 +109,6 @@ export class ProfilePage {
       }
     }
 
-
     this.mediaService.getProfileData(this.urlUserProfile.id, this.useCache).pipe(
       finalize(() => {
         loading.dismiss();
@@ -154,7 +153,6 @@ export class ProfilePage {
   }
 
   buttonClicked(event){
-    this.cf.detectChanges();
     if(event.detail.value === 'video-uploads'){
       this.videosClicked = true;
       this.photosClicked = false;

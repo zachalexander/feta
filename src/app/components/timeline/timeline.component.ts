@@ -283,6 +283,14 @@ export class TimelineComponent implements OnInit {
     //   }
     // });
 
+    setTimeout(() => {
+      if (this.data.length < 2) {
+        this.profileSearch = true;
+      } else  {
+        this.profileSearch = false;
+      }
+    }, 1000)
+
 
   }
 
@@ -693,13 +701,26 @@ export class TimelineComponent implements OnInit {
       event.target.complete();
   }
 
-  async refreshData(event){
+  // async refreshData(event){
 
-    if(this.platform.is('hybrid')){
-      await Haptics.impact({ style: ImpactStyle.Medium})
-    }
+  //   if(this.platform.is('hybrid')){
+  //     await Haptics.impact({ style: ImpactStyle.Medium})
+  //   }
 
-    window.location.reload();
+  //  await this.changeLocation();
+
+  //   // window.location.reload();
+  // }
+
+  async changeLocation(){
+    // save current route first
+    const currentRoute = this.router.url;
+
+    this.router.navigateByUrl('/timeline', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentRoute]); // navigate to same route
+    }); 
+
+    this.refresh = false;
   }
 
   scrollToTop(){
@@ -710,10 +731,11 @@ export class TimelineComponent implements OnInit {
         finalize(() => {
           this.loaded = true;
         })
-      ).subscribe(data => {
+      ).subscribe(async data => {
         this.data = data[0];
         this.refresh = true;
-        window.location.reload();
+        await this.changeLocation();
+        // window.location.reload();
       })
     })
   }

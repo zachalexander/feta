@@ -5,6 +5,7 @@ import { AddPhotoComponent } from 'src/app/components/add-photo/add-photo.compon
 import { MediaService } from 'src/app/services/media.service';
 import { Platform } from '@ionic/angular';
 import { APIService } from 'src/app/API.service';
+import { CachingService } from 'src/app/services/caching.service';
 
 @Component({
   selector: 'app-timeline-page',
@@ -23,13 +24,18 @@ export class TimelinePage implements OnInit {
     private modalController: ModalController,
     private mediaService: MediaService,
     public platform: Platform,
-    private api: APIService
+    private api: APIService,
+    private cachingService: CachingService
   ) {
     this.timelineData;
     this.timelineDataLength;
   }
 
   async ngOnInit(){
+
+
+    // await this.mediaService.callAndCacheImageId(localStorage.getItem('usernameID'))
+
     await this.mediaService.getTimelineData().pipe(
       finalize(() => {
         this.loaded = true;

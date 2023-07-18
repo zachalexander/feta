@@ -111,7 +111,7 @@ export class MediaService {
 
   getTimelineData(): Observable<any> {
     let currentUser = localStorage.getItem('usernameID');
-    // let url = 'family-timeline';
+    let url = 'family-timeline-' + currentUser;
 
     return this.getData(currentUser).pipe(
       map((res: any) => {
@@ -132,20 +132,7 @@ export class MediaService {
   }
 
   private getData(currentUser): Observable<any> {
-    // url = `${url}?={0,n}`
-    // const storedValue = from(this.cachingService.getCachedRequest(url));
-    // return storedValue.pipe(
-    //   switchMap(result => {
-    //     if (!result) {
-    //       console.log('full api call')
-    //       return this.callAndCache(url, currentUser);
-    //     } else {
-    //       console.log('cached result')
-    //       return of(result);
-    //     }
-    //   })
-    // )
-    return from(this.getDataFromGraphQL(currentUser))
+    return from(this.getDataFromGraphQLTop4(currentUser))
   }
 
 
@@ -169,8 +156,6 @@ export class MediaService {
 
     const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
     let array: any = response.data.imagePostsByProfileID.items;
-
-    console.log(array)
     return array;
   }
 
@@ -198,6 +183,7 @@ export class MediaService {
     };
 
     const response = (await API.graphql(graphqlOperation(statement, gqlAPIServiceArguments))) as any;
+    console.log(response.data.imagePostsByProfileID)
     let array: any = response.data.imagePostsByProfileID.items;
 
     let photosPosted = [];
@@ -226,7 +212,7 @@ export class MediaService {
         })
       }
     }))
-    return [photosPosted, photosPosted.length, videosPosted, videosPosted.length];
+    return [photosPosted, photosPosted.length, videosPosted, videosPosted.length, response.data.imagePostsByProfileID.nextToken];
   }
 
   async imageUrlToBase64(url) {
@@ -255,10 +241,39 @@ export class MediaService {
     return from(this.getDataFromGraphQLPaginated(currentUser, token))
   }
 
+  async callAndCacheImageId(currentUser){
+    const statement = `query timelineImages {
+      imagePostsBySorterValueAndTime_posted(sorterValue: "media", sortDirection: DESC, limit: 2) {
+        items {
+          usernameID
+          id
+          posterImage
+          mediaSourceMobile
+          mediaSourceDesktop
+        }
+      }
+    }`
+
+    const response = await API.graphql(graphqlOperation(statement)) as any
+    let array: any = response.data.imagePostsBySorterValueAndTime_posted.items;
+
+    let mediaArray = []
+    await Promise.all(array.map(async posts => {
+      if(posts.mediaSourceMobile){
+        mediaArray.push({
+          imageId: posts.id,
+          base64Mobile: await this.imageUrlToBase64(posts.mediaSourceMobile),
+          base64Desktop: await this.imageUrlToBase64(posts.mediaSourceDesktop)
+        })
+      }
+    }))
+    return mediaArray;
+  }
+
 
   async getDataFromGraphQLPaginated(currentUser, tokenNext: string) {
     const statement = `query timelineSorted($tokenNext: String)  {
-      imagePostsBySorterValueAndTime_posted(sorterValue: "media", sortDirection: DESC, limit: 2, nextToken: $tokenNext) {
+      imagePostsBySorterValueAndTime_posted(sorterValue: "media", sortDirection: DESC, limit: 4, nextToken: $tokenNext) {
         items {
           usernameID
           comments
@@ -312,8 +327,8 @@ export class MediaService {
         })
       } else {
         this.mediaPosted.push({
-          mediaSourceMobile: posts.mediaSourceMobile,
-          mediaSourceDesktop: posts.mediaSourceDesktop,
+          mediaSourceMobile: await this.checkLocalStorageImage(posts.id, currentUser, posts.mediaSourceMobile, "timeline-image-"),
+          mediaSourceDesktop: await this.checkLocalStorageImage(posts.id, currentUser, posts.mediaSourceDesktop, "timeline-image-"),
           s3_key: posts.s3_key,
           downloadableVideo: posts.downloadableVideo,
           isVideo: false,
@@ -334,9 +349,100 @@ export class MediaService {
     return [this.mediaPosted, this.mediaPosted.length, response.data.imagePostsBySorterValueAndTime_posted.nextToken]
   }
 
+  async checkLocalStorageImage(id, currentUser, url, key){
+    let cachedData: any = await this.cachingService.getCachedRequest(key+id)
+    if(cachedData && cachedData.imageId === id){
+      return cachedData.base64Mobile;
+    } else {
+      let base64Value = await this.convertUrlToBase64(url)
+      await this.cachingService.cacheRequests(key+id, { "imageId": id, "base64Mobile": base64Value, "base64Desktop": base64Value })
+      return base64Value;
+    }
+  }
+
+  async getDataFromGraphQLTop4(currentUser){
+
+    const statement = `query timelineSorted {
+      imagePostsBySorterValueAndTime_posted(sorterValue: "media", sortDirection: DESC, limit: 4) {
+        items {
+          usernameID
+          comments
+          createdAt
+          description
+          id
+          likes
+          time_posted
+          updatedAt
+          s3_key
+          posterImage
+          mediaSourceMobile
+          mediaSourceDesktop
+          downloadableVideo
+          profile {
+            profilepicture {
+              imageurl
+            }
+          }
+          username {
+            username
+          }
+        }
+        nextToken
+      }
+    }`;
+
+    const response = (await API.graphql(graphqlOperation(statement))) as any;
+    let array: any = response.data.imagePostsBySorterValueAndTime_posted.items;
+
+
+    this.mediaPosted = [];
+    await Promise.all(array.map(async posts => {
+      if (await this.checkForVideo(posts.s3_key)) {
+        this.mediaPosted.push({
+          mediaSourceMobile: await Storage.get(posts.s3_key, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+          mediaSourceDesktop: null,
+          s3_key: posts.s3_key,
+          downloadableVideo: posts.downloadableVideo,
+          isVideo: true,
+          time_posted: new Date(posts.time_posted),
+          usernameID: posts.usernameID,
+          description: posts.description,
+          id: posts.id,
+          likes: posts.likes,
+          posterImage: await Storage.get(posts.posterImage, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+          comments: +(await this.commentLength(posts.id)).toString(),
+          like_count: await this.getLikeCount(posts.likes),
+          username: posts.username.username,
+          userLiked: await this.getLikeData(posts.likes, currentUser),
+          profilePicture: await this.checkForProfilePhoto(posts.profile.profilepicture)
+        })
+      } else {
+        this.mediaPosted.push({
+          mediaSourceMobile: posts.mediaSourceMobile,
+          mediaSourceDesktop: posts.mediaSourceDesktop,
+          s3_key: posts.s3_key,
+          downloadableVideo: posts.downloadableVideo,
+          isVideo: false,
+          time_posted: new Date(posts.time_posted),
+          usernameID: posts.usernameID,
+          description: posts.description,
+          id: posts.id,
+          likes: posts.likes,
+          comments: +(await this.commentLength(posts.id)).toString(),
+          like_count: await this.getLikeCount(posts.likes),
+          username: posts.username.username,
+          userLiked: await this.getLikeData(posts.likes, currentUser),
+          profilePicture: await this.checkForProfilePhoto(posts.profile.profilepicture)
+        })
+      }
+    }))
+    this.mediaPosted = this.sortByDate(this.mediaPosted)
+    return [this.mediaPosted, this.mediaPosted.length, response.data.imagePostsBySorterValueAndTime_posted.nextToken]
+  }
+
   async getDataFromGraphQL(currentUser){
     const statement = `query timelineSorted {
-      imagePostsBySorterValueAndTime_posted(sorterValue: "media", sortDirection: DESC, limit: 2) {
+      imagePostsBySorterValueAndTime_posted(sorterValue: "media", sortDirection: DESC) {
         items {
           usernameID
           comments
