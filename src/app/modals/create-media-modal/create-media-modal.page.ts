@@ -1,6 +1,7 @@
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { APIService } from "../../API.service";
+import { CachingService } from 'src/app/services/caching.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MediaService } from 'src/app/services/media.service';
@@ -10,7 +11,9 @@ import { Storage } from '@aws-amplify/storage';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { PassThrough } from 'stream';
 import { Capacitor } from '@capacitor/core';
-import { CachingService } from 'src/app/services/caching.service';
+
+import { ImageResizer, ImageResizerOptions } from '@awesome-cordova-plugins/image-resizer/ngx';
+import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
 
 const APP_DIRECTORY = Directory.Documents
 
@@ -47,6 +50,8 @@ export class CreateMediaModalPage {
     private mediaService: MediaService,
     private sanitizer: DomSanitizer,
     private loadingController: LoadingController,
+    private imageResizer: ImageResizer,
+    private videoEditor: VideoEditor,
     private cachingService: CachingService
   ) {    
     this.postImageForm = new FormGroup({
@@ -134,6 +139,8 @@ export class CreateMediaModalPage {
             directory: APP_DIRECTORY
           })
 
+          console.log(file_uri)
+
           this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
           loading.dismiss();
         }
@@ -202,15 +209,19 @@ export class CreateMediaModalPage {
     imagepost.time_posted = new Date().toISOString()
     imagepost.usernameID = usernameID
     imagepost.profileID = this.profileID
+    imagepost.sorterValue = "media"
     
     if(extension === 'mov' || extension === 'mp4' || extension === 'webm' || extension === 'ogg' || extension === 'MOV'){
       const video = true;
       imagepost.s3_key = `video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.m3u8`
+      imagepost.downloadableVideo = `video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`
       imagepost.posterImage = `poster-images/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}Poster-Images.0000000.jpg`
       await this.submitToS3(`video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`, this.blob, video, extension)
     } else {
       const video = false;
-      imagepost.s3_key = `https://ik.imagekit.io/bkf4g8lrl/feta-photos/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`
+      imagepost.mediaSourceMobile = `https://ik.imagekit.io/bkf4g8lrl/feta-photos/tr:f-jpg/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`
+      imagepost.mediaSourceDesktop = `https://ik.imagekit.io/bkf4g8lrl/feta-photos/tr:f-auto/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`
+      imagepost.s3_key = `timeline-uploads/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`
       await this.submitToS3(`timeline-uploads/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`, this.blob, video, extension)
     }
     
@@ -218,7 +229,6 @@ export class CreateMediaModalPage {
     loading.dismiss();
 
     await this.api.CreateImagePost(imagepost).then(() => {
-      this.cachingService.clearAllCachedData();
       this.router.navigate(['/timeline']).then(() => { window.location.reload()});
       loading.dismiss();
     })

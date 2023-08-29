@@ -3,95 +3,111 @@
     <ion-buttons slot="start" (click)="backToProfile()" class="cancel">&nbsp;&nbsp;Cancel</ion-buttons>
     <ion-title>Edit Profile</ion-title>
     <ion-buttons slot="end" *ngIf="!updateProfileForm.valid" (click)="onUpdate(updateProfileForm.value)" class="post"></ion-buttons>
-    <ion-buttons color="primary" slot="end" *ngIf="updateProfileForm.valid" (click)="onUpdate(updateProfileForm.value)" class="post"><ion-text color="primary">Done&nbsp;&nbsp;</ion-text></ion-buttons>
+    <ion-buttons color="dark" fill="clear" slot="end" *ngIf="updateProfileForm.valid" (click)="onUpdate(updateProfileForm.value)" class="post"><ion-text color="dark">Done&nbsp;&nbsp;</ion-text></ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid class="edit-grid">
-    <ion-row size-lg="12" size-md="12" size-sm="12" size="12">
-      <div class = "profile-pic-div">
-        <ion-avatar class="upload-pic-container" *ngIf="!profilePic">
-          <img id="avatar" src="../../../assets/avatar.svg">
-        </ion-avatar>
-        <ion-avatar class="upload-pic-container" *ngIf="profilePic">
-          <img id="avatar" class="cropped-image" [src]="profilePic" />
-        </ion-avatar>
-        <ion-text class="profile-photo" (click)="changeProfilePhoto()" color="primary"><strong>Change profile photo</strong></ion-text>
-      </div>
-    </ion-row>
+    <form class="update-form" [formGroup]="updateProfileForm" (ngSubmit)="onUpdate(updateProfileForm.value)">
+      <div class="upper-wrapper">
+        <div class="upper-left">
 
-
-    <form [formGroup]="updateProfileForm" (ngSubmit)="onUpdate(updateProfileForm.value)">
-        <ion-row>
-          <ion-col size-lg="12" size-md="12" size-sm="12" size="12">
-            <ion-item lines="none">
-              <div class="username-edit-wrapper">
-                <div class="username-wrapper">
-                  <div class="name-input">Username</div><ion-input type="text" formControlName="username" required></ion-input>
-                  <ion-icon class="invalid-entry" name="close-circle-outline" *ngIf="(f['username'].invalid && (f['username'].dirty || f['username'].touched)) || 
-                  (f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)) ||
-                  f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)"></ion-icon>
-                  <ion-icon *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].pending)" class="valid-entry" name="checkmark-circle-outline"></ion-icon>
-                  <ion-spinner class="validate-spinner" size="small" *ngIf="(f['username'].pending)"></ion-spinner>
-                </div>
-                <div *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && ((f['username'].touched) || (f['username'].dirty)) && !(f['username'].pending)" class="success-message">
-                  Username looks good.
-                </div>
-                <div *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].dirty) && !(f['username'].touched) && (f['username'].pending)" class="pending-message">
-                </div>
-                <div *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].dirty) && !(f['username'].touched)" class="initial-message">
-                </div>
-                <div *ngIf="f['username'].invalid && (f['username'].dirty || f['username'].touched)" class="alert-danger">
-                  <div *ngIf="f['username'].hasError('required')" class="error-message">
-                      A username is required.
-                  </div>
-                  <div *ngIf="f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)" class="error-message-characters">
-                      Username must be at least 2 characters long.
-                  </div>
-                  <div *ngIf="f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)" class="error-message-taken">
-                      Username is already taken!
-                  </div>
-                </div>
+          <ion-item>
+            <div class="username-edit-wrapper">
+              <div class="username-wrapper">
+                <div class="name-input">Username</div><ion-input type="text" formControlName="username" required></ion-input>
+                <ion-icon class="invalid-entry" name="close-circle-outline" *ngIf="(f['username'].invalid && (f['username'].dirty || f['username'].touched)) || 
+                      (f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)) ||
+                      f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)"></ion-icon>
+                <ion-icon
+                  *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].pending)"
+                  class="valid-entry" name="checkmark-circle-outline"></ion-icon>
+                <ion-spinner class="validate-spinner" size="small" *ngIf="(f['username'].pending)"></ion-spinner>
               </div>
-            </ion-item>
-          </ion-col>
-
-          <ion-col size-lg="12" size-md="12" size-sm="12" size="12">
-            <ion-item lines="none">
-              <div class="familyname-wrapper">
-                <div class="name-input">Family Name</div>
-                <ion-input type="text" formControlName="family_name"></ion-input>
+              <div
+                *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && ((f['username'].touched) || (f['username'].dirty)) && !(f['username'].pending)"
+                class="success-message">
+                Username looks good.
               </div>
-            </ion-item>
-          </ion-col>
-
-          <ion-col size-lg="12" size-md="12" size-sm="12" size="12">
-            <div class="relation-selector">
-              <div class="relation-selector-wrapper">
-                <div class="name-input">Relation</div>
-                  <ion-item class="relation-select" lines="none">
-                    <ion-select value="Null" okText="Select" cancelText="Dismiss" formControlName="relation" (ionChange)="relationChange($event)">
-                      <ion-select-option value="Parent of Katie">Parent of Katie</ion-select-option>
-                      <ion-select-option value="Parent of Zach">Parent of Zach</ion-select-option>
-                      <ion-select-option value="Grandparent of Katie">Grandparent of Katie</ion-select-option>
-                      <ion-select-option value="Grandparent of Zach">Grandparent of Zach</ion-select-option>
-                      <ion-select-option value="Aunt of Katie">Aunt of Katie</ion-select-option>
-                      <ion-select-option value="Aunt of Zach">Aunt of Zach</ion-select-option>
-                      <ion-select-option value="Uncle of Katie">Uncle of Katie</ion-select-option>
-                      <ion-select-option value="Uncle of Zach">Uncle of Zach</ion-select-option>
-                      <ion-select-option value="Cousin of Katie">Cousin of Katie</ion-select-option>
-                      <ion-select-option value="Cousin of Zach">Cousin of Zach</ion-select-option>
-                      <ion-select-option value="Other">Other</ion-select-option>
-                      <ion-select-option value="Creator">Creator</ion-select-option>
-                    </ion-select>
-                  </ion-item>
+              <div
+                *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].dirty) && !(f['username'].touched) && (f['username'].pending)"
+                class="pending-message">
+              </div>
+              <div
+                *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].dirty) && !(f['username'].touched)"
+                class="initial-message">
+              </div>
+              <div *ngIf="f['username'].invalid && (f['username'].dirty || f['username'].touched)" class="alert-danger">
+                <div *ngIf="f['username'].hasError('required')" class="error-message">
+                  A username is required.
+                </div>
+                <div *ngIf="f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)"
+                  class="error-message-characters">
+                  Username must be at least 2 characters long.
+                </div>
+                <div *ngIf="f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)"
+                  class="error-message-taken">
+                  Username is already taken!
+                </div>
               </div>
             </div>
-
-          </ion-col>
-
-        </ion-row>
+          </ion-item>
+          <ion-item>
+            <div class="name-input">First Name</div>
+            <ion-input type="text" formControlName="first_name" class="name-input"></ion-input>
+          </ion-item>
+          <ion-item>
+            <div class="name-input">Last Name</div>
+            <ion-input type="text" formControlName="last_name" class="name-input"></ion-input>
+          </ion-item>
+        </div>
+        <div class="profile-pic-div">
+          <ion-avatar class="upload-pic-container" *ngIf="!profilePic">
+            <img id="avatar" src="../../../assets/avatar.svg">
+          </ion-avatar>
+          <ion-avatar class="upload-pic-container" *ngIf="profilePic">
+            <img id="avatar" class="cropped-image" [src]="profilePic" />
+          </ion-avatar>
+          <ion-text class="profile-photo" (click)="changeProfilePhoto()" color="primary"><strong>Change
+              photo</strong></ion-text>
+        </div>
+      </div>
+      
+      <ion-item>
+        <div class="name-input">Birthday</div>
+        <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerMonth()" *ngIf="!monthSelected">Select Month</ion-button>
+        <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerMonth()" *ngIf="monthSelected && !monthAdjust && monthShown.date.text">{{monthShown.date.text}}</ion-button>
+        <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerMonth()" *ngIf="monthSelected && monthAdjust && monthShownChanged.date.text">{{monthShownChanged.date.text}}</ion-button>
+                <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerDay()" *ngIf="!dateSelected">Select Day</ion-button>
+        <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerDay()" *ngIf="dateSelected && !dateAdjust && dateShown.date.text">{{dateShown.date.text}}</ion-button>
+        <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerDay()" *ngIf="dateSelected && dateAdjust && dateShownChanged.date.text">{{dateShownChanged.date.text}}</ion-button>
+      </ion-item>
+      <ion-item>
+        <div class="name-input">Relation</div>
+        <ion-select class="select-button" value="Null" okText="Select" cancelText="Dismiss" formControlName="relation" (ionChange)="relationChange($event)">
+          <ion-select-option value="Parent of Katie">Parent of Katie</ion-select-option>
+          <ion-select-option value="Parent of Zach">Parent of Zach</ion-select-option>
+          <ion-select-option value="Grandparent of Katie">Grandparent of Katie</ion-select-option>
+          <ion-select-option value="Grandparent of Zach">Grandparent of Zach</ion-select-option>
+          <ion-select-option value="Aunt of Katie">Aunt of Katie</ion-select-option>
+          <ion-select-option value="Aunt of Zach">Aunt of Zach</ion-select-option>
+          <ion-select-option value="Uncle of Katie">Uncle of Katie</ion-select-option>
+          <ion-select-option value="Uncle of Zach">Uncle of Zach</ion-select-option>
+          <ion-select-option value="Cousin of Katie">Cousin of Katie</ion-select-option>
+          <ion-select-option value="Cousin of Zach">Cousin of Zach</ion-select-option>
+          <ion-select-option value="Nephew of Katie">Nephew of Katie</ion-select-option>
+          <ion-select-option value="Nephew of Zach">Nephew of Zach</ion-select-option>
+          <ion-select-option value="Friend">Friend</ion-select-option>
+          <ion-select-option value="Feta Creator">Feta Creator</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="bio-item" counter="true" >
+        <div class="text-area-wrapper">
+        <ion-label class="name-input" position="stacked">Bio</ion-label>
+          <ion-textarea autoGrow="true" placeholder="Tell us about yourself..." class="bio-input" maxlength="120" formControlName="bio"></ion-textarea>
+        </div>
+      </ion-item>
     </form>
   </ion-grid>
 </ion-content>

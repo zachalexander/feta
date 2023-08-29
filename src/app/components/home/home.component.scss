@@ -1,3 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Baumans&family=Gentium+Book+Plus&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto+Slab:wght@300&display=swap');
+
+
+
+ion-title {
+  font-family: 'Baumans', cursive !important;
+  font-weight: 400;
+  font-size: 1.75em;
+  display: flex;
+  justify-content: flex-start;
+}
+
+small {
+  font-size: 1em;
+}
+
+.row-1 {
+
+  display: flex;
+  flex-direction: row;
+  flex-basis: 50%;
+  max-width: 500px;
+  margin: auto;
+
+  ion-card {
+    width: 50%;
+    margin: 0em 1.25em;
+  }
+
+  .terms_card {
+    padding: 0em 0em 0em 0em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 0.25em;
+    margin-top: 0em;
+  }
+
+  .members_card {
+    padding: 0em 0em 0em 0em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 0.25em;
+    margin-top: 0em;
+  }
+
+  .members, .terms {
+    display: flex;
+    margin: 1em auto -1em auto;
+    width: 100%;
+    height: 100%;
+  }
+
+  .members_div, .terms_div {
+    max-width: 100%;
+  }
+
+  .members_button, .terms_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    text-align: center;
+    font-size: .85em;
+  }
+}
+
+
+
 .loading-top {
   display: flex;
   align-items: center;
@@ -29,4 +101,33 @@ img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.create-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  margin-bottom: 10em;
+}
+
+ion-grid {
+  height: 100%;
+}
+
+ion-row {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-card {
+
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+
 }

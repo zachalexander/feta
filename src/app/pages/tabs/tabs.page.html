@@ -1,23 +1,50 @@
-<ion-tabs mode="ios">
+<ion-tabs mode="md" *ngIf="!needRegister">
   <ion-tab-bar class="footer-scroll" slot="bottom">
     <ion-tab-button (click)="homeClick()" tab="home">
-      <ion-icon *ngIf="!homeclick" name="home-outline"></ion-icon>
-      <ion-icon *ngIf="homeclick" name="home"></ion-icon>
+      <!-- <ion-icon *ngIf="!homeclick" name="home-outline"></ion-icon> -->
+      <ion-icon *ngIf="!homeclick" src="../../../assets/streamline/interface-home-3.svg"></ion-icon><small>Home</small>
+      <ion-icon *ngIf="homeclick" src="../../../assets/streamline/home-4.svg"></ion-icon>
     </ion-tab-button>
 
     <ion-tab-button (click)="timelineClick()" tab="timeline">
-      <ion-icon *ngIf="!timelineclick" name="image-outline"></ion-icon>
-      <ion-icon *ngIf="timelineclick" name="image"></ion-icon>
+      <!-- <ion-icon *ngIf="!timelineclick" name="image-outline"></ion-icon> -->
+      <ion-icon *ngIf="!timelineclick" src="../../../assets/streamline/image-photo-polaroid.svg"></ion-icon><small>Timeline</small>
+      <ion-icon *ngIf="timelineclick" src="../../../assets/streamline/polaroid.svg"></ion-icon>
     </ion-tab-button>
 
     <ion-tab-button (click)="messageClick()" tab="message-board">
-      <ion-icon *ngIf="!messageclick" name="chatbubbles-outline"></ion-icon>
-      <ion-icon *ngIf="messageclick" name="chatbubbles"></ion-icon>
+      <ion-icon *ngIf="!messageclick" src="../../../assets/streamline/imessage.svg"></ion-icon><small>Bulletin</small>
+      <ion-icon *ngIf="messageclick" src="../../../assets/streamline/imessage_fill.svg"></ion-icon>
     </ion-tab-button>
 
     <ion-tab-button class="profile-button" (click)="profileClick()" tab="profile/{{username}}">
-      <ion-icon *ngIf="!profileclick" name="person-circle-outline"></ion-icon>
-      <ion-icon *ngIf="profileclick" name="person-circle"></ion-icon>
+      <!-- <ion-icon *ngIf="!profileclick" name="person-circle-outline"></ion-icon> -->
+      <!-- <ion-icon *ngIf="!profileclick" src="../../../assets/streamline/interface-user-square-alternate.svg"></ion-icon>Profile
+      <ion-icon *ngIf="profileclick" src="../../../assets/streamline/user-square-single.svg"></ion-icon> -->
+      <ion-avatar class="profile-pic-avatar">
+        <img *ngIf="hasProfilePic" [src]="profilePicture" />
+        <img *ngIf="!hasProfilePic" src="../../../assets/profile_placeholder_avatar.png" />
+      </ion-avatar><small>Profile</small>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+
+<ion-tabs mode="ios" *ngIf="needRegister">
+  <ion-tab-bar class="footer-scroll" slot="bottom">
+    <ion-tab-button tab="home" disabled="true">
+      <ion-icon name="home-outline"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="timeline" disabled="true">
+      <ion-icon name="image-outline"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="message-board" disabled="true">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="profile/{{username}}" disabled="true">
+      <ion-icon name="person-circle-outline"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

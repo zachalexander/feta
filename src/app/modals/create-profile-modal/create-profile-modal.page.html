@@ -2,19 +2,40 @@
 <ion-content [fullscreen]="true">
   <swiper [config]="slideOpts" #createProfileSwiper [noSwiping]="true" [allowTouchMove]="false">
     <ng-template swiperSlide>
-      <div class="slide-one-container">
-        <div class="button-sidebyside-slide-one">
-          <ion-button class="next-button" (click)="nextSlide()" fill="clear" color="dark">Next&nbsp;<ion-icon name="arrow-forward"></ion-icon></ion-button>
+      <ion-tab-bar slot="top" class="slide-one-bar">
+        <ion-button fill="clear" color="dark" (click)="nextSlide()">Next&nbsp;<ion-icon name="arrow-forward"></ion-icon></ion-button> 
+      </ion-tab-bar>
+      <div class="first-last-name-container">
+        <img class="profile-pic" src="../../../assets/undraw_people.svg" />
+        <div class="fam-nickname">
+          <h5>Please enter your name:</h5>
+          <form [formGroup]="createProfileForm">
+            <ion-item lines="none">
+              <div class="input-container">
+                <ion-input placeholder="First Name" type="text" formControlName="first_name"></ion-input>
+                <ion-input placeholder="Last Name" type="text" formControlName="last_name"></ion-input>
+              </div>
+            </ion-item>
+          </form>
         </div>
+      </div>
+    </ng-template>
+    <ng-template swiperSlide>
+      <ion-tab-bar slot="top" class="slide-two-bar">
+          <ion-button class="previous-button" (click)="previousSlide()" fill="clear" color="dark"><ion-icon
+              name="arrow-back"></ion-icon>&nbsp;Back</ion-button>
+          <ion-button class="next-button" (click)="nextSlide()" fill="clear" color="dark">Next&nbsp;<ion-icon
+              name="arrow-forward"></ion-icon></ion-button>
+      </ion-tab-bar>
+      <div class="username-container">
         <img class="username-pic" src="../../../assets/undraw_social_bio.svg" />
         <div class="form-div">
-  
           <h5>Please pick a username:</h5>
           <form [formGroup]="createProfileForm">
             <ion-item lines="none">
               <div class="username-edit-wrapper">
                 <div class="username-wrapper">
-                  <ion-input type="text" formControlName="username" required></ion-input>
+                  <ion-input placeholder="Username" type="text" formControlName="username" required></ion-input>
                   <ion-icon class="invalid-entry" name="close-circle-outline" *ngIf="(f['username'].invalid && (f['username'].dirty || f['username'].touched)) || 
                   (f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)) ||
                   f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)"></ion-icon>
@@ -46,17 +67,42 @@
       </div>
     </ng-template>
     <ng-template swiperSlide>
-      <div class="slide-two-container">
-        <div class="button-sidebyside-slide-two">
-          <ion-button class="previous-button" (click)="previousSlide()" fill="clear" color="dark"><ion-icon name="arrow-back"></ion-icon>&nbsp;Back</ion-button>
-          <ion-button class="next-button" (click)="nextSlide()" fill="clear" color="dark">Next&nbsp;<ion-icon name="arrow-forward"></ion-icon></ion-button>
+      <ion-tab-bar slot="top" class="slide-three-bar">
+        <ion-button class="previous-button" (click)="previousSlide()" fill="clear" color="dark"><ion-icon
+            name="arrow-back"></ion-icon>&nbsp;Back</ion-button>
+        <ion-button class="next-button" (click)="nextSlide()" fill="clear" color="dark">Next&nbsp;<ion-icon
+            name="arrow-forward"></ion-icon></ion-button>
+      </ion-tab-bar>
+      <div class="birthday-container">
+        <img class="connection-pic" src="../../../assets/undraw_balloons.svg" />
+        <div class="birthday-div">
+          <h5>When is your birthday?</h5>
+          <form [formGroup]="createProfileForm">
+            <ion-item class="birthday-picker" lines="none">
+                <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerMonth()" *ngIf="!monthSelected">Select Month</ion-button>
+                <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerMonth()" *ngIf="monthSelected && monthShown.date.text">{{monthShown.date.text}}</ion-button>
+
+                <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerDay()" *ngIf="!dateSelected">Select Day</ion-button>
+                <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerDay()" *ngIf="dateSelected && dateShown.date.text">{{dateShown.date.text}}</ion-button>
+            </ion-item>
+          </form>
         </div>
-        <img class="connection-pic" src="../../../assets/undraw_connection.svg" />
+      </div>
+    </ng-template>
+    <ng-template swiperSlide>
+      <ion-tab-bar slot="top" class="slide-four-bar">
+        <ion-button class="previous-button" (click)="previousSlide()" fill="clear" color="dark"><ion-icon
+            name="arrow-back"></ion-icon>&nbsp;Back</ion-button>
+        <ion-button class="next-button" (click)="nextSlide()" fill="clear" color="dark">Next&nbsp;<ion-icon
+            name="arrow-forward"></ion-icon></ion-button>
+      </ion-tab-bar>
+      <div class="affiliation-container">
+        <img class="connection-pic" src="../../../assets/undraw_online_connection.svg" />
         <div class="affiliation-div">
-          <h5>What is your affiliation to Zach or Katie?</h5>
+          <h5>How do you know Zach or Katie?</h5>
           <form [formGroup]="createProfileForm">
             <ion-item class="relation-picker" lines="none">
-              <ion-select class="select-button" value="Null" okText="Select" cancelText="Dismiss" formControlName="relation" (ionChange)="relationChange($event)">
+              <ion-select placeholder="Select one" class="select-button" value="Null" okText="Select" cancelText="Dismiss" formControlName="relation" (ionChange)="relationChange($event)">
                 <ion-select-option value="Parent of Katie">Parent of Katie</ion-select-option>
                 <ion-select-option value="Parent of Zach">Parent of Zach</ion-select-option>
                 <ion-select-option value="Grandparent of Katie">Grandparent of Katie</ion-select-option>
@@ -67,47 +113,128 @@
                 <ion-select-option value="Uncle of Zach">Uncle of Zach</ion-select-option>
                 <ion-select-option value="Cousin of Katie">Cousin of Katie</ion-select-option>
                 <ion-select-option value="Cousin of Zach">Cousin of Zach</ion-select-option>
-                <ion-select-option value="Other">Other</ion-select-option>
-                <ion-select-option value="Creator">Creator</ion-select-option>
+                <ion-select-option value="Nephew of Katie">Nephew of Katie</ion-select-option>
+                <ion-select-option value="Nephew of Zach">Nephew of Zach</ion-select-option>
+                <ion-select-option value="Friend">Friend</ion-select-option>
+                <ion-select-option value="Feta Creator">Feta Creator</ion-select-option>
               </ion-select>
             </ion-item>
           </form>
         </div>
       </div>
     </ng-template>
-    <ng-template swiperSlide>
-      <div class="slide-three-container" style="min-width:100% !important">
-        <div class="button-sidebyside-slide-three">
-          <ion-button class="previous-button" (click)="previousSlide()" fill="clear" color="dark"><ion-icon name="arrow-back"></ion-icon>&nbsp;Back</ion-button>
-          <ion-button class="next-button" (click)="nextSlide()" fill="clear" color="dark">Next&nbsp;<ion-icon name="arrow-forward"></ion-icon></ion-button>
-        </div>
-        <img class="profile-pic" src="../../../assets/undraw_profile_data.svg" />
-        <div class="fam-nickname">
-          <h5>What is your family nickname?</h5>
-          <form [formGroup]="createProfileForm">
-            <ion-item lines="none">
-              <ion-input type="text" formControlName="family_name"></ion-input>
-            </ion-item>
-          </form>
-        </div>
-      </div>
-    </ng-template>
+
   
     
   <ng-template swiperSlide>
+    <ion-tab-bar slot="top" class="slide-five-bar" *ngIf="!reviewClick">
+      <ion-button class="previous-button" (click)="previousSlide()" fill="clear" color="dark"><ion-icon name="arrow-back"></ion-icon>&nbsp;Back</ion-button>
+    </ion-tab-bar>
     <div class="last-page-prereview" *ngIf="!reviewClick">
-      <div class="button-sidebyside-slide-four">
-        <ion-button class="previous-button" (click)="previousSlide()" fill="clear" color="dark"><ion-icon name="arrow-back"></ion-icon>&nbsp;Back</ion-button>
-      </div>
       <img class="lastpage-pic" src="../../../assets/undraw_certification.svg" />
       <ion-button color="light" class="review-button" (click)="reviewEntry()">Review</ion-button>
     </div>
 
     <div class="last-page" *ngIf="reviewClick">
-        <ion-tab-bar slot="top" mode="md">
-          <ion-title class="final-title">Final Review</ion-title>
-        </ion-tab-bar>
+      <ion-tab-bar slot="top" mode="ios">
+        <ion-title class="final-title">Review Profile</ion-title>
+      </ion-tab-bar>
       <small class="final-instructions">Let's take a quick look to make sure all the information below looks right to you. You will have an opportunity to adjust this information at a later date if desired.</small>
+      <form class="submit-form" [formGroup]="createProfileForm" (ngSubmit)="closeModal(createProfileForm.value)">
+      <ion-list>
+        <ion-item lines="none">
+          <ion-label>First Name</ion-label>
+          <ion-input formControlName="first_name"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Last Name</ion-label>
+          <ion-input formControlName="last_name"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+        <div class="username-edit-wrapper">
+          <div class="username-wrapper">
+            <ion-label class="username-label">Username</ion-label>
+            <div class="username-input-message-wrapper">
+              <div class="username-input-wrapper">
+                <ion-input class="username-input" type="text" formControlName="username" required></ion-input>
+                <ion-icon class="invalid-entry" name="close-circle-outline"
+                  *ngIf="(f['username'].invalid && (f['username'].dirty || f['username'].touched)) || 
+                          (f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)) ||
+                          f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)"></ion-icon>
+                <ion-icon
+                  *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].pending)"
+                  class="valid-entry" name="checkmark-circle-outline"></ion-icon>
+                <ion-spinner class="validate-spinner" size="small" *ngIf="(f['username'].pending)"></ion-spinner>
+              </div>
+              <div
+                *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && ((f['username'].touched) || (f['username'].dirty)) && !(f['username'].pending)"
+                class="success-message">
+                Username looks good.
+              </div>
+              <div
+                *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].dirty) && !(f['username'].touched) && (f['username'].pending)"
+                class="pending-message">
+              </div>
+              <div
+                *ngIf="!(f['username'].hasError('required')) && !(f['username'].hasError('minlength')) && !(f['username'].hasError('userNameValidator')) && !(f['username'].dirty) && !(f['username'].touched)"
+                class="initial-message">
+              </div>
+              <div *ngIf="f['username'].invalid && (f['username'].dirty || f['username'].touched)" class="alert-danger">
+                <div *ngIf="f['username'].hasError('required')" class="error-message">
+                  A username is required.
+                </div>
+                <div *ngIf="f['username'].hasError('minlength') && (f['username'].dirty || f['username'].touched)"
+                  class="error-message-characters">
+                  Username must be at least 2 characters long.
+                </div>
+                <div *ngIf="f['username'].hasError('userNameValidator') && (f['username'].dirty || f['username'].touched)"
+                  class="error-message-taken">
+                  Username is already taken!
+                </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Birthday</ion-label>
+          <div class="birthday-button-wrapper">
+            <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerMonth()" *ngIf="!monthSelected">
+              Month</ion-button>
+            <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerMonth()"
+              *ngIf="monthSelected && monthShown.date.text">{{monthShown.date.text}}</ion-button>
+            <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerDay()" *ngIf="!dateSelected">
+              Day</ion-button>
+            <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerDay()"
+              *ngIf="dateSelected && dateShown.date.text">{{dateShown.date.text}}</ion-button>
+          </div>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Affiliation</ion-label>
+            <ion-select placeholder="Select one" class="select-button" value="Null" okText="Select" cancelText="Dismiss"
+              formControlName="relation" (ionChange)="relationChange($event)">
+              <ion-select-option value="Parent of Katie">Parent of Katie</ion-select-option>
+              <ion-select-option value="Parent of Zach">Parent of Zach</ion-select-option>
+              <ion-select-option value="Grandparent of Katie">Grandparent of Katie</ion-select-option>
+              <ion-select-option value="Grandparent of Zach">Grandparent of Zach</ion-select-option>
+              <ion-select-option value="Aunt of Katie">Aunt of Katie</ion-select-option>
+              <ion-select-option value="Aunt of Zach">Aunt of Zach</ion-select-option>
+              <ion-select-option value="Uncle of Katie">Uncle of Katie</ion-select-option>
+              <ion-select-option value="Uncle of Zach">Uncle of Zach</ion-select-option>
+              <ion-select-option value="Cousin of Katie">Cousin of Katie</ion-select-option>
+              <ion-select-option value="Cousin of Zach">Cousin of Zach</ion-select-option>
+              <ion-select-option value="Nephew of Katie">Nephew of Katie</ion-select-option>
+              <ion-select-option value="Nephew of Zach">Nephew of Zach</ion-select-option>
+              <ion-select-option value="Friend">Friend</ion-select-option>
+              <ion-select-option value="Feta Creator">Feta Creator</ion-select-option>
+            </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-button class="final-submit-button" color="success" type="button" [disabled]="!createProfileForm.valid"
+        (click)="closeModal(createProfileForm.value)">Finish your profile</ion-button>
+      </form>
+      <!-- <small class="final-instructions">Let's take a quick look to make sure all the information below looks right to you. You will have an opportunity to adjust this information at a later date if desired.</small>
       <form class="submit-form" [formGroup]="createProfileForm" (ngSubmit)="closeModal(createProfileForm.value)">
         <ion-item lines="none">
           <ion-label position="stacked">Username (required<small style="color:darkred; vertical-align: super; text-align: left;">*</small>)</ion-label>
@@ -141,6 +268,17 @@
           </div>
         </ion-item>
 
+        <ion-item class="birthday-info" lines="none">
+          <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerMonth()" *ngIf="!monthSelected">Select
+            Month</ion-button>
+          <ion-button formControlName="birthmonth" class="date-button" fill="clear" color="dark" (click)="openPickerMonth()"
+            *ngIf="monthSelected && monthShown.date.text">{{monthShown.date.text}}</ion-button>
+          <ion-button class="date-button" fill="clear" color="dark" (click)="openPickerDay()" *ngIf="!dateSelected">Select
+            Day</ion-button>
+          <ion-button formControlName="birthday" class="date-button" fill="clear" color="dark" (click)="openPickerDay()"
+            *ngIf="dateSelected && dateShown.date.text">{{dateShown.date.text}}</ion-button>
+        </ion-item>
+
         <ion-item lines="none">
           <ion-label position="stacked">Relation to Zach/Katie (optional)</ion-label>
           <ion-select value="Null" okText="Select" cancelText="Dismiss" formControlName="relation" (ionChange)="relationChange($event)">
@@ -163,7 +301,7 @@
           <ion-input type="text" formControlName="family_name"></ion-input>
         </ion-item>
         <ion-button class="final-submit-button" color="success" type="button" [disabled]="!createProfileForm.valid" (click)="closeModal(createProfileForm.value)">Finish your profile</ion-button>
-      </form>
+      </form> -->
     </div>
   </ng-template>
 </swiper>

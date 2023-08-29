@@ -1,1 +1,22 @@
+ion-tabs {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
 
+ion-tabs, ion-tab-bar, ion-tab-button {
+    background: var(--ion-color-light)
+}
+
+ion-tab-bar {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-pic-avatar {
+    padding: 0em;
+    margin: 0em;
+    height: 32px;
+    width: 32px;
+    border: 1px solid var(--ion-color-dark);
+}

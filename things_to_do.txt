@@ -1,0 +1,8 @@
+1) Edit post capability
+2) Subscriptions on delete/new posts
+6) Lazy load content from profile page
+9) Go through profile creation UI to make sure it works properly
+10) Test updates to profile content
+11) Add note to home page - Feta rules and information
+12) Add settings modal
+13) Fix username capitalization

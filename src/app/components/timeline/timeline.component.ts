@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList, ViewChildren, OnChanges} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList, ViewChildren, OnChanges, AfterViewInit} from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { TimelinePageModule } from 'src/app/pages/timeline/timeline.module';
 import { ModalController, Platform } from '@ionic/angular';
 // import { PhotoService } from '../../services/photo.service';
 import { MediaService } from 'src/app/services/media.service';
-// import { CachingService } from '../../services/caching.service';
 import { APIService } from "../../API.service";
-// import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
 // import { EditPhotoModalPage } from '../../modals/edit-photo-modal/edit-photo-modal.page';
 import { LikeListModalPage } from '../../modals/like-list-modal/like-list-modal.page';
 import { Storage } from '@aws-amplify/storage';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, map } from 'rxjs';
 import { IonInfiniteScroll, IonRefresher, IonRefresherContent} from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { IonItemSliding} from '@ionic/angular';
@@ -23,6 +23,7 @@ import { IonContent } from '@ionic/angular';
 import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Auth } from '@aws-amplify/auth';
+import { Share } from '@capacitor/share';
 // import { Network } from '@capacitor/network';
 
 import { finalize } from 'rxjs/operators';
@@ -32,11 +33,12 @@ import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
 import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
 
 import SwiperCore, { Zoom, EffectFade } from 'swiper';
+import { timeline } from 'console';
 // import { toast } from 'aws-amplify';
 // import { async } from '@angular/core/testing';
 // import { Timestamp } from 'rxjs/internal/operators/timestamp';
 SwiperCore.use([Zoom, EffectFade]);
-
+declare var Hls;
 
 @Component({
   selector: 'app-timeline',
@@ -45,33 +47,14 @@ SwiperCore.use([Zoom, EffectFade]);
   providers: [DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix]
 })
 
-// interface cachedData {
-//   comment_count: number,
-//   description: string,
-//   id: string,
-//   imageDeteled: boolean,
-//   imageKey: string,
-//   imagesID: string,
-//   like_count: number,
-//   likes: string,
-//   profilePicture: string,
-//   time_posted: Date,
-//   url: string,
-//   userLiked: boolean,
-//   username: string,
-//   usernameID: string,
-//   version: number
-
-// }
-
-export class TimelineComponent {
+export class TimelineComponent implements OnInit {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRefresher) ionRefresher: IonRefresher;
   @ViewChild(IonContent) ionContent: IonContent;
   @ViewChild('slides') slides: IonItemSliding;
   @Input('data') data = [];
-  @Input('datalength') datalength: Number;
+  @Input('token') token: String;
   @ViewChildren('timelineVideo') videos: QueryList<any>
 
 
@@ -81,15 +64,19 @@ export class TimelineComponent {
   replay = false;
   pause;
   videoStyle;
+  platformView;
+  mobilePlatform;
   
   onCreateImageSubscription: Subscription | null = null;
   onUpdateImageSubscription: Subscription | null = null;
   onDeleteImageSubscription: Subscription | null = null;
-  onUpdateCommentSubscription: Subscription | null = null;
+  onCreateCommentsSubscription: Subscription | null = null;
+  onDeleteCommentsSubscription: Subscription | null = null;
 
   alreadyLiked: boolean;
   loaded: boolean;
   profileSearch: boolean;
+  refresh: boolean;
   browser: any;
 
   dataReturned: any;
@@ -116,12 +103,44 @@ export class TimelineComponent {
     public navController: NavController,
     private platform: Platform,
     private loadingController: LoadingController,
-    private mediaService: MediaService
+    private mediaService: MediaService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.mobilePlatform = this.platform.is("mobile");
   }
 
   functionGetCognitoUserId(){
     return Auth.currentUserInfo().then(user => user.id);
+  }
+
+
+  async ngAfterViewInit() {
+    this.didScroll();
+    this.startSubscriptions();
+  }
+
+
+  async ngOnDestroy() {
+    if (this.onCreateImageSubscription) {
+      await this.onCreateImageSubscription.unsubscribe();
+    }
+    if (this.onUpdateImageSubscription) {
+      await this.onUpdateImageSubscription.unsubscribe();
+    }
+    if (this.onDeleteImageSubscription) {
+      await this.onDeleteImageSubscription.unsubscribe();
+    }
+    if (this.onCreateCommentsSubscription) {
+      await this.onCreateCommentsSubscription.unsubscribe();
+    }
+    if (this.onDeleteCommentsSubscription) {
+      await this.onDeleteCommentsSubscription.unsubscribe();
+    }
+    this.platform.pause.subscribe(async () => {
+      console.log('pausing subscription')
+    });
   }
 
   isElementInViewport(element){
@@ -143,25 +162,27 @@ export class TimelineComponent {
       this.replay = false;
     }
 
-    const videos = document.querySelectorAll('video');
-    for (let i = 0; i < videos.length; i++) {
-      videos[i].style.objectFit = "cover";
-    }
-
-
     this.videos.forEach(player => {
       if(this.nowPlaying) return;
-
       const nativeElement = player.nativeElement;
       const inView = this.isElementInViewport(nativeElement);
 
       if(inView) {
         this.nowPlaying = nativeElement;
         this.nowPlaying.muted = true;
+        let playPromise = this.nowPlaying.play();
+
+        if (playPromise !== undefined) {
+          playPromise.then(_ => {
+            this.nowPlaying.play();
+          })
+          .catch(error => {
+            this.nowPlaying.play();
+          })
+        }
         this.pause = false;
         this.muted = true;
         this.replay = false;
-        this.nowPlaying.play();
         this.videoOver = false;
       }
     })
@@ -217,10 +238,18 @@ export class TimelineComponent {
     }
   }
 
+  ngOnInit(): void {
+  
+  }
+
   async ngOnChanges() {
 
     this.currentUserUsernameID = localStorage.getItem('usernameID')
     this.browser = localStorage.getItem('User-browser')
+    this.platformView = await this.platform.platforms();
+
+    this.didScroll();
+    this.startSubscriptions();
 
     // if (this.platform.is('hybrid')) {
 
@@ -254,37 +283,15 @@ export class TimelineComponent {
     //   }
     // });
 
-
-  }
-
-  async ngOnInit(){
-
-    const elems = document.querySelectorAll("video, audio")
-
-    elems.forEach(() => {
-      console.log(elems)
-    })
-  }
+    setTimeout(() => {
+      if (this.data.length < 2) {
+        this.profileSearch = true;
+      } else  {
+        this.profileSearch = false;
+      }
+    }, 1000)
 
 
-  async ngAfterViewInit() {
-    this.didScroll();
-    this.startSubscriptions();
-  }
-
-  async ngOnDestroy() {
-    if(this.onCreateImageSubscription){
-      await this.onCreateImageSubscription.unsubscribe();
-    }
-    if(this.onUpdateImageSubscription){
-      await this.onUpdateImageSubscription.unsubscribe();
-    }
-    if(this.onDeleteImageSubscription){
-      await this.onDeleteImageSubscription.unsubscribe();
-    }
-    this.platform.pause.subscribe(async () => {
-      console.log('pausing subscription')
-    });
   }
 
   async presentToastNewPost(){
@@ -301,213 +308,304 @@ export class TimelineComponent {
 
   // This is for editing and sharing posts on wall
 
-  // async clickEditPost(imageUrl, imagePostId, imageId) {
-  //   const modal = await this.modalController.create({
-  //     component: EditPhotoModalPage
-  //   })
+  async clickEditPost(mediaUrl, mediaId) {
+    // const modal = await this.modalController.create({
+    //   component: EditPhotoModalPage
+    // })
 
-  //   let imageData = [imageUrl, imagePostId, imageId]
-  //   // await this.photoService.getImagesID(imageData);
-  //   // await this.photoService.getImagePostDescription();
+    let imageData = [mediaUrl, mediaId]
+    // await this.photoService.getImagesID(imageData);
+    // await this.photoService.getImagePostDescription();
 
-  //   modal.onDidDismiss().then((dataReturned) => {
-  //     if (dataReturned !== null) {
-  //       this.dataReturned = dataReturned.data;
-  //     }
-  //   });
+    // modal.onDidDismiss().then((dataReturned) => {
+    //   if (dataReturned !== null) {
+    //     this.dataReturned = dataReturned.data;
+    //   }
+    // });
 
-  //   return await modal.present();
-  // }
+    // return await modal.present();
+  }
 
-  // async presentActionSheet(username, imageId, imagePostId, imageUrl, imageKey) {
+  async presentActionSheet(username, mediaId, mediaKey, downloadableVideo, isVideo) {
 
-  //   if(this.currentUserUsername === username){
-  //     this.currentUserEditPost = true;
-  //     const actionSheet = await this.actionSheetController.create({
-  //       header: 'Post Settings',
-  //       cssClass: 'my-custom-class',
-  //       buttons: [{
-  //         text: 'Edit Post',
-  //         icon: 'pencil-outline',
-  //         handler: () => {
+    if(this.currentUserUsername === username){
+      this.currentUserEditPost = true;
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Post Settings',
+        cssClass: 'my-custom-class',
+        buttons: [{
+          text: 'Edit Post',
+          icon: 'pencil-outline',
+          handler: () => {
 
-  //             this.clickEditPost(imageUrl, imagePostId, imageId);
+              this.clickEditPost(mediaKey, mediaId);
               
-  //           }
-  //       },
-  //       {
-  //         text: 'Delete Post',
-  //         role: 'destructive',
-  //         icon: 'trash-outline',
-  //         handler: async () => {
-  //           const alert = await this.alertController.create({
-  //             cssClass: 'my-custom-class',
-  //             header: 'Delete Post',
-  //             message: 'Are you sure you want to delete this post?',
-  //             buttons: [
-  //               {
-  //                 text: 'No',
-  //               },
-  //               {
-  //                 text: 'Delete',
-  //                 handler: async () => {
+            }
+        },
+        {
+          text: 'Delete Post',
+          role: 'destructive',
+          icon: 'trash-outline',
+          handler: async () => {
+            const alert = await this.alertController.create({
+              cssClass: 'my-custom-class',
+              header: 'Delete Post',
+              message: 'Are you sure you want to delete this post?',
+              buttons: [
+                {
+                  text: 'No',
+                },
+                {
+                  text: 'Delete',
+                  handler: async () => {
 
-  //                   let imagePostData = await this.api.GetImagePost(imagePostId)
-       
-  //                   // await this.api.DeleteImagePost({id: imagePostData.id, _version: imagePostData._version})
+                    await this.api.DeleteImagePost({id: mediaId})
 
-  //                   // let imageData = await this.api.GetImages(imageId)
-
-  //                   // await this.api.DeleteImages({id: imageData.id, _version: imageData._version})
-
-  //                   await Storage.remove(imageKey)
-
-  //                   await this.presentToast();
-
-  //                 }
-  //             }
-  //             ]
-  //           });
+                    if(isVideo){
+                      await Storage.remove(downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
+                    } else {
+                      await Storage.remove(mediaKey)
+                    }
+                    await this.presentToast();
+                  }
+              }
+              ]
+            });
         
-  //           await alert.present();
-  //         }
-  //       }, {
-  //         text: 'Share',
-  //         icon: 'share-outline',
-  //         handler: async () => {
+            await alert.present();
+          }
+        }, {
+          text: 'Share',
+          icon: 'share-outline',
+          handler: async () => {
 
-  //           // let s3image = await this.api.GetImages(imageId)
-  //           let photo = await Storage.get(s3image.imageurl, { download: true})
- 
-  //           if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
-  //             const fileName = 'feta-download-' + new Date().getTime() + '.jpeg' 
-  //             this.downloadBlob(photo.Body, fileName)
-  //           }
+            const loading = await this.loadingController.create({
+              spinner: 'lines-sharp-small',
+              translucent: false,
+              cssClass: 'spinner-loading'
+            });
 
-  //           if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
-  //             const base64Data = await this.readAsBase64(photo.Body)
-  //             const fileName = new Date().getTime() + '.jpeg';
-  
-  //             await Filesystem.writeFile({
-  //               path: fileName,
-  //               data: base64Data,
-  //               directory: Directory.Cache
-  //             }).then(() => {
-  //               return Filesystem.getUri({
-  //                 directory: Directory.Cache,
-  //                 path: fileName
-  //               });
-  //             }).then((uriResult) => {
-  //               return Share.share({
-  //                 title: 'Share this photo',
-  //                 text: "Look at this photo from Zach & Katie's Feta app",
-  //                 url: uriResult.uri,
-  //                 dialogTitle: 'Share this photo',
-  //               });
-  //             })
-  //           }
-  //         }
-  //       }, {
-  //         text: 'Cancel',
-  //         icon: 'close',
-  //         role: 'cancel',
-  //         handler: () => {}
-  //       }]
-  //     });
-  //     await actionSheet.present();
-  
-  //     const { role } = await actionSheet.onDidDismiss();
+            loading.present();
 
-  //   } else {
-  //     const actionSheet = await this.actionSheetController.create({
-  //       header: 'Post Settings',
-  //       cssClass: 'my-custom-class',
-  //       buttons: [{
-  //         text: 'Share',
-  //         icon: 'share-outline',
-  //         handler: () => {
+            let media = await this.api.GetImagePost(mediaId)
+            if(isVideo){
+              let video = await Storage.get(media.downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
+
+              if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
+                const fileName = 'feta-download-' + new Date().getTime() + '.mov' 
+                this.downloadBlob(video, fileName)
+                loading.dismiss()
+              }
+
+              if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
+                const response = await fetch(`${video}`)
+                const blob = await response.blob();
+                const base64Data = await this.convertBlobToBase64(blob) as string;
+                const fileName = new Date().getTime() + '.mov';
     
-  //           this.shareButtonClicked(imageId)
-            
-  //         }
-  //       }, 
-  //       {
-  //         text: 'Cancel',
-  //         icon: 'close',
-  //         role: 'cancel',
-  //         handler: () => {}
-  //       }]
-  //     });
-  //     await actionSheet.present();
+                await Filesystem.writeFile({
+                  path: fileName,
+                  data: base64Data,
+                  directory: Directory.Cache
+                }).then(() => {
+                  return Filesystem.getUri({
+                    directory: Directory.Cache,
+                    path: fileName
+                  });
+                }).then((uriResult) => {
+                  loading.dismiss()
+                  return Share.share({
+                    title: 'Share content',
+                    text: "Look at this content from Zach & Katie's Feta app",
+                    url: uriResult.uri,
+                    dialogTitle: 'Share this content',
+                  });
+                })
+              }
+            } else {
+
+              let photo = await Storage.get(mediaKey, { download: true})
+
+              if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
+                const fileName = 'feta-download-' + new Date().getTime() + '.jpeg' 
+                this.downloadBlob(photo.Body, fileName)
+                loading.dismiss();
+              }
+
+              if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
+                const base64Data = await this.readAsBase64(photo.Body)
+                const fileName = new Date().getTime() + '.jpeg';
+    
+                await Filesystem.writeFile({
+                  path: fileName,
+                  data: base64Data,
+                  directory: Directory.Cache
+                }).then(() => {
+                  return Filesystem.getUri({
+                    directory: Directory.Cache,
+                    path: fileName
+                  });
+                }).then((uriResult) => {
+                  loading.dismiss();
+                  return Share.share({
+                    title: 'Share content',
+                    text: "Look at this content from Zach & Katie's Feta app",
+                    url: uriResult.uri,
+                    dialogTitle: 'Share this content',
+                  });
+                })
+              }
+            }            
+          }
+        }, {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {}
+        }]
+      });
+      await actionSheet.present();
   
-  //     const { role } = await actionSheet.onDidDismiss();
+      const { role } = await actionSheet.onDidDismiss();
 
-  //   }
-  // }
+    } else {
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Post Settings',
+        cssClass: 'my-custom-class',
+        buttons: [{
+          text: 'Share',
+          icon: 'share-outline',
+          handler: () => {
+    
+            this.shareButtonClicked(mediaId, isVideo, mediaKey)
+            
+          }
+        }, 
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {}
+        }]
+      });
+      await actionSheet.present();
+  
+      const { role } = await actionSheet.onDidDismiss();
 
-  // async shareButtonClicked(imageId){
-  //   let s3image = await this.api.GetImages(imageId)
-  //   let photo = await Storage.get(s3image.imageurl, { download: true})
+    }
+  }
 
-  //   if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
-  //     const fileName = 'feta-download-' + new Date().getTime() + '.jpeg' 
-  //     this.downloadBlob(photo.Body, fileName)
-  //   }
+  async shareButtonClicked(id, isVideo, mediaKey){
 
-  //   if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
-  //     const base64Data = await this.readAsBase64(photo.Body)
-  //     const fileName = new Date().getTime() + '.jpeg';
+    const loading = await this.loadingController.create({
+      spinner: 'lines-sharp-small',
+      translucent: false,
+      cssClass: 'spinner-loading'
+    });
 
-  //     await Filesystem.writeFile({
-  //       path: fileName,
-  //       data: base64Data,
-  //       directory: Directory.Cache
-  //     }).then(() => {
-  //       return Filesystem.getUri({
-  //         directory: Directory.Cache,
-  //         path: fileName
-  //       });
-  //     }).then((uriResult) => {
-  //       return Share.share({
-  //         title: 'Share this photo',
-  //         text: "Look at this photo from Zach & Katie's Feta app",
-  //         url: uriResult.uri,
-  //         dialogTitle: 'Share this photo',
-  //       });
-  //     })
+    loading.present();
 
-  //   }
-  // }
+    let media = await this.api.GetImagePost(id)
+    if(isVideo){
+      let video = await Storage.get(media.downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
 
-  // downloadBlob(blob, filename) {
-  //   const url = URL.createObjectURL(blob);
-  //   const a = document.createElement('a');
-  //   a.href = url;
-  //   a.download = filename || 'download';
-  //   const clickHandler = () => {
-  //     setTimeout(() => {
-  //       URL.revokeObjectURL(url);
-  //       a.removeEventListener('click', clickHandler);
-  //     }, 10);
-  //   };
-  //   a.addEventListener('click', clickHandler, false);
-  //   a.click();
-  //   return a;
-  // }
+      if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
+        const fileName = 'feta-download-' + new Date().getTime() + '.mov' 
+        this.downloadBlob(video, fileName)
+        loading.dismiss();
+      }
+
+      if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
+        const response = await fetch(`${video}`)
+        const blob = await response.blob();
+        const base64Data = await this.convertBlobToBase64(blob) as string;
+        const fileName = new Date().getTime() + '.mov';
+
+        await Filesystem.writeFile({
+          path: fileName,
+          data: base64Data,
+          directory: Directory.Cache
+        }).then(() => {
+          return Filesystem.getUri({
+            directory: Directory.Cache,
+            path: fileName
+          });
+        }).then((uriResult) => {
+          loading.dismiss();
+          return Share.share({
+            title: 'Share content',
+            text: "Look at this content from Zach & Katie's Feta app",
+            url: uriResult.uri,
+            dialogTitle: 'Share this content',
+          });
+        })     
+      }
+    } else {
+        let photo = await Storage.get(mediaKey, { download: true})
+
+        if(this.platform.is('desktop' || 'mobileweb' || 'pwa')){
+          const fileName = 'feta-download-' + new Date().getTime() + '.jpeg' 
+          this.downloadBlob(photo.Body, fileName)
+          loading.dismiss();
+        }
+
+        if(this.platform.is('hybrid' || 'iphone' || 'ios' || 'mobile' || 'ipad')){
+          const base64Data = await this.readAsBase64(photo.Body)
+          const fileName = new Date().getTime() + '.jpeg';
+
+          await Filesystem.writeFile({
+            path: fileName,
+            data: base64Data,
+            directory: Directory.Cache
+          }).then(() => {
+            return Filesystem.getUri({
+              directory: Directory.Cache,
+              path: fileName
+            });
+          }).then((uriResult) => {
+            loading.dismiss();
+            return Share.share({
+              title: 'Share content',
+              text: "Look at this content from Zach & Katie's Feta app",
+              url: uriResult.uri,
+              dialogTitle: 'Share this content',
+            });
+          })
+        }
+      }            
+  }
+
+  async downloadBlob(link, filename) {
+    const response = await fetch(`${link}`)
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || 'download';
+    const clickHandler = () => {
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        a.removeEventListener('click', clickHandler);
+      }, 10);
+    };
+    a.addEventListener('click', clickHandler, false);
+    a.click();
+    return a;
+  }
 
 
-  // async readAsBase64(photo) { 
-  //   return await this.convertBlobToBase64(photo) as string;
-  // }
+  async readAsBase64(photo) { 
+    return await this.convertBlobToBase64(photo) as string;
+  }
 
-  // convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
-  //   const reader = new FileReader();
-  //   reader.onerror = reject;
-  //   reader.onload = () => {
-  //     resolve(reader.result);
-  //   };
-  //   reader.readAsDataURL(blob)
-  // })
+  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob)
+  })
 
   // toast messages
 
@@ -548,21 +646,23 @@ export class TimelineComponent {
 
   // modal functions
 
-  // async openModal(id) {
-  //   console.log(id)
-  //   const modal = await this.modalController.create({
-  //     component: CommentModalPage
-  //   });
+  async openModal(id) {
+    const modal = await this.modalController.create({
+      component: CommentModalPage,
+      componentProps: {
+        imageID: id
+      }
+    });
 
-  //   await this.photoService.getPostImageID(id)
+    // await this.photoService.getPostImageID(id)
 
-  //   modal.onDidDismiss().then((dataReturned) => {
-  //     if (dataReturned !== null) {
-  //       this.dataReturned = dataReturned.data;
-  //     }
-  //   });
-  //   return await modal.present();
-  // }
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        this.dataReturned = dataReturned.data;
+      }
+    });
+    return await modal.present();
+  }
 
   async showLikesModal(url) {
     const modal = await this.modalController.create({
@@ -571,8 +671,6 @@ export class TimelineComponent {
         imageID: url[1]
       }
     });
-
-    // await this.photoService.getImagesID(url)
 
     modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null) {
@@ -585,55 +683,61 @@ export class TimelineComponent {
 
   // when user scrolls to bottom, invoke this function
 
-  // loadData(event) {
+  loadData(event) {
+      try {
+        this.mediaService.getTimelineDataPaginated(this.token).subscribe((data) => {
+          let dataPull = data[0]
+          this.token = data[2]
 
-  //     setTimeout(async () => {
+          if (this.token === null) {
+            event.target.disabled = true;
+            this.scrollFinished = true;
+          } 
+          Object.entries(dataPull).forEach(([key, value]) => { this.data[this.data.length] = value })
+        });
+      } catch (error) {
+        console.log(error)
+      }
+      event.target.complete();
+  }
 
-  //       this.counter_init = this.data.length;
-  //       this.counter_end = this.counter_init + 10;
+  // async refreshData(event){
 
-  //       try {
-  //         this.wallService.getFamilyWallData(this.counter_init, this.counter_end).subscribe((data) => {
-  //           let dataPull = data[0]
-  //           this.dataScrolledLength = data[1];
-  //           Object.entries(dataPull).forEach(([key, value]) => { this.data[this.data.length] = value })
-  //         });
-  //       } catch (error) {
-  //         console.log(error)
-  //       }
-  
-  //       this.counter_init = this.counter_init + 10;
-  //       this.counter_end = this.counter_end + 10;
-  //       event.target.complete();
-  
-  //       if (this.data.length == this.datalength) {
-  //         event.target.disabled = true;
-  //         this.scrollFinished = true;
-  //       } 
-  //     }, 100);
- 
+  //   if(this.platform.is('hybrid')){
+  //     await Haptics.impact({ style: ImpactStyle.Medium})
+  //   }
+
+  //  await this.changeLocation();
+
+  //   // window.location.reload();
   // }
 
-  async refreshData(event){
+  async changeLocation(){
+    // save current route first
+    const currentRoute = this.router.url;
 
-    if(this.platform.is('hybrid')){
-      await Haptics.impact({ style: ImpactStyle.Medium})
-    }
+    this.router.navigateByUrl('/timeline', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentRoute]); // navigate to same route
+    }); 
 
-    // setTimeout(async () => {
-    let callback = this.mediaService.getDataFromGraphQL(this.currentUserUsernameID).then((res) =>
-      this.data = res[0]
-    );
-
-    callback.then(() => {
-      event.target.complete();
-    })
-
-
+    this.refresh = false;
   }
 
   scrollToTop(){
-    this.ionContent.scrollToTop(400)
+    this.ionContent.scrollToTop(400).then(() => {
+      this.refresh = true;
+
+      this.mediaService.getTimelineData().pipe(
+        finalize(() => {
+          this.loaded = true;
+        })
+      ).subscribe(async data => {
+        this.data = data[0];
+        this.refresh = true;
+        await this.changeLocation();
+        // window.location.reload();
+      })
+    })
   }
 
   // disabling toggles
@@ -647,18 +751,16 @@ export class TimelineComponent {
   }
 
   startSubscriptions(){
-    // this.onCreateImageSubscription = <Subscription>(
-    //   this.api.OnCreateImagePostListener.subscribe(async (event: any) => {
-    //     this.presentToastNewPost();
-    //   })
-    // );
+    this.onCreateImageSubscription = <Subscription>(
+      this.api.OnCreateImagePostListener().subscribe(async (event: any) => {
+        this.presentToastNewPost();
+      })
+    );
 
     this.onUpdateImageSubscription = <Subscription>(
       this.api.OnUpdateImagePostListener().subscribe({
         next: async (event: any) => {
-
           const imageId = event.value.data.onUpdateImagePost.id;
-
 
           if((JSON.parse(event.value.data.onUpdateImagePost.likes))){
             let post = await this.api.GetPostLikes(imageId)
@@ -670,66 +772,75 @@ export class TimelineComponent {
               return media;
             })
           }
-  
-        //   if((JSON.parse(event.value.data.onUpdateImagePost.likes)) && (JSON.parse(event.value.data.onUpdateImagePost.comments))){
-  
-        //     const likes_updated = await JSON.parse(event.value.data.onUpdateImagePost.likes).usernames.length
-        //     const comments_updated = await JSON.parse(event.value.data.onUpdateImagePost.comments)
-  
-            
-  
-        //     await this.data.forEach(async photos => {
-        //       if((photos.id == imageId) && (comments_updated)){
-        //         photos.like_count = likes_updated;
-        //         photos.comments = await this.wallService.formatComments(JSON.stringify(comments_updated), imageId);
-        //         photos.comment_count = await (await this.wallService.formatComments(JSON.stringify(comments_updated), imageId)).length;
-        //       }
-        //     })
-        //   } 
-          
-        //   else if(JSON.parse(event.value.data.onUpdateImagePost.likes)) {
-        //     const likes_updated = JSON.parse(event.value.data.onUpdateImagePost.likes).usernames.length
-        //     this.data.forEach(async photos => {
-        //       if((photos.id == imageId)){
-        //         photos.like_count = likes_updated;
-        //       }
-        //     })
-        //   } else {
-        //     const likes_updated = JSON.parse(event.value.data.onUpdateImagePost.likes).usernames.length
-        //     const comments_updated = JSON.parse(event.value.data.onUpdateImagePost.comments)
-  
-        //     comments_updated.map(async comments => {
-        //       comments.username = localStorage.getItem('username');
-        //     })
-  
-        //     this.data.forEach(async photos => {
-        //       if((photos.id == imageId) && (comments_updated)){
-        //         photos.like_count = likes_updated;
-        //         photos.comments = await this.wallService.formatComments(JSON.stringify(comments_updated), imageId);
-        //         photos.comment_count = await (await this.wallService.formatComments(JSON.stringify(comments_updated), imageId)).length;
-        //       }
-        //     })
-        //   }
-        //   // this.commentLoading = false;
         }
       })
     )
   
-    // this.onDeleteImageSubscription = <Subscription>(
-    //   this.api.OnDeleteImagePostListener.subscribe((event: any) => {
-    //     const imageId = event.value.data.onDeleteImagePost.id;
-    //     const delete_status = event.value.data.onDeleteImagePost._deleted
+    this.onDeleteImageSubscription = <Subscription>(
+      this.api.OnDeleteImagePostListener().subscribe((event: any) => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      })
+    )
 
-    //     this.cachingService.clearAllCachedData();
-  
-    //     this.data.forEach(async photos => {
-    //       if((photos.id == imageId)){
-    //         photos.postDeleted = delete_status;
-    //       }
-    //     })
-    //   })
-    // );
+    this.onCreateCommentsSubscription = <Subscription>(
+      this.api.OnCreateCommentsListener().subscribe({
+        next: async (event: any) => {
+          const imageId = event.value.data.onCreateComments.imagePostsID;
 
+          let commentsArray: [] = await this.api.getImageComments(imageId)
+          let commentLength: string = commentsArray.length.toString()
+
+          await this.api.UpdateImagePost({ id: imageId, comments: commentLength })
+
+          let timelineData = await this.api.ListImagePosts();
+
+          timelineData.items.map(values => {
+            if (values.id === imageId) {
+              values.comments = commentLength
+            }
+          })
+
+          this.data.filter((media) => {
+            if (media.id === imageId) {
+              media.comments = commentLength
+            }
+          })
+        }
+      })
+    )
+
+    this.onDeleteCommentsSubscription = <Subscription>(
+      this.api.OnDeleteCommentsListener().subscribe({
+        next: async (event: any) => {
+          const imageId = event.value.data.onDeleteComments.imagePostsID;
+          let commentsArray: [] = await this.api.getImageComments(imageId)
+          let commentLength: string = commentsArray.length.toString()
+
+          await this.api.UpdateImagePost({id: imageId, comments: commentLength})
+
+          let timelineData = await this.api.ListImagePosts();
+
+          timelineData.items.map(values => {
+            if(values.id === imageId){
+              values.comments = commentLength
+            }
+          })
+
+          this.data.filter(values => {
+            if(values.id === imageId){
+              values.comments = commentLength
+            }
+          })
+        }
+      })
+    )
+  }
+
+  async commentLength(imageID) {
+    let commentArray: [] = await this.api.getImageComments(imageID)
+    return commentArray.length
   }
 
 }

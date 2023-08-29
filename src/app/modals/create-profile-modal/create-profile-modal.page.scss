@@ -2,6 +2,22 @@ ion-button {
     text-transform: capitalize !important;
 }
 
+h5 {
+    font-size: 16px !important;
+}
+
+ion-tab-bar {
+    display: flex;
+    flex-direction: row;
+}
+
+ion-tab-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    min-width: 90%;
+}
+
 .swiper {
     height: 100% !important;
     margin-left: 0 !important;
@@ -12,27 +28,85 @@ ion-button {
     bottom: 30px !important;
 }
 
-.slide-one-container {
+.slide-one-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end !important;
+}
 
-    height: 100% !important;
+.slide-two-bar, .slide-three-bar, .slide-four-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
-    .button-sidebyside-slide-one {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-    
-        ion-button {
-            font-weight: 600;
-        }
-    }
+.slide-five-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start !important;
+}
+
+.first-last-name-container {
 
     img {
-        width: 300px;
-        height: 300px;
+        display: flex;
+        width: 250px;
+        height: 250px;
+        margin: auto;
+    }
+
+    .fam-nickname {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        width: 85%;
+        margin: 0em auto 1em auto;
+        max-width: 400px;
+    }
+
+
+    form {
+        min-width: 100%;
+    }
+
+    ion-item {
+        width: 100%;
+    }
+
+
+    ion-item,
+    ion-input {
+        --padding-start: 1em !important;
+    }
+
+    ion-input {
+        margin: 0.25em auto;
+        max-width: 250px;
+    }
+
+    ion-input,
+    ion-input:active,
+    ion-input:focus,
+    ion-input:hover {
+        background-color: var(--ion-color-light) !important;
+        border-radius: 0.5em;
+        border: 0.5px solid var(--ion-color-light) !important;
+    }
+}
+
+.username-container {
+
+    img {
+        width: 250px;
+        height: 250px;
         margin: auto;
         display: flex;
     }
-
 
     #input {
         padding: 0 1em 0 1em !important;
@@ -43,7 +117,6 @@ ion-button {
         font-weight: 600;
         font-size: 12px;
     }
-
 
     .success-message {
         color: mediumseagreen;
@@ -108,14 +181,16 @@ ion-button {
     ion-item, ion-input {
         --padding-start: 1em !important;
         width: 90% !important;
-        max-width: 300px;
+        max-width: 250px;
     }
 
     ion-input {
         text-transform: lowercase !important;
 
+        input::placeholder {
+            text-transform: capitalize !important;
+        }
     }
-
     ion-input, ion-input:active, ion-input:focus {
         background-color: var(--ion-color-light) !important;
         border-radius: 0.5em;
@@ -123,15 +198,62 @@ ion-button {
     }
 }
 
-.slide-two-container {
+.birthday-container {
+    img {
+        display: flex;
+        width: 250px;
+        height: 250px;
+        margin: 1em auto;
+        justify-content: center;
+        align-items: center;
+    }
 
-    height: 100%;
+    .date-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+        padding: 6px 12px;
+        margin: 0px 2px;
+        position: relative;
+        transition: color 150ms ease-in-out 0s;
+        border: none;
+        background: var(--ion-color-step-300, #edeef0);
+        color: var(--ion-text-color, #000);
+        font-family: inherit;
+        font-size: inherit;
+        cursor: pointer;
+        appearance: none;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .birthday-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .birthday-picker {
+        display: flex;
+    }
+
+
+    h5 {
+        text-align: center;
+    }
+}
+
+.affiliation-container {
 
     ion-item {
         --background-hover: none !important;
         --background-active: none !important;
         --background-focus: none !important;
         --background-target: none !important;
+        --background-activated: none !important
     }
 
     ion-alert {
@@ -146,19 +268,9 @@ ion-button {
         margin: auto;
     }
 
-    .button-sidebyside-slide-two {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    
-        ion-button {
-            font-weight: 600;
-        }
-    }
-
     img {
-        width: 300px;
-        height: 300px;
+        width: 250px;
+        height: 250px;
         margin: auto;
         display: flex;
     }
@@ -180,9 +292,11 @@ ion-button {
         border: 0.5px solid var(--ion-color-light) !important;
         border-radius: 0.5em;
         padding: 15px 10px;
-        max-width: 300px;
+        max-width: 250px;
         margin: auto;
         min-width: 70%;
+        padding-right: 1.5em;
+        --background-activated: none !important;
     }
 
     .relation-picker, .relation-picker:focus, .relation-picker:active {
@@ -193,60 +307,7 @@ ion-button {
 }
 
 
-.slide-three-container {
 
-    height: 100%;
-
-    .button-sidebyside-slide-three {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    
-        ion-button {
-            font-weight: 600;
-        }
-    }
-
-    img {
-        width: 300px;
-        height: 300px;
-        margin: auto;
-        display: flex;
-    }
-
-    .fam-nickname {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-    }
-
-    .form-div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-
-    form {
-        min-width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-
-    ion-item, ion-input {
-        --padding-start: 1em !important;
-        width: 60% !important;
-    }
-
-    ion-input, ion-input:active, ion-input:focus, ion-input:hover {
-        background-color: var(--ion-color-light) !important;
-        border-radius: 0.5em;
-        border: 0.5px solid var(--ion-color-light) !important;
-    }
-}
 
 .last-page-prereview {
 
@@ -282,77 +343,12 @@ ion-button {
 
 
 
-.close-icon {
-    min-width: 175%;
-    text-align: right;
-    justify-content: flex-end;
-    font-size: 24px;
-}
-
-// .slide-one-container, .slide-two-container, .slide-three-container, .slide-four-container, .last-page-prereview {
-//     min-height: 100%;
-//     --min-width: 80% !important;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     padding: none;
-
-//     .photo-div {
-//         display: flex;
-//         margin-bottom: 3em;
-//         flex-direction: column;
-//         justify-content: center;
-//         align-items: center;
-//     }
-
-//     .username-pic, .connection-pic, .profile-pic, .lastpage-pic {
-//         padding-bottom: 1em;
-//     }
-
-//     .form-div, .fam-nickname {
-//         padding-bottom: 3em;
-//     }
-
-
-
-//     #avatar {
-//         width: 140px;
-//         height: 140px;
-//         max-width: 100% !important;
-
-//     }
-
-//     .upload-pic-container {
-//         position: relative;
-//         width: 130px;
-//         height: 130px;
-//         border: 3px solid 0px 10px 15px -3px rgba(0,0,0,0.1);
-//         box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
-//     }
-
-//     ion-avatar {
-//         text-align: right;
-//     }
-
-//     #camera-icon {
-//         font-size: 24px;
-//         position: absolute;
-//         bottom: -8px;
-//         right: 18px;
-//         background: white;
-//         padding: 0.5em;
-//         border-radius: 50%;
-//         border: 1px solid #ddd;
-//         box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
-//         color: mediumseagreen;
-//     }
-
+// .close-icon {
+//     min-width: 175%;
+//     text-align: right;
+//     justify-content: flex-end;
+//     font-size: 24px;
 // }
-
-
-
-
-
 
 
 .last-page {
@@ -360,14 +356,13 @@ ion-button {
     flex-direction: column;
     min-width: 90%;
 
-
     .submit-form {
         display: flex;
         flex-direction: column;
         max-width: 80%;
         justify-content: center;
         justify-self: center;
-        margin: auto;
+        margin: 1em auto;
         align-items: center;
     }
     
@@ -375,7 +370,7 @@ ion-button {
         font-size: 75%;
         max-width: 70%;
         margin: 2em auto 1em auto;
-        color: #333;
+        color: var(--ion-color-dark);
     }
     
     .final-submit-button {
@@ -383,12 +378,6 @@ ion-button {
         font-weight: 600;
     }
     
-    .final-title {
-        font-weight: 600;
-        margin: 1em auto;
-    
-    }
-
     #input {
         padding: 0 1em 0 1em !important;
     }
@@ -421,7 +410,7 @@ ion-button {
     }
 
     form {
-        min-width: 90%;
+        // min-width: 90%;
         display: flex;
         justify-content: center;
     }
@@ -431,18 +420,20 @@ ion-button {
         color: mediumseagreen;
         font-size: 1.25em;
         --ionicon-stroke-width: 40px;
-        padding-left: 0.5em;
+        // padding-left: 0.5em;
         min-height: 100%;
         align-self: center;
+        margin: 0em 0.5em;
     }
 
     .invalid-entry {
         color: indianred;
         font-size: 1.25em;
         --ionicon-stroke-width: 40px;
-        padding-left: 0.5em;
+        // padding-left: 0.5em;
         min-height: 100%;
         align-self: center;
+        margin: 0em 0.5em;
     }
     .validate-spinner {
         transform: scale(0.75);
@@ -450,7 +441,7 @@ ion-button {
         align-self: center;
         justify-self: center;
         min-height: 100%;
-        margin-left: 0.5em;
+        margin: 0em 0.5em;
     }
 
     .form-div {
@@ -458,6 +449,63 @@ ion-button {
         justify-content: center;
         align-items: center;
         flex-direction: column;
+    }
+
+    .username-edit-wrapper {
+        margin: 0.15em 0em;
+    }
+
+    .birthday-button-wrapper {
+        display: flex;
+        flex-direction: row;
+        max-width: 150px;
+        height: 100%;
+        align-items: center;
+
+        ion-button {
+            background: var(--ion-color-light);
+            border-radius: 5px;
+            height: 70%;
+        }
+    }
+
+    .select-button {
+        width: 65%;
+        min-width: 60%;
+        padding: 10px 10px;
+        background-color: var(--ion-color-light) !important;
+        border: 0.5px solid var(--ion-color-light) !important;
+        border-radius: 0.5em;
+        margin: 0;
+    }
+
+    .username-wrapper {
+
+        .username-label {
+            display: flex;
+            align-items: center;
+            margin: 0em !important;
+            min-width: 87px !important;
+            max-width: 87px !important;
+        }
+
+        .username-input-message-wrapper {
+    
+            display: flex;
+            flex-direction: column;
+    
+            .username-input-wrapper {
+                display: flex;
+                flex-direction: row;
+            }
+    
+        }
+    }
+
+
+    ion-label {
+        min-width: 80px;
+        max-width: 80px;
     }
 
     ion-item {
@@ -468,23 +516,12 @@ ion-button {
 
     ion-item, ion-input {
         --padding-start: 1em !important;
-        width: 90% !important;
         max-width: 300px;
-    }
-
-    ion-select {
-        background-color: var(--ion-color-light) !important;
-        border: 0.5px solid var(--ion-color-light) !important;
-        border-radius: 0.5em;
-        padding: 15px 10px;
-        max-width: 300px;
-        margin: auto;
-        min-width: 70%;
+        font-size: 0.85em;
     }
 
     .username-input {
         text-transform: lowercase !important;
-
     }
 
     ion-input, ion-input:active, ion-input:focus {

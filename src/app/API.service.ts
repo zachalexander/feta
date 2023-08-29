@@ -119,9 +119,12 @@ export type Profile = {
   usernameID?: string | null;
   ImagePosts?: ImagePost | null;
   Username?: Username | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: ProfilePicture | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -131,6 +134,7 @@ export type Profile = {
 export type ImagePost = {
   __typename: "ImagePost";
   id: string;
+  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -140,6 +144,9 @@ export type ImagePost = {
   profileID: string;
   profile?: Profile | null;
   s3_key?: string | null;
+  mediaSourceMobile?: string | null;
+  mediaSourceDesktop?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -175,8 +182,11 @@ export type CreateProfileInput = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
+  bio?: string | null;
+  birthday?: string | null;
   profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
 };
@@ -186,8 +196,11 @@ export type ModelProfileConditionInput = {
   relation?: ModelStringInput | null;
   cognitoID?: ModelStringInput | null;
   usernameID?: ModelStringInput | null;
-  family_name?: ModelStringInput | null;
+  first_name?: ModelStringInput | null;
+  last_name?: ModelStringInput | null;
   profilepictureID?: ModelIDInput | null;
+  bio?: ModelStringInput | null;
+  birthday?: ModelStringInput | null;
   and?: Array<ModelProfileConditionInput | null> | null;
   or?: Array<ModelProfileConditionInput | null> | null;
   not?: ModelProfileConditionInput | null;
@@ -201,8 +214,11 @@ export type UpdateProfileInput = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
+  bio?: string | null;
+  birthday?: string | null;
   profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
 };
@@ -213,6 +229,7 @@ export type DeleteProfileInput = {
 
 export type CreateImagePostInput = {
   id?: string | null;
+  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -220,10 +237,14 @@ export type CreateImagePostInput = {
   usernameID: string;
   profileID: string;
   s3_key?: string | null;
+  mediaSourceMobile?: string | null;
+  mediaSourceDesktop?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
 };
 
 export type ModelImagePostConditionInput = {
+  sorterValue?: ModelStringInput | null;
   description?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
   likes?: ModelStringInput | null;
@@ -231,6 +252,9 @@ export type ModelImagePostConditionInput = {
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
+  mediaSourceMobile?: ModelStringInput | null;
+  mediaSourceDesktop?: ModelStringInput | null;
+  downloadableVideo?: ModelStringInput | null;
   posterImage?: ModelStringInput | null;
   and?: Array<ModelImagePostConditionInput | null> | null;
   or?: Array<ModelImagePostConditionInput | null> | null;
@@ -239,6 +263,7 @@ export type ModelImagePostConditionInput = {
 
 export type UpdateImagePostInput = {
   id: string;
+  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -246,6 +271,9 @@ export type UpdateImagePostInput = {
   usernameID?: string | null;
   profileID?: string | null;
   s3_key?: string | null;
+  mediaSourceMobile?: string | null;
+  mediaSourceDesktop?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
 };
 
@@ -346,8 +374,11 @@ export type ModelProfileFilterInput = {
   relation?: ModelStringInput | null;
   cognitoID?: ModelStringInput | null;
   usernameID?: ModelStringInput | null;
-  family_name?: ModelStringInput | null;
+  first_name?: ModelStringInput | null;
+  last_name?: ModelStringInput | null;
   profilepictureID?: ModelIDInput | null;
+  bio?: ModelStringInput | null;
+  birthday?: ModelStringInput | null;
   and?: Array<ModelProfileFilterInput | null> | null;
   or?: Array<ModelProfileFilterInput | null> | null;
   not?: ModelProfileFilterInput | null;
@@ -363,6 +394,7 @@ export type ModelProfileConnection = {
 
 export type ModelImagePostFilterInput = {
   id?: ModelIDInput | null;
+  sorterValue?: ModelStringInput | null;
   description?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
   likes?: ModelStringInput | null;
@@ -370,6 +402,9 @@ export type ModelImagePostFilterInput = {
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
+  mediaSourceMobile?: ModelStringInput | null;
+  mediaSourceDesktop?: ModelStringInput | null;
+  downloadableVideo?: ModelStringInput | null;
   posterImage?: ModelStringInput | null;
   and?: Array<ModelImagePostFilterInput | null> | null;
   or?: Array<ModelImagePostFilterInput | null> | null;
@@ -421,6 +456,16 @@ export enum ModelSortDirection {
   DESC = "DESC"
 }
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+};
+
 export type ModelSubscriptionProfilePictureFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   imageurl?: ModelSubscriptionStringInput | null;
@@ -465,14 +510,18 @@ export type ModelSubscriptionProfileFilterInput = {
   relation?: ModelSubscriptionStringInput | null;
   cognitoID?: ModelSubscriptionStringInput | null;
   usernameID?: ModelSubscriptionStringInput | null;
-  family_name?: ModelSubscriptionStringInput | null;
+  first_name?: ModelSubscriptionStringInput | null;
+  last_name?: ModelSubscriptionStringInput | null;
   profilepictureID?: ModelSubscriptionIDInput | null;
+  bio?: ModelSubscriptionStringInput | null;
+  birthday?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionProfileFilterInput | null> | null;
   or?: Array<ModelSubscriptionProfileFilterInput | null> | null;
 };
 
 export type ModelSubscriptionImagePostFilterInput = {
   id?: ModelSubscriptionIDInput | null;
+  sorterValue?: ModelSubscriptionStringInput | null;
   description?: ModelSubscriptionStringInput | null;
   time_posted?: ModelSubscriptionStringInput | null;
   likes?: ModelSubscriptionStringInput | null;
@@ -480,6 +529,9 @@ export type ModelSubscriptionImagePostFilterInput = {
   usernameID?: ModelSubscriptionIDInput | null;
   profileID?: ModelSubscriptionIDInput | null;
   s3_key?: ModelSubscriptionStringInput | null;
+  mediaSourceMobile?: ModelSubscriptionStringInput | null;
+  mediaSourceDesktop?: ModelSubscriptionStringInput | null;
+  downloadableVideo?: ModelSubscriptionStringInput | null;
   posterImage?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionImagePostFilterInput | null> | null;
   or?: Array<ModelSubscriptionImagePostFilterInput | null> | null;
@@ -517,6 +569,7 @@ export type CreateProfilePictureMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -524,6 +577,9 @@ export type CreateProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -538,7 +594,8 @@ export type CreateProfilePictureMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -549,6 +606,8 @@ export type CreateProfilePictureMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -574,6 +633,7 @@ export type UpdateProfilePictureMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -581,6 +641,9 @@ export type UpdateProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -595,7 +658,8 @@ export type UpdateProfilePictureMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -606,6 +670,8 @@ export type UpdateProfilePictureMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -631,6 +697,7 @@ export type DeleteProfilePictureMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -638,6 +705,9 @@ export type DeleteProfilePictureMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -652,7 +722,8 @@ export type DeleteProfilePictureMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -663,6 +734,8 @@ export type DeleteProfilePictureMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -684,6 +757,7 @@ export type CreateProfileMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -707,14 +781,20 @@ export type CreateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -727,6 +807,7 @@ export type CreateProfileMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -734,6 +815,9 @@ export type CreateProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -745,8 +829,11 @@ export type CreateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -757,7 +844,8 @@ export type CreateProfileMutation = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -770,8 +858,11 @@ export type CreateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -782,6 +873,8 @@ export type CreateProfileMutation = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -798,6 +891,7 @@ export type UpdateProfileMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -821,14 +915,20 @@ export type UpdateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -841,6 +941,7 @@ export type UpdateProfileMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -848,6 +949,9 @@ export type UpdateProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -859,8 +963,11 @@ export type UpdateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -871,7 +978,8 @@ export type UpdateProfileMutation = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -884,8 +992,11 @@ export type UpdateProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -896,6 +1007,8 @@ export type UpdateProfileMutation = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -912,6 +1025,7 @@ export type DeleteProfileMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -935,14 +1049,20 @@ export type DeleteProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -955,6 +1075,7 @@ export type DeleteProfileMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -962,6 +1083,9 @@ export type DeleteProfileMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -973,8 +1097,11 @@ export type DeleteProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -985,7 +1112,8 @@ export type DeleteProfileMutation = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -998,8 +1126,11 @@ export type DeleteProfileMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1010,6 +1141,8 @@ export type DeleteProfileMutation = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -1019,6 +1152,7 @@ export type DeleteProfileMutation = {
 export type CreateImagePostMutation = {
   __typename: "ImagePost";
   id: string;
+  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -1032,6 +1166,7 @@ export type CreateImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1039,6 +1174,9 @@ export type CreateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1050,8 +1188,11 @@ export type CreateImagePostMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1073,6 +1214,7 @@ export type CreateImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1080,6 +1222,9 @@ export type CreateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1094,7 +1239,8 @@ export type CreateImagePostMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1105,12 +1251,17 @@ export type CreateImagePostMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSourceMobile?: string | null;
+  mediaSourceDesktop?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -1119,6 +1270,7 @@ export type CreateImagePostMutation = {
 export type UpdateImagePostMutation = {
   __typename: "ImagePost";
   id: string;
+  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -1132,6 +1284,7 @@ export type UpdateImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1139,6 +1292,9 @@ export type UpdateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1150,8 +1306,11 @@ export type UpdateImagePostMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1173,6 +1332,7 @@ export type UpdateImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1180,6 +1340,9 @@ export type UpdateImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1194,7 +1357,8 @@ export type UpdateImagePostMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1205,12 +1369,17 @@ export type UpdateImagePostMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSourceMobile?: string | null;
+  mediaSourceDesktop?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -1219,6 +1388,7 @@ export type UpdateImagePostMutation = {
 export type DeleteImagePostMutation = {
   __typename: "ImagePost";
   id: string;
+  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -1232,6 +1402,7 @@ export type DeleteImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1239,6 +1410,9 @@ export type DeleteImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1250,8 +1424,11 @@ export type DeleteImagePostMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1273,6 +1450,7 @@ export type DeleteImagePostMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1280,6 +1458,9 @@ export type DeleteImagePostMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1294,7 +1475,8 @@ export type DeleteImagePostMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1305,12 +1487,17 @@ export type DeleteImagePostMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSourceMobile?: string | null;
+  mediaSourceDesktop?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -1357,6 +1544,7 @@ export type CreateUsernameMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -1380,14 +1568,20 @@ export type CreateUsernameMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1402,6 +1596,7 @@ export type CreateUsernameMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1409,6 +1604,9 @@ export type CreateUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1423,7 +1621,8 @@ export type CreateUsernameMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1434,6 +1633,8 @@ export type CreateUsernameMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1453,6 +1654,7 @@ export type UpdateUsernameMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -1476,14 +1678,20 @@ export type UpdateUsernameMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1498,6 +1706,7 @@ export type UpdateUsernameMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1505,6 +1714,9 @@ export type UpdateUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1519,7 +1731,8 @@ export type UpdateUsernameMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1530,6 +1743,8 @@ export type UpdateUsernameMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1549,6 +1764,7 @@ export type DeleteUsernameMutation = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -1572,14 +1788,20 @@ export type DeleteUsernameMutation = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1594,6 +1816,7 @@ export type DeleteUsernameMutation = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1601,6 +1824,9 @@ export type DeleteUsernameMutation = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1615,7 +1841,8 @@ export type DeleteUsernameMutation = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1626,6 +1853,8 @@ export type DeleteUsernameMutation = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1651,6 +1880,7 @@ export type GetProfilePictureQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1658,6 +1888,9 @@ export type GetProfilePictureQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1672,7 +1905,8 @@ export type GetProfilePictureQuery = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1683,6 +1917,8 @@ export type GetProfilePictureQuery = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1707,8 +1943,11 @@ export type ListProfilePicturesQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1732,6 +1971,7 @@ export type GetProfileQuery = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -1755,14 +1995,20 @@ export type GetProfileQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1775,6 +2021,7 @@ export type GetProfileQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1782,6 +2029,9 @@ export type GetProfileQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1793,8 +2043,11 @@ export type GetProfileQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1805,7 +2058,8 @@ export type GetProfileQuery = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -1818,8 +2072,11 @@ export type GetProfileQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1830,6 +2087,8 @@ export type GetProfileQuery = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -1848,6 +2107,7 @@ export type ListProfilesQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1855,6 +2115,9 @@ export type ListProfilesQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1869,7 +2132,8 @@ export type ListProfilesQuery = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1880,6 +2144,8 @@ export type ListProfilesQuery = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -1891,6 +2157,7 @@ export type ListProfilesQuery = {
 export type GetImagePostQuery = {
   __typename: "ImagePost";
   id: string;
+  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -1904,6 +2171,7 @@ export type GetImagePostQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1911,6 +2179,9 @@ export type GetImagePostQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1922,8 +2193,11 @@ export type GetImagePostQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -1945,6 +2219,7 @@ export type GetImagePostQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -1952,6 +2227,9 @@ export type GetImagePostQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1966,7 +2244,8 @@ export type GetImagePostQuery = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -1977,12 +2256,17 @@ export type GetImagePostQuery = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSourceMobile?: string | null;
+  mediaSourceDesktop?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -1993,6 +2277,7 @@ export type ListImagePostsQuery = {
   items: Array<{
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -2016,14 +2301,20 @@ export type ListImagePostsQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2065,6 +2356,7 @@ export type GetUsernameQuery = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -2088,14 +2380,20 @@ export type GetUsernameQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2110,6 +2408,7 @@ export type GetUsernameQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2117,6 +2416,9 @@ export type GetUsernameQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2131,7 +2433,8 @@ export type GetUsernameQuery = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2142,6 +2445,8 @@ export type GetUsernameQuery = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2163,6 +2468,7 @@ export type ListUsernamesQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2170,6 +2476,9 @@ export type ListUsernamesQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2181,8 +2490,11 @@ export type ListUsernamesQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2208,6 +2520,7 @@ export type ProfilesByProfilepictureIDQuery = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2215,6 +2528,9 @@ export type ProfilesByProfilepictureIDQuery = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2229,7 +2545,8 @@ export type ProfilesByProfilepictureIDQuery = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2240,6 +2557,8 @@ export type ProfilesByProfilepictureIDQuery = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2248,11 +2567,12 @@ export type ProfilesByProfilepictureIDQuery = {
   nextToken?: string | null;
 };
 
-export type ImagePostsByUsernameIDQuery = {
+export type ImagePostsBySorterValueAndTime_postedQuery = {
   __typename: "ModelImagePostConnection";
   items: Array<{
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -2276,14 +2596,70 @@ export type ImagePostsByUsernameIDQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
+    posterImage?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type ImagePostsByUsernameIDQuery = {
+  __typename: "ModelImagePostConnection";
+  items: Array<{
+    __typename: "ImagePost";
+    id: string;
+    sorterValue?: string | null;
+    description?: string | null;
+    time_posted?: string | null;
+    likes?: string | null;
+    comments?: string | null;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+    } | null;
+    s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2296,6 +2672,7 @@ export type ImagePostsByProfileIDQuery = {
   items: Array<{
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -2319,14 +2696,20 @@ export type ImagePostsByProfileIDQuery = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2348,6 +2731,7 @@ export type OnCreateProfilePictureSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2355,6 +2739,9 @@ export type OnCreateProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2369,7 +2756,8 @@ export type OnCreateProfilePictureSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2380,6 +2768,8 @@ export type OnCreateProfilePictureSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2405,6 +2795,7 @@ export type OnUpdateProfilePictureSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2412,6 +2803,9 @@ export type OnUpdateProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2426,7 +2820,8 @@ export type OnUpdateProfilePictureSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2437,6 +2832,8 @@ export type OnUpdateProfilePictureSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2462,6 +2859,7 @@ export type OnDeleteProfilePictureSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2469,6 +2867,9 @@ export type OnDeleteProfilePictureSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2483,7 +2884,8 @@ export type OnDeleteProfilePictureSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2494,6 +2896,8 @@ export type OnDeleteProfilePictureSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -2515,6 +2919,7 @@ export type OnCreateProfileSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -2538,14 +2943,20 @@ export type OnCreateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2558,6 +2969,7 @@ export type OnCreateProfileSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2565,6 +2977,9 @@ export type OnCreateProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2576,8 +2991,11 @@ export type OnCreateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2588,7 +3006,8 @@ export type OnCreateProfileSubscription = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -2601,8 +3020,11 @@ export type OnCreateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2613,6 +3035,8 @@ export type OnCreateProfileSubscription = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -2629,6 +3053,7 @@ export type OnUpdateProfileSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -2652,14 +3077,20 @@ export type OnUpdateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2672,6 +3103,7 @@ export type OnUpdateProfileSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2679,6 +3111,9 @@ export type OnUpdateProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2690,8 +3125,11 @@ export type OnUpdateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2702,7 +3140,8 @@ export type OnUpdateProfileSubscription = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -2715,8 +3154,11 @@ export type OnUpdateProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2727,6 +3169,8 @@ export type OnUpdateProfileSubscription = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -2743,6 +3187,7 @@ export type OnDeleteProfileSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -2766,14 +3211,20 @@ export type OnDeleteProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2786,6 +3237,7 @@ export type OnDeleteProfileSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2793,6 +3245,9 @@ export type OnDeleteProfileSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2804,8 +3259,11 @@ export type OnDeleteProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2816,7 +3274,8 @@ export type OnDeleteProfileSubscription = {
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
   } | null;
-  family_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   profilepictureID?: string | null;
   profilepicture?: {
     __typename: "ProfilePicture";
@@ -2829,8 +3288,11 @@ export type OnDeleteProfileSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2841,6 +3303,8 @@ export type OnDeleteProfileSubscription = {
     updatedAt: string;
     profilePictureProfileId?: string | null;
   } | null;
+  bio?: string | null;
+  birthday?: string | null;
   createdAt: string;
   updatedAt: string;
   profileUsernameId?: string | null;
@@ -2850,6 +3314,7 @@ export type OnDeleteProfileSubscription = {
 export type OnCreateImagePostSubscription = {
   __typename: "ImagePost";
   id: string;
+  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -2863,6 +3328,7 @@ export type OnCreateImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2870,6 +3336,9 @@ export type OnCreateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2881,8 +3350,11 @@ export type OnCreateImagePostSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -2904,6 +3376,7 @@ export type OnCreateImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2911,6 +3384,9 @@ export type OnCreateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2925,7 +3401,8 @@ export type OnCreateImagePostSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -2936,12 +3413,17 @@ export type OnCreateImagePostSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSourceMobile?: string | null;
+  mediaSourceDesktop?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -2950,6 +3432,7 @@ export type OnCreateImagePostSubscription = {
 export type OnUpdateImagePostSubscription = {
   __typename: "ImagePost";
   id: string;
+  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -2963,6 +3446,7 @@ export type OnUpdateImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -2970,6 +3454,9 @@ export type OnUpdateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2981,8 +3468,11 @@ export type OnUpdateImagePostSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -3004,6 +3494,7 @@ export type OnUpdateImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3011,6 +3502,9 @@ export type OnUpdateImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3025,7 +3519,8 @@ export type OnUpdateImagePostSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3036,12 +3531,17 @@ export type OnUpdateImagePostSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSourceMobile?: string | null;
+  mediaSourceDesktop?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -3050,6 +3550,7 @@ export type OnUpdateImagePostSubscription = {
 export type OnDeleteImagePostSubscription = {
   __typename: "ImagePost";
   id: string;
+  sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
   likes?: string | null;
@@ -3063,6 +3564,7 @@ export type OnDeleteImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3070,6 +3572,9 @@ export type OnDeleteImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3081,8 +3586,11 @@ export type OnDeleteImagePostSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
@@ -3104,6 +3612,7 @@ export type OnDeleteImagePostSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3111,6 +3620,9 @@ export type OnDeleteImagePostSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3125,7 +3637,8 @@ export type OnDeleteImagePostSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3136,12 +3649,17 @@ export type OnDeleteImagePostSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
   } | null;
   s3_key?: string | null;
+  mediaSourceMobile?: string | null;
+  mediaSourceDesktop?: string | null;
+  downloadableVideo?: string | null;
   posterImage?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -3188,6 +3706,7 @@ export type OnCreateUsernameSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -3211,14 +3730,20 @@ export type OnCreateUsernameSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -3233,6 +3758,7 @@ export type OnCreateUsernameSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3240,6 +3766,9 @@ export type OnCreateUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3254,7 +3783,8 @@ export type OnCreateUsernameSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3265,6 +3795,8 @@ export type OnCreateUsernameSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -3284,6 +3816,7 @@ export type OnUpdateUsernameSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -3307,14 +3840,20 @@ export type OnUpdateUsernameSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -3329,6 +3868,7 @@ export type OnUpdateUsernameSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3336,6 +3876,9 @@ export type OnUpdateUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3350,7 +3893,8 @@ export type OnUpdateUsernameSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3361,6 +3905,8 @@ export type OnUpdateUsernameSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -3380,6 +3926,7 @@ export type OnDeleteUsernameSubscription = {
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
+    sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
     likes?: string | null;
@@ -3403,14 +3950,20 @@ export type OnDeleteUsernameSubscription = {
       relation?: string | null;
       cognitoID?: string | null;
       usernameID?: string | null;
-      family_name?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
       profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
       createdAt: string;
       updatedAt: string;
       profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
     } | null;
     s3_key?: string | null;
+    mediaSourceMobile?: string | null;
+    mediaSourceDesktop?: string | null;
+    downloadableVideo?: string | null;
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -3425,6 +3978,7 @@ export type OnDeleteUsernameSubscription = {
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
+      sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
       likes?: string | null;
@@ -3432,6 +3986,9 @@ export type OnDeleteUsernameSubscription = {
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3446,7 +4003,8 @@ export type OnDeleteUsernameSubscription = {
       usernameImagePostsId?: string | null;
       usernameProfileId?: string | null;
     } | null;
-    family_name?: string | null;
+    first_name?: string | null;
+    last_name?: string | null;
     profilepictureID?: string | null;
     profilepicture?: {
       __typename: "ProfilePicture";
@@ -3457,6 +4015,8 @@ export type OnDeleteUsernameSubscription = {
       updatedAt: string;
       profilePictureProfileId?: string | null;
     } | null;
+    bio?: string | null;
+    birthday?: string | null;
     createdAt: string;
     updatedAt: string;
     profileUsernameId?: string | null;
@@ -3467,6 +4027,7 @@ export type OnDeleteUsernameSubscription = {
   usernameImagePostsId?: string | null;
   usernameProfileId?: string | null;
 };
+
 
 // ZACH CREATED
 export type GetUsernameDataQuery = {
@@ -3484,7 +4045,45 @@ export type GetUsernameDataQuery = {
 })
 export class APIService {
 
-  // ZACH CREATED
+  finalArray;
+  mediaPosted;
+
+  // ZACH CREATED  
+
+  async getImageComments(id: string): Promise<any> {
+    const statement = `query listImageComments($id: String) {
+      listComments(filter: {imagePostsID: {eq: $id}}) {
+        items {
+          id
+          time_posted
+          usernameID
+          imagePostsID
+          comment
+        }
+      }
+    }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+
+    let data = this.sortByDate(response.data.listComments.items)
+    data.map(async values => {
+      values.username = await (await this.GetUsername(values.usernameID))?.username
+      values.profilePic = await this.checkForProfilePhoto(await(await this.GetProfilePictureProfileID(await (await this.GetUsername(values.usernameID))?.profileID)))
+    })
+    return data;
+  }
+
+  async checkForProfilePhoto(url) {
+    if (url) {
+      return await Storage.get('profile-pictures/' + url.imageurl)
+    } else {
+      return false;
+    }
+  }
 
   async GetUsernameProfile(username: string): Promise<any> {
     const statement = `query getUsernameData($username: String) {
@@ -3520,6 +4119,201 @@ export class APIService {
     return <GetImagePostQuery>response.data.getImagePost;
   }
 
+  async getSpecificTimelineMedia(id: String): Promise<any> {
+
+    const statement = `query GetImagePost($id: ID!) {
+      getImagePost(id: $id) {
+        __typename
+        id
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        username {
+          __typename
+          id
+          username
+          profileID
+          ImagePosts {
+            __typename
+            id
+            description
+            time_posted
+            likes
+            comments
+            usernameID
+            profileID
+            s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            posterImage
+            createdAt
+            updatedAt
+          }
+          Profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            first_name
+            last_name
+            bio
+            profilepictureID
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+          }
+          createdAt
+          updatedAt
+          usernameImagePostsId
+          usernameProfileId
+        }
+        profileID
+        profile {
+          __typename
+          id
+          email
+          relation
+          cognitoID
+          usernameID
+          ImagePosts {
+            __typename
+            id
+            description
+            time_posted
+            likes
+            comments
+            usernameID
+            profileID
+            s3_key
+            posterImage
+            createdAt
+            updatedAt
+          }
+          Username {
+            __typename
+            id
+            username
+            profileID
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+          }
+          first_name
+          last_name
+          bio
+          profilepictureID
+          profilepicture {
+            __typename
+            id
+            imageurl
+            profileID
+            createdAt
+            updatedAt
+            profilePictureProfileId
+          }
+          createdAt
+          updatedAt
+          profileUsernameId
+          profileImagePostsId
+        }
+        s3_key
+        posterImage
+        mediaSourceMobile
+        mediaSourceDesktop
+        createdAt
+        updatedAt
+      }
+    }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+
+    let array: any = response.data.getImagePost;
+    let currentUser = localStorage.getItem('usernameID');
+
+    this.finalArray = [];
+    if (!array.posterImage) {
+      this.finalArray.push({
+        mediaSourceMobile: array.mediaSourceMobile,
+        mediaSourceDesktop: array.mediaSourceDesktop,
+        isVideo: false,
+        time_posted: new Date(array.time_posted),
+        usernameID: array.usernameID,
+        description: array.description,
+        id: array.id,
+        likes: array.likes,
+        // comment_count: await this.commentLength(posts.comments),
+        like_count: await this.getLikeCount(array.likes),
+        username: array.username.username,
+        userLiked: await this.getLikeData(array.likes, currentUser),
+        profilePicture: "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + array.profile.profilepicture.imageurl
+      })
+    } else {
+      this.finalArray.push({
+        mediaSourceMobile: await Storage.get(array.s3_key, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+        mediaSourceDesktop: null,
+        isVideo: true,
+        time_posted: new Date(array.time_posted),
+        usernameID: array.usernameID,
+        description: array.description,
+        id: array.id,
+        likes: array.likes,
+        posterImage: "https://ik.imagekit.io/bkf4g8lrl/poster-images/" + array.posterImage,
+        // comment_count: await this.commentLength(posts.comments),
+        like_count: await this.getLikeCount(array.likes),
+        username: array.username.username,
+        userLiked: await this.getLikeData(array.likes, currentUser),
+        profilePicture: "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + array.profile.profilepicture.imageurl
+      })
+    }
+    this.finalArray = this.finalArray[0]
+    return [1, this.finalArray];
+  }
+
+
+  sortByDate(array) {
+    return array.sort((a, b) => Date.parse(b.time_posted) - Date.parse(a.time_posted))
+  }
+
+  async getLikeData(likes, usernameID) {
+    if (!JSON.parse(likes)) {
+      return false;
+    } else {
+      if (!JSON.parse(likes)['usernames']) {
+        return false;
+      } else {
+        let usersThatLike = [];
+        usersThatLike = JSON.parse(likes)['usernames'];
+        if (usersThatLike.indexOf(usernameID) > -1) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+  }
+
+  async getLikeCount(likesArray) {
+    if (JSON.parse(likesArray)) {
+      if (JSON.parse(likesArray)['usernames']) {
+        likesArray = JSON.parse(likesArray)['usernames']
+        return likesArray.length;
+      } else {
+        return 0;
+      }
+    } else {
+      return 0;
+    }
+  }
 
 
   async getUserProfileMediaData(profileID: String): Promise<any> {
@@ -3529,6 +4323,8 @@ export class APIService {
         items {
           time_posted
           s3_key
+          mediaSourceMobile
+          mediaSourceDesktop
           profileID
           description
           likes
@@ -3552,6 +4348,8 @@ export class APIService {
         photosPosted.push({
           time_posted: posts.time_posted,
           s3_key: posts.s3_key,
+          mediaSourceMobile: posts.mediaSourceMobile,
+          mediaSourceDesktop: posts.mediaSourceDesktop,
           profileID: posts.profileID,
           description: posts.description,
           likes: posts.likes,
@@ -3625,7 +4423,9 @@ export class APIService {
           cognitoID
           createdAt
           email
-          family_name
+          first_name
+          last_name
+          bio
           id
           relation
           updatedAt
@@ -3681,6 +4481,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -3688,6 +4489,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -3702,7 +4506,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -3713,6 +4518,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -3754,6 +4561,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -3761,6 +4569,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -3775,7 +4586,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -3786,6 +4598,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -3827,6 +4641,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -3834,6 +4649,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -3848,7 +4666,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -3859,6 +4678,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -3896,6 +4717,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -3919,14 +4741,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -3939,6 +4767,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -3946,6 +4775,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -3957,8 +4789,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -3969,7 +4804,8 @@ export class APIService {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -3982,8 +4818,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -3994,6 +4833,8 @@ export class APIService {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -4026,6 +4867,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -4049,14 +4891,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -4069,6 +4917,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4076,6 +4925,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4087,8 +4939,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4099,7 +4954,8 @@ export class APIService {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -4112,8 +4968,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4124,6 +4983,8 @@ export class APIService {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -4156,6 +5017,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -4179,14 +5041,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -4199,6 +5067,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4206,6 +5075,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4217,8 +5089,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4229,7 +5104,8 @@ export class APIService {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -4242,8 +5118,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4254,6 +5133,8 @@ export class APIService {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -4279,6 +5160,7 @@ export class APIService {
         createImagePost(input: $input, condition: $condition) {
           __typename
           id
+          sorterValue
           description
           time_posted
           likes
@@ -4292,6 +5174,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4299,6 +5182,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4310,8 +5196,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4333,6 +5222,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4340,6 +5230,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4354,7 +5247,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4365,12 +5259,17 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
             profileImagePostsId
           }
           s3_key
+          mediaSourceMobile
+          mediaSourceDesktop
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -4395,6 +5294,7 @@ export class APIService {
         updateImagePost(input: $input, condition: $condition) {
           __typename
           id
+          sorterValue
           description
           time_posted
           likes
@@ -4408,6 +5308,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4415,6 +5316,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4426,8 +5330,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4449,6 +5356,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4456,6 +5364,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4470,7 +5381,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4481,12 +5393,17 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
             profileImagePostsId
           }
           s3_key
+          mediaSourceMobile
+          mediaSourceDesktop
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -4511,6 +5428,7 @@ export class APIService {
         deleteImagePost(input: $input, condition: $condition) {
           __typename
           id
+          sorterValue
           description
           time_posted
           likes
@@ -4524,6 +5442,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4531,6 +5450,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4542,8 +5464,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -4565,6 +5490,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4572,6 +5498,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4586,7 +5515,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4597,12 +5527,17 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
             profileImagePostsId
           }
           s3_key
+          mediaSourceMobile
+          mediaSourceDesktop
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -4713,6 +5648,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -4736,14 +5672,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -4758,6 +5700,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4765,6 +5708,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4779,7 +5725,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4790,6 +5737,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -4825,6 +5774,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -4848,14 +5798,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -4870,6 +5826,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4877,6 +5834,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -4891,7 +5851,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -4902,6 +5863,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -4937,6 +5900,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -4960,14 +5924,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -4982,6 +5952,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -4989,6 +5960,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5003,7 +5977,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5014,6 +5989,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5052,6 +6029,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -5059,6 +6037,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5073,7 +6054,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5084,6 +6066,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5122,8 +6106,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5164,6 +6151,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -5187,14 +6175,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -5207,6 +6201,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -5214,6 +6209,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5225,8 +6223,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5237,7 +6238,8 @@ export class APIService {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -5250,8 +6252,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5262,6 +6267,8 @@ export class APIService {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -5294,6 +6301,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -5301,6 +6309,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5315,7 +6326,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5326,6 +6338,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5354,6 +6368,7 @@ export class APIService {
         getImagePost(id: $id) {
           __typename
           id
+          sorterValue
           description
           time_posted
           likes
@@ -5367,6 +6382,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -5374,6 +6390,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5385,8 +6404,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5408,6 +6430,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -5415,6 +6438,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5429,7 +6455,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5440,12 +6467,17 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
             profileImagePostsId
           }
           s3_key
+          mediaSourceMobile
+          mediaSourceDesktop
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -5470,6 +6502,7 @@ export class APIService {
           items {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -5493,14 +6526,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -5590,6 +6629,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -5613,14 +6653,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -5635,6 +6681,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -5642,6 +6689,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5656,7 +6706,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5667,6 +6718,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5702,6 +6755,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -5709,6 +6763,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5720,8 +6777,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -5770,6 +6830,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -5777,6 +6838,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -5791,7 +6855,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -5802,6 +6867,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -5832,19 +6899,21 @@ export class APIService {
       response.data.profilesByProfilepictureID
     );
   }
-  async ImagePostsByUsernameID(
-    usernameID: string,
+  async ImagePostsBySorterValueAndTime_posted(
+    sorterValue: string,
+    time_posted?: ModelStringKeyConditionInput,
     sortDirection?: ModelSortDirection,
     filter?: ModelImagePostFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ImagePostsByUsernameIDQuery> {
-    const statement = `query ImagePostsByUsernameID($usernameID: ID!, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
-        imagePostsByUsernameID(usernameID: $usernameID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<ImagePostsBySorterValueAndTime_postedQuery> {
+    const statement = `query ImagePostsBySorterValueAndTime_posted($sorterValue: String!, $time_posted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
+        imagePostsBySorterValueAndTime_posted(sorterValue: $sorterValue, time_posted: $time_posted, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -5868,14 +6937,103 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
+            posterImage
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      sorterValue
+    };
+    if (time_posted) {
+      gqlAPIServiceArguments.time_posted = time_posted;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ImagePostsBySorterValueAndTime_postedQuery>(
+      response.data.imagePostsBySorterValueAndTime_posted
+    );
+  }
+  async ImagePostsByUsernameID(
+    usernameID: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelImagePostFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ImagePostsByUsernameIDQuery> {
+    const statement = `query ImagePostsByUsernameID($usernameID: ID!, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
+        imagePostsByUsernameID(usernameID: $usernameID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            sorterValue
+            description
+            time_posted
+            likes
+            comments
+            usernameID
+            username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+            }
+            profileID
+            profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+            }
+            s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -5916,6 +7074,7 @@ export class APIService {
           items {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -5939,14 +7098,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -5996,6 +7161,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6003,6 +7169,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6017,7 +7186,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6028,6 +7198,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -6074,6 +7246,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6081,6 +7254,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6095,7 +7271,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6106,6 +7283,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -6152,6 +7331,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6159,6 +7339,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6173,7 +7356,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6184,6 +7368,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -6224,6 +7410,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -6247,14 +7434,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -6267,6 +7460,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6274,6 +7468,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6285,8 +7482,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6297,7 +7497,8 @@ export class APIService {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -6310,8 +7511,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6322,6 +7526,8 @@ export class APIService {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -6355,6 +7561,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -6378,14 +7585,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -6398,6 +7611,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6405,6 +7619,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6416,8 +7633,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6428,7 +7648,8 @@ export class APIService {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -6441,8 +7662,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6453,6 +7677,8 @@ export class APIService {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -6486,6 +7712,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -6509,14 +7736,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -6529,6 +7762,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6536,6 +7770,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6547,8 +7784,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6559,7 +7799,8 @@ export class APIService {
             usernameImagePostsId
             usernameProfileId
           }
-          family_name
+          first_name
+          last_name
           profilepictureID
           profilepicture {
             __typename
@@ -6572,8 +7813,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6584,6 +7828,8 @@ export class APIService {
             updatedAt
             profilePictureProfileId
           }
+          bio
+          birthday
           createdAt
           updatedAt
           profileUsernameId
@@ -6610,6 +7856,7 @@ export class APIService {
         onCreateImagePost(filter: $filter) {
           __typename
           id
+          sorterValue
           description
           time_posted
           likes
@@ -6623,6 +7870,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6630,6 +7878,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6641,8 +7892,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6664,6 +7918,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6671,6 +7926,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6685,7 +7943,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6696,12 +7955,17 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
             profileImagePostsId
           }
           s3_key
+          mediaSourceMobile
+          mediaSourceDesktop
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -6727,6 +7991,7 @@ export class APIService {
         onUpdateImagePost(filter: $filter) {
           __typename
           id
+          sorterValue
           description
           time_posted
           likes
@@ -6740,6 +8005,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6747,6 +8013,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6758,8 +8027,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6781,6 +8053,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6788,6 +8061,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6802,7 +8078,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6813,12 +8090,17 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
             profileImagePostsId
           }
           s3_key
+          mediaSourceMobile
+          mediaSourceDesktop
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -6844,6 +8126,7 @@ export class APIService {
         onDeleteImagePost(filter: $filter) {
           __typename
           id
+          sorterValue
           description
           time_posted
           likes
@@ -6857,6 +8140,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6864,6 +8148,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6875,8 +8162,11 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
@@ -6898,6 +8188,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -6905,6 +8196,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -6919,7 +8213,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -6930,12 +8225,17 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
             profileImagePostsId
           }
           s3_key
+          mediaSourceMobile
+          mediaSourceDesktop
+          downloadableVideo
           posterImage
           createdAt
           updatedAt
@@ -7050,6 +8350,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -7073,14 +8374,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -7095,6 +8402,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -7102,6 +8410,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -7116,7 +8427,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -7127,6 +8439,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -7163,6 +8477,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -7186,14 +8501,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -7208,6 +8529,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -7215,6 +8537,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -7229,7 +8554,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -7240,6 +8566,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId
@@ -7276,6 +8604,7 @@ export class APIService {
           ImagePosts {
             __typename
             id
+            sorterValue
             description
             time_posted
             likes
@@ -7299,14 +8628,20 @@ export class APIService {
               relation
               cognitoID
               usernameID
-              family_name
+              first_name
+              last_name
               profilepictureID
+              bio
+              birthday
               createdAt
               updatedAt
               profileUsernameId
               profileImagePostsId
             }
             s3_key
+            mediaSourceMobile
+            mediaSourceDesktop
+            downloadableVideo
             posterImage
             createdAt
             updatedAt
@@ -7321,6 +8656,7 @@ export class APIService {
             ImagePosts {
               __typename
               id
+              sorterValue
               description
               time_posted
               likes
@@ -7328,6 +8664,9 @@ export class APIService {
               usernameID
               profileID
               s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
               posterImage
               createdAt
               updatedAt
@@ -7342,7 +8681,8 @@ export class APIService {
               usernameImagePostsId
               usernameProfileId
             }
-            family_name
+            first_name
+            last_name
             profilepictureID
             profilepicture {
               __typename
@@ -7353,6 +8693,8 @@ export class APIService {
               updatedAt
               profilePictureProfileId
             }
+            bio
+            birthday
             createdAt
             updatedAt
             profileUsernameId

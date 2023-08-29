@@ -46,10 +46,12 @@ export class ProfilePicturePage {
     });
     await loading.present();
 
-    this.profilePic = await this.getProfilePicture(localStorage.getItem('profileID'))
+    this.profilePic = await Storage.get('profile-pictures/' + await this.getProfilePicture(localStorage.getItem('profileID')))
+
 
     if(!this.profilePic){
       this.noPicYet = true;
+      loading.dismiss();
     } else {
       setTimeout(() => {
         loading.dismiss();
@@ -138,10 +140,13 @@ export class ProfilePicturePage {
     const blob = await fetch(this.croppedImage).then(res => res.blob())
     const username = await localStorage.getItem('username')
     const filename = 'profile-pictures/' + localStorage.getItem('profileID') + '.jpg'
+    const imagekitFilename = localStorage.getItem('profileID') + '.jpg'
 
     try {
       let profileID = localStorage.getItem('profileID')
       let profilepictureID = await (await this.api.GetProfile(profileID)).profilepictureID
+
+      console.log(profilepictureID)
 
       if(!profilepictureID){
 
@@ -149,7 +154,7 @@ export class ProfilePicturePage {
 
           const createProfilePicture = new Promise(resolve => {
             resolve(this.api.CreateProfilePicture({
-              imageurl: filename,
+              imageurl: imagekitFilename,
               profileID: profileID
             }))
           })
@@ -159,7 +164,6 @@ export class ProfilePicturePage {
           }))
 
           profilepictureID = findNewProfilePictureID.toString();
-          console.log(profilepictureID)
           
           const updateProfile = new Promise(resolve => {
             resolve(this.api.UpdateProfile({id: profileID, profilepictureID: profilepictureID}))
@@ -194,7 +198,6 @@ export class ProfilePicturePage {
   }
 
   async getProfilePicture(profileID){
-    const url = await (await this.api.GetProfilePictureProfileID(profileID))?.imageurl
-    return this.mediaService.getPhotoUrl(url);
+    return await (await this.api.GetProfilePictureProfileID(profileID))?.imageurl;
   }
 }

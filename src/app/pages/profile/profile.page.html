@@ -1,24 +1,40 @@
-<ion-header>
-  <ion-toolbar mode="ios">
-    <ion-title>
-      {{profileData.username}}
-    </ion-title>
-    <ion-icon (click)="openMenu()" class="menu-button" slot="end" name="menu"></ion-icon>
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar color="light">
+      <ion-title class="username-toolbar">
+        <strong>{{profileData.username}}</strong>
+      </ion-title>
+      <ion-icon (click)="openMenu()" class="menu-button" slot="end" name="menu"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <div class="profile-info">
     <div *ngIf="!editAccess" class="top-of-profile-edit">
       <div class="left-top-profile">
         <ion-avatar *ngIf="!profilePhoto">
-          <img src="../../../assets/avatar.svg">
+          <ion-img src="../../../assets/avatar.svg"></ion-img>
         </ion-avatar>
         <ion-avatar *ngIf="profilePhoto">
-          <img [src]="profilePhoto">
+          <ion-img [src]="profilePhoto"></ion-img>
         </ion-avatar>
+        <div class="name-info">
+          <p class="fullname" *ngIf="profileData.first_name && profileData.last_name">
+            {{profileData.first_name}}&nbsp;{{profileData.last_name}}</p>
+          <p class="fullname" *ngIf="!profileData.first_name || !profileData.last_name">{{profileData.username}}</p>
+        </div>
+        <div class="relationship-div">
+          <ion-icon *ngIf="admin" src="../../../assets/streamline/star-1.svg" class="star"></ion-icon>
+          <p class="relation">{{profileData.relation}}</p>
+        </div>
       </div>
       <div class="right-top-profile-wrapper">
+        <div class="birthday-div">
+          <ion-icon class="birthday-icon" src="../../../assets/streamline/birthday-cake-1.svg"></ion-icon>&nbsp;&nbsp;
+          <p class="birthday"><strong>{{profileData.birthday | date: 'MMMM d'}}{{(profileData.birthday | date: 'd') |
+              dateSuffix}}</strong></p>
+          <div>
+          </div>
+        </div>
         <div class="right-top-profile">
           <div class="stats-div">
             <p class="stats-count"><strong>{{photosPostedCount}}</strong></p>
@@ -43,8 +59,20 @@
         <ion-avatar *ngIf="profilePhoto">
           <img [src]="profilePhoto">
         </ion-avatar>
+        <div class="name-info">
+          <p class="fullname" *ngIf="profileData.first_name && profileData.last_name">{{profileData.first_name}}&nbsp;{{profileData.last_name}}</p>
+          <p class="fullname" *ngIf="!profileData.first_name || !profileData.last_name">{{profileData.username}}</p>
+        </div>
+        <div class="relationship-div">
+          <ion-icon *ngIf="admin" src="../../../assets/streamline/star-1.svg" class="star"></ion-icon>
+          <p class="relation">{{profileData.relation}}</p>
+        </div>
       </div>
       <div class="right-top-profile-wrapper">
+        <div class="birthday-div">
+          <div><ion-icon class="birthday-icon" src="../../../assets/streamline/birthday-cake-1.svg"></ion-icon></div>&nbsp;&nbsp;
+          <p class="birthday"><strong class="edit-birthday">{{profileData.birthday | date: 'MMMM d'}}{{(profileData.birthday | date: 'd') | dateSuffix}}</strong></p>
+        </div>
         <div class="right-top-profile">
           <div class="stats-div">
             <p class="stats-count"><strong>{{photosPostedCount}}</strong></p>
@@ -58,27 +86,18 @@
       </div>
     </div>
     <div class="bio">
-      <p class="bio-text"><strong class="username">{{profileData.username}}</strong> is Data Engineer at the Center for Justice Innovation. Married to Katie Friedman. I live and work in New York.</p>
+      <p class="bio-text">{{profileData.bio}}</p>
     </div>
     <ion-chip *ngIf="editAccess" color="medium" class="edit-profile-button" expand="full" (click)="updateProfile()">Edit Profile</ion-chip>
   
     <ion-toolbar class="separator-toolbar">
     <ion-segment [(ngModel)]="select_buttons" (ionChange)="buttonClicked($event)">
       <ion-segment-button value="photo-uploads" checked>
-        <ion-icon name="camera"></ion-icon>
+        <ion-icon name="camera-outline"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="video-uploads">
-        <ion-icon name="videocam"></ion-icon>
+        <ion-icon name="videocam-outline"></ion-icon>
       </ion-segment-button>
-      <!-- <ion-segment-button value="recipes" disabled>
-        <ion-icon name="restaurant"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="cool-spots" disabled>
-        <ion-icon name="earth"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="notes" disabled>
-        <ion-icon name="chatbubbles"></ion-icon>
-      </ion-segment-button> -->
     </ion-segment>
   </ion-toolbar>
     <div class="no-photos" *ngIf="noPhotosYet && photosClicked">
@@ -86,9 +105,10 @@
     </div>
     <ion-grid class="postedphotos" *ngIf="!noPhotosYet && photosClicked">
       <ion-row class="postedphotos_row">
-        <ion-col *ngFor="let image of profileMediaData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-          <div class="square" *ngIf="!image.deleted" style="background-image: url({{image.s3_key}})">
-          </div>
+        <ion-col *ngFor="let image of profileImageData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
+            <div (click)="openClickModal(image.id)" class="square" *ngIf="!image.deleted && loaded" style="background-image: url({{image.base64}}); background-color: var(--ion-color-light)">
+            </div>
+            <ion-skeleton-text *ngIf="!loaded" animated style="width: 99.8%; margin: 0; background-position: center; object-fit: contain; aspect-ratio: 1;"></ion-skeleton-text>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -98,9 +118,9 @@
     <ion-grid class="postedvideos" *ngIf="!noVideosYet && videosClicked">
       <ion-row class="postedvideos_row">
         <ion-col *ngFor="let video of profileMediaData" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-          <div id="video-wrapper" class="square" *ngIf="!video.deleted" style="background-image: url({{video.posterImage}})">
+          <div (click)="openClickModal(video.id)" id="video-wrapper" class="square" *ngIf="!video.deleted" style="background-image: url({{video.posterImage}}); background-color: var(--ion-color-light)">
             <div id="play-controls">
-              <ion-icon name="play" large></ion-icon>
+              <ion-icon name="play-outline" large></ion-icon>
             </div>
           </div>
         </ion-col>

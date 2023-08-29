@@ -14,8 +14,10 @@ import { LoadingController } from '@ionic/angular';
 export class HomeComponent {
 
   @Input() name?: string;
+  fetaProfileCount: number;
   already_registered;
   createProfile = false;
+  errorPage = false;
   username;
   profilepicid;
   browserName = '';
@@ -70,6 +72,7 @@ export class HomeComponent {
     loading.present();
 
     await this.loadUserData();
+    await this.listProfiles();
 
     loading.dismiss();
   }
@@ -79,6 +82,11 @@ export class HomeComponent {
     await currentUser.signOut()
     await localStorage.clear()
     await this.router.navigate(['/login']).then(() => { window.location.reload()})
+  }
+
+  async listProfiles() {
+    let profiles = await this.api.ListProfiles();
+    this.fetaProfileCount = profiles.items.length
   }
 
   async loadUserData() {
@@ -113,7 +121,8 @@ export class HomeComponent {
       }
     }
     catch (error) {
-       await this.router.navigate(['/login']).then(() => { window.location.reload()})
+      console.log(error)
+      this.errorPage = true;
     }
 
 }

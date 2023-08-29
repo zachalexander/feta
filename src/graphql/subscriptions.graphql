@@ -13,6 +13,7 @@ subscription OnCreateProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -20,6 +21,9 @@ subscription OnCreateProfilePicture(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -33,7 +37,8 @@ subscription OnCreateProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -43,6 +48,8 @@ subscription OnCreateProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -68,6 +75,7 @@ subscription OnUpdateProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -75,6 +83,9 @@ subscription OnUpdateProfilePicture(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -88,7 +99,8 @@ subscription OnUpdateProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -98,6 +110,8 @@ subscription OnUpdateProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -123,6 +137,7 @@ subscription OnDeleteProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -130,6 +145,9 @@ subscription OnDeleteProfilePicture(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -143,7 +161,8 @@ subscription OnDeleteProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -153,6 +172,8 @@ subscription OnDeleteProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -173,6 +194,7 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -194,14 +216,20 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -212,6 +240,7 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -219,6 +248,9 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -229,8 +261,11 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -241,7 +276,8 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -252,8 +288,11 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -264,6 +303,8 @@ subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -279,6 +320,7 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -300,14 +342,20 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -318,6 +366,7 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -325,6 +374,9 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -335,8 +387,11 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -347,7 +402,8 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -358,8 +414,11 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -370,6 +429,8 @@ subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -385,6 +446,7 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -406,14 +468,20 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -424,6 +492,7 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -431,6 +500,9 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -441,8 +513,11 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -453,7 +528,8 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -464,8 +540,11 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -476,6 +555,8 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -485,6 +566,7 @@ subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
 subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
   onCreateImagePost(filter: $filter) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -496,6 +578,7 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -503,6 +586,9 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -513,8 +599,11 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -534,6 +623,7 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -541,6 +631,9 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -554,7 +647,8 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -564,12 +658,17 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
       profileImagePostsId
     }
     s3_key
+    mediaSourceMobile
+    mediaSourceDesktop
+    downloadableVideo
     posterImage
     createdAt
     updatedAt
@@ -578,6 +677,7 @@ subscription OnCreateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
 subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
   onUpdateImagePost(filter: $filter) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -589,6 +689,7 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -596,6 +697,9 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -606,8 +710,11 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -627,6 +734,7 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -634,6 +742,9 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -647,7 +758,8 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -657,12 +769,17 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
       profileImagePostsId
     }
     s3_key
+    mediaSourceMobile
+    mediaSourceDesktop
+    downloadableVideo
     posterImage
     createdAt
     updatedAt
@@ -671,6 +788,7 @@ subscription OnUpdateImagePost($filter: ModelSubscriptionImagePostFilterInput) {
 subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
   onDeleteImagePost(filter: $filter) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -682,6 +800,7 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -689,6 +808,9 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -699,8 +821,11 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -720,6 +845,7 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -727,6 +853,9 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -740,7 +869,8 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -750,12 +880,17 @@ subscription OnDeleteImagePost($filter: ModelSubscriptionImagePostFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
       profileImagePostsId
     }
     s3_key
+    mediaSourceMobile
+    mediaSourceDesktop
+    downloadableVideo
     posterImage
     createdAt
     updatedAt
@@ -801,6 +936,7 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -822,14 +958,20 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -842,6 +984,7 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -849,6 +992,9 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -862,7 +1008,8 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -872,6 +1019,8 @@ subscription OnCreateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -890,6 +1039,7 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -911,14 +1061,20 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -931,6 +1087,7 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -938,6 +1095,9 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -951,7 +1111,8 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -961,6 +1122,8 @@ subscription OnUpdateUsername($filter: ModelSubscriptionUsernameFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -979,6 +1142,7 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -1000,14 +1164,20 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -1020,6 +1190,7 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -1027,6 +1198,9 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -1040,7 +1214,8 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -1050,6 +1225,8 @@ subscription OnDeleteUsername($filter: ModelSubscriptionUsernameFilterInput) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId

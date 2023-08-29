@@ -21,15 +21,13 @@ export class CachingService {
   cacheRequests(url, data){
     const validUntil = (new Date().getTime()) + TTL * 1000;
     url = `${url}`;
-
     return this.storage.set(url, { validUntil, data })
   }
 
   async getCachedRequest(url){
     const currentTime = new Date().getTime();
     const storedValue = await this.storage.get(url);
-
-    if(!storedValue){
+    if(!storedValue || storedValue === null){
       return null;
     } else if(storedValue.validUntil < currentTime){
       await this.storage.remove(url);

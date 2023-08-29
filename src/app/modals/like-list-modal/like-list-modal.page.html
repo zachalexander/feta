@@ -10,8 +10,9 @@
     <ion-item lines="none" *ngFor="let username of likes">
       <div class="list-items">
         <div class="avatar-names-div">
-          <ion-avatar *ngIf="image">
+          <ion-avatar>
             <img *ngIf="image" id="avatar" src="{{username[2]}}">
+            <img *ngIf="!image" id="avatar" src="../../../assets/avatar.svg">
           </ion-avatar>
           <div class="username-info">
             <ion-label class="username-label-username">{{username[0]}}</ion-label>

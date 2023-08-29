@@ -1,15 +1,19 @@
 
 
 <!-- pull and refresh option at top -->
-<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="didScroll()" id="wall-content" lines="none" #container>
+<ion-content class="no-scroll" [fullscreen]="true" [scrollEvents]="true" (ionScroll)="didScroll()" id="wall-content" lines="none" #container>
 
-  <ion-refresher lines="none" slot="fixed" (ionRefresh)="refreshData($event)">
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
     <ion-refresher-content
-    pullingIcon="chevron-down-circle-outline"
-    pullingText="Pull to refresh"
-    refreshingSpinner="lines-small">
+    pullingIcon="chevron-down-outline"
+    pullingText="Refresh timeline"
+    refreshingSpinner="lines-sharp-small">
     </ion-refresher-content>
-  </ion-refresher>
+  </ion-refresher> -->
+
+  <div *ngIf="refresh" class="spinner-test" style="height: 5em; border-bottom: 1px solid var(--ion-color-light); display: flex; justify-content: center; align-items: center;">
+      <ion-spinner name="lines-sharp-small"></ion-spinner>
+  </div>
 
 
   <!-- subscription to listen for new posts, will show pop-up when new posts added to wall -->
@@ -20,8 +24,8 @@
   </div>
 
   <!-- start of photo grid -->
-  <ion-grid lines="none">
-    <ion-row lines="none" class="ion-padding-vertical">
+  <ion-grid lines="none" class="ion-no-padding" mode="ios">
+    <ion-row lines="none" class="ion-padding-vertical" mode="ios">
 
       <!-- start of iterating through images -->
       <ion-col lines="none" *ngFor="let image of data" size="12" size-lg="12" size-md="12" size-sm="12" size-xs="12" trackBy:trackItems>
@@ -30,7 +34,7 @@
         <ion-card lines="none" *ngIf="image.postDeleted !== true">
 
           <!-- display the username and settings for each post at top of card -->
-          <ion-item lines="none">
+          <ion-item lines="none" mode="ios">
             <div class="top-wrapper">
               <div class="start-top-wrapper">
                 <ion-avatar *ngIf="!image.profilePicture" class="upload-pic-container">
@@ -41,27 +45,24 @@
                 </ion-avatar>
                 <ion-label class="top-card"><small class="card-username" routerLink="/profile/{{image.username}}">{{image.username}}</small></ion-label>
               </div>
-              <!-- <ion-label (click)="presentActionSheet(image.username, image.imagesID, image.id, image.url, image.imageKey)" class="top-card" slot="end"><ion-icon name="ellipsis-horizontal-sharp"></ion-icon></ion-label> -->
+              <ion-label (click)="presentActionSheet(image.username, image.id, image.s3_key, image.downloadableVideo, image.isVideo)" class="top-card" slot="end"><ion-icon name="ellipsis-horizontal-sharp"></ion-icon></ion-label>
             </div>
           </ion-item>
 
           <!-- locate the image url and assign a unique id per post -->
-          <ion-card-header lines="none">
+          <ion-card-header lines="none" mode="ios">
             <swiper *ngIf="!image.isVideo" class="mySwiper" effect="fade" [zoom]="true">
               <ng-template swiperSlide>
                 <div class="swiper-zoom-container">
-                  <img *ngIf="!image.isVideo" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSource" loading="lazy"/>
+                  <img *ngIf="!image.isVideo && mobilePlatform" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSourceMobile" loading="lazy" style="background: var(--ion-color-light)"/>
+                  <img *ngIf="!image.isVideo && !mobilePlatform" id="photo_{{image.imagesID}}" class="swiper-lazy" [src]="image.mediaSourceDesktop" loading="lazy" style="background: var(--ion-color-light)" />
                 </div>
               </ng-template>
             </swiper>
             <div id="video-container" *ngIf="image.isVideo">
-              <!-- <video (ended)="videoEnd()" class="video_{{image.id}}" type="application/x-mpegURL" width="100%" #timelineVideo type="video/m3u8" *ngIf="(browser === 'chrome') && image.isVideo" [src]="image.mediaSource" preload="auto" playsinline></video> -->
-              <video poster="{{image.imagePoster}}" (ended)="videoEnd()" class="video_{{image.id}}" #timelineVideo *ngIf="(browser === 'other') && image.isVideo" preload="none" playsinline webkit-playsinline="webkit-playsinline">
-                <source [src]="image.mediaSource" type="application/x-mpegURL">
-              </video>
-              <vg-player *ngIf="(browser === 'chrome' || browser === 'safari')">
-                <video poster="{{image.imagePoster}}" (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSource" #media id="multipleVideos" preload="auto" playsinline webkit-playsinline="webkit-playsinline">
-                  <source [vgHls]="image.mediaSource" type="application/x-mpegURL">
+              <vg-player>
+                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSourceMobile" #media preload="metadata" playsinline webkit-playsinline="webkit-playsinline" muted="true">
+                  <source [vgHls]="image.mediaSourceMobile" type="application/x-mpegURL">
                 </video>
               </vg-player>
               <div id="volume-controls">
@@ -83,11 +84,11 @@
                 <app-timeline-like-button [version]="image.version" [user]="this.currentUserUsername" [alreadyLiked]="image.userLiked" [imageId] = "image.id" [usernameID]="this.currentUserUsernameID"></app-timeline-like-button>
 
                 <!-- comment chat-bubble button below image -->
-                <!-- <ion-tab-button *ngIf="!disabledButtons" (click)="openModal(image.id)">
+                <ion-tab-button (click)="openModal(image.id)">
                   <p class="comment-icon">Comment</p><ion-icon name="chatbubble-outline"></ion-icon>
                 </ion-tab-button>
 
-                <ion-tab-button *ngIf="disabledButtons" disabled="true" class="disabledCommentButton" (click)="openModal(image.id)">
+                <!-- <ion-tab-button *ngIf="disabledButtons" disabled="true" class="disabledCommentButton" (click)="openModal(image.id)">
                   <p class="comment-icon">Comment</p><ion-icon name="chatbubbles-outline"></ion-icon>
                 </ion-tab-button> -->
 
@@ -102,16 +103,16 @@
             <!-- shows the post description and the user that posted the image -->
             <ion-card-content class="ion-no-padding" lines="none" class="image-description">
               <strong class="username-description" routerLink="/profile/{{image.username}}">{{image.username}}</strong> {{image.description}}
-              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} | {{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
+              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} - {{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
             </ion-card-content>
 
           </ion-card-header>
 
           <!-- start of comment section of post -->
-          <ion-item-group lines="none" class="comments" *ngIf="image.comment_count > 0">
+          <ion-item-group lines="none" class="comments" *ngIf="image.comments > 0">
             <!-- if greater than 0 comments, show below -->
             <ion-item-divider lines="none" class="comment-divider">
-              <!-- <ion-label class="view-all-comments" color="medium" (click)="openModal(image.id)">View all {{image.comment_count}} comments </ion-label> -->
+              <ion-label class="view-all-comments" color="medium" (click)="openModal(image.id)">View all {{image.comments}} comments </ion-label>
             </ion-item-divider>
           </ion-item-group>
         </ion-card>
@@ -129,10 +130,15 @@
     </ion-fab-button>
   </ion-fab>
 
-  <!-- <ion-infinite-scroll *ngIf="!profileSearch" (ionInfinite)="loadData($event)" position="bottom">
+  <ion-infinite-scroll *ngIf="mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
     <ion-infinite-scroll-content loadingSpinner="lines-small">
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+  </ion-infinite-scroll>
+
+  <ion-infinite-scroll *ngIf="!mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
+    <ion-infinite-scroll-content loadingSpinner="lines-small">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>
 

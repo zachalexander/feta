@@ -14,6 +14,7 @@ mutation CreateProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -21,6 +22,9 @@ mutation CreateProfilePicture(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -34,7 +38,8 @@ mutation CreateProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -44,6 +49,8 @@ mutation CreateProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -70,6 +77,7 @@ mutation UpdateProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -77,6 +85,9 @@ mutation UpdateProfilePicture(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -90,7 +101,8 @@ mutation UpdateProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -100,6 +112,8 @@ mutation UpdateProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -126,6 +140,7 @@ mutation DeleteProfilePicture(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -133,6 +148,9 @@ mutation DeleteProfilePicture(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -146,7 +164,8 @@ mutation DeleteProfilePicture(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -156,6 +175,8 @@ mutation DeleteProfilePicture(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -179,6 +200,7 @@ mutation CreateProfile(
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -200,14 +222,20 @@ mutation CreateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -218,6 +246,7 @@ mutation CreateProfile(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -225,6 +254,9 @@ mutation CreateProfile(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -235,8 +267,11 @@ mutation CreateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -247,7 +282,8 @@ mutation CreateProfile(
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -258,8 +294,11 @@ mutation CreateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -270,6 +309,8 @@ mutation CreateProfile(
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -288,6 +329,7 @@ mutation UpdateProfile(
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -309,14 +351,20 @@ mutation UpdateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -327,6 +375,7 @@ mutation UpdateProfile(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -334,6 +383,9 @@ mutation UpdateProfile(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -344,8 +396,11 @@ mutation UpdateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -356,7 +411,8 @@ mutation UpdateProfile(
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -367,8 +423,11 @@ mutation UpdateProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -379,6 +438,8 @@ mutation UpdateProfile(
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -397,6 +458,7 @@ mutation DeleteProfile(
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -418,14 +480,20 @@ mutation DeleteProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -436,6 +504,7 @@ mutation DeleteProfile(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -443,6 +512,9 @@ mutation DeleteProfile(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -453,8 +525,11 @@ mutation DeleteProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -465,7 +540,8 @@ mutation DeleteProfile(
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -476,8 +552,11 @@ mutation DeleteProfile(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -488,6 +567,8 @@ mutation DeleteProfile(
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -500,6 +581,7 @@ mutation CreateImagePost(
 ) {
   createImagePost(input: $input, condition: $condition) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -511,6 +593,7 @@ mutation CreateImagePost(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -518,6 +601,9 @@ mutation CreateImagePost(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -528,8 +614,11 @@ mutation CreateImagePost(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -549,6 +638,7 @@ mutation CreateImagePost(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -556,6 +646,9 @@ mutation CreateImagePost(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -569,7 +662,8 @@ mutation CreateImagePost(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -579,12 +673,17 @@ mutation CreateImagePost(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
       profileImagePostsId
     }
     s3_key
+    mediaSourceMobile
+    mediaSourceDesktop
+    downloadableVideo
     posterImage
     createdAt
     updatedAt
@@ -596,6 +695,7 @@ mutation UpdateImagePost(
 ) {
   updateImagePost(input: $input, condition: $condition) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -607,6 +707,7 @@ mutation UpdateImagePost(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -614,6 +715,9 @@ mutation UpdateImagePost(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -624,8 +728,11 @@ mutation UpdateImagePost(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -645,6 +752,7 @@ mutation UpdateImagePost(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -652,6 +760,9 @@ mutation UpdateImagePost(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -665,7 +776,8 @@ mutation UpdateImagePost(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -675,12 +787,17 @@ mutation UpdateImagePost(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
       profileImagePostsId
     }
     s3_key
+    mediaSourceMobile
+    mediaSourceDesktop
+    downloadableVideo
     posterImage
     createdAt
     updatedAt
@@ -692,6 +809,7 @@ mutation DeleteImagePost(
 ) {
   deleteImagePost(input: $input, condition: $condition) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -703,6 +821,7 @@ mutation DeleteImagePost(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -710,6 +829,9 @@ mutation DeleteImagePost(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -720,8 +842,11 @@ mutation DeleteImagePost(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -741,6 +866,7 @@ mutation DeleteImagePost(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -748,6 +874,9 @@ mutation DeleteImagePost(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -761,7 +890,8 @@ mutation DeleteImagePost(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -771,12 +901,17 @@ mutation DeleteImagePost(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
       profileImagePostsId
     }
     s3_key
+    mediaSourceMobile
+    mediaSourceDesktop
+    downloadableVideo
     posterImage
     createdAt
     updatedAt
@@ -834,6 +969,7 @@ mutation CreateUsername(
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -855,14 +991,20 @@ mutation CreateUsername(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -875,6 +1017,7 @@ mutation CreateUsername(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -882,6 +1025,9 @@ mutation CreateUsername(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -895,7 +1041,8 @@ mutation CreateUsername(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -905,6 +1052,8 @@ mutation CreateUsername(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -926,6 +1075,7 @@ mutation UpdateUsername(
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -947,14 +1097,20 @@ mutation UpdateUsername(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -967,6 +1123,7 @@ mutation UpdateUsername(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -974,6 +1131,9 @@ mutation UpdateUsername(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -987,7 +1147,8 @@ mutation UpdateUsername(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -997,6 +1158,8 @@ mutation UpdateUsername(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -1018,6 +1181,7 @@ mutation DeleteUsername(
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -1039,14 +1203,20 @@ mutation DeleteUsername(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -1059,6 +1229,7 @@ mutation DeleteUsername(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -1066,6 +1237,9 @@ mutation DeleteUsername(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -1079,7 +1253,8 @@ mutation DeleteUsername(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -1089,6 +1264,8 @@ mutation DeleteUsername(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId

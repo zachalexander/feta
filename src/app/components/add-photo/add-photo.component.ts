@@ -91,6 +91,7 @@ export class AddPhotoComponent implements OnInit {
     // localStorage.setItem('blob-string', URL.createObjectURL(this.blob))
     // localStorage.setItem('filename-string', this.filename)
 
+    console.log(this.selected)
   
 
     await write_blob({

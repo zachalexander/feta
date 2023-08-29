@@ -1,10 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Chivo:wght@300;400;700;900&family=Oleo+Script:wght@700&display=swap');
 
+
 .swiper-zoom-container {
     img {
-        width: 100%;
-        height: auto;
+        // width: 100vw;
+        // height: 600px;
     }
+}
+
+ion-refresher.refresher-active {
+    display: flex;
+    justify-content: center;
+    padding: 2em;
+    z-index: 5;
 }
 
 
@@ -14,7 +22,12 @@
     height: 500px;
     border: none !important;
     overflow: hidden;
-    object-fit: cover;
+    object-fit: contain;
+
+    vg-player {
+        display: flex;
+        justify-content: center;
+    }
 
     vg-player video {
         object-fit: cover;
@@ -23,24 +36,26 @@
         width: 100vw;
         height: 500px;
     }
+
+    .video-background {
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        -webkit-background-size: cover;
+        // -moz-background-size: cover;
+        // -o-background-size: cover;
+        overflow: hidden;
+        width: 100%;
+        height: 500px;
+    }
     
     video {
-        width: 100vw;
         height: 100%;
+        width: 100%;
         position: relative;
         object-fit: cover;
-        margin: 0;
-        padding: 0;
-    }
-
-    video[poster]{
-        height: 500px;
-        width: 100vw;
-        object-fit: cover;
-        position: relative;
-        margin: 0;
-        padding: 0;
-        background: transparent;
+        z-index: 1;
     }
 }
 
@@ -59,6 +74,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    z-index: 5;
+    cursor: pointer;
 
     ion-icon {
         width: 15px !important;
@@ -77,6 +94,8 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    z-index: 5;
+    cursor: pointer;
 
     p {
         margin: 0.5em 1em;
@@ -97,6 +116,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    z-index: 5;
+    cursor: pointer;
 
     ion-icon {
         width: 15px !important;

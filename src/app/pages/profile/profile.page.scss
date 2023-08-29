@@ -1,8 +1,15 @@
+
+
 .menu-button {
     padding: 0 1em;
 }
 
-.no-photos {
+.username-toolbar {
+    font-size: 1em;
+}
+
+
+.no-photos, .no-videos {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,6 +18,20 @@
     h5 {
         color: var(--ion-color-medium);
         font-weight: 500;
+    }
+}
+
+.relationship-div {
+    display: flex;
+    margin: -2em auto 1em auto;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75em;
+    color: var(--ion-color-medium);
+    font-weight: 600;
+
+    .star {
+        height: 15px;
     }
 }
 
@@ -27,7 +48,7 @@ ion-content{
 }
 
 ion-grid {
-    padding: auto !important;
+    padding: 0 !important;
     max-width: 600px;
 }
 
@@ -95,6 +116,10 @@ ion-icon {
     margin: 0 auto;
     max-width: 600px;
 
+    .edit-birthday {
+        margin-bottom: 0.25em;
+    }
+
     .username-header {
         justify-content: center;
         align-items: center;
@@ -120,6 +145,33 @@ ion-icon {
 
     }
 
+    .birthday-div {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        padding: 0em 2em 0.25em 0em;
+        max-width: 200px;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95em;
+
+        .birthday {
+            font-size: 0.95em;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            margin: 0em 0.35em 0em 0em;
+        }
+
+        .birthday-text {
+            font-size: 0.65em;
+            margin: -0.5em auto;
+            color: var(--ion-color-medium);
+            font-weight: 600;
+            text-align: center;
+        }
+    }
+
     .stats-div {
         display: flex;
         flex-direction: column;
@@ -135,6 +187,7 @@ ion-icon {
             font-size: 0.65em;
             margin: -0.5em auto;
             font-weight: 600;
+            text-align: center;
         }
     }
 
@@ -145,7 +198,7 @@ ion-icon {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 1em 1em 1em 1em;
+    padding: 0em 1.25em 1.25em 1.25em;
     max-width: 500px;
     margin: auto;
 
@@ -158,6 +211,7 @@ ion-icon {
 
     p {
         font-size: 0.75em;
+        margin: 0em 0.5em 0.5em 0.5em;
     }
 }
 
@@ -229,7 +283,7 @@ ion-icon {
         position: absolute;
         top: calc(50% - 23px);
         right: calc(50% - 23px);
-        background: rgba(0, 0, 0, 0.70);
+        background: transparent;
         border-radius: 50%;
         height: 45px;
         width: 45px;
@@ -269,4 +323,22 @@ ion-icon {
 
 ion-icon:hover {
     cursor: pointer;
+}
+
+.name-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 0.85em;
+
+    .fullname {
+        color: var(--ion-color-dark);
+        text-align: center;
+        font-weight: 600;
+    }
+}
+
+.birthday-icon {
+    height: 20px;
+    width: 20px;
 }

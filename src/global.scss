@@ -27,7 +27,7 @@
 
 @import '~@aws-amplify/ui-angular/theme.css';
 @import url('https://fonts.googleapis.com/css2?family=Baumans&family=Gentium+Book+Plus&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto+Slab:wght@300&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Noto+Emoji&display=swap');
 
 @import 'swiper/css/bundle';
 @import 'swiper/css/pagination';
@@ -237,4 +237,29 @@ ion-tab-button {
     display: flex;
     justify-content: space-around;
     margin: 0;
+    padding-top: 0.5em;
+}
+
+ion-title {
+    color: black;
+}
+
+alert-wrapper.sc-ion-alert-ios {
+    border-radius: 0px;
+    box-shadow: none;
+    overflow: hidden;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 90vw;
+    min-width: var(--min-width);
+    max-width: 500px;
+    height: var(--height);
+    min-height: var(--min-height);
+    max-height: var(--max-height);
+    background: var(--background);
+    contain: content;
+    opacity: 0;
+    z-index: 10;
 }

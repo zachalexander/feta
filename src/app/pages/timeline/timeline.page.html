@@ -1,18 +1,18 @@
-<ion-header>
-  <ion-toolbar mode="ios">
-    <ion-title>
-      Timeline
-    </ion-title>
-    <ion-tab-button (click)="createPhotoModal()" class="button-div" slot="end">
-      <ion-icon name="add-circle-outline"></ion-icon>
-    </ion-tab-button>
+<ion-header class="ion-no-border" mode="md">
+  <ion-toolbar color="light">
+      <ion-title text-left>
+        Feta
+      </ion-title>
+      <ion-tab-button (click)="createPhotoModal()" class="button-div" slot="end">
+        <ion-icon src="../../../assets/streamline/interface-add-square.svg"></ion-icon>
+      </ion-tab-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
     <!-- loading spinner -->
     <div *ngIf="!loaded" class="loading-centered">
       <ion-spinner name="lines-small"></ion-spinner>
     </div>
-    <app-timeline [datalength]="timelineDataLength" [data]="timelineData"></app-timeline>
+    <app-timeline [data]="timelineData" [token]="nextToken"></app-timeline>
 </ion-content>

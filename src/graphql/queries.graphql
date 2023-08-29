@@ -11,6 +11,7 @@ query GetProfilePicture($id: ID!) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -18,6 +19,9 @@ query GetProfilePicture($id: ID!) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -31,7 +35,8 @@ query GetProfilePicture($id: ID!) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -41,6 +46,8 @@ query GetProfilePicture($id: ID!) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -67,8 +74,11 @@ query ListProfilePictures(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -91,6 +101,7 @@ query GetProfile($id: ID!) {
     usernameID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -112,14 +123,20 @@ query GetProfile($id: ID!) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -130,6 +147,7 @@ query GetProfile($id: ID!) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -137,6 +155,9 @@ query GetProfile($id: ID!) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -147,8 +168,11 @@ query GetProfile($id: ID!) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -159,7 +183,8 @@ query GetProfile($id: ID!) {
       usernameImagePostsId
       usernameProfileId
     }
-    family_name
+    first_name
+    last_name
     profilepictureID
     profilepicture {
       id
@@ -170,8 +195,11 @@ query GetProfile($id: ID!) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -182,6 +210,8 @@ query GetProfile($id: ID!) {
       updatedAt
       profilePictureProfileId
     }
+    bio
+    birthday
     createdAt
     updatedAt
     profileUsernameId
@@ -202,6 +232,7 @@ query ListProfiles(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -209,6 +240,9 @@ query ListProfiles(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -222,7 +256,8 @@ query ListProfiles(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -232,6 +267,8 @@ query ListProfiles(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -243,6 +280,7 @@ query ListProfiles(
 query GetImagePost($id: ID!) {
   getImagePost(id: $id) {
     id
+    sorterValue
     description
     time_posted
     likes
@@ -254,6 +292,7 @@ query GetImagePost($id: ID!) {
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -261,6 +300,9 @@ query GetImagePost($id: ID!) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -271,8 +313,11 @@ query GetImagePost($id: ID!) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -292,6 +337,7 @@ query GetImagePost($id: ID!) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -299,6 +345,9 @@ query GetImagePost($id: ID!) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -312,7 +361,8 @@ query GetImagePost($id: ID!) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -322,12 +372,17 @@ query GetImagePost($id: ID!) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
       profileImagePostsId
     }
     s3_key
+    mediaSourceMobile
+    mediaSourceDesktop
+    downloadableVideo
     posterImage
     createdAt
     updatedAt
@@ -341,6 +396,7 @@ query ListImagePosts(
   listImagePosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -362,14 +418,20 @@ query ListImagePosts(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -413,6 +475,7 @@ query GetUsername($id: ID!) {
     profileID
     ImagePosts {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -434,14 +497,20 @@ query GetUsername($id: ID!) {
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -454,6 +523,7 @@ query GetUsername($id: ID!) {
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -461,6 +531,9 @@ query GetUsername($id: ID!) {
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -474,7 +547,8 @@ query GetUsername($id: ID!) {
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -484,6 +558,8 @@ query GetUsername($id: ID!) {
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -507,6 +583,7 @@ query ListUsernames(
       profileID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -514,6 +591,9 @@ query ListUsernames(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -524,8 +604,11 @@ query ListUsernames(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
@@ -561,6 +644,7 @@ query ProfilesByProfilepictureID(
       usernameID
       ImagePosts {
         id
+        sorterValue
         description
         time_posted
         likes
@@ -568,6 +652,9 @@ query ProfilesByProfilepictureID(
         usernameID
         profileID
         s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
         posterImage
         createdAt
         updatedAt
@@ -581,7 +668,8 @@ query ProfilesByProfilepictureID(
         usernameImagePostsId
         usernameProfileId
       }
-      family_name
+      first_name
+      last_name
       profilepictureID
       profilepicture {
         id
@@ -591,6 +679,8 @@ query ProfilesByProfilepictureID(
         updatedAt
         profilePictureProfileId
       }
+      bio
+      birthday
       createdAt
       updatedAt
       profileUsernameId
@@ -599,15 +689,17 @@ query ProfilesByProfilepictureID(
     nextToken
   }
 }
-query ImagePostsByUsernameID(
-  $usernameID: ID!
+query ImagePostsBySorterValueAndTime_posted(
+  $sorterValue: String!
+  $time_posted: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
   $filter: ModelImagePostFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  imagePostsByUsernameID(
-    usernameID: $usernameID
+  imagePostsBySorterValueAndTime_posted(
+    sorterValue: $sorterValue
+    time_posted: $time_posted
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -615,6 +707,7 @@ query ImagePostsByUsernameID(
   ) {
     items {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -636,14 +729,79 @@ query ImagePostsByUsernameID(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
+      posterImage
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query ImagePostsByUsernameID(
+  $usernameID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelImagePostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  imagePostsByUsernameID(
+    usernameID: $usernameID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      sorterValue
+      description
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+      }
+      s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt
@@ -667,6 +825,7 @@ query ImagePostsByProfileID(
   ) {
     items {
       id
+      sorterValue
       description
       time_posted
       likes
@@ -688,14 +847,20 @@ query ImagePostsByProfileID(
         relation
         cognitoID
         usernameID
-        family_name
+        first_name
+        last_name
         profilepictureID
+        bio
+        birthday
         createdAt
         updatedAt
         profileUsernameId
         profileImagePostsId
       }
       s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
       posterImage
       createdAt
       updatedAt

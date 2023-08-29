@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { CachingService } from './services/caching.service';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { TimelinePageModule } from './pages/timeline/timeline.module';
+import { CachingService } from './services/caching.service';
 
 @Component({
   selector: 'app-root',
