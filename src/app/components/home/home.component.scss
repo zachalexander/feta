@@ -1,14 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Baumans&family=Gentium+Book+Plus&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto+Slab:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baumans&family=Cormorant&family=Gentium+Book+Plus&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto+Slab:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap');
 
+ion-toolbar {
+  max-width: 550px;
+  margin: auto;
+}
 
+ion-icon {
+  min-width: 24px;
+  min-height: 24px;
+  padding-right: 1em;
+
+}
+
+ion-card {
+  max-width: 500px;
+  padding: 0;
+  margin: 0.5em auto;
+}
 
 ion-title {
-  font-family: 'Baumans', cursive !important;
+  font-family: 'Cormorant', cursive !important;
   font-weight: 400;
   font-size: 1.75em;
   display: flex;
+  justify-content: center;
+  letter-spacing: -1px;
+}
+
+.hello-div {
+  padding: 0.5em;
+}
+
+ion-card-title {
+    font-family: 'Cormorant', cursive !important;
+    font-weight: 400;
+    font-size: 2.5em;
+    display: flex;
+    justify-content: flex-start;
+    letter-spacing: -1px;
+    margin: 0;
+    padding: 0.15em 0em;
+}
+
+.timeline-button {
+  display: flex;
+  max-width: 50%;
+  margin-bottom: 1em;
   justify-content: flex-start;
 }
+
+
 
 small {
   font-size: 1em;
@@ -35,6 +77,13 @@ small {
     align-items: center;
     margin-left: 0.25em;
     margin-top: 0em;
+
+    img {
+        max-width: 80%;
+        max-height: 80%;
+        border: 0;
+        padding: 1em;
+      }
   }
 
   .members_card {
@@ -45,6 +94,13 @@ small {
     align-items: center;
     margin-right: 0.25em;
     margin-top: 0em;
+
+    img {
+        max-width: 80%;
+        max-height: 80%;
+        border: 0;
+        padding: 1em;
+      }
   }
 
   .members, .terms {
@@ -58,14 +114,14 @@ small {
     max-width: 100%;
   }
 
-  .members_button, .terms_button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    text-align: center;
-    font-size: .85em;
-  }
+  // .members_button, .terms_button {
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   margin: auto;
+  //   text-align: center;
+  //   font-size: .85em;
+  // }
 }
 
 
@@ -77,12 +133,7 @@ small {
   min-height: 100vh;
 }
 
-img {
-  max-width: 80%;
-  max-height: 80%;
-  border: 0;
-  padding: 1em;
-}
+
 
 .lets-go-button {
   color: black !important;
@@ -96,7 +147,7 @@ img {
   align-items: center;
 }
 
-.upload-msg-div, .hello-div {
+.upload-msg-div {
   display: flex;
   flex-direction: column;
   justify-content: center;
