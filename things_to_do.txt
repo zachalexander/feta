@@ -6,3 +6,23 @@
 11) Add note to home page - Feta rules and information
 12) Add settings modal
 13) Fix username capitalization
+
+
+Code Review
+1) Login page
+2) Create Account page
+3) Home page
+4) Timeline page
+4a) Timeline component
+4b) Add media component
+4c) Post settings 
+4d) Like button
+4e) Comment component
+5) Profile page
+5a) Edit profile component
+5b) Change profile photo
+5c) Change username
+
+
+#E7E9EA
+

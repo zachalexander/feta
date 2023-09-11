@@ -1820,3 +1820,69 @@ export const onDeleteUsername = /* GraphQL */ `
     }
   }
 `;
+
+export const onUpdateSportsGame = /* GraphQL */ `
+subscription OnUpdateSportsGame(
+  $filter: ModelSubscriptionSportsGameFilterInput
+) {
+  onUpdateSportsGame(filter: $filter) {
+    id
+    startTime
+    homeTeam
+    homeTeamLogo
+    awayTeam
+    awayTeamLogo
+    homeTeamWins
+    homeTeamLosses
+    awayTeamWins
+    awayTeamLosses
+    gameStatus
+    lastUpdate
+    BaseballGame {
+      sportsGameID
+      sportsGame {
+        id
+        startTime
+        homeTeam
+        homeTeamLogo
+        awayTeam
+        awayTeamLogo
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        gameStatus
+        lastUpdate
+        createdAt
+        updatedAt
+        sportsGameBaseballGameId
+      }
+      awayHitterOne
+      awayHitterTwo
+      awayHitterThree
+      awayHitterFour
+      awayHitterFive
+      awayHitterSix
+      awayHitterSeven
+      awayHitterEight
+      awayHitterNine
+      homeHitterOne
+      homeHitterTwo
+      homeHitterThree
+      homeHitterFour
+      homeHitterFive
+      homeHitterSix
+      homeHitterSeven
+      homeHitterEight
+      homeHitterNine
+      boxInfo
+      lastUpdate
+      id
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+    sportsGameBaseballGameId
+  }
+}`;

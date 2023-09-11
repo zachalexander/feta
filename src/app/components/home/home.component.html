@@ -2,8 +2,9 @@
   <ion-header class="ion-no-border" mode="md">
     <ion-toolbar color="light">
         <ion-title>
-          Feta
+          Friedman Alexander
         </ion-title>
+        <ion-icon (click)="openMenu()" class="menu-button" slot="end" name="menu"></ion-icon>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -21,11 +22,14 @@
         </ion-card-content>
       </ion-card>
       <ion-card *ngIf="already_registered">
+        <img alt="Alexander family photo" src="../../../assets/family-photo-4.png" />
         <ion-card-content>
           <div class="hello-div">
             <ion-card-title>Hi, {{username}}!</ion-card-title>
-            <small>Welcome to feta.</small>
+            <small>We are excited to share our story with you -- welcome to our family space.</small>
           </div>
+          <br>
+          <ion-button (click)="toTimeline()" class="timeline-button" mode="ios" color="dark" shape="round">View our timeline</ion-button>
         </ion-card-content>
       </ion-card>
       <div class="row-1">
@@ -33,7 +37,7 @@
           <img class="members" src="../../../assets/undraw_community.svg" />
           <ion-card-content>
             <div class="members_div">
-              <ion-button class="members_button" color="light">View all <strong>&nbsp;{{fetaProfileCount}}&nbsp;members</strong></ion-button>
+              <ion-button mode="ios" shape="round" color="light">View all <strong>&nbsp;{{fetaProfileCount}}&nbsp;members</strong></ion-button>
             </div>
           </ion-card-content>
         </ion-card>
@@ -41,7 +45,7 @@
           <img class="terms" src="../../../assets/undraw_terms.svg" />
           <ion-card-content>
             <div class="terms_div">
-              <ion-button class="terms_button" color="light">Read our terms</ion-button>
+              <ion-button mode="ios" shape="round" color="light">Read our terms</ion-button>
             </div>
           </ion-card-content>
         </ion-card>

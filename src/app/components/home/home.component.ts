@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Auth } from 'aws-amplify'
 import { Router } from '@angular/router';
-import { APIService } from '../../API.service';
+import { APIService } from 'src/app/API.service';
 import { ModalController } from '@ionic/angular';
 import { CreateProfileModalPage } from '../../modals/create-profile-modal/create-profile-modal.page'
 import { LoadingController } from '@ionic/angular';
+import { ProfileMenuModalPage } from 'src/app/modals/profile-menu-modal/profile-menu-modal.page';
 
 @Component({
   selector: 'app-home',
@@ -89,6 +90,10 @@ export class HomeComponent {
     this.fetaProfileCount = profiles.items.length
   }
 
+  toTimeline(){
+    this.router.navigate(['/timeline']).then(() => { window.location.reload() })
+  }
+
   async loadUserData() {
 
     
@@ -125,6 +130,13 @@ export class HomeComponent {
       this.errorPage = true;
     }
 
+}
+
+async openMenu() {
+  const modal = await this.modalController.create({
+    component: ProfileMenuModalPage
+  })
+  return await modal.present();
 }
 
 async uploadProfilePic(){

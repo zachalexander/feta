@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap');
+
 ion-header {
     background: var(--ion-color-light) !important;
 }
@@ -13,11 +15,12 @@ ion-header {
 }
 
 ion-title {
-    font-family: 'Baumans', cursive !important;
+    font-family: 'Cormorant', cursive !important;
     font-weight: 400;
     font-size: 1.75em;
     display: flex;
     justify-content: flex-start !important;
+    letter-spacing: -1px;
 }
 
 .button-div {

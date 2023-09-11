@@ -3,14 +3,6 @@
 <!-- pull and refresh option at top -->
 <ion-content class="no-scroll" [fullscreen]="true" [scrollEvents]="true" (ionScroll)="didScroll()" id="wall-content" lines="none" #container>
 
-  <!-- <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
-    <ion-refresher-content
-    pullingIcon="chevron-down-outline"
-    pullingText="Refresh timeline"
-    refreshingSpinner="lines-sharp-small">
-    </ion-refresher-content>
-  </ion-refresher> -->
-
   <div *ngIf="refresh" class="spinner-test" style="height: 5em; border-bottom: 1px solid var(--ion-color-light); display: flex; justify-content: center; align-items: center;">
       <ion-spinner name="lines-sharp-small"></ion-spinner>
   </div>
@@ -103,7 +95,7 @@
             <!-- shows the post description and the user that posted the image -->
             <ion-card-content class="ion-no-padding" lines="none" class="image-description">
               <strong class="username-description" routerLink="/profile/{{image.username}}">{{image.username}}</strong> {{image.description}}
-              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | date: "MMMM d"}}{{(image.time_posted | date: "d") | dateSuffix}}, {{image.time_posted | date: 'y '}} - {{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
+              <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
             </ion-card-content>
 
           </ion-card-header>
@@ -124,19 +116,19 @@
     </div>
   </ion-grid>
 
-  <ion-fab color="dark" (click)="scrollToTop()" class="arrow-up-outline" slot="fixed" horizontal="end" vertical="bottom">
+  <ion-fab color="dark" (click)="scrollToTop()" (ionInfinite)="loadData($event)" class="arrow-up-outline" slot="fixed" horizontal="end" vertical="bottom">
     <ion-fab-button color="light" class="cycle-up-button">
       <ion-icon name="arrow-up-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <ion-infinite-scroll *ngIf="mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
-    <ion-infinite-scroll-content loadingSpinner="lines-small">
+    <ion-infinite-scroll-content loadingSpinner="lines-sharp-small">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
   <ion-infinite-scroll *ngIf="!mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
-    <ion-infinite-scroll-content loadingSpinner="lines-small">
+    <ion-infinite-scroll-content loadingSpinner="lines-sharp-small">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 

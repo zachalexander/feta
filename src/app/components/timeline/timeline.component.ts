@@ -34,6 +34,7 @@ import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
 
 import SwiperCore, { Zoom, EffectFade } from 'swiper';
 import { timeline } from 'console';
+import { ConsoleLogger } from '@aws-amplify/core';
 // import { toast } from 'aws-amplify';
 // import { async } from '@angular/core/testing';
 // import { Timestamp } from 'rxjs/internal/operators/timestamp';
@@ -178,6 +179,7 @@ export class TimelineComponent implements OnInit {
           })
           .catch(error => {
             this.nowPlaying.play();
+            console.log(error)
           })
         }
         this.pause = false;
@@ -690,27 +692,17 @@ export class TimelineComponent implements OnInit {
           this.token = data[2]
 
           if (this.token === null) {
-            event.target.disabled = true;
+            // event.target.disabled = true;
             this.scrollFinished = true;
           } 
           Object.entries(dataPull).forEach(([key, value]) => { this.data[this.data.length] = value })
+          event.target.complete();
         });
       } catch (error) {
         console.log(error)
       }
-      event.target.complete();
+
   }
-
-  // async refreshData(event){
-
-  //   if(this.platform.is('hybrid')){
-  //     await Haptics.impact({ style: ImpactStyle.Medium})
-  //   }
-
-  //  await this.changeLocation();
-
-  //   // window.location.reload();
-  // }
 
   async changeLocation(){
     // save current route first
@@ -733,9 +725,11 @@ export class TimelineComponent implements OnInit {
         })
       ).subscribe(async data => {
         this.data = data[0];
-        this.refresh = true;
+        this.token = data[2];
+        this.refresh = false;
+        this.scrollFinished = false;
         await this.changeLocation();
-        // window.location.reload();
+        this.showFabButton = false;
       })
     })
   }

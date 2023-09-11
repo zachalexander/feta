@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap');
+
+ion-header {
+    background: var(--ion-color-light) !important;
+}
+
+.toolbar-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    ion-icon {
+        height: 24px;
+        width: 24px;
+        margin-right: 1rem;
+    }
+}
+
+.last-updated {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    border-bottom: 1px solid var(--ion-color-light);
+
+    ion-text {
+        font-size: 0.75rem;
+    }
+}
+
+.sports-banner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    ion-chip {
+        font-weight: 600;
+    }
+
+    .versus {
+        font-size: 0.85rem;
+        padding: 0 1em;
+    }
+}
+
+.sports-teams {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    ion-card-content {
+        padding: 0 !important;
+        font-size: 0.85rem;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-wrap: nowrap;
+    }
+}
+
+.team-wrapper-away, .team-wrapper-home {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1rem;
+    font-weight: 600;
+
+    ion-avatar {
+        margin: 0 0.5em;
+        max-width: 24px;
+        max-height: 24px;
+    }
+
+    .team-info-home, .team-info-away {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+}
+
+.team-wrapper-away {
+    padding: 0em;
+}
+
+ion-toolbar {
+    display: flex;
+    max-width: 550px;
+    justify-content: space-between;
+    margin: auto;
+}
+
+ion-card {
+    max-width: 450px;
+    margin: 2em auto;
+}
+
+ion-title {
+    font-family: 'Cormorant', cursive !important;
+    font-weight: 400;
+    font-size: 1.75em;
+    display: flex;
+    justify-content: flex-start !important;
+    letter-spacing: -1px;
+}
+
+.game-status {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1em 1em 1em;
+    max-width: 450px;
+}
