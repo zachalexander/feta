@@ -2,5 +2,11 @@
   "AppSyncApiName": "feta",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2023-03-09T16:52:02.155Z"
+  "AuthModeLastUpdated": "2023-09-11T21:14:51.935Z",
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authfeta",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

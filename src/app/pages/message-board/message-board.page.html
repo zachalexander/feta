@@ -1,10 +1,49 @@
-<ion-header>
-  <ion-toolbar mode="ios">
-    <ion-title>
-      Family Posts
-    </ion-title>
+<ion-header class="ion-no-border" mode="md">
+  <ion-toolbar color="light">
+    <div class="toolbar-wrapper">
+      <ion-title text-left>
+        Le critique
+      </ion-title>
+      <ion-icon name="refresh-outline" (click)="refresh()"></ion-icon>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-card *ngFor="let game of baseballData">
+    <ion-card-header>
+      <div class="last-updated">
+        <ion-chip color="warning">Sports</ion-chip>
+        <ion-text color="medium">Last updated at {{game.lastUpdate | date: 'h:mma' }} EST</ion-text>
+      </div>
+      <div class="sports-banner">
+        <div class="sports-teams">
+          <div class="team-wrapper-away">
+              <ion-avatar>
+                <img alt="team-logo-away" src="../../../assets/profile_placeholder_avatar.png"/>
+              </ion-avatar> 
+              <div class="team-info-away">
+                <ion-card-content>{{game.awayTeam}}</ion-card-content>
+                <small>(88-51)</small>
+              </div>
+          </div>
+          <div class="versus"> at </div>
+          <div class="team-wrapper-home">
+              <ion-avatar>
+                <img alt="team-logo-home" src="../../../assets/profile_placeholder_avatar.png" />
+              </ion-avatar> 
+              <div class="team-info-home">
+                <ion-card-content>{{game.homeTeam}}</ion-card-content>
+                <small>(72-68)</small>
+              </div>
+          </div>
+        </div>
+      </div>
+    </ion-card-header>
+    <div class="game-status">
+      <ion-chip [outline]="true" color="default" [disabled]="true">{{game.gameStatus}}</ion-chip>
+      <ion-chip color="success">{{game.startTime | date: 'MMM d, YYYY h:mm a' }} EST</ion-chip>
+    </div>
+  </ion-card>
+
 </ion-content>

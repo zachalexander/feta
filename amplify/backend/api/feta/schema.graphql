@@ -1,15 +1,15 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type ProfilePicture @model @auth(rules: [{allow: public}]) {
+
+type ProfilePicture @model @auth(rules: [{allow: private}]) {
   id: ID!
   imageurl: String
   Profile: Profile @belongsTo
   profileID: String
 }
 
-type Profile @model @auth(rules: [{allow: public}]) {
+type Profile @model @auth(rules: [{allow: private}]) {
   id: ID!
   email: String
   relation: String
@@ -25,7 +25,7 @@ type Profile @model @auth(rules: [{allow: public}]) {
   birthday: AWSDateTime
 }
 
-type ImagePost @model @auth(rules: [{allow: public}]) {
+type ImagePost @model @auth(rules: [{allow: private}]) {
   id: ID!
   sorterValue: String @index(name: "byTimePosted", sortKeyFields: ["time_posted"])
   description: String
@@ -43,7 +43,7 @@ type ImagePost @model @auth(rules: [{allow: public}]) {
   posterImage: String
 }
 
-type Comments @model @auth(rules: [{allow: public}]) {
+type Comments @model @auth(rules: [{allow: private}]) {
   id: ID!
   usernameID: String
   comment: String
@@ -51,10 +51,51 @@ type Comments @model @auth(rules: [{allow: public}]) {
   imagePostsID: String
 }
 
-type Username @model @auth(rules: [{allow: public}]) {
+type Username @model @auth(rules: [{allow: private}]) {
   id: ID!
   username: String
   profileID: String
   ImagePosts: ImagePost @belongsTo
   Profile: Profile @belongsTo
+}
+
+type SportsGame @model @auth(rules: [{allow: private}]) {
+  id: ID!
+  startTime: AWSDateTime
+  homeTeam: String
+  homeTeamLogo: String
+  awayTeam: String
+  awayTeamLogo: String
+  homeTeamWins: Int
+  homeTeamLosses: Int
+  awayTeamWins: Int
+  awayTeamLosses: Int
+  gameStatus: String
+  lastUpdate: AWSDateTime
+  BaseballGame: BaseballGame @belongsTo
+}
+
+type BaseballGame @model @auth(rules: [{allow: private}]) {
+  sportsGameID: ID! @index(name: "bySportsGame")
+  sportsGame: SportsGame @hasOne(fields: ["sportsGameID"])
+  awayHitterOne: AWSJSON
+  awayHitterTwo: AWSJSON
+  awayHitterThree: AWSJSON
+  awayHitterFour: AWSJSON
+  awayHitterFive: AWSJSON
+  awayHitterSix: AWSJSON
+  awayHitterSeven: AWSJSON
+  awayHitterEight: AWSJSON
+  awayHitterNine: AWSJSON
+  homeHitterOne: AWSJSON
+  homeHitterTwo: AWSJSON
+  homeHitterThree: AWSJSON
+  homeHitterFour: AWSJSON
+  homeHitterFive: AWSJSON
+  homeHitterSix: AWSJSON
+  homeHitterSeven: AWSJSON
+  homeHitterEight: AWSJSON
+  homeHitterNine: AWSJSON
+  boxInfo: AWSJSON
+  lastUpdate: AWSDateTime
 }

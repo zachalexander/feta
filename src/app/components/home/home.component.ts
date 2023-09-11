@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Auth } from 'aws-amplify'
 import { Router } from '@angular/router';
-import { APIService } from '../../API.service';
+import { APIService } from 'src/app/API.service';
 import { ModalController } from '@ionic/angular';
 import { CreateProfileModalPage } from '../../modals/create-profile-modal/create-profile-modal.page'
 import { LoadingController } from '@ionic/angular';

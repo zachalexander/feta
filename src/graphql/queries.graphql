@@ -622,6 +622,243 @@ query ListUsernames(
     nextToken
   }
 }
+query GetSportsGame($id: ID!) {
+  getSportsGame(id: $id) {
+    id
+    startTime
+    homeTeam
+    homeTeamLogo
+    awayTeam
+    awayTeamLogo
+    homeTeamWins
+    homeTeamLosses
+    awayTeamWins
+    awayTeamLosses
+    gameStatus
+    lastUpdate
+    BaseballGame {
+      sportsGameID
+      sportsGame {
+        id
+        startTime
+        homeTeam
+        homeTeamLogo
+        awayTeam
+        awayTeamLogo
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        gameStatus
+        lastUpdate
+        createdAt
+        updatedAt
+        sportsGameBaseballGameId
+      }
+      awayHitterOne
+      awayHitterTwo
+      awayHitterThree
+      awayHitterFour
+      awayHitterFive
+      awayHitterSix
+      awayHitterSeven
+      awayHitterEight
+      awayHitterNine
+      homeHitterOne
+      homeHitterTwo
+      homeHitterThree
+      homeHitterFour
+      homeHitterFive
+      homeHitterSix
+      homeHitterSeven
+      homeHitterEight
+      homeHitterNine
+      boxInfo
+      lastUpdate
+      id
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+    sportsGameBaseballGameId
+  }
+}
+query ListSportsGames(
+  $filter: ModelSportsGameFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listSportsGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      startTime
+      homeTeam
+      homeTeamLogo
+      awayTeam
+      awayTeamLogo
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      gameStatus
+      lastUpdate
+      BaseballGame {
+        sportsGameID
+        awayHitterOne
+        awayHitterTwo
+        awayHitterThree
+        awayHitterFour
+        awayHitterFive
+        awayHitterSix
+        awayHitterSeven
+        awayHitterEight
+        awayHitterNine
+        homeHitterOne
+        homeHitterTwo
+        homeHitterThree
+        homeHitterFour
+        homeHitterFive
+        homeHitterSix
+        homeHitterSeven
+        homeHitterEight
+        homeHitterNine
+        boxInfo
+        lastUpdate
+        id
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      sportsGameBaseballGameId
+    }
+    nextToken
+  }
+}
+query GetBaseballGame($id: ID!) {
+  getBaseballGame(id: $id) {
+    sportsGameID
+    sportsGame {
+      id
+      startTime
+      homeTeam
+      homeTeamLogo
+      awayTeam
+      awayTeamLogo
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      gameStatus
+      lastUpdate
+      BaseballGame {
+        sportsGameID
+        awayHitterOne
+        awayHitterTwo
+        awayHitterThree
+        awayHitterFour
+        awayHitterFive
+        awayHitterSix
+        awayHitterSeven
+        awayHitterEight
+        awayHitterNine
+        homeHitterOne
+        homeHitterTwo
+        homeHitterThree
+        homeHitterFour
+        homeHitterFive
+        homeHitterSix
+        homeHitterSeven
+        homeHitterEight
+        homeHitterNine
+        boxInfo
+        lastUpdate
+        id
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      sportsGameBaseballGameId
+    }
+    awayHitterOne
+    awayHitterTwo
+    awayHitterThree
+    awayHitterFour
+    awayHitterFive
+    awayHitterSix
+    awayHitterSeven
+    awayHitterEight
+    awayHitterNine
+    homeHitterOne
+    homeHitterTwo
+    homeHitterThree
+    homeHitterFour
+    homeHitterFive
+    homeHitterSix
+    homeHitterSeven
+    homeHitterEight
+    homeHitterNine
+    boxInfo
+    lastUpdate
+    id
+    createdAt
+    updatedAt
+  }
+}
+query ListBaseballGames(
+  $filter: ModelBaseballGameFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listBaseballGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      sportsGameID
+      sportsGame {
+        id
+        startTime
+        homeTeam
+        homeTeamLogo
+        awayTeam
+        awayTeamLogo
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        gameStatus
+        lastUpdate
+        createdAt
+        updatedAt
+        sportsGameBaseballGameId
+      }
+      awayHitterOne
+      awayHitterTwo
+      awayHitterThree
+      awayHitterFour
+      awayHitterFive
+      awayHitterSix
+      awayHitterSeven
+      awayHitterEight
+      awayHitterNine
+      homeHitterOne
+      homeHitterTwo
+      homeHitterThree
+      homeHitterFour
+      homeHitterFive
+      homeHitterSix
+      homeHitterSeven
+      homeHitterEight
+      homeHitterNine
+      boxInfo
+      lastUpdate
+      id
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
 query ProfilesByProfilepictureID(
   $profilepictureID: ID!
   $sortDirection: ModelSortDirection
@@ -862,6 +1099,66 @@ query ImagePostsByProfileID(
       mediaSourceDesktop
       downloadableVideo
       posterImage
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query BaseballGamesBySportsGameID(
+  $sportsGameID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelBaseballGameFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  baseballGamesBySportsGameID(
+    sportsGameID: $sportsGameID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      sportsGameID
+      sportsGame {
+        id
+        startTime
+        homeTeam
+        homeTeamLogo
+        awayTeam
+        awayTeamLogo
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        gameStatus
+        lastUpdate
+        createdAt
+        updatedAt
+        sportsGameBaseballGameId
+      }
+      awayHitterOne
+      awayHitterTwo
+      awayHitterThree
+      awayHitterFour
+      awayHitterFive
+      awayHitterSix
+      awayHitterSeven
+      awayHitterEight
+      awayHitterNine
+      homeHitterOne
+      homeHitterTwo
+      homeHitterThree
+      homeHitterFour
+      homeHitterFive
+      homeHitterSix
+      homeHitterSeven
+      homeHitterEight
+      homeHitterNine
+      boxInfo
+      lastUpdate
+      id
       createdAt
       updatedAt
     }
