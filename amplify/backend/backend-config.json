@@ -12,7 +12,16 @@
       ],
       "output": {
         "authConfig": {
-          "additionalAuthenticationProviders": [],
+          "additionalAuthenticationProviders": [
+            {
+              "apiKeyConfig": {
+                "apiKeyExpirationDate": "2024-09-11T15:52:31.515Z",
+                "apiKeyExpirationDays": 365,
+                "description": "sports-api"
+              },
+              "authenticationType": "API_KEY"
+            }
+          ],
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
@@ -59,7 +68,41 @@
       "service": "Cognito"
     }
   },
+  "function": {
+    "mlbstatsapinode": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "feta"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
   "parameters": {
+    "AMPLIFY_function_mlbstatsapinode_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mlbstatsapinode"
+        }
+      ]
+    },
+    "AMPLIFY_function_mlbstatsapinode_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mlbstatsapinode"
+        }
+      ]
+    },
     "AMPLIFY_storage_fetabe6b35e5_bucketName": {
       "usedBy": [
         {

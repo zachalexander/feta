@@ -5,6 +5,7 @@ import API, { graphqlOperation } from "@aws-amplify/api-graphql";
 import { DomSanitizer } from '@angular/platform-browser';
 import { from, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class SportsService {
   constructor(
     private api: APIService,
     private sanitizer: DomSanitizer,
+    private http: HttpClient
   ) { }
 
   getSportsData(): Observable<any> {
@@ -34,49 +36,21 @@ export class SportsService {
           id
           startTime
           homeTeam
-          homeTeamLogo
           awayTeam
-          awayTeamLogo
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           gameStatus
           lastUpdate
-            BaseballGame {
-            __typename
-            sportsGameID
-            awayHitterOne
-            awayHitterTwo
-            awayHitterThree
-            awayHitterFour
-            awayHitterFive
-            awayHitterSix
-            awayHitterSeven
-            awayHitterEight
-            awayHitterNine
-            homeHitterOne
-            homeHitterTwo
-            homeHitterThree
-            homeHitterFour
-            homeHitterFive
-            homeHitterSix
-            homeHitterSeven
-            homeHitterEight
-            homeHitterNine
-            boxInfo
-            lastUpdate
-            id
-          }
-          sportsGameBaseballGameId
         }
         nextToken
       }
     }`;
 
     const response = (await API.graphql(
-      graphqlOperation(statement)
+      graphqlOperation(statement), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku'}
     )) as any;
     return response.data.listSportsGames.items;
+  }
+
+  getMlbData(): Observable<any> {
+    return this.http.get('https://statsapi.mlb.com/api/v1.1/game/716636/feed/live');
   }
 }

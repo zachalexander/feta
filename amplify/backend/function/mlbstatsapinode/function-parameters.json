@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "api": {
+      "feta": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

@@ -8,6 +8,13 @@
       "cognitoUserPoolId": "authfeta"
     },
     "conflictResolution": {},
-    "additionalAuthTypes": []
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 365,
+        "apiKeyExpirationDate": "2024-09-11T15:52:31.515Z",
+        "keyDescription": "sports-api"
+      }
+    ]
   }
 }

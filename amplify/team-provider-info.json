@@ -29,6 +29,12 @@
         "fetadevvodservice": {
           "s3UUID": "nk0sepbg"
         }
+      },
+      "function": {
+        "mlbstatsapinode": {
+          "deploymentBucketName": "amplify-feta-dev-142441-deployment",
+          "s3Key": "amplify-builds/mlbstatsapinode-397432505248496e3449-build.zip"
+        }
       }
     }
   }

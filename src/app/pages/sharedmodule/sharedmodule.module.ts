@@ -28,6 +28,7 @@ import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
 
 import { InViewportDirective } from 'ng-in-viewport';
 import { CommentModalPage } from 'src/app/modals/comment-modal/comment-modal.page';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -43,7 +44,7 @@ import { CommentModalPage } from 'src/app/modals/comment-modal/comment-modal.pag
     VgOverlayPlayModule,
     VgBufferingModule,
     VgStreamingModule,
-    InViewportDirective
+    InViewportDirective,
   ],
   declarations: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent, CommentModalPage],
   exports: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent, InViewportDirective, CommentModalPage]

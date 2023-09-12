@@ -59,43 +59,13 @@ type Username @model @auth(rules: [{allow: private}]) {
   Profile: Profile @belongsTo
 }
 
-type SportsGame @model @auth(rules: [{allow: private}]) {
+type SportsGame @model @auth(rules: [{allow: public}]) {
   id: ID!
-  startTime: AWSDateTime
   homeTeam: String
-  homeTeamLogo: String
   awayTeam: String
-  awayTeamLogo: String
-  homeTeamWins: Int
-  homeTeamLosses: Int
-  awayTeamWins: Int
-  awayTeamLosses: Int
   gameStatus: String
-  lastUpdate: AWSDateTime
-  BaseballGame: BaseballGame @belongsTo
+  startTime: String
+  lastUpdate: String
+  todayGame: String
 }
 
-type BaseballGame @model @auth(rules: [{allow: private}]) {
-  sportsGameID: ID! @index(name: "bySportsGame")
-  sportsGame: SportsGame @hasOne(fields: ["sportsGameID"])
-  awayHitterOne: AWSJSON
-  awayHitterTwo: AWSJSON
-  awayHitterThree: AWSJSON
-  awayHitterFour: AWSJSON
-  awayHitterFive: AWSJSON
-  awayHitterSix: AWSJSON
-  awayHitterSeven: AWSJSON
-  awayHitterEight: AWSJSON
-  awayHitterNine: AWSJSON
-  homeHitterOne: AWSJSON
-  homeHitterTwo: AWSJSON
-  homeHitterThree: AWSJSON
-  homeHitterFour: AWSJSON
-  homeHitterFive: AWSJSON
-  homeHitterSix: AWSJSON
-  homeHitterSeven: AWSJSON
-  homeHitterEight: AWSJSON
-  homeHitterNine: AWSJSON
-  boxInfo: AWSJSON
-  lastUpdate: AWSDateTime
-}

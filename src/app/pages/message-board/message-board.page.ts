@@ -1,13 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList, ViewChildren, OnChanges, AfterViewInit } from '@angular/core';
 import { APIService } from 'src/app/API.service';
 import { SportsService } from 'src/app/services/sports.service';
-import { Subscription, finalize } from 'rxjs';
-import { ZenObservable } from 'zen-observable-ts';
-
-import { GraphQLSubscription } from '@aws-amplify/api';
-import { OnUpdateSportsGameSubscription } from 'src/app/API.service';
-import { Amplify, API, graphqlOperation } from 'aws-amplify';
-import * as subscriptions from 'src/graphql/subscriptions';
+import { BehaviorSubject, Subscription, finalize } from 'rxjs';
+import { Amplify } from 'aws-amplify';
 
 @Component({
   selector: 'app-message-board',
@@ -19,7 +14,6 @@ export class MessageBoardPage implements OnInit {
   onUpdateSportsGame: Subscription | null = null;
   data: any;
   baseballData: any = [];
-  private subscription: ZenObservable.Subscription | null = null
 
   constructor(
     private api: APIService,
@@ -27,8 +21,10 @@ export class MessageBoardPage implements OnInit {
   ) {}
 
   refresh(){
-    window.location.reload();
+    this.api.UpdateSportsGame({id: '716621', gameStatus: 'started'})
+    // window.location.reload();
   }
+
 
   async ngOnInit() {
 
@@ -40,10 +36,12 @@ export class MessageBoardPage implements OnInit {
     // });
 
   
-
+    const behaviorSubject = new BehaviorSubject('event -1');
+    behaviorSubject.next('event 0')
 
     this.startSubscriptions();
     this.getSportsData();
+    this.getBaseballData();
 
     // this.onUpdateSportsGame = <Subscription>(
     //   this.api.OnUpdateSportsGameListener().subscribe(
@@ -77,6 +75,12 @@ export class MessageBoardPage implements OnInit {
     if (this.onUpdateSportsGame) {
       await this.onUpdateSportsGame.unsubscribe();
     }
+  }
+
+  async getBaseballData(){
+    await this.sportsService.getMlbData().subscribe(data => {
+      console.log(data['liveData']['plays']['currentPlay']['result'])
+    })
   }
 
 

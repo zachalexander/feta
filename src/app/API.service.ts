@@ -29,9 +29,6 @@ export type __SubscriptionContainer = {
   onCreateSportsGame: OnCreateSportsGameSubscription;
   onUpdateSportsGame: OnUpdateSportsGameSubscription;
   onDeleteSportsGame: OnDeleteSportsGameSubscription;
-  onCreateBaseballGame: OnCreateBaseballGameSubscription;
-  onUpdateBaseballGame: OnUpdateBaseballGameSubscription;
-  onDeleteBaseballGame: OnDeleteBaseballGameSubscription;
 };
 
 export type CreateProfilePictureInput = {
@@ -360,197 +357,46 @@ export type DeleteUsernameInput = {
 
 export type CreateSportsGameInput = {
   id?: string | null;
-  startTime?: string | null;
   homeTeam?: string | null;
-  homeTeamLogo?: string | null;
   awayTeam?: string | null;
-  awayTeamLogo?: string | null;
-  homeTeamWins?: number | null;
-  homeTeamLosses?: number | null;
-  awayTeamWins?: number | null;
-  awayTeamLosses?: number | null;
   gameStatus?: string | null;
+  startTime?: string | null;
   lastUpdate?: string | null;
-  sportsGameBaseballGameId?: string | null;
 };
 
 export type ModelSportsGameConditionInput = {
-  startTime?: ModelStringInput | null;
   homeTeam?: ModelStringInput | null;
-  homeTeamLogo?: ModelStringInput | null;
   awayTeam?: ModelStringInput | null;
-  awayTeamLogo?: ModelStringInput | null;
-  homeTeamWins?: ModelIntInput | null;
-  homeTeamLosses?: ModelIntInput | null;
-  awayTeamWins?: ModelIntInput | null;
-  awayTeamLosses?: ModelIntInput | null;
   gameStatus?: ModelStringInput | null;
+  startTime?: ModelStringInput | null;
   lastUpdate?: ModelStringInput | null;
   and?: Array<ModelSportsGameConditionInput | null> | null;
   or?: Array<ModelSportsGameConditionInput | null> | null;
   not?: ModelSportsGameConditionInput | null;
-  sportsGameBaseballGameId?: ModelIDInput | null;
-};
-
-export type ModelIntInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
 };
 
 export type SportsGame = {
   __typename: "SportsGame";
   id: string;
-  startTime?: string | null;
   homeTeam?: string | null;
-  homeTeamLogo?: string | null;
   awayTeam?: string | null;
-  awayTeamLogo?: string | null;
-  homeTeamWins?: number | null;
-  homeTeamLosses?: number | null;
-  awayTeamWins?: number | null;
-  awayTeamLosses?: number | null;
   gameStatus?: string | null;
+  startTime?: string | null;
   lastUpdate?: string | null;
-  BaseballGame?: BaseballGame | null;
-  createdAt: string;
-  updatedAt: string;
-  sportsGameBaseballGameId?: string | null;
-};
-
-export type BaseballGame = {
-  __typename: "BaseballGame";
-  sportsGameID: string;
-  sportsGame?: SportsGame | null;
-  awayHitterOne?: string | null;
-  awayHitterTwo?: string | null;
-  awayHitterThree?: string | null;
-  awayHitterFour?: string | null;
-  awayHitterFive?: string | null;
-  awayHitterSix?: string | null;
-  awayHitterSeven?: string | null;
-  awayHitterEight?: string | null;
-  awayHitterNine?: string | null;
-  homeHitterOne?: string | null;
-  homeHitterTwo?: string | null;
-  homeHitterThree?: string | null;
-  homeHitterFour?: string | null;
-  homeHitterFive?: string | null;
-  homeHitterSix?: string | null;
-  homeHitterSeven?: string | null;
-  homeHitterEight?: string | null;
-  homeHitterNine?: string | null;
-  boxInfo?: string | null;
-  lastUpdate?: string | null;
-  id: string;
   createdAt: string;
   updatedAt: string;
 };
 
 export type UpdateSportsGameInput = {
   id: string;
-  startTime?: string | null;
   homeTeam?: string | null;
-  homeTeamLogo?: string | null;
   awayTeam?: string | null;
-  awayTeamLogo?: string | null;
-  homeTeamWins?: number | null;
-  homeTeamLosses?: number | null;
-  awayTeamWins?: number | null;
-  awayTeamLosses?: number | null;
   gameStatus?: string | null;
+  startTime?: string | null;
   lastUpdate?: string | null;
-  sportsGameBaseballGameId?: string | null;
 };
 
 export type DeleteSportsGameInput = {
-  id: string;
-};
-
-export type CreateBaseballGameInput = {
-  sportsGameID: string;
-  awayHitterOne?: string | null;
-  awayHitterTwo?: string | null;
-  awayHitterThree?: string | null;
-  awayHitterFour?: string | null;
-  awayHitterFive?: string | null;
-  awayHitterSix?: string | null;
-  awayHitterSeven?: string | null;
-  awayHitterEight?: string | null;
-  awayHitterNine?: string | null;
-  homeHitterOne?: string | null;
-  homeHitterTwo?: string | null;
-  homeHitterThree?: string | null;
-  homeHitterFour?: string | null;
-  homeHitterFive?: string | null;
-  homeHitterSix?: string | null;
-  homeHitterSeven?: string | null;
-  homeHitterEight?: string | null;
-  homeHitterNine?: string | null;
-  boxInfo?: string | null;
-  lastUpdate?: string | null;
-  id?: string | null;
-};
-
-export type ModelBaseballGameConditionInput = {
-  sportsGameID?: ModelIDInput | null;
-  awayHitterOne?: ModelStringInput | null;
-  awayHitterTwo?: ModelStringInput | null;
-  awayHitterThree?: ModelStringInput | null;
-  awayHitterFour?: ModelStringInput | null;
-  awayHitterFive?: ModelStringInput | null;
-  awayHitterSix?: ModelStringInput | null;
-  awayHitterSeven?: ModelStringInput | null;
-  awayHitterEight?: ModelStringInput | null;
-  awayHitterNine?: ModelStringInput | null;
-  homeHitterOne?: ModelStringInput | null;
-  homeHitterTwo?: ModelStringInput | null;
-  homeHitterThree?: ModelStringInput | null;
-  homeHitterFour?: ModelStringInput | null;
-  homeHitterFive?: ModelStringInput | null;
-  homeHitterSix?: ModelStringInput | null;
-  homeHitterSeven?: ModelStringInput | null;
-  homeHitterEight?: ModelStringInput | null;
-  homeHitterNine?: ModelStringInput | null;
-  boxInfo?: ModelStringInput | null;
-  lastUpdate?: ModelStringInput | null;
-  and?: Array<ModelBaseballGameConditionInput | null> | null;
-  or?: Array<ModelBaseballGameConditionInput | null> | null;
-  not?: ModelBaseballGameConditionInput | null;
-};
-
-export type UpdateBaseballGameInput = {
-  sportsGameID?: string | null;
-  awayHitterOne?: string | null;
-  awayHitterTwo?: string | null;
-  awayHitterThree?: string | null;
-  awayHitterFour?: string | null;
-  awayHitterFive?: string | null;
-  awayHitterSix?: string | null;
-  awayHitterSeven?: string | null;
-  awayHitterEight?: string | null;
-  awayHitterNine?: string | null;
-  homeHitterOne?: string | null;
-  homeHitterTwo?: string | null;
-  homeHitterThree?: string | null;
-  homeHitterFour?: string | null;
-  homeHitterFive?: string | null;
-  homeHitterSix?: string | null;
-  homeHitterSeven?: string | null;
-  homeHitterEight?: string | null;
-  homeHitterNine?: string | null;
-  boxInfo?: string | null;
-  lastUpdate?: string | null;
-  id: string;
-};
-
-export type DeleteBaseballGameInput = {
   id: string;
 };
 
@@ -655,59 +501,19 @@ export type ModelUsernameConnection = {
 
 export type ModelSportsGameFilterInput = {
   id?: ModelIDInput | null;
-  startTime?: ModelStringInput | null;
   homeTeam?: ModelStringInput | null;
-  homeTeamLogo?: ModelStringInput | null;
   awayTeam?: ModelStringInput | null;
-  awayTeamLogo?: ModelStringInput | null;
-  homeTeamWins?: ModelIntInput | null;
-  homeTeamLosses?: ModelIntInput | null;
-  awayTeamWins?: ModelIntInput | null;
-  awayTeamLosses?: ModelIntInput | null;
   gameStatus?: ModelStringInput | null;
+  startTime?: ModelStringInput | null;
   lastUpdate?: ModelStringInput | null;
   and?: Array<ModelSportsGameFilterInput | null> | null;
   or?: Array<ModelSportsGameFilterInput | null> | null;
   not?: ModelSportsGameFilterInput | null;
-  sportsGameBaseballGameId?: ModelIDInput | null;
 };
 
 export type ModelSportsGameConnection = {
   __typename: "ModelSportsGameConnection";
   items: Array<SportsGame | null>;
-  nextToken?: string | null;
-};
-
-export type ModelBaseballGameFilterInput = {
-  sportsGameID?: ModelIDInput | null;
-  awayHitterOne?: ModelStringInput | null;
-  awayHitterTwo?: ModelStringInput | null;
-  awayHitterThree?: ModelStringInput | null;
-  awayHitterFour?: ModelStringInput | null;
-  awayHitterFive?: ModelStringInput | null;
-  awayHitterSix?: ModelStringInput | null;
-  awayHitterSeven?: ModelStringInput | null;
-  awayHitterEight?: ModelStringInput | null;
-  awayHitterNine?: ModelStringInput | null;
-  homeHitterOne?: ModelStringInput | null;
-  homeHitterTwo?: ModelStringInput | null;
-  homeHitterThree?: ModelStringInput | null;
-  homeHitterFour?: ModelStringInput | null;
-  homeHitterFive?: ModelStringInput | null;
-  homeHitterSix?: ModelStringInput | null;
-  homeHitterSeven?: ModelStringInput | null;
-  homeHitterEight?: ModelStringInput | null;
-  homeHitterNine?: ModelStringInput | null;
-  boxInfo?: ModelStringInput | null;
-  lastUpdate?: ModelStringInput | null;
-  and?: Array<ModelBaseballGameFilterInput | null> | null;
-  or?: Array<ModelBaseballGameFilterInput | null> | null;
-  not?: ModelBaseballGameFilterInput | null;
-};
-
-export type ModelBaseballGameConnection = {
-  __typename: "ModelBaseballGameConnection";
-  items: Array<BaseballGame | null>;
   nextToken?: string | null;
 };
 
@@ -817,57 +623,13 @@ export type ModelSubscriptionUsernameFilterInput = {
 
 export type ModelSubscriptionSportsGameFilterInput = {
   id?: ModelSubscriptionIDInput | null;
-  startTime?: ModelSubscriptionStringInput | null;
   homeTeam?: ModelSubscriptionStringInput | null;
-  homeTeamLogo?: ModelSubscriptionStringInput | null;
   awayTeam?: ModelSubscriptionStringInput | null;
-  awayTeamLogo?: ModelSubscriptionStringInput | null;
-  homeTeamWins?: ModelSubscriptionIntInput | null;
-  homeTeamLosses?: ModelSubscriptionIntInput | null;
-  awayTeamWins?: ModelSubscriptionIntInput | null;
-  awayTeamLosses?: ModelSubscriptionIntInput | null;
   gameStatus?: ModelSubscriptionStringInput | null;
+  startTime?: ModelSubscriptionStringInput | null;
   lastUpdate?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionSportsGameFilterInput | null> | null;
   or?: Array<ModelSubscriptionSportsGameFilterInput | null> | null;
-};
-
-export type ModelSubscriptionIntInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-  in?: Array<number | null> | null;
-  notIn?: Array<number | null> | null;
-};
-
-export type ModelSubscriptionBaseballGameFilterInput = {
-  sportsGameID?: ModelSubscriptionIDInput | null;
-  awayHitterOne?: ModelSubscriptionStringInput | null;
-  awayHitterTwo?: ModelSubscriptionStringInput | null;
-  awayHitterThree?: ModelSubscriptionStringInput | null;
-  awayHitterFour?: ModelSubscriptionStringInput | null;
-  awayHitterFive?: ModelSubscriptionStringInput | null;
-  awayHitterSix?: ModelSubscriptionStringInput | null;
-  awayHitterSeven?: ModelSubscriptionStringInput | null;
-  awayHitterEight?: ModelSubscriptionStringInput | null;
-  awayHitterNine?: ModelSubscriptionStringInput | null;
-  homeHitterOne?: ModelSubscriptionStringInput | null;
-  homeHitterTwo?: ModelSubscriptionStringInput | null;
-  homeHitterThree?: ModelSubscriptionStringInput | null;
-  homeHitterFour?: ModelSubscriptionStringInput | null;
-  homeHitterFive?: ModelSubscriptionStringInput | null;
-  homeHitterSix?: ModelSubscriptionStringInput | null;
-  homeHitterSeven?: ModelSubscriptionStringInput | null;
-  homeHitterEight?: ModelSubscriptionStringInput | null;
-  homeHitterNine?: ModelSubscriptionStringInput | null;
-  boxInfo?: ModelSubscriptionStringInput | null;
-  lastUpdate?: ModelSubscriptionStringInput | null;
-  and?: Array<ModelSubscriptionBaseballGameFilterInput | null> | null;
-  or?: Array<ModelSubscriptionBaseballGameFilterInput | null> | null;
 };
 
 export type CreateProfilePictureMutation = {
@@ -2184,410 +1946,35 @@ export type DeleteUsernameMutation = {
 export type CreateSportsGameMutation = {
   __typename: "SportsGame";
   id: string;
-  startTime?: string | null;
   homeTeam?: string | null;
-  homeTeamLogo?: string | null;
   awayTeam?: string | null;
-  awayTeamLogo?: string | null;
-  homeTeamWins?: number | null;
-  homeTeamLosses?: number | null;
-  awayTeamWins?: number | null;
-  awayTeamLosses?: number | null;
   gameStatus?: string | null;
+  startTime?: string | null;
   lastUpdate?: string | null;
-  BaseballGame?: {
-    __typename: "BaseballGame";
-    sportsGameID: string;
-    sportsGame?: {
-      __typename: "SportsGame";
-      id: string;
-      startTime?: string | null;
-      homeTeam?: string | null;
-      homeTeamLogo?: string | null;
-      awayTeam?: string | null;
-      awayTeamLogo?: string | null;
-      homeTeamWins?: number | null;
-      homeTeamLosses?: number | null;
-      awayTeamWins?: number | null;
-      awayTeamLosses?: number | null;
-      gameStatus?: string | null;
-      lastUpdate?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      sportsGameBaseballGameId?: string | null;
-    } | null;
-    awayHitterOne?: string | null;
-    awayHitterTwo?: string | null;
-    awayHitterThree?: string | null;
-    awayHitterFour?: string | null;
-    awayHitterFive?: string | null;
-    awayHitterSix?: string | null;
-    awayHitterSeven?: string | null;
-    awayHitterEight?: string | null;
-    awayHitterNine?: string | null;
-    homeHitterOne?: string | null;
-    homeHitterTwo?: string | null;
-    homeHitterThree?: string | null;
-    homeHitterFour?: string | null;
-    homeHitterFive?: string | null;
-    homeHitterSix?: string | null;
-    homeHitterSeven?: string | null;
-    homeHitterEight?: string | null;
-    homeHitterNine?: string | null;
-    boxInfo?: string | null;
-    lastUpdate?: string | null;
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
   createdAt: string;
   updatedAt: string;
-  sportsGameBaseballGameId?: string | null;
 };
 
 export type UpdateSportsGameMutation = {
   __typename: "SportsGame";
   id: string;
-  startTime?: string | null;
   homeTeam?: string | null;
-  homeTeamLogo?: string | null;
   awayTeam?: string | null;
-  awayTeamLogo?: string | null;
-  homeTeamWins?: number | null;
-  homeTeamLosses?: number | null;
-  awayTeamWins?: number | null;
-  awayTeamLosses?: number | null;
   gameStatus?: string | null;
+  startTime?: string | null;
   lastUpdate?: string | null;
-  BaseballGame?: {
-    __typename: "BaseballGame";
-    sportsGameID: string;
-    sportsGame?: {
-      __typename: "SportsGame";
-      id: string;
-      startTime?: string | null;
-      homeTeam?: string | null;
-      homeTeamLogo?: string | null;
-      awayTeam?: string | null;
-      awayTeamLogo?: string | null;
-      homeTeamWins?: number | null;
-      homeTeamLosses?: number | null;
-      awayTeamWins?: number | null;
-      awayTeamLosses?: number | null;
-      gameStatus?: string | null;
-      lastUpdate?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      sportsGameBaseballGameId?: string | null;
-    } | null;
-    awayHitterOne?: string | null;
-    awayHitterTwo?: string | null;
-    awayHitterThree?: string | null;
-    awayHitterFour?: string | null;
-    awayHitterFive?: string | null;
-    awayHitterSix?: string | null;
-    awayHitterSeven?: string | null;
-    awayHitterEight?: string | null;
-    awayHitterNine?: string | null;
-    homeHitterOne?: string | null;
-    homeHitterTwo?: string | null;
-    homeHitterThree?: string | null;
-    homeHitterFour?: string | null;
-    homeHitterFive?: string | null;
-    homeHitterSix?: string | null;
-    homeHitterSeven?: string | null;
-    homeHitterEight?: string | null;
-    homeHitterNine?: string | null;
-    boxInfo?: string | null;
-    lastUpdate?: string | null;
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
   createdAt: string;
   updatedAt: string;
-  sportsGameBaseballGameId?: string | null;
 };
 
 export type DeleteSportsGameMutation = {
   __typename: "SportsGame";
   id: string;
-  startTime?: string | null;
   homeTeam?: string | null;
-  homeTeamLogo?: string | null;
   awayTeam?: string | null;
-  awayTeamLogo?: string | null;
-  homeTeamWins?: number | null;
-  homeTeamLosses?: number | null;
-  awayTeamWins?: number | null;
-  awayTeamLosses?: number | null;
   gameStatus?: string | null;
+  startTime?: string | null;
   lastUpdate?: string | null;
-  BaseballGame?: {
-    __typename: "BaseballGame";
-    sportsGameID: string;
-    sportsGame?: {
-      __typename: "SportsGame";
-      id: string;
-      startTime?: string | null;
-      homeTeam?: string | null;
-      homeTeamLogo?: string | null;
-      awayTeam?: string | null;
-      awayTeamLogo?: string | null;
-      homeTeamWins?: number | null;
-      homeTeamLosses?: number | null;
-      awayTeamWins?: number | null;
-      awayTeamLosses?: number | null;
-      gameStatus?: string | null;
-      lastUpdate?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      sportsGameBaseballGameId?: string | null;
-    } | null;
-    awayHitterOne?: string | null;
-    awayHitterTwo?: string | null;
-    awayHitterThree?: string | null;
-    awayHitterFour?: string | null;
-    awayHitterFive?: string | null;
-    awayHitterSix?: string | null;
-    awayHitterSeven?: string | null;
-    awayHitterEight?: string | null;
-    awayHitterNine?: string | null;
-    homeHitterOne?: string | null;
-    homeHitterTwo?: string | null;
-    homeHitterThree?: string | null;
-    homeHitterFour?: string | null;
-    homeHitterFive?: string | null;
-    homeHitterSix?: string | null;
-    homeHitterSeven?: string | null;
-    homeHitterEight?: string | null;
-    homeHitterNine?: string | null;
-    boxInfo?: string | null;
-    lastUpdate?: string | null;
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-  sportsGameBaseballGameId?: string | null;
-};
-
-export type CreateBaseballGameMutation = {
-  __typename: "BaseballGame";
-  sportsGameID: string;
-  sportsGame?: {
-    __typename: "SportsGame";
-    id: string;
-    startTime?: string | null;
-    homeTeam?: string | null;
-    homeTeamLogo?: string | null;
-    awayTeam?: string | null;
-    awayTeamLogo?: string | null;
-    homeTeamWins?: number | null;
-    homeTeamLosses?: number | null;
-    awayTeamWins?: number | null;
-    awayTeamLosses?: number | null;
-    gameStatus?: string | null;
-    lastUpdate?: string | null;
-    BaseballGame?: {
-      __typename: "BaseballGame";
-      sportsGameID: string;
-      awayHitterOne?: string | null;
-      awayHitterTwo?: string | null;
-      awayHitterThree?: string | null;
-      awayHitterFour?: string | null;
-      awayHitterFive?: string | null;
-      awayHitterSix?: string | null;
-      awayHitterSeven?: string | null;
-      awayHitterEight?: string | null;
-      awayHitterNine?: string | null;
-      homeHitterOne?: string | null;
-      homeHitterTwo?: string | null;
-      homeHitterThree?: string | null;
-      homeHitterFour?: string | null;
-      homeHitterFive?: string | null;
-      homeHitterSix?: string | null;
-      homeHitterSeven?: string | null;
-      homeHitterEight?: string | null;
-      homeHitterNine?: string | null;
-      boxInfo?: string | null;
-      lastUpdate?: string | null;
-      id: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    sportsGameBaseballGameId?: string | null;
-  } | null;
-  awayHitterOne?: string | null;
-  awayHitterTwo?: string | null;
-  awayHitterThree?: string | null;
-  awayHitterFour?: string | null;
-  awayHitterFive?: string | null;
-  awayHitterSix?: string | null;
-  awayHitterSeven?: string | null;
-  awayHitterEight?: string | null;
-  awayHitterNine?: string | null;
-  homeHitterOne?: string | null;
-  homeHitterTwo?: string | null;
-  homeHitterThree?: string | null;
-  homeHitterFour?: string | null;
-  homeHitterFive?: string | null;
-  homeHitterSix?: string | null;
-  homeHitterSeven?: string | null;
-  homeHitterEight?: string | null;
-  homeHitterNine?: string | null;
-  boxInfo?: string | null;
-  lastUpdate?: string | null;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateBaseballGameMutation = {
-  __typename: "BaseballGame";
-  sportsGameID: string;
-  sportsGame?: {
-    __typename: "SportsGame";
-    id: string;
-    startTime?: string | null;
-    homeTeam?: string | null;
-    homeTeamLogo?: string | null;
-    awayTeam?: string | null;
-    awayTeamLogo?: string | null;
-    homeTeamWins?: number | null;
-    homeTeamLosses?: number | null;
-    awayTeamWins?: number | null;
-    awayTeamLosses?: number | null;
-    gameStatus?: string | null;
-    lastUpdate?: string | null;
-    BaseballGame?: {
-      __typename: "BaseballGame";
-      sportsGameID: string;
-      awayHitterOne?: string | null;
-      awayHitterTwo?: string | null;
-      awayHitterThree?: string | null;
-      awayHitterFour?: string | null;
-      awayHitterFive?: string | null;
-      awayHitterSix?: string | null;
-      awayHitterSeven?: string | null;
-      awayHitterEight?: string | null;
-      awayHitterNine?: string | null;
-      homeHitterOne?: string | null;
-      homeHitterTwo?: string | null;
-      homeHitterThree?: string | null;
-      homeHitterFour?: string | null;
-      homeHitterFive?: string | null;
-      homeHitterSix?: string | null;
-      homeHitterSeven?: string | null;
-      homeHitterEight?: string | null;
-      homeHitterNine?: string | null;
-      boxInfo?: string | null;
-      lastUpdate?: string | null;
-      id: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    sportsGameBaseballGameId?: string | null;
-  } | null;
-  awayHitterOne?: string | null;
-  awayHitterTwo?: string | null;
-  awayHitterThree?: string | null;
-  awayHitterFour?: string | null;
-  awayHitterFive?: string | null;
-  awayHitterSix?: string | null;
-  awayHitterSeven?: string | null;
-  awayHitterEight?: string | null;
-  awayHitterNine?: string | null;
-  homeHitterOne?: string | null;
-  homeHitterTwo?: string | null;
-  homeHitterThree?: string | null;
-  homeHitterFour?: string | null;
-  homeHitterFive?: string | null;
-  homeHitterSix?: string | null;
-  homeHitterSeven?: string | null;
-  homeHitterEight?: string | null;
-  homeHitterNine?: string | null;
-  boxInfo?: string | null;
-  lastUpdate?: string | null;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteBaseballGameMutation = {
-  __typename: "BaseballGame";
-  sportsGameID: string;
-  sportsGame?: {
-    __typename: "SportsGame";
-    id: string;
-    startTime?: string | null;
-    homeTeam?: string | null;
-    homeTeamLogo?: string | null;
-    awayTeam?: string | null;
-    awayTeamLogo?: string | null;
-    homeTeamWins?: number | null;
-    homeTeamLosses?: number | null;
-    awayTeamWins?: number | null;
-    awayTeamLosses?: number | null;
-    gameStatus?: string | null;
-    lastUpdate?: string | null;
-    BaseballGame?: {
-      __typename: "BaseballGame";
-      sportsGameID: string;
-      awayHitterOne?: string | null;
-      awayHitterTwo?: string | null;
-      awayHitterThree?: string | null;
-      awayHitterFour?: string | null;
-      awayHitterFive?: string | null;
-      awayHitterSix?: string | null;
-      awayHitterSeven?: string | null;
-      awayHitterEight?: string | null;
-      awayHitterNine?: string | null;
-      homeHitterOne?: string | null;
-      homeHitterTwo?: string | null;
-      homeHitterThree?: string | null;
-      homeHitterFour?: string | null;
-      homeHitterFive?: string | null;
-      homeHitterSix?: string | null;
-      homeHitterSeven?: string | null;
-      homeHitterEight?: string | null;
-      homeHitterNine?: string | null;
-      boxInfo?: string | null;
-      lastUpdate?: string | null;
-      id: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    sportsGameBaseballGameId?: string | null;
-  } | null;
-  awayHitterOne?: string | null;
-  awayHitterTwo?: string | null;
-  awayHitterThree?: string | null;
-  awayHitterFour?: string | null;
-  awayHitterFive?: string | null;
-  awayHitterSix?: string | null;
-  awayHitterSeven?: string | null;
-  awayHitterEight?: string | null;
-  awayHitterNine?: string | null;
-  homeHitterOne?: string | null;
-  homeHitterTwo?: string | null;
-  homeHitterThree?: string | null;
-  homeHitterFour?: string | null;
-  homeHitterFive?: string | null;
-  homeHitterSix?: string | null;
-  homeHitterSeven?: string | null;
-  homeHitterEight?: string | null;
-  homeHitterNine?: string | null;
-  boxInfo?: string | null;
-  lastUpdate?: string | null;
-  id: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -3237,65 +2624,13 @@ export type ListUsernamesQuery = {
 export type GetSportsGameQuery = {
   __typename: "SportsGame";
   id: string;
-  startTime?: string | null;
   homeTeam?: string | null;
-  homeTeamLogo?: string | null;
   awayTeam?: string | null;
-  awayTeamLogo?: string | null;
-  homeTeamWins?: number | null;
-  homeTeamLosses?: number | null;
-  awayTeamWins?: number | null;
-  awayTeamLosses?: number | null;
   gameStatus?: string | null;
+  startTime?: string | null;
   lastUpdate?: string | null;
-  BaseballGame?: {
-    __typename: "BaseballGame";
-    sportsGameID: string;
-    sportsGame?: {
-      __typename: "SportsGame";
-      id: string;
-      startTime?: string | null;
-      homeTeam?: string | null;
-      homeTeamLogo?: string | null;
-      awayTeam?: string | null;
-      awayTeamLogo?: string | null;
-      homeTeamWins?: number | null;
-      homeTeamLosses?: number | null;
-      awayTeamWins?: number | null;
-      awayTeamLosses?: number | null;
-      gameStatus?: string | null;
-      lastUpdate?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      sportsGameBaseballGameId?: string | null;
-    } | null;
-    awayHitterOne?: string | null;
-    awayHitterTwo?: string | null;
-    awayHitterThree?: string | null;
-    awayHitterFour?: string | null;
-    awayHitterFive?: string | null;
-    awayHitterSix?: string | null;
-    awayHitterSeven?: string | null;
-    awayHitterEight?: string | null;
-    awayHitterNine?: string | null;
-    homeHitterOne?: string | null;
-    homeHitterTwo?: string | null;
-    homeHitterThree?: string | null;
-    homeHitterFour?: string | null;
-    homeHitterFive?: string | null;
-    homeHitterSix?: string | null;
-    homeHitterSeven?: string | null;
-    homeHitterEight?: string | null;
-    homeHitterNine?: string | null;
-    boxInfo?: string | null;
-    lastUpdate?: string | null;
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
   createdAt: string;
   updatedAt: string;
-  sportsGameBaseballGameId?: string | null;
 };
 
 export type ListSportsGamesQuery = {
@@ -3303,168 +2638,11 @@ export type ListSportsGamesQuery = {
   items: Array<{
     __typename: "SportsGame";
     id: string;
-    startTime?: string | null;
     homeTeam?: string | null;
-    homeTeamLogo?: string | null;
     awayTeam?: string | null;
-    awayTeamLogo?: string | null;
-    homeTeamWins?: number | null;
-    homeTeamLosses?: number | null;
-    awayTeamWins?: number | null;
-    awayTeamLosses?: number | null;
     gameStatus?: string | null;
-    lastUpdate?: string | null;
-    BaseballGame?: {
-      __typename: "BaseballGame";
-      sportsGameID: string;
-      awayHitterOne?: string | null;
-      awayHitterTwo?: string | null;
-      awayHitterThree?: string | null;
-      awayHitterFour?: string | null;
-      awayHitterFive?: string | null;
-      awayHitterSix?: string | null;
-      awayHitterSeven?: string | null;
-      awayHitterEight?: string | null;
-      awayHitterNine?: string | null;
-      homeHitterOne?: string | null;
-      homeHitterTwo?: string | null;
-      homeHitterThree?: string | null;
-      homeHitterFour?: string | null;
-      homeHitterFive?: string | null;
-      homeHitterSix?: string | null;
-      homeHitterSeven?: string | null;
-      homeHitterEight?: string | null;
-      homeHitterNine?: string | null;
-      boxInfo?: string | null;
-      lastUpdate?: string | null;
-      id: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    sportsGameBaseballGameId?: string | null;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type GetBaseballGameQuery = {
-  __typename: "BaseballGame";
-  sportsGameID: string;
-  sportsGame?: {
-    __typename: "SportsGame";
-    id: string;
     startTime?: string | null;
-    homeTeam?: string | null;
-    homeTeamLogo?: string | null;
-    awayTeam?: string | null;
-    awayTeamLogo?: string | null;
-    homeTeamWins?: number | null;
-    homeTeamLosses?: number | null;
-    awayTeamWins?: number | null;
-    awayTeamLosses?: number | null;
-    gameStatus?: string | null;
     lastUpdate?: string | null;
-    BaseballGame?: {
-      __typename: "BaseballGame";
-      sportsGameID: string;
-      awayHitterOne?: string | null;
-      awayHitterTwo?: string | null;
-      awayHitterThree?: string | null;
-      awayHitterFour?: string | null;
-      awayHitterFive?: string | null;
-      awayHitterSix?: string | null;
-      awayHitterSeven?: string | null;
-      awayHitterEight?: string | null;
-      awayHitterNine?: string | null;
-      homeHitterOne?: string | null;
-      homeHitterTwo?: string | null;
-      homeHitterThree?: string | null;
-      homeHitterFour?: string | null;
-      homeHitterFive?: string | null;
-      homeHitterSix?: string | null;
-      homeHitterSeven?: string | null;
-      homeHitterEight?: string | null;
-      homeHitterNine?: string | null;
-      boxInfo?: string | null;
-      lastUpdate?: string | null;
-      id: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    sportsGameBaseballGameId?: string | null;
-  } | null;
-  awayHitterOne?: string | null;
-  awayHitterTwo?: string | null;
-  awayHitterThree?: string | null;
-  awayHitterFour?: string | null;
-  awayHitterFive?: string | null;
-  awayHitterSix?: string | null;
-  awayHitterSeven?: string | null;
-  awayHitterEight?: string | null;
-  awayHitterNine?: string | null;
-  homeHitterOne?: string | null;
-  homeHitterTwo?: string | null;
-  homeHitterThree?: string | null;
-  homeHitterFour?: string | null;
-  homeHitterFive?: string | null;
-  homeHitterSix?: string | null;
-  homeHitterSeven?: string | null;
-  homeHitterEight?: string | null;
-  homeHitterNine?: string | null;
-  boxInfo?: string | null;
-  lastUpdate?: string | null;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListBaseballGamesQuery = {
-  __typename: "ModelBaseballGameConnection";
-  items: Array<{
-    __typename: "BaseballGame";
-    sportsGameID: string;
-    sportsGame?: {
-      __typename: "SportsGame";
-      id: string;
-      startTime?: string | null;
-      homeTeam?: string | null;
-      homeTeamLogo?: string | null;
-      awayTeam?: string | null;
-      awayTeamLogo?: string | null;
-      homeTeamWins?: number | null;
-      homeTeamLosses?: number | null;
-      awayTeamWins?: number | null;
-      awayTeamLosses?: number | null;
-      gameStatus?: string | null;
-      lastUpdate?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      sportsGameBaseballGameId?: string | null;
-    } | null;
-    awayHitterOne?: string | null;
-    awayHitterTwo?: string | null;
-    awayHitterThree?: string | null;
-    awayHitterFour?: string | null;
-    awayHitterFive?: string | null;
-    awayHitterSix?: string | null;
-    awayHitterSeven?: string | null;
-    awayHitterEight?: string | null;
-    awayHitterNine?: string | null;
-    homeHitterOne?: string | null;
-    homeHitterTwo?: string | null;
-    homeHitterThree?: string | null;
-    homeHitterFour?: string | null;
-    homeHitterFive?: string | null;
-    homeHitterSix?: string | null;
-    homeHitterSeven?: string | null;
-    homeHitterEight?: string | null;
-    homeHitterNine?: string | null;
-    boxInfo?: string | null;
-    lastUpdate?: string | null;
-    id: string;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -3674,56 +2852,6 @@ export type ImagePostsByProfileIDQuery = {
     mediaSourceDesktop?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type BaseballGamesBySportsGameIDQuery = {
-  __typename: "ModelBaseballGameConnection";
-  items: Array<{
-    __typename: "BaseballGame";
-    sportsGameID: string;
-    sportsGame?: {
-      __typename: "SportsGame";
-      id: string;
-      startTime?: string | null;
-      homeTeam?: string | null;
-      homeTeamLogo?: string | null;
-      awayTeam?: string | null;
-      awayTeamLogo?: string | null;
-      homeTeamWins?: number | null;
-      homeTeamLosses?: number | null;
-      awayTeamWins?: number | null;
-      awayTeamLosses?: number | null;
-      gameStatus?: string | null;
-      lastUpdate?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      sportsGameBaseballGameId?: string | null;
-    } | null;
-    awayHitterOne?: string | null;
-    awayHitterTwo?: string | null;
-    awayHitterThree?: string | null;
-    awayHitterFour?: string | null;
-    awayHitterFive?: string | null;
-    awayHitterSix?: string | null;
-    awayHitterSeven?: string | null;
-    awayHitterEight?: string | null;
-    awayHitterNine?: string | null;
-    homeHitterOne?: string | null;
-    homeHitterTwo?: string | null;
-    homeHitterThree?: string | null;
-    homeHitterFour?: string | null;
-    homeHitterFive?: string | null;
-    homeHitterSix?: string | null;
-    homeHitterSeven?: string | null;
-    homeHitterEight?: string | null;
-    homeHitterNine?: string | null;
-    boxInfo?: string | null;
-    lastUpdate?: string | null;
-    id: string;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -5044,410 +4172,35 @@ export type OnDeleteUsernameSubscription = {
 export type OnCreateSportsGameSubscription = {
   __typename: "SportsGame";
   id: string;
-  startTime?: string | null;
   homeTeam?: string | null;
-  homeTeamLogo?: string | null;
   awayTeam?: string | null;
-  awayTeamLogo?: string | null;
-  homeTeamWins?: number | null;
-  homeTeamLosses?: number | null;
-  awayTeamWins?: number | null;
-  awayTeamLosses?: number | null;
   gameStatus?: string | null;
+  startTime?: string | null;
   lastUpdate?: string | null;
-  BaseballGame?: {
-    __typename: "BaseballGame";
-    sportsGameID: string;
-    sportsGame?: {
-      __typename: "SportsGame";
-      id: string;
-      startTime?: string | null;
-      homeTeam?: string | null;
-      homeTeamLogo?: string | null;
-      awayTeam?: string | null;
-      awayTeamLogo?: string | null;
-      homeTeamWins?: number | null;
-      homeTeamLosses?: number | null;
-      awayTeamWins?: number | null;
-      awayTeamLosses?: number | null;
-      gameStatus?: string | null;
-      lastUpdate?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      sportsGameBaseballGameId?: string | null;
-    } | null;
-    awayHitterOne?: string | null;
-    awayHitterTwo?: string | null;
-    awayHitterThree?: string | null;
-    awayHitterFour?: string | null;
-    awayHitterFive?: string | null;
-    awayHitterSix?: string | null;
-    awayHitterSeven?: string | null;
-    awayHitterEight?: string | null;
-    awayHitterNine?: string | null;
-    homeHitterOne?: string | null;
-    homeHitterTwo?: string | null;
-    homeHitterThree?: string | null;
-    homeHitterFour?: string | null;
-    homeHitterFive?: string | null;
-    homeHitterSix?: string | null;
-    homeHitterSeven?: string | null;
-    homeHitterEight?: string | null;
-    homeHitterNine?: string | null;
-    boxInfo?: string | null;
-    lastUpdate?: string | null;
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
   createdAt: string;
   updatedAt: string;
-  sportsGameBaseballGameId?: string | null;
 };
 
 export type OnUpdateSportsGameSubscription = {
   __typename: "SportsGame";
   id: string;
-  startTime?: string | null;
   homeTeam?: string | null;
-  homeTeamLogo?: string | null;
   awayTeam?: string | null;
-  awayTeamLogo?: string | null;
-  homeTeamWins?: number | null;
-  homeTeamLosses?: number | null;
-  awayTeamWins?: number | null;
-  awayTeamLosses?: number | null;
   gameStatus?: string | null;
+  startTime?: string | null;
   lastUpdate?: string | null;
-  BaseballGame?: {
-    __typename: "BaseballGame";
-    sportsGameID: string;
-    sportsGame?: {
-      __typename: "SportsGame";
-      id: string;
-      startTime?: string | null;
-      homeTeam?: string | null;
-      homeTeamLogo?: string | null;
-      awayTeam?: string | null;
-      awayTeamLogo?: string | null;
-      homeTeamWins?: number | null;
-      homeTeamLosses?: number | null;
-      awayTeamWins?: number | null;
-      awayTeamLosses?: number | null;
-      gameStatus?: string | null;
-      lastUpdate?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      sportsGameBaseballGameId?: string | null;
-    } | null;
-    awayHitterOne?: string | null;
-    awayHitterTwo?: string | null;
-    awayHitterThree?: string | null;
-    awayHitterFour?: string | null;
-    awayHitterFive?: string | null;
-    awayHitterSix?: string | null;
-    awayHitterSeven?: string | null;
-    awayHitterEight?: string | null;
-    awayHitterNine?: string | null;
-    homeHitterOne?: string | null;
-    homeHitterTwo?: string | null;
-    homeHitterThree?: string | null;
-    homeHitterFour?: string | null;
-    homeHitterFive?: string | null;
-    homeHitterSix?: string | null;
-    homeHitterSeven?: string | null;
-    homeHitterEight?: string | null;
-    homeHitterNine?: string | null;
-    boxInfo?: string | null;
-    lastUpdate?: string | null;
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
   createdAt: string;
   updatedAt: string;
-  sportsGameBaseballGameId?: string | null;
 };
 
 export type OnDeleteSportsGameSubscription = {
   __typename: "SportsGame";
   id: string;
-  startTime?: string | null;
   homeTeam?: string | null;
-  homeTeamLogo?: string | null;
   awayTeam?: string | null;
-  awayTeamLogo?: string | null;
-  homeTeamWins?: number | null;
-  homeTeamLosses?: number | null;
-  awayTeamWins?: number | null;
-  awayTeamLosses?: number | null;
   gameStatus?: string | null;
+  startTime?: string | null;
   lastUpdate?: string | null;
-  BaseballGame?: {
-    __typename: "BaseballGame";
-    sportsGameID: string;
-    sportsGame?: {
-      __typename: "SportsGame";
-      id: string;
-      startTime?: string | null;
-      homeTeam?: string | null;
-      homeTeamLogo?: string | null;
-      awayTeam?: string | null;
-      awayTeamLogo?: string | null;
-      homeTeamWins?: number | null;
-      homeTeamLosses?: number | null;
-      awayTeamWins?: number | null;
-      awayTeamLosses?: number | null;
-      gameStatus?: string | null;
-      lastUpdate?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      sportsGameBaseballGameId?: string | null;
-    } | null;
-    awayHitterOne?: string | null;
-    awayHitterTwo?: string | null;
-    awayHitterThree?: string | null;
-    awayHitterFour?: string | null;
-    awayHitterFive?: string | null;
-    awayHitterSix?: string | null;
-    awayHitterSeven?: string | null;
-    awayHitterEight?: string | null;
-    awayHitterNine?: string | null;
-    homeHitterOne?: string | null;
-    homeHitterTwo?: string | null;
-    homeHitterThree?: string | null;
-    homeHitterFour?: string | null;
-    homeHitterFive?: string | null;
-    homeHitterSix?: string | null;
-    homeHitterSeven?: string | null;
-    homeHitterEight?: string | null;
-    homeHitterNine?: string | null;
-    boxInfo?: string | null;
-    lastUpdate?: string | null;
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-  sportsGameBaseballGameId?: string | null;
-};
-
-export type OnCreateBaseballGameSubscription = {
-  __typename: "BaseballGame";
-  sportsGameID: string;
-  sportsGame?: {
-    __typename: "SportsGame";
-    id: string;
-    startTime?: string | null;
-    homeTeam?: string | null;
-    homeTeamLogo?: string | null;
-    awayTeam?: string | null;
-    awayTeamLogo?: string | null;
-    homeTeamWins?: number | null;
-    homeTeamLosses?: number | null;
-    awayTeamWins?: number | null;
-    awayTeamLosses?: number | null;
-    gameStatus?: string | null;
-    lastUpdate?: string | null;
-    BaseballGame?: {
-      __typename: "BaseballGame";
-      sportsGameID: string;
-      awayHitterOne?: string | null;
-      awayHitterTwo?: string | null;
-      awayHitterThree?: string | null;
-      awayHitterFour?: string | null;
-      awayHitterFive?: string | null;
-      awayHitterSix?: string | null;
-      awayHitterSeven?: string | null;
-      awayHitterEight?: string | null;
-      awayHitterNine?: string | null;
-      homeHitterOne?: string | null;
-      homeHitterTwo?: string | null;
-      homeHitterThree?: string | null;
-      homeHitterFour?: string | null;
-      homeHitterFive?: string | null;
-      homeHitterSix?: string | null;
-      homeHitterSeven?: string | null;
-      homeHitterEight?: string | null;
-      homeHitterNine?: string | null;
-      boxInfo?: string | null;
-      lastUpdate?: string | null;
-      id: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    sportsGameBaseballGameId?: string | null;
-  } | null;
-  awayHitterOne?: string | null;
-  awayHitterTwo?: string | null;
-  awayHitterThree?: string | null;
-  awayHitterFour?: string | null;
-  awayHitterFive?: string | null;
-  awayHitterSix?: string | null;
-  awayHitterSeven?: string | null;
-  awayHitterEight?: string | null;
-  awayHitterNine?: string | null;
-  homeHitterOne?: string | null;
-  homeHitterTwo?: string | null;
-  homeHitterThree?: string | null;
-  homeHitterFour?: string | null;
-  homeHitterFive?: string | null;
-  homeHitterSix?: string | null;
-  homeHitterSeven?: string | null;
-  homeHitterEight?: string | null;
-  homeHitterNine?: string | null;
-  boxInfo?: string | null;
-  lastUpdate?: string | null;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateBaseballGameSubscription = {
-  __typename: "BaseballGame";
-  sportsGameID: string;
-  sportsGame?: {
-    __typename: "SportsGame";
-    id: string;
-    startTime?: string | null;
-    homeTeam?: string | null;
-    homeTeamLogo?: string | null;
-    awayTeam?: string | null;
-    awayTeamLogo?: string | null;
-    homeTeamWins?: number | null;
-    homeTeamLosses?: number | null;
-    awayTeamWins?: number | null;
-    awayTeamLosses?: number | null;
-    gameStatus?: string | null;
-    lastUpdate?: string | null;
-    BaseballGame?: {
-      __typename: "BaseballGame";
-      sportsGameID: string;
-      awayHitterOne?: string | null;
-      awayHitterTwo?: string | null;
-      awayHitterThree?: string | null;
-      awayHitterFour?: string | null;
-      awayHitterFive?: string | null;
-      awayHitterSix?: string | null;
-      awayHitterSeven?: string | null;
-      awayHitterEight?: string | null;
-      awayHitterNine?: string | null;
-      homeHitterOne?: string | null;
-      homeHitterTwo?: string | null;
-      homeHitterThree?: string | null;
-      homeHitterFour?: string | null;
-      homeHitterFive?: string | null;
-      homeHitterSix?: string | null;
-      homeHitterSeven?: string | null;
-      homeHitterEight?: string | null;
-      homeHitterNine?: string | null;
-      boxInfo?: string | null;
-      lastUpdate?: string | null;
-      id: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    sportsGameBaseballGameId?: string | null;
-  } | null;
-  awayHitterOne?: string | null;
-  awayHitterTwo?: string | null;
-  awayHitterThree?: string | null;
-  awayHitterFour?: string | null;
-  awayHitterFive?: string | null;
-  awayHitterSix?: string | null;
-  awayHitterSeven?: string | null;
-  awayHitterEight?: string | null;
-  awayHitterNine?: string | null;
-  homeHitterOne?: string | null;
-  homeHitterTwo?: string | null;
-  homeHitterThree?: string | null;
-  homeHitterFour?: string | null;
-  homeHitterFive?: string | null;
-  homeHitterSix?: string | null;
-  homeHitterSeven?: string | null;
-  homeHitterEight?: string | null;
-  homeHitterNine?: string | null;
-  boxInfo?: string | null;
-  lastUpdate?: string | null;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteBaseballGameSubscription = {
-  __typename: "BaseballGame";
-  sportsGameID: string;
-  sportsGame?: {
-    __typename: "SportsGame";
-    id: string;
-    startTime?: string | null;
-    homeTeam?: string | null;
-    homeTeamLogo?: string | null;
-    awayTeam?: string | null;
-    awayTeamLogo?: string | null;
-    homeTeamWins?: number | null;
-    homeTeamLosses?: number | null;
-    awayTeamWins?: number | null;
-    awayTeamLosses?: number | null;
-    gameStatus?: string | null;
-    lastUpdate?: string | null;
-    BaseballGame?: {
-      __typename: "BaseballGame";
-      sportsGameID: string;
-      awayHitterOne?: string | null;
-      awayHitterTwo?: string | null;
-      awayHitterThree?: string | null;
-      awayHitterFour?: string | null;
-      awayHitterFive?: string | null;
-      awayHitterSix?: string | null;
-      awayHitterSeven?: string | null;
-      awayHitterEight?: string | null;
-      awayHitterNine?: string | null;
-      homeHitterOne?: string | null;
-      homeHitterTwo?: string | null;
-      homeHitterThree?: string | null;
-      homeHitterFour?: string | null;
-      homeHitterFive?: string | null;
-      homeHitterSix?: string | null;
-      homeHitterSeven?: string | null;
-      homeHitterEight?: string | null;
-      homeHitterNine?: string | null;
-      boxInfo?: string | null;
-      lastUpdate?: string | null;
-      id: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    sportsGameBaseballGameId?: string | null;
-  } | null;
-  awayHitterOne?: string | null;
-  awayHitterTwo?: string | null;
-  awayHitterThree?: string | null;
-  awayHitterFour?: string | null;
-  awayHitterFive?: string | null;
-  awayHitterSix?: string | null;
-  awayHitterSeven?: string | null;
-  awayHitterEight?: string | null;
-  awayHitterNine?: string | null;
-  homeHitterOne?: string | null;
-  homeHitterTwo?: string | null;
-  homeHitterThree?: string | null;
-  homeHitterFour?: string | null;
-  homeHitterFive?: string | null;
-  homeHitterSix?: string | null;
-  homeHitterSeven?: string | null;
-  homeHitterEight?: string | null;
-  homeHitterNine?: string | null;
-  boxInfo?: string | null;
-  lastUpdate?: string | null;
-  id: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -7436,65 +6189,13 @@ export class APIService {
         createSportsGame(input: $input, condition: $condition) {
           __typename
           id
-          startTime
           homeTeam
-          homeTeamLogo
           awayTeam
-          awayTeamLogo
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           gameStatus
+          startTime
           lastUpdate
-          BaseballGame {
-            __typename
-            sportsGameID
-            sportsGame {
-              __typename
-              id
-              startTime
-              homeTeam
-              homeTeamLogo
-              awayTeam
-              awayTeamLogo
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              gameStatus
-              lastUpdate
-              createdAt
-              updatedAt
-              sportsGameBaseballGameId
-            }
-            awayHitterOne
-            awayHitterTwo
-            awayHitterThree
-            awayHitterFour
-            awayHitterFive
-            awayHitterSix
-            awayHitterSeven
-            awayHitterEight
-            awayHitterNine
-            homeHitterOne
-            homeHitterTwo
-            homeHitterThree
-            homeHitterFour
-            homeHitterFive
-            homeHitterSix
-            homeHitterSeven
-            homeHitterEight
-            homeHitterNine
-            boxInfo
-            lastUpdate
-            id
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
-          sportsGameBaseballGameId
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7516,65 +6217,11 @@ export class APIService {
         updateSportsGame(input: $input, condition: $condition) {
           __typename
           id
-          startTime
           homeTeam
-          homeTeamLogo
           awayTeam
-          awayTeamLogo
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           gameStatus
+          startTime
           lastUpdate
-          BaseballGame {
-            __typename
-            sportsGameID
-            sportsGame {
-              __typename
-              id
-              startTime
-              homeTeam
-              homeTeamLogo
-              awayTeam
-              awayTeamLogo
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              gameStatus
-              lastUpdate
-              createdAt
-              updatedAt
-              sportsGameBaseballGameId
-            }
-            awayHitterOne
-            awayHitterTwo
-            awayHitterThree
-            awayHitterFour
-            awayHitterFive
-            awayHitterSix
-            awayHitterSeven
-            awayHitterEight
-            awayHitterNine
-            homeHitterOne
-            homeHitterTwo
-            homeHitterThree
-            homeHitterFour
-            homeHitterFive
-            homeHitterSix
-            homeHitterSeven
-            homeHitterEight
-            homeHitterNine
-            boxInfo
-            lastUpdate
-            id
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-          sportsGameBaseballGameId
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7584,7 +6231,7 @@ export class APIService {
       gqlAPIServiceArguments.condition = condition;
     }
     const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
+      graphqlOperation(statement, gqlAPIServiceArguments), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku' }
     )) as any;
     return <UpdateSportsGameMutation>response.data.updateSportsGame;
   }
@@ -7596,65 +6243,13 @@ export class APIService {
         deleteSportsGame(input: $input, condition: $condition) {
           __typename
           id
-          startTime
           homeTeam
-          homeTeamLogo
           awayTeam
-          awayTeamLogo
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           gameStatus
+          startTime
           lastUpdate
-          BaseballGame {
-            __typename
-            sportsGameID
-            sportsGame {
-              __typename
-              id
-              startTime
-              homeTeam
-              homeTeamLogo
-              awayTeam
-              awayTeamLogo
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              gameStatus
-              lastUpdate
-              createdAt
-              updatedAt
-              sportsGameBaseballGameId
-            }
-            awayHitterOne
-            awayHitterTwo
-            awayHitterThree
-            awayHitterFour
-            awayHitterFive
-            awayHitterSix
-            awayHitterSeven
-            awayHitterEight
-            awayHitterNine
-            homeHitterOne
-            homeHitterTwo
-            homeHitterThree
-            homeHitterFour
-            homeHitterFive
-            homeHitterSix
-            homeHitterSeven
-            homeHitterEight
-            homeHitterNine
-            boxInfo
-            lastUpdate
-            id
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
-          sportsGameBaseballGameId
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7667,273 +6262,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteSportsGameMutation>response.data.deleteSportsGame;
-  }
-  async CreateBaseballGame(
-    input: CreateBaseballGameInput,
-    condition?: ModelBaseballGameConditionInput
-  ): Promise<CreateBaseballGameMutation> {
-    const statement = `mutation CreateBaseballGame($input: CreateBaseballGameInput!, $condition: ModelBaseballGameConditionInput) {
-        createBaseballGame(input: $input, condition: $condition) {
-          __typename
-          sportsGameID
-          sportsGame {
-            __typename
-            id
-            startTime
-            homeTeam
-            homeTeamLogo
-            awayTeam
-            awayTeamLogo
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            gameStatus
-            lastUpdate
-            BaseballGame {
-              __typename
-              sportsGameID
-              awayHitterOne
-              awayHitterTwo
-              awayHitterThree
-              awayHitterFour
-              awayHitterFive
-              awayHitterSix
-              awayHitterSeven
-              awayHitterEight
-              awayHitterNine
-              homeHitterOne
-              homeHitterTwo
-              homeHitterThree
-              homeHitterFour
-              homeHitterFive
-              homeHitterSix
-              homeHitterSeven
-              homeHitterEight
-              homeHitterNine
-              boxInfo
-              lastUpdate
-              id
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-            sportsGameBaseballGameId
-          }
-          awayHitterOne
-          awayHitterTwo
-          awayHitterThree
-          awayHitterFour
-          awayHitterFive
-          awayHitterSix
-          awayHitterSeven
-          awayHitterEight
-          awayHitterNine
-          homeHitterOne
-          homeHitterTwo
-          homeHitterThree
-          homeHitterFour
-          homeHitterFive
-          homeHitterSix
-          homeHitterSeven
-          homeHitterEight
-          homeHitterNine
-          boxInfo
-          lastUpdate
-          id
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateBaseballGameMutation>response.data.createBaseballGame;
-  }
-  async UpdateBaseballGame(
-    input: UpdateBaseballGameInput,
-    condition?: ModelBaseballGameConditionInput
-  ): Promise<UpdateBaseballGameMutation> {
-    const statement = `mutation UpdateBaseballGame($input: UpdateBaseballGameInput!, $condition: ModelBaseballGameConditionInput) {
-        updateBaseballGame(input: $input, condition: $condition) {
-          __typename
-          sportsGameID
-          sportsGame {
-            __typename
-            id
-            startTime
-            homeTeam
-            homeTeamLogo
-            awayTeam
-            awayTeamLogo
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            gameStatus
-            lastUpdate
-            BaseballGame {
-              __typename
-              sportsGameID
-              awayHitterOne
-              awayHitterTwo
-              awayHitterThree
-              awayHitterFour
-              awayHitterFive
-              awayHitterSix
-              awayHitterSeven
-              awayHitterEight
-              awayHitterNine
-              homeHitterOne
-              homeHitterTwo
-              homeHitterThree
-              homeHitterFour
-              homeHitterFive
-              homeHitterSix
-              homeHitterSeven
-              homeHitterEight
-              homeHitterNine
-              boxInfo
-              lastUpdate
-              id
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-            sportsGameBaseballGameId
-          }
-          awayHitterOne
-          awayHitterTwo
-          awayHitterThree
-          awayHitterFour
-          awayHitterFive
-          awayHitterSix
-          awayHitterSeven
-          awayHitterEight
-          awayHitterNine
-          homeHitterOne
-          homeHitterTwo
-          homeHitterThree
-          homeHitterFour
-          homeHitterFive
-          homeHitterSix
-          homeHitterSeven
-          homeHitterEight
-          homeHitterNine
-          boxInfo
-          lastUpdate
-          id
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateBaseballGameMutation>response.data.updateBaseballGame;
-  }
-  async DeleteBaseballGame(
-    input: DeleteBaseballGameInput,
-    condition?: ModelBaseballGameConditionInput
-  ): Promise<DeleteBaseballGameMutation> {
-    const statement = `mutation DeleteBaseballGame($input: DeleteBaseballGameInput!, $condition: ModelBaseballGameConditionInput) {
-        deleteBaseballGame(input: $input, condition: $condition) {
-          __typename
-          sportsGameID
-          sportsGame {
-            __typename
-            id
-            startTime
-            homeTeam
-            homeTeamLogo
-            awayTeam
-            awayTeamLogo
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            gameStatus
-            lastUpdate
-            BaseballGame {
-              __typename
-              sportsGameID
-              awayHitterOne
-              awayHitterTwo
-              awayHitterThree
-              awayHitterFour
-              awayHitterFive
-              awayHitterSix
-              awayHitterSeven
-              awayHitterEight
-              awayHitterNine
-              homeHitterOne
-              homeHitterTwo
-              homeHitterThree
-              homeHitterFour
-              homeHitterFive
-              homeHitterSix
-              homeHitterSeven
-              homeHitterEight
-              homeHitterNine
-              boxInfo
-              lastUpdate
-              id
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-            sportsGameBaseballGameId
-          }
-          awayHitterOne
-          awayHitterTwo
-          awayHitterThree
-          awayHitterFour
-          awayHitterFive
-          awayHitterSix
-          awayHitterSeven
-          awayHitterEight
-          awayHitterNine
-          homeHitterOne
-          homeHitterTwo
-          homeHitterThree
-          homeHitterFour
-          homeHitterFive
-          homeHitterSix
-          homeHitterSeven
-          homeHitterEight
-          homeHitterNine
-          boxInfo
-          lastUpdate
-          id
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteBaseballGameMutation>response.data.deleteBaseballGame;
   }
   async GetProfilePicture(id: string): Promise<GetProfilePictureQuery> {
     const statement = `query GetProfilePicture($id: ID!) {
@@ -8737,65 +7065,13 @@ export class APIService {
         getSportsGame(id: $id) {
           __typename
           id
-          startTime
           homeTeam
-          homeTeamLogo
           awayTeam
-          awayTeamLogo
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           gameStatus
+          startTime
           lastUpdate
-          BaseballGame {
-            __typename
-            sportsGameID
-            sportsGame {
-              __typename
-              id
-              startTime
-              homeTeam
-              homeTeamLogo
-              awayTeam
-              awayTeamLogo
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              gameStatus
-              lastUpdate
-              createdAt
-              updatedAt
-              sportsGameBaseballGameId
-            }
-            awayHitterOne
-            awayHitterTwo
-            awayHitterThree
-            awayHitterFour
-            awayHitterFive
-            awayHitterSix
-            awayHitterSeven
-            awayHitterEight
-            awayHitterNine
-            homeHitterOne
-            homeHitterTwo
-            homeHitterThree
-            homeHitterFour
-            homeHitterFive
-            homeHitterSix
-            homeHitterSeven
-            homeHitterEight
-            homeHitterNine
-            boxInfo
-            lastUpdate
-            id
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
-          sportsGameBaseballGameId
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -8817,199 +7093,11 @@ export class APIService {
           items {
             __typename
             id
-            startTime
             homeTeam
-            homeTeamLogo
             awayTeam
-            awayTeamLogo
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
             gameStatus
-            lastUpdate
-            BaseballGame {
-              __typename
-              sportsGameID
-              awayHitterOne
-              awayHitterTwo
-              awayHitterThree
-              awayHitterFour
-              awayHitterFive
-              awayHitterSix
-              awayHitterSeven
-              awayHitterEight
-              awayHitterNine
-              homeHitterOne
-              homeHitterTwo
-              homeHitterThree
-              homeHitterFour
-              homeHitterFive
-              homeHitterSix
-              homeHitterSeven
-              homeHitterEight
-              homeHitterNine
-              boxInfo
-              lastUpdate
-              id
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-            sportsGameBaseballGameId
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListSportsGamesQuery>response.data.listSportsGames;
-  }
-  async GetBaseballGame(id: string): Promise<GetBaseballGameQuery> {
-    const statement = `query GetBaseballGame($id: ID!) {
-        getBaseballGame(id: $id) {
-          __typename
-          sportsGameID
-          sportsGame {
-            __typename
-            id
             startTime
-            homeTeam
-            homeTeamLogo
-            awayTeam
-            awayTeamLogo
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            gameStatus
             lastUpdate
-            BaseballGame {
-              __typename
-              sportsGameID
-              awayHitterOne
-              awayHitterTwo
-              awayHitterThree
-              awayHitterFour
-              awayHitterFive
-              awayHitterSix
-              awayHitterSeven
-              awayHitterEight
-              awayHitterNine
-              homeHitterOne
-              homeHitterTwo
-              homeHitterThree
-              homeHitterFour
-              homeHitterFive
-              homeHitterSix
-              homeHitterSeven
-              homeHitterEight
-              homeHitterNine
-              boxInfo
-              lastUpdate
-              id
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-            sportsGameBaseballGameId
-          }
-          awayHitterOne
-          awayHitterTwo
-          awayHitterThree
-          awayHitterFour
-          awayHitterFive
-          awayHitterSix
-          awayHitterSeven
-          awayHitterEight
-          awayHitterNine
-          homeHitterOne
-          homeHitterTwo
-          homeHitterThree
-          homeHitterFour
-          homeHitterFive
-          homeHitterSix
-          homeHitterSeven
-          homeHitterEight
-          homeHitterNine
-          boxInfo
-          lastUpdate
-          id
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetBaseballGameQuery>response.data.getBaseballGame;
-  }
-  async ListBaseballGames(
-    filter?: ModelBaseballGameFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListBaseballGamesQuery> {
-    const statement = `query ListBaseballGames($filter: ModelBaseballGameFilterInput, $limit: Int, $nextToken: String) {
-        listBaseballGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            sportsGameID
-            sportsGame {
-              __typename
-              id
-              startTime
-              homeTeam
-              homeTeamLogo
-              awayTeam
-              awayTeamLogo
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              gameStatus
-              lastUpdate
-              createdAt
-              updatedAt
-              sportsGameBaseballGameId
-            }
-            awayHitterOne
-            awayHitterTwo
-            awayHitterThree
-            awayHitterFour
-            awayHitterFive
-            awayHitterSix
-            awayHitterSeven
-            awayHitterEight
-            awayHitterNine
-            homeHitterOne
-            homeHitterTwo
-            homeHitterThree
-            homeHitterFour
-            homeHitterFive
-            homeHitterSix
-            homeHitterSeven
-            homeHitterEight
-            homeHitterNine
-            boxInfo
-            lastUpdate
-            id
             createdAt
             updatedAt
           }
@@ -9029,7 +7117,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListBaseballGamesQuery>response.data.listBaseballGames;
+    return <ListSportsGamesQuery>response.data.listSportsGames;
   }
   async ProfilesByProfilepictureID(
     profilepictureID: string,
@@ -9359,86 +7447,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ImagePostsByProfileIDQuery>response.data.imagePostsByProfileID;
-  }
-  async BaseballGamesBySportsGameID(
-    sportsGameID: string,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelBaseballGameFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<BaseballGamesBySportsGameIDQuery> {
-    const statement = `query BaseballGamesBySportsGameID($sportsGameID: ID!, $sortDirection: ModelSortDirection, $filter: ModelBaseballGameFilterInput, $limit: Int, $nextToken: String) {
-        baseballGamesBySportsGameID(sportsGameID: $sportsGameID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            sportsGameID
-            sportsGame {
-              __typename
-              id
-              startTime
-              homeTeam
-              homeTeamLogo
-              awayTeam
-              awayTeamLogo
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              gameStatus
-              lastUpdate
-              createdAt
-              updatedAt
-              sportsGameBaseballGameId
-            }
-            awayHitterOne
-            awayHitterTwo
-            awayHitterThree
-            awayHitterFour
-            awayHitterFive
-            awayHitterSix
-            awayHitterSeven
-            awayHitterEight
-            awayHitterNine
-            homeHitterOne
-            homeHitterTwo
-            homeHitterThree
-            homeHitterFour
-            homeHitterFive
-            homeHitterSix
-            homeHitterSeven
-            homeHitterEight
-            homeHitterNine
-            boxInfo
-            lastUpdate
-            id
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      sportsGameID
-    };
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <BaseballGamesBySportsGameIDQuery>(
-      response.data.baseballGamesBySportsGameID
-    );
   }
   OnCreateProfilePictureListener(
     filter?: ModelSubscriptionProfilePictureFilterInput
@@ -11027,65 +9035,13 @@ export class APIService {
         onCreateSportsGame(filter: $filter) {
           __typename
           id
-          startTime
           homeTeam
-          homeTeamLogo
           awayTeam
-          awayTeamLogo
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           gameStatus
+          startTime
           lastUpdate
-          BaseballGame {
-            __typename
-            sportsGameID
-            sportsGame {
-              __typename
-              id
-              startTime
-              homeTeam
-              homeTeamLogo
-              awayTeam
-              awayTeamLogo
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              gameStatus
-              lastUpdate
-              createdAt
-              updatedAt
-              sportsGameBaseballGameId
-            }
-            awayHitterOne
-            awayHitterTwo
-            awayHitterThree
-            awayHitterFour
-            awayHitterFive
-            awayHitterSix
-            awayHitterSeven
-            awayHitterEight
-            awayHitterNine
-            homeHitterOne
-            homeHitterTwo
-            homeHitterThree
-            homeHitterFour
-            homeHitterFive
-            homeHitterSix
-            homeHitterSeven
-            homeHitterEight
-            homeHitterNine
-            boxInfo
-            lastUpdate
-            id
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
-          sportsGameBaseballGameId
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -11108,65 +9064,11 @@ export class APIService {
         onUpdateSportsGame(filter: $filter) {
           __typename
           id
-          startTime
           homeTeam
-          homeTeamLogo
           awayTeam
-          awayTeamLogo
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           gameStatus
+          startTime
           lastUpdate
-          BaseballGame {
-            __typename
-            sportsGameID
-            sportsGame {
-              __typename
-              id
-              startTime
-              homeTeam
-              homeTeamLogo
-              awayTeam
-              awayTeamLogo
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              gameStatus
-              lastUpdate
-              createdAt
-              updatedAt
-              sportsGameBaseballGameId
-            }
-            awayHitterOne
-            awayHitterTwo
-            awayHitterThree
-            awayHitterFour
-            awayHitterFive
-            awayHitterSix
-            awayHitterSeven
-            awayHitterEight
-            awayHitterNine
-            homeHitterOne
-            homeHitterTwo
-            homeHitterThree
-            homeHitterFour
-            homeHitterFive
-            homeHitterSix
-            homeHitterSeven
-            homeHitterEight
-            homeHitterNine
-            boxInfo
-            lastUpdate
-            id
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-          sportsGameBaseballGameId
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -11174,7 +9076,7 @@ export class APIService {
       gqlAPIServiceArguments.filter = filter;
     }
     return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
+      graphqlOperation(statement, gqlAPIServiceArguments), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku' }
     ) as Observable<
       SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateSportsGame">>
     >;
@@ -11189,65 +9091,13 @@ export class APIService {
         onDeleteSportsGame(filter: $filter) {
           __typename
           id
-          startTime
           homeTeam
-          homeTeamLogo
           awayTeam
-          awayTeamLogo
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           gameStatus
+          startTime
           lastUpdate
-          BaseballGame {
-            __typename
-            sportsGameID
-            sportsGame {
-              __typename
-              id
-              startTime
-              homeTeam
-              homeTeamLogo
-              awayTeam
-              awayTeamLogo
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              gameStatus
-              lastUpdate
-              createdAt
-              updatedAt
-              sportsGameBaseballGameId
-            }
-            awayHitterOne
-            awayHitterTwo
-            awayHitterThree
-            awayHitterFour
-            awayHitterFive
-            awayHitterSix
-            awayHitterSeven
-            awayHitterEight
-            awayHitterNine
-            homeHitterOne
-            homeHitterTwo
-            homeHitterThree
-            homeHitterFour
-            homeHitterFive
-            homeHitterSix
-            homeHitterSeven
-            homeHitterEight
-            homeHitterNine
-            boxInfo
-            lastUpdate
-            id
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
-          sportsGameBaseballGameId
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -11258,282 +9108,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<
       SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteSportsGame">>
-    >;
-  }
-
-  OnCreateBaseballGameListener(
-    filter?: ModelSubscriptionBaseballGameFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateBaseballGame">>
-  > {
-    const statement = `subscription OnCreateBaseballGame($filter: ModelSubscriptionBaseballGameFilterInput) {
-        onCreateBaseballGame(filter: $filter) {
-          __typename
-          sportsGameID
-          sportsGame {
-            __typename
-            id
-            startTime
-            homeTeam
-            homeTeamLogo
-            awayTeam
-            awayTeamLogo
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            gameStatus
-            lastUpdate
-            BaseballGame {
-              __typename
-              sportsGameID
-              awayHitterOne
-              awayHitterTwo
-              awayHitterThree
-              awayHitterFour
-              awayHitterFive
-              awayHitterSix
-              awayHitterSeven
-              awayHitterEight
-              awayHitterNine
-              homeHitterOne
-              homeHitterTwo
-              homeHitterThree
-              homeHitterFour
-              homeHitterFive
-              homeHitterSix
-              homeHitterSeven
-              homeHitterEight
-              homeHitterNine
-              boxInfo
-              lastUpdate
-              id
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-            sportsGameBaseballGameId
-          }
-          awayHitterOne
-          awayHitterTwo
-          awayHitterThree
-          awayHitterFour
-          awayHitterFive
-          awayHitterSix
-          awayHitterSeven
-          awayHitterEight
-          awayHitterNine
-          homeHitterOne
-          homeHitterTwo
-          homeHitterThree
-          homeHitterFour
-          homeHitterFive
-          homeHitterSix
-          homeHitterSeven
-          homeHitterEight
-          homeHitterNine
-          boxInfo
-          lastUpdate
-          id
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<
-        Pick<__SubscriptionContainer, "onCreateBaseballGame">
-      >
-    >;
-  }
-
-  OnUpdateBaseballGameListener(
-    filter?: ModelSubscriptionBaseballGameFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateBaseballGame">>
-  > {
-    const statement = `subscription OnUpdateBaseballGame($filter: ModelSubscriptionBaseballGameFilterInput) {
-        onUpdateBaseballGame(filter: $filter) {
-          __typename
-          sportsGameID
-          sportsGame {
-            __typename
-            id
-            startTime
-            homeTeam
-            homeTeamLogo
-            awayTeam
-            awayTeamLogo
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            gameStatus
-            lastUpdate
-            BaseballGame {
-              __typename
-              sportsGameID
-              awayHitterOne
-              awayHitterTwo
-              awayHitterThree
-              awayHitterFour
-              awayHitterFive
-              awayHitterSix
-              awayHitterSeven
-              awayHitterEight
-              awayHitterNine
-              homeHitterOne
-              homeHitterTwo
-              homeHitterThree
-              homeHitterFour
-              homeHitterFive
-              homeHitterSix
-              homeHitterSeven
-              homeHitterEight
-              homeHitterNine
-              boxInfo
-              lastUpdate
-              id
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-            sportsGameBaseballGameId
-          }
-          awayHitterOne
-          awayHitterTwo
-          awayHitterThree
-          awayHitterFour
-          awayHitterFive
-          awayHitterSix
-          awayHitterSeven
-          awayHitterEight
-          awayHitterNine
-          homeHitterOne
-          homeHitterTwo
-          homeHitterThree
-          homeHitterFour
-          homeHitterFive
-          homeHitterSix
-          homeHitterSeven
-          homeHitterEight
-          homeHitterNine
-          boxInfo
-          lastUpdate
-          id
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<
-        Pick<__SubscriptionContainer, "onUpdateBaseballGame">
-      >
-    >;
-  }
-
-  OnDeleteBaseballGameListener(
-    filter?: ModelSubscriptionBaseballGameFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteBaseballGame">>
-  > {
-    const statement = `subscription OnDeleteBaseballGame($filter: ModelSubscriptionBaseballGameFilterInput) {
-        onDeleteBaseballGame(filter: $filter) {
-          __typename
-          sportsGameID
-          sportsGame {
-            __typename
-            id
-            startTime
-            homeTeam
-            homeTeamLogo
-            awayTeam
-            awayTeamLogo
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            gameStatus
-            lastUpdate
-            BaseballGame {
-              __typename
-              sportsGameID
-              awayHitterOne
-              awayHitterTwo
-              awayHitterThree
-              awayHitterFour
-              awayHitterFive
-              awayHitterSix
-              awayHitterSeven
-              awayHitterEight
-              awayHitterNine
-              homeHitterOne
-              homeHitterTwo
-              homeHitterThree
-              homeHitterFour
-              homeHitterFive
-              homeHitterSix
-              homeHitterSeven
-              homeHitterEight
-              homeHitterNine
-              boxInfo
-              lastUpdate
-              id
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-            sportsGameBaseballGameId
-          }
-          awayHitterOne
-          awayHitterTwo
-          awayHitterThree
-          awayHitterFour
-          awayHitterFive
-          awayHitterSix
-          awayHitterSeven
-          awayHitterEight
-          awayHitterNine
-          homeHitterOne
-          homeHitterTwo
-          homeHitterThree
-          homeHitterFour
-          homeHitterFive
-          homeHitterSix
-          homeHitterSeven
-          homeHitterEight
-          homeHitterNine
-          boxInfo
-          lastUpdate
-          id
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<
-        Pick<__SubscriptionContainer, "onDeleteBaseballGame">
-      >
     >;
   }
 }
