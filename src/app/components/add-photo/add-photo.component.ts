@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { CreateMediaModalPage } from '../../modals/create-media-modal/create-media-modal.page';
 import { Router } from '@angular/router';
 import { MediaService } from 'src/app/services/media.service';
-import { APIService } from "../../API.service";
+import { APIService } from "../../API_backup_sept14.service";
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';

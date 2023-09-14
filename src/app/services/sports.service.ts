@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@aws-amplify/storage';
-import { APIService } from "../API.service";
+import { APIService } from "../API_backup_sept14.service";
 import API, { graphqlOperation } from "@aws-amplify/api-graphql";
 import { DomSanitizer } from '@angular/platform-browser';
 import { from, Observable, of } from 'rxjs';
@@ -39,6 +39,7 @@ export class SportsService {
           awayTeam
           gameStatus
           lastUpdate
+          liveGameData
         }
         nextToken
       }
@@ -48,9 +49,5 @@ export class SportsService {
       graphqlOperation(statement), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku'}
     )) as any;
     return response.data.listSportsGames.items;
-  }
-
-  getMlbData(): Observable<any> {
-    return this.http.get('https://statsapi.mlb.com/api/v1.1/game/716636/feed/live');
   }
 }

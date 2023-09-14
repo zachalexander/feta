@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { APIService } from '../../API.service';
+import { APIService } from '../../API_backup_sept14.service';
 import { MediaService } from 'src/app/services/media.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { ModalController, Platform } from '@ionic/angular';

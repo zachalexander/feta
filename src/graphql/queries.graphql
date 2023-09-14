@@ -622,37 +622,6 @@ query ListUsernames(
     nextToken
   }
 }
-query GetSportsGame($id: ID!) {
-  getSportsGame(id: $id) {
-    id
-    homeTeam
-    awayTeam
-    gameStatus
-    startTime
-    lastUpdate
-    createdAt
-    updatedAt
-  }
-}
-query ListSportsGames(
-  $filter: ModelSportsGameFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listSportsGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      homeTeam
-      awayTeam
-      gameStatus
-      startTime
-      lastUpdate
-      createdAt
-      updatedAt
-    }
-    nextToken
-  }
-}
 query ProfilesByProfilepictureID(
   $profilepictureID: ID!
   $sortDirection: ModelSortDirection
@@ -893,6 +862,39 @@ query ImagePostsByProfileID(
       mediaSourceDesktop
       downloadableVideo
       posterImage
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetSportsGame($id: ID!) {
+  getSportsGame(id: $id) {
+    id
+    homeTeam
+    awayTeam
+    gameStatus
+    startTime
+    lastUpdate
+    liveGameData
+    createdAt
+    updatedAt
+  }
+}
+query ListSportsGames(
+  $filter: ModelSportsGameFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listSportsGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      homeTeam
+      awayTeam
+      gameStatus
+      startTime
+      lastUpdate
+      liveGameData
       createdAt
       updatedAt
     }

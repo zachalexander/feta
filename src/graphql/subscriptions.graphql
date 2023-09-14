@@ -1248,6 +1248,7 @@ subscription OnCreateSportsGame(
     gameStatus
     startTime
     lastUpdate
+    liveGameData
     createdAt
     updatedAt
   }
@@ -1262,6 +1263,7 @@ subscription OnUpdateSportsGame(
     gameStatus
     startTime
     lastUpdate
+    liveGameData
     createdAt
     updatedAt
   }
@@ -1276,6 +1278,7 @@ subscription OnDeleteSportsGame(
     gameStatus
     startTime
     lastUpdate
+    liveGameData
     createdAt
     updatedAt
   }

@@ -1288,6 +1288,7 @@ mutation CreateSportsGame(
     gameStatus
     startTime
     lastUpdate
+    liveGameData
     createdAt
     updatedAt
   }
@@ -1303,6 +1304,7 @@ mutation UpdateSportsGame(
     gameStatus
     startTime
     lastUpdate
+    liveGameData
     createdAt
     updatedAt
   }
@@ -1318,6 +1320,7 @@ mutation DeleteSportsGame(
     gameStatus
     startTime
     lastUpdate
+    liveGameData
     createdAt
     updatedAt
   }

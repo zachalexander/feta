@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Storage } from '@aws-amplify/storage';
-import { APIService } from "../API.service";
+import { APIService } from "../API_backup_sept14.service";
 import API, { graphqlOperation} from "@aws-amplify/api-graphql";
 import { DomSanitizer } from '@angular/platform-browser';
 import { from, Observable, of } from 'rxjs';

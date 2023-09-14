@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/internal/operators/finalize';
 import { AddPhotoComponent } from 'src/app/components/add-photo/add-photo.component';
 import { MediaService } from 'src/app/services/media.service';
 import { Platform } from '@ionic/angular';
-import { APIService } from 'src/app/API.service';
+import { APIService } from 'src/app/API_backup_sept14.service';
 import { CachingService } from 'src/app/services/caching.service';
 
 @Component({

@@ -14,6 +14,9 @@ export class MessageBoardPage implements OnInit {
   onUpdateSportsGame: Subscription | null = null;
   data: any;
   baseballData: any = [];
+  liveData: any = [];
+  lastEvent: any = [];
+  lastEventDescription;
 
   constructor(
     private api: APIService,
@@ -27,37 +30,8 @@ export class MessageBoardPage implements OnInit {
 
 
   async ngOnInit() {
-
-    // const sub = API.graphql<GraphQLSubscription<OnUpdateSportsGameSubscription>>(
-    //   graphqlOperation(subscriptions.onUpdateSportsGame)
-    // ).subscribe({
-    //   next: ({ provider, value }) => console.log({ provider, value }),
-    //   error: error => console.warn(error)
-    // });
-
-  
-    const behaviorSubject = new BehaviorSubject('event -1');
-    behaviorSubject.next('event 0')
-
     this.startSubscriptions();
     this.getSportsData();
-    this.getBaseballData();
-
-    // this.onUpdateSportsGame = <Subscription>(
-    //   this.api.OnUpdateSportsGameListener().subscribe(
-    //     (event: any) => {
-    //       const data = event;
-    //       console.log(data)
-    //     }
-    //   )
-    // )
-  
-
-    // this.subscription = this.api.OnUpdateSportsGameListener().subscribe(
-    //   (event: any) => {
-    //     console.log(event)
-    //   }
-    // )
   }
 
   startSubscriptions() {
@@ -65,7 +39,14 @@ export class MessageBoardPage implements OnInit {
       this.api.OnUpdateSportsGameListener().subscribe({
         next: async (event: any) => {
           const data = event;
-          console.log(data)
+          console.log(data.value.data.onUpdateSportsGame)
+          this.baseballData = [data.value.data.onUpdateSportsGame];
+          this.liveData = JSON.parse(this.baseballData[0].liveGameData)
+          console.log(this.liveData)
+
+          this.lastEvent = this.liveData[this.liveData.length - 1]
+          this.lastEventDescription = this.liveData[this.liveData.length - 1].des ? this.liveData[this.liveData.length - 1].des : this.lastEventDescription;
+          console.log(this.lastEvent)
         }
       })
     )
@@ -77,12 +58,6 @@ export class MessageBoardPage implements OnInit {
     }
   }
 
-  async getBaseballData(){
-    await this.sportsService.getMlbData().subscribe(data => {
-      console.log(data['liveData']['plays']['currentPlay']['result'])
-    })
-  }
-
 
   async getSportsData(){
     await this.sportsService.getSportsData().pipe(
@@ -92,6 +67,9 @@ export class MessageBoardPage implements OnInit {
     ).subscribe(data => {
       this.baseballData = data;
       console.log(this.baseballData)
+      this.liveData = JSON.parse(this.baseballData[0].liveGameData)
+      this.lastEvent = this.liveData[this.liveData.length - 1]
+      this.lastEventDescription = this.lastEventDescription;
     })
   }
 

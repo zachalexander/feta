@@ -11,10 +11,11 @@
 
 <ion-content [fullscreen]="true">
   <ion-card *ngFor="let game of baseballData">
+    <ion-progress-bar type="indeterminate" color="danger"></ion-progress-bar>
     <ion-card-header>
       <div class="last-updated">
         <ion-chip color="warning">Sports</ion-chip>
-        <ion-text color="medium">Last updated at {{game.lastUpdate }} EST</ion-text>
+        <ion-text color="medium">Last updated {{game.lastUpdate | date: 'MMM d' }} at {{game.lastUpdate | date: 'h:mma'}} EST</ion-text>
       </div>
       <div class="sports-banner">
         <div class="sports-teams">
@@ -25,6 +26,7 @@
               <div class="team-info-away">
                 <ion-card-content>{{game.awayTeam}}</ion-card-content>
                 <small>(88-51)</small>
+                <p class="score">{{lastEvent.away_score}}</p>
               </div>
           </div>
           <div class="versus"> at </div>
@@ -35,6 +37,7 @@
               <div class="team-info-home">
                 <ion-card-content>{{game.homeTeam}}</ion-card-content>
                 <small>(72-68)</small>
+                <p class="score">{{lastEvent.home_score}}</p>
               </div>
           </div>
         </div>
@@ -44,6 +47,22 @@
       <ion-chip [outline]="true" color="default" [disabled]="true">{{game.gameStatus}}</ion-chip>
       <ion-chip color="success">{{game.startTime | date: 'MMM d, YYYY h:mm a' }} EST</ion-chip>
     </div>
+
+    <ion-item>
+      <div class="live-game-scoring-wrapper">
+        <div class="current-batter">
+          <ion-label>Current Batter: {{lastEvent.batter_name}}</ion-label>
+        </div>
+        <div class="live-game-banner">
+          <ion-label>Balls: {{lastEvent.balls}}</ion-label> &nbsp;
+          <ion-label>Strikes: {{lastEvent.strikes}}</ion-label> &nbsp;
+          <ion-label>Outs: {{lastEvent.outs}}</ion-label> &nbsp;
+        </div>
+        <div class="live-game-last-event">
+          <ion-label text-wrap class="live-description" *ngIf="lastEventDescription">{{lastEventDescription}}</ion-label>
+        </div>
+      </div>
+    </ion-item>
   </ion-card>
 
 </ion-content>

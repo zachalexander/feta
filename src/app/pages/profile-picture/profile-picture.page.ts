@@ -9,7 +9,7 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@aws-amplify/storage';
-import { APIService } from 'src/app/API.service';
+import { APIService } from 'src/app/API_backup_sept14.service';
 import { MediaService } from 'src/app/services/media.service';
 import { switchMap } from 'rxjs/operators';
 import { create } from 'domain';
