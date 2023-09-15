@@ -15,8 +15,8 @@ async function getMlbData(date) {
     return mlbdata['dates'][0]['games'][0];
 }
 
-async function liveGameData() {
-    let liveData = await fetch('https://statsapi.mlb.com/api/v1.1/game/716597/feed/live').then(data => data.json())
+async function liveGameData(gamePk) {
+    let liveData = await fetch(`https://statsapi.mlb.com/api/v1.1/game/${gamePk}/feed/live`).then(data => data.json())
     return liveData;
 }
 
@@ -29,6 +29,7 @@ async function createLiveData(data) {
         play.away_score = data.liveData.linescore.teams.away.runs;
         play.home_score = data.liveData.linescore.teams.home.runs;
         const ab = data.liveData.plays.allPlays[i];
+        play.halfInning = ab.about.halfInning + " " + ab.about.inning.toString();
         play.date = data.gameData.datetime.officialDate;
         play.temp = data.gameData.weather.temp;
         play.condition = data.gameData.weather.condition;
@@ -53,7 +54,9 @@ async function createLiveData(data) {
         play.game_type = data.gameData.game.type;
         play.inning = ab.about.inning;
         play.topbot = ab.about.halfInning;
+        play.halfInning = ab.about.halfInning + " " + ab.about.inning.toString();
         play.abnum = ab.atBatIndex;
+        play.pitchInfo = ab.playEvents;
         const pitchnum = (typeof ab.playEvents !== "undefined") ? ab.playEvents.length : 1;
         play.pitchnum = pitchnum;
         play.id = String(gamepk) + "-" + String(ab.matchup.batter.id) + "-" + String(ab.matchup.pitcher.id) + "-" + String(ab.about.inning) + "-" + String(ab.atBatIndex) + "-" + String(pitchnum);
@@ -64,14 +67,13 @@ async function createLiveData(data) {
 
 export const handler = async (event) => {
 
-    const today = new Date();
+    const today = new Date(new Date().toLocaleString('en', { timeZone: 'America/New_York' }));
     const formatted_date = await formatDate(today);
     const data = await getMlbData(formatted_date);
 
-    const liveGame = await liveGameData()
+    const liveGame = await liveGameData(data['gamePk'])
+    console.log(liveGame)
     const livePlays = await createLiveData(liveGame)
-
-    console.log(livePlays)
 
     const gamePk = data['gamePk']
     const homeTeam = data['teams']['home']['team']['name']
@@ -79,6 +81,20 @@ export const handler = async (event) => {
     const startTime = data['gameDate']
     const gameStatus = data['status']['detailedState']
     const now = new Date().toISOString()
+
+    console.log(gamePk)
+    const query_create = `
+        mutation createSportsGame($input: CreateSportsGameInput = {
+            id: ${JSON.stringify(gamePk)},
+            lastUpdate: ${JSON.stringify(now)}
+        }) {
+            createSportsGame(input: $input) {
+                __typename
+                id
+                lastUpdate
+            }
+        }
+    `;
 
     const query = `
         mutation updateSportsGameTable($input: UpdateSportsGameInput = {
@@ -109,7 +125,7 @@ export const handler = async (event) => {
             'x-api-key': GRAPHQL_API_KEY,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ query })
+        body: JSON.stringify({ query_create })
     };
 
 

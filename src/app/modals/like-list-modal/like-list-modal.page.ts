@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
-import { APIService } from "../../API_backup_sept14.service";
+import { APIService } from "../../API.service";
 import { MediaService } from 'src/app/services/media.service';
 import { Router } from '@angular/router';
 import { Storage } from 'aws-amplify';

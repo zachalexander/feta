@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { APIService } from 'src/app/API_backup_sept14.service';
+import { APIService } from 'src/app/API.service';
 import { MediaService } from 'src/app/services/media.service';
 import { ModalController, IonTextarea, ToastController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';

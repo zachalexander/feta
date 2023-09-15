@@ -11,7 +11,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-card *ngFor="let game of baseballData">
-    <ion-progress-bar type="indeterminate" color="danger"></ion-progress-bar>
+    <!-- <ion-progress-bar type="indeterminate" color="danger"></ion-progress-bar> -->
     <ion-card-header>
       <div class="last-updated">
         <ion-chip color="warning">Sports</ion-chip>
@@ -63,6 +63,21 @@
         </div>
       </div>
     </ion-item>
+
+
+      <div class="at-bat">
+        <ion-item *ngFor="let atBat of liveData">
+          <div class="pitch-wrapper">
+            <ion-text>{{atBat.batter_name}}</ion-text>
+            <div class="pitches" *ngFor="let pitch of atBat.pitchInfo">
+              <small>Balls: {{pitch.count.balls}}</small>&nbsp;
+              <small>Strikes: {{pitch.count.strikes}}</small>&nbsp;
+              <small>Outs: {{pitch.count.outs}}</small>
+            </div>
+            <small><strong>{{atBat.des}}</strong></small>
+          </div>
+        </ion-item>
+      </div>
   </ion-card>
 
 </ion-content>

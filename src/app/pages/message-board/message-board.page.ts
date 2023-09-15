@@ -24,8 +24,7 @@ export class MessageBoardPage implements OnInit {
   ) {}
 
   refresh(){
-    this.api.UpdateSportsGame({id: '716621', gameStatus: 'started'})
-    // window.location.reload();
+    window.location.reload();
   }
 
 
@@ -44,8 +43,8 @@ export class MessageBoardPage implements OnInit {
           this.liveData = JSON.parse(this.baseballData[0].liveGameData)
           console.log(this.liveData)
 
-          this.lastEvent = this.liveData[this.liveData.length - 1]
-          this.lastEventDescription = this.liveData[this.liveData.length - 1].des ? this.liveData[this.liveData.length - 1].des : this.lastEventDescription;
+          this.lastEvent = this.liveData[0]
+          this.lastEventDescription = this.liveData[0].des ? this.liveData[0].des : this.lastEventDescription;
           console.log(this.lastEvent)
         }
       })
@@ -67,8 +66,9 @@ export class MessageBoardPage implements OnInit {
     ).subscribe(data => {
       this.baseballData = data;
       console.log(this.baseballData)
-      this.liveData = JSON.parse(this.baseballData[0].liveGameData)
-      this.lastEvent = this.liveData[this.liveData.length - 1]
+      this.liveData = JSON.parse(this.baseballData[0].liveGameData).reverse().length !== 0 ? JSON.parse(this.baseballData[0].liveGameData).reverse() : JSON.parse(this.baseballData[1].liveGameData).reverse() 
+      console.log(this.liveData)
+      this.lastEvent = this.liveData[0]
       this.lastEventDescription = this.lastEventDescription;
     })
   }

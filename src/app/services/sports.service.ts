@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@aws-amplify/storage';
-import { APIService } from "../API_backup_sept14.service";
+import { APIService } from "../API.service";
 import API, { graphqlOperation } from "@aws-amplify/api-graphql";
 import { DomSanitizer } from '@angular/platform-browser';
 import { from, Observable, of } from 'rxjs';

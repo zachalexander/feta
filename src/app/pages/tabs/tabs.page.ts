@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { APIService } from 'src/app/API_backup_sept14.service';
+import { APIService } from 'src/app/API.service';
 import { Storage } from 'aws-amplify'
 
 @Component({

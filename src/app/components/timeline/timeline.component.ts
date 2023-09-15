@@ -4,7 +4,7 @@ import { TimelinePageModule } from 'src/app/pages/timeline/timeline.module';
 import { ModalController, Platform } from '@ionic/angular';
 // import { PhotoService } from '../../services/photo.service';
 import { MediaService } from 'src/app/services/media.service';
-import { APIService } from "../../API_backup_sept14.service";
+import { APIService } from "../../API.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
 // import { EditPhotoModalPage } from '../../modals/edit-photo-modal/edit-photo-modal.page';

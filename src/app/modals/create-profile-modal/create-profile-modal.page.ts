@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild , ViewEncapsulation, AfterContentChecked} from '@angular/core';
 import { SwiperComponent } from 'swiper/angular';
-import { APIService } from "../../API_backup_sept14.service";
+import { APIService } from "../../API.service";
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomvalidationService } from '../../services/customvalidation.service';

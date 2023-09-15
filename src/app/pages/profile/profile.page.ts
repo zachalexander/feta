@@ -1,6 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { APIService } from 'src/app/API_backup_sept14.service';
+import { APIService } from 'src/app/API.service';
 import { CachingService } from 'src/app/services/caching.service';
 import { ModalController } from '@ionic/angular';
 import { UpdateProfileModalPage } from 'src/app/modals/update-profile-modal/update-profile-modal.page';
