@@ -25,7 +25,7 @@
               </ion-avatar> 
               <div class="team-info-away">
                 <ion-card-content>{{game.awayTeam}}</ion-card-content>
-                <small>(88-51)</small>
+                <small>({{liveData[0].awayWins}} - {{liveData[0].awayLosses}})</small>
                 <p class="score">{{lastEvent.away_score}}</p>
               </div>
           </div>
@@ -36,7 +36,7 @@
               </ion-avatar> 
               <div class="team-info-home">
                 <ion-card-content>{{game.homeTeam}}</ion-card-content>
-                <small>(72-68)</small>
+                <small>({{liveData[0].homeWins}} - {{liveData[0].homeLosses}})</small>
                 <p class="score">{{lastEvent.home_score}}</p>
               </div>
           </div>
@@ -51,6 +51,7 @@
     <ion-item>
       <div class="live-game-scoring-wrapper">
         <div class="current-batter">
+          <ion-label>Current Pitcher: {{lastEvent.pitcher_name}}</ion-label>
           <ion-label>Current Batter: {{lastEvent.batter_name}}</ion-label>
         </div>
         <div class="live-game-banner">
