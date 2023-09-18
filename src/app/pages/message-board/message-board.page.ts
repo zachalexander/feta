@@ -15,8 +15,11 @@ export class MessageBoardPage implements OnInit {
   data: any;
   baseballData: any = [];
   liveData: any = [];
+  currentData: any = [];
   lastEvent: any = [];
   lastEventDescription;
+
+  halfInnings = ["Top 1st", "Bottom 1st", "Top 2nd", "Bottom 2nd", "Top 3rd", "Bottom 3rd", "Top 4th", "Bottom 4th", "Top 5th", "Bottom 5th", "Top 6th", "Bottom 6th", "Top 7th", "Bottom 7th", "Top 8th", "Bottom 8th", "Top 9th", "Bottom 9th"]
 
   constructor(
     private api: APIService,
@@ -67,9 +70,11 @@ export class MessageBoardPage implements OnInit {
       this.baseballData = data;
       console.log(this.baseballData)
       this.liveData = JSON.parse(this.baseballData[0].liveGameData).reverse().length !== 0 ? JSON.parse(this.baseballData[0].liveGameData).reverse() : JSON.parse(this.baseballData[1].liveGameData).reverse() 
-      console.log(this.liveData)
-      this.lastEvent = this.liveData[0]
-      this.lastEventDescription = this.lastEventDescription;
+      console.log(this.liveData[0])
+
+      this.currentData = this.liveData[0]
+      // this.lastEvent = this.liveData[0]
+      // this.lastEventDescription = this.lastEventDescription;
     })
   }
 

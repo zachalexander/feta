@@ -11,7 +11,7 @@ async function formatDate(date) {
 }
 
 async function getMlbData(date) {
-    let mlbdata = await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&startDate=${date}&endDate=${date}&teamId=110`).then(data => data.json());
+    let mlbdata = await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&startDate=2023-09-16&endDate=2023-09-16&teamId=110`).then(data => data.json());
     return mlbdata['dates'][0]['games'][0];
 }
 
@@ -22,48 +22,91 @@ async function liveGameData(gamePk) {
 
 async function createLiveData(data) {
     const gamepk = data.gameData.game.pk;
-    const livePlays = [];
-    for (let i = 0; i < data.liveData.plays.allPlays.length; i++) {
-        const play = {}
-        play.gamepk = gamepk;
-        play.away_score = data.liveData.linescore.teams.away.runs;
-        play.home_score = data.liveData.linescore.teams.home.runs;
-        const ab = data.liveData.plays.allPlays[i];
-        play.halfInning = ab.about.halfInning + " " + ab.about.inning.toString();
-        play.date = data.gameData.datetime.officialDate;
-        play.temp = data.gameData.weather.temp;
-        play.condition = data.gameData.weather.condition;
-        play.wind = data.gameData.weather.wind;
-        play.venue = data.gameData.venue.id;
-        play.batter = ab.matchup.batter.id;
-        play.batter_name = ab.matchup.batter.fullName;
-        play.stand = ab.matchup.batSide.code;
-        play.pitcher = ab.matchup.pitcher.id;
-        play.pitcher_name = ab.matchup.pitcher.fullName;
-        play.throws = ab.matchup.pitchHand.code;
-        play.events = ab.result.event;
-        play.description = ab.result.eventType;
-        play.des = ab.result.description;
-        play.strikes = ab.count.strikes;
-        play.balls = ab.count.balls;
-        play.outs = ab.count.outs;
-        play.home_team = data.gameData.teams.home.abbreviation;
-        play.away_team = data.gameData.teams.away.abbreviation;
-        play.year = data.gameData.game.season;
-        play.type = data.gameData.game.gamedayType;
-        play.game_type = data.gameData.game.type;
-        play.inning = ab.about.inning;
-        play.topbot = ab.about.halfInning;
-        play.halfInning = ab.about.halfInning + " " + ab.about.inning.toString();
-        play.abnum = ab.atBatIndex;
-        play.pitchInfo = ab.playEvents;
-        const pitchnum = (typeof ab.playEvents !== "undefined") ? ab.playEvents.length : 1;
-        play.pitchnum = pitchnum;
-        play.id = String(gamepk) + "-" + String(ab.matchup.batter.id) + "-" + String(ab.matchup.pitcher.id) + "-" + String(ab.about.inning) + "-" + String(ab.atBatIndex) + "-" + String(pitchnum);
-        livePlays.push(play)
-    }
-    return JSON.stringify(livePlays);
+    let livePlays = [];
+    let inningData = [];
+    let playData = {}
+
+    let baseballData = data.liveData.plays.allPlays;
+    let halfInning;
+    let innings = [];
+    baseballData.forEach(playInfo => {
+        let halfInningPrev = halfInning
+        if (playInfo.about.inning > 3) {
+            halfInning = `${playInfo.about.halfInning}`.charAt(0).toUpperCase().concat(`${playInfo.about.halfInning}`.slice(1), " ", `${playInfo.about.inning.toString()}`, "th")
+        } else if (playInfo.about.inning == 3) {
+            halfInning = `${playInfo.about.halfInning}`.charAt(0).toUpperCase().concat(`${playInfo.about.halfInning}`.slice(1), " ", `${playInfo.about.inning.toString()}`, "rd")
+        } else if (playInfo.about.inning == 2) {
+            halfInning = `${playInfo.about.halfInning}`.charAt(0).toUpperCase().concat(`${playInfo.about.halfInning}`.slice(1), " ", `${playInfo.about.inning.toString()}`, "nd")
+        } else if (playInfo.about.inning == 1) {
+            halfInning = `${playInfo.about.halfInning}`.charAt(0).toUpperCase().concat(`${playInfo.about.halfInning}`.slice(1), " ", `${playInfo.about.inning.toString()}`, "st")
+        }
+
+        if ((halfInning !== halfInningPrev)) {
+            innings = [];
+            innings.push(playInfo)
+            playData[halfInning] = playInfo
+        } else {
+            innings.push(playInfo)
+            playData[halfInning] = innings
+        }
+    })
+    livePlays.push(playData);
+    return JSON.stringify(livePlays)
 }
+
+
+// for(let j=0; j < halfInningList.length; j++){
+//     if(halfInningList[j] === ab.about.halfInning + " " + ab.about.inning.toString()){
+//         halfInningData[`${ab.about.halfInning} + " " + ${ab.about.inning.toString()}`] = ab.playEvents
+//     }
+// }
+
+// play.gamepk = gamepk;
+// play.away_score = data.liveData.linescore.teams.away.runs;
+// play.home_score = data.liveData.linescore.teams.home.runs;
+
+// play.halfInning = ab.about.halfInning + " " + ab.about.inning.toString();
+
+
+
+// play.date = data.gameData.datetime.officialDate;
+// play.temp = data.gameData.weather.temp;
+// play.awayWins = data.gameData.teams.away.record.leagueRecord.wins
+// play.awayLosses = data.gameData.teams.away.record.leagueRecord.losses
+// play.homeWins = data.gameData.teams.home.record.leagueRecord.wins
+// play.homeLosses = data.gameData.teams.home.record.leagueRecord.losses
+// play.condition = data.gameData.weather.condition;
+// play.wind = data.gameData.weather.wind;
+// play.venue = data.gameData.venue.id;
+// play.batter = ab.matchup.batter.id;
+// play.batter_name = ab.matchup.batter.fullName;
+// play.stand = ab.matchup.batSide.code;
+// play.pitcher = ab.matchup.pitcher.id;
+// play.pitcher_name = ab.matchup.pitcher.fullName;
+// play.throws = ab.matchup.pitchHand.code;
+// play.events = ab.result.event;
+// play.description = ab.result.eventType;
+// play.des = ab.result.description;
+// play.strikes = ab.count.strikes;
+// play.balls = ab.count.balls;
+// play.outs = ab.count.outs;
+// play.home_team = data.gameData.teams.home.abbreviation;
+// play.away_team = data.gameData.teams.away.abbreviation;
+// play.year = data.gameData.game.season;
+// play.type = data.gameData.game.gamedayType;
+// play.game_type = data.gameData.game.type;
+// play.inning = ab.about.inning;
+// play.topbot = ab.about.halfInning;
+// play.halfInning = ab.about.halfInning + " " + ab.about.inning.toString();
+// play.abnum = ab.atBatIndex;
+// play.pitchInfo = ab.playEvents;
+// const pitchnum = (typeof ab.playEvents !== "undefined") ? ab.playEvents.length : 1;
+// play.pitchnum = pitchnum;
+// play.id = String(gamepk) + "-" + String(ab.matchup.batter.id) + "-" + String(ab.matchup.pitcher.id) + "-" + String(ab.about.inning) + "-" + String(ab.atBatIndex) + "-" + String(pitchnum);
+// livePlays.push(halfInningData)
+// }
+// return JSON.stringify(halfInningData);
+// }
 
 export const handler = async (event) => {
 
@@ -72,8 +115,8 @@ export const handler = async (event) => {
     const data = await getMlbData(formatted_date);
 
     const liveGame = await liveGameData(data['gamePk'])
-    console.log(liveGame)
     const livePlays = await createLiveData(liveGame)
+    // console.log(livePlays)
 
     const gamePk = data['gamePk']
     const homeTeam = data['teams']['home']['team']['name']
@@ -81,20 +124,6 @@ export const handler = async (event) => {
     const startTime = data['gameDate']
     const gameStatus = data['status']['detailedState']
     const now = new Date().toISOString()
-
-    console.log(gamePk)
-    const query_create = `
-        mutation createSportsGame($input: CreateSportsGameInput = {
-            id: ${JSON.stringify(gamePk)},
-            lastUpdate: ${JSON.stringify(now)}
-        }) {
-            createSportsGame(input: $input) {
-                __typename
-                id
-                lastUpdate
-            }
-        }
-    `;
 
     const query = `
         mutation updateSportsGameTable($input: UpdateSportsGameInput = {
@@ -125,7 +154,7 @@ export const handler = async (event) => {
             'x-api-key': GRAPHQL_API_KEY,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ query_create })
+        body: JSON.stringify({ query })
     };
 
 

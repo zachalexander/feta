@@ -26,7 +26,7 @@
               <div class="team-info-away">
                 <ion-card-content>{{game.awayTeam}}</ion-card-content>
                 <small>({{liveData[0].awayWins}} - {{liveData[0].awayLosses}})</small>
-                <p class="score">{{lastEvent.away_score}}</p>
+                <p class="score">{{currentData.currentPlay.result.awayScore}}</p>
               </div>
           </div>
           <div class="versus"> at </div>
@@ -37,7 +37,7 @@
               <div class="team-info-home">
                 <ion-card-content>{{game.homeTeam}}</ion-card-content>
                 <small>({{liveData[0].homeWins}} - {{liveData[0].homeLosses}})</small>
-                <p class="score">{{lastEvent.home_score}}</p>
+                <p class="score">{{currentData.currentPlay.result.homeScore}}</p>
               </div>
           </div>
         </div>
@@ -51,13 +51,13 @@
     <ion-item>
       <div class="live-game-scoring-wrapper">
         <div class="current-batter">
-          <ion-label>Current Pitcher: {{lastEvent.pitcher_name}}</ion-label>
-          <ion-label>Current Batter: {{lastEvent.batter_name}}</ion-label>
+          <ion-label>Current Pitcher: {{currentData.currentPlay.matchup.pitcher.fullName}}</ion-label>
+          <ion-label>Current Batter: {{currentData.currentPlay.matchup.batter.fullName}}</ion-label>
         </div>
         <div class="live-game-banner">
-          <ion-label>Balls: {{lastEvent.balls}}</ion-label> &nbsp;
-          <ion-label>Strikes: {{lastEvent.strikes}}</ion-label> &nbsp;
-          <ion-label>Outs: {{lastEvent.outs}}</ion-label> &nbsp;
+          <ion-label>Balls: {{currentData.currentPlay.count.balls}}</ion-label> &nbsp;
+          <ion-label>Strikes: {{currentData.currentPlay.count.strikes}}</ion-label> &nbsp;
+          <ion-label>Outs: {{currentData.currentPlay.count.outs}}</ion-label> &nbsp;
         </div>
         <div class="live-game-last-event">
           <ion-label text-wrap class="live-description" *ngIf="lastEventDescription">{{lastEventDescription}}</ion-label>
@@ -66,16 +66,18 @@
     </ion-item>
 
 
-      <div class="at-bat">
-        <ion-item *ngFor="let atBat of liveData">
-          <div class="pitch-wrapper">
-            <ion-text>{{atBat.batter_name}}</ion-text>
-            <div class="pitches" *ngFor="let pitch of atBat.pitchInfo">
-              <small>Balls: {{pitch.count.balls}}</small>&nbsp;
-              <small>Strikes: {{pitch.count.strikes}}</small>&nbsp;
-              <small>Outs: {{pitch.count.outs}}</small>
-            </div>
-            <small><strong>{{atBat.des}}</strong></small>
+      <div class="inning-breakdown">
+        <ion-item *ngFor="let value of halfInnings">
+          <div class="inning-wrapper">
+            <ion-text>{{value}}</ion-text>
+            <ion-item *ngFor="let atBat of currentData[value]">
+              <div class="atBat-wrapper">
+                <p>{{atBat.result.description}}</p>
+                <ion-item *ngFor="let pitch of atBat.playEvents">
+                  <p>{{pitch.details.description}}</p>
+                </ion-item>
+              </div>
+            </ion-item>
           </div>
         </ion-item>
       </div>
