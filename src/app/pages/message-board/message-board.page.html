@@ -2,7 +2,7 @@
   <ion-toolbar color="light">
     <div class="toolbar-wrapper">
       <ion-title text-left>
-        Le critique
+        Family Hub
       </ion-title>
       <ion-icon name="refresh-outline" (click)="refresh()"></ion-icon>
     </div>
@@ -66,21 +66,27 @@
     </ion-item>
 
 
-      <div class="inning-breakdown">
-        <ion-item *ngFor="let value of halfInnings">
+    <ion-accordion-group>
+      <div class="inning-breakdown" *ngFor="let value of halfInnings">
           <div class="inning-wrapper">
-            <ion-text>{{value}}</ion-text>
-            <ion-item *ngFor="let atBat of currentData[value]">
-              <div class="atBat-wrapper">
-                <p>{{atBat.result.description}}</p>
-                <ion-item *ngFor="let pitch of atBat.playEvents">
-                  <p>{{pitch.details.description}}</p>
-                </ion-item>
+              <ion-accordion value="{{value}}">
+                  <ion-item slot="header" color="light">
+                    <ion-label>{{value}}</ion-label>
+                  </ion-item>
+                    <div slot="content" class="atBat-wrapper" *ngFor="let atBat of currentData[value]">
+                      <ion-item lines="none" *ngFor="let pitch of atBat.playEvents">
+                        <ion-note><ion-icon name="chevron-forward-outline"></ion-icon>{{pitch.details.description}}</ion-note>
+                      </ion-item>
+                      <ion-item class="play-description">
+                        <ion-note color="dark">{{atBat.result.description}}&nbsp;{{atBat.count.outs}} out(s).</ion-note>
+                      </ion-item>
+                    </div>
+   
+
+              </ion-accordion>
               </div>
-            </ion-item>
-          </div>
-        </ion-item>
-      </div>
+        </div>
+    </ion-accordion-group>
   </ion-card>
 
 </ion-content>

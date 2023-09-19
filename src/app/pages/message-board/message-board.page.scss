@@ -100,6 +100,17 @@ ion-card {
     margin: 2em auto;
 }
 
+ion-note {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play-description {
+    display: flex;
+    flex-direction: column;
+}
+
 ion-title {
     font-family: 'Cormorant', cursive !important;
     font-weight: 400;

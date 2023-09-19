@@ -43,12 +43,12 @@ export class MessageBoardPage implements OnInit {
           const data = event;
           console.log(data.value.data.onUpdateSportsGame)
           this.baseballData = [data.value.data.onUpdateSportsGame];
-          this.liveData = JSON.parse(this.baseballData[0].liveGameData)
-          console.log(this.liveData)
+          this.currentData = JSON.parse(this.baseballData[0].liveGameData)
+          console.log(this.currentData)
 
-          this.lastEvent = this.liveData[0]
-          this.lastEventDescription = this.liveData[0].des ? this.liveData[0].des : this.lastEventDescription;
-          console.log(this.lastEvent)
+          // this.lastEvent = this.liveData[0]
+          // this.lastEventDescription = this.liveData[0].des ? this.liveData[0].des : this.lastEventDescription;
+          // console.log(this.lastEvent)
         }
       })
     )
@@ -68,7 +68,7 @@ export class MessageBoardPage implements OnInit {
       })
     ).subscribe(data => {
       this.baseballData = data;
-      console.log(this.baseballData)
+      console.log(JSON.parse(this.baseballData[0].liveGameData))
       this.liveData = JSON.parse(this.baseballData[0].liveGameData).reverse().length !== 0 ? JSON.parse(this.baseballData[0].liveGameData).reverse() : JSON.parse(this.baseballData[1].liveGameData).reverse() 
       console.log(this.liveData[0])
 

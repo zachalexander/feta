@@ -11,7 +11,7 @@ async function formatDate(date) {
 }
 
 async function getMlbData(date) {
-    let mlbdata = await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&startDate=2023-09-16&endDate=2023-09-16&teamId=110`).then(data => data.json());
+    let mlbdata = await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&startDate=${date}&endDate=${date}&teamId=110`).then(data => data.json());
     return mlbdata['dates'][0]['games'][0];
 }
 
@@ -27,6 +27,7 @@ async function createLiveData(data) {
     let playData = {}
 
     let baseballData = data.liveData.plays.allPlays;
+    let currentPlay = data.liveData.plays.currentPlay;
     let halfInning;
     let innings = [];
     baseballData.forEach(playInfo => {
@@ -40,6 +41,8 @@ async function createLiveData(data) {
         } else if (playInfo.about.inning == 1) {
             halfInning = `${playInfo.about.halfInning}`.charAt(0).toUpperCase().concat(`${playInfo.about.halfInning}`.slice(1), " ", `${playInfo.about.inning.toString()}`, "st")
         }
+
+        playData["currentPlay"] = currentPlay;
 
         if ((halfInning !== halfInningPrev)) {
             innings = [];
@@ -124,6 +127,8 @@ export const handler = async (event) => {
     const startTime = data['gameDate']
     const gameStatus = data['status']['detailedState']
     const now = new Date().toISOString()
+
+    console.log(gamePk)
 
     const query = `
         mutation updateSportsGameTable($input: UpdateSportsGameInput = {
