@@ -61,6 +61,10 @@ ion-header {
     .current-count {
         margin: 0.5em 0em -1.25em 0em;
     }
+
+    .final {
+        text-align: center;
+    }
 }
 
 .sports-teams {
@@ -142,6 +146,7 @@ ion-title {
 .game-status {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     margin: 0 1em 1em 1em;
     max-width: 450px;
 }
@@ -165,4 +170,11 @@ ion-title {
     padding-bottom: 1em;
     margin: 0em 0em 1em 0em;
     border-bottom: 1px solid var(--ion-color-light);
+}
+
+.join-conversation {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1em;
+    border-top: 1px solid var(--ion-color-light);
 }

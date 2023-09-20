@@ -29,6 +29,7 @@ async function createLiveData(data) {
     let baseballData = data.liveData.plays.allPlays;
     let currentPlay = data.liveData.plays.currentPlay;
     let startingGameData = data.gameData;
+    let finalData = data.liveData.decisions;
     let halfInning;
     let innings = [];
     baseballData.forEach(playInfo => {
@@ -45,13 +46,14 @@ async function createLiveData(data) {
 
         playData["currentPlay"] = currentPlay;
         playData["startingGameData"] = startingGameData;
+        playData["finalData"] = finalData;
 
         if ((halfInning !== halfInningPrev)) {
             innings = [];
-            innings.push(playInfo)
-            playData[halfInning] = playInfo
+            innings.push(playInfo.result)
+            playData[halfInning] = playInfo.result
         } else {
-            innings.push(playInfo)
+            innings.push(playInfo.result)
             playData[halfInning] = innings
         }
     })
@@ -71,6 +73,10 @@ export const handler = async (event) => {
     const gamePk = data['gamePk']
     const homeTeam = data['teams']['home']['team']['name']
     const awayTeam = data['teams']['away']['team']['name']
+    const awayTeamWins = data['teams']['away']['leagueRecord']['wins'].toString()
+    const awayTeamLosses = data['teams']['away']['leagueRecord']['losses'].toString()
+    const homeTeamWins = data['teams']['home']['leagueRecord']['wins'].toString()
+    const homeTeamLosses = data['teams']['home']['leagueRecord']['losses'].toString()
     const startTime = data['gameDate']
     const gameStatus = data['status']['detailedState']
     const now = new Date().toISOString()
@@ -80,6 +86,10 @@ export const handler = async (event) => {
         id: ${JSON.stringify(gamePk)}, 
         lastUpdate: ${JSON.stringify(now)},
         homeTeam: ${JSON.stringify(homeTeam)},
+        homeTeamWins: ${JSON.stringify(homeTeamWins)},
+        homeTeamLosses: ${JSON.stringify(homeTeamLosses)},
+        awayTeamWins: ${JSON.stringify(awayTeamWins)},
+        awayTeamLosses: ${JSON.stringify(awayTeamLosses)},
         awayTeam: ${JSON.stringify(awayTeam)},
         startTime: ${JSON.stringify(startTime)},
         gameStatus: ${JSON.stringify(gameStatus)},

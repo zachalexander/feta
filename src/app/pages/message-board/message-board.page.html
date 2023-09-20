@@ -11,7 +11,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-card *ngFor="let game of baseballData">
-    <ion-progress-bar type="indeterminate" color="dark"></ion-progress-bar>
+    <ion-progress-bar *ngIf="game.gameStatus === 'In Progress'" type="indeterminate" color="dark"></ion-progress-bar>
     <ion-card-header>
       <div class="last-updated">
         <ion-chip color="warning">Sports</ion-chip>
@@ -25,14 +25,15 @@
                 <img *ngIf="game.awayTeam === 'Baltimore Orioles'" alt="team-logo-away" src="../../../assets/baseball-logos/baltimore-orioles.svg" />
               </ion-avatar> 
               <div class="team-info-away">
-                <ion-card-content>{{game.awayTeam}}</ion-card-content>
+                <ion-card-content *ngIf="currentData.startingGameData.status.detailedState !== 'Final'">{{game.awayTeam}}</ion-card-content>
                 <small>{{game.awayTeamWins}} - {{game.awayTeamLosses}}</small>
                 <ion-note class="score">{{currentData.currentPlay.result.awayScore}}</ion-note>
               </div>
           </div>
           <div class="bases-outs">
-            <ion-note>{{currentHalfInning}}</ion-note>
-            <ion-avatar>
+            <ion-note *ngIf="currentData.startingGameData.status.detailedState !== 'Final'">{{currentHalfInning}}</ion-note>
+            <ion-note *ngIf="currentData.startingGameData.status.detailedState === 'Final'" class="final">{{game.startTime | date: 'E M/d' }} <br> Final</ion-note>
+            <ion-avatar *ngIf="currentData.startingGameData.status.detailedState !== 'Final'">
               <img *ngIf="!currentData.currentPlay.matchup.postOnFirst && !currentData.currentPlay.matchup.postOnSecond && !currentData.currentPlay.matchup.postOnThird" src="../../../assets/baseball-data/bases-clear.svg" />
               <img *ngIf="currentData.currentPlay.matchup.postOnFirst && (!currentData.currentPlay.matchup.postOnSecond && !currentData.currentPlay.matchup.postOnThird)" src="../../../assets/baseball-data/runner-on-first-only.svg" />
               <img *ngIf="currentData.currentPlay.matchup.postOnSecond && (!currentData.currentPlay.matchup.postOnFirst && !currentData.currentPlay.matchup.postOnThird)" src="../../../assets/baseball-data/runner-second-only.svg" />
@@ -41,8 +42,8 @@
               <img *ngIf="currentData.currentPlay.matchup.postOnFirst && currentData.currentPlay.matchup.postOnSecond && currentData.currentPlay.matchup.postOnThird" src="../../../assets/baseball-data/bases-loaded.svg" />
               <img *ngIf="currentData.currentPlay.matchup.postOnFirst && currentData.currentPlay.matchup.postOnThird && !currentData.currentPlay.matchup.postOnSecond" src="../../../assets/baseball-data/runners-corners.svg" />
             </ion-avatar>
-            <ion-note class="current-count">{{currentData.currentPlay.count.balls}} - {{currentData.currentPlay.count.strikes}}</ion-note>
-            <ion-avatar>
+            <ion-note *ngIf="currentData.startingGameData.status.detailedState !== 'Final'" class="current-count">{{currentData.currentPlay.count.balls}} - {{currentData.currentPlay.count.strikes}}</ion-note>
+            <ion-avatar *ngIf="currentData.startingGameData.status.detailedState !== 'Final'">
               <img *ngIf="currentData.currentPlay.count.outs === 0" src="../../../assets/baseball-data/no-outs.svg" />
               <img *ngIf="currentData.currentPlay.count.outs === 1" src="../../../assets/baseball-data/one-out.svg" />
               <img *ngIf="currentData.currentPlay.count.outs === 2" src="../../../assets/baseball-data/two-outs.svg" />
@@ -55,7 +56,7 @@
                 <img *ngIf="game.homeTeam === 'Baltimore Orioles'" alt="team-logo-home" src="../../../assets/baseball-logos/baltimore-orioles.svg" />
               </ion-avatar> 
               <div class="team-info-home">
-                <ion-card-content>{{game.homeTeam}}</ion-card-content>
+                <ion-card-content *ngIf="currentData.startingGameData.status.detailedState !== 'Final'">{{game.homeTeam}}</ion-card-content>
                 <small>{{game.homeTeamWins}} - {{game.homeTeamLosses}}</small>
                 <ion-note class="score">{{currentData.currentPlay.result.homeScore}}</ion-note>
               </div>
@@ -64,16 +65,19 @@
       </div>
     </ion-card-header>
     <div class="pitcher-duel">
-      <ion-note *ngIf="currentData.startingGameData.status.detailedState !== 'In Progress'">{{currentData.startingGameData.probablePitchers.away.fullName}}</ion-note>
-      <ion-note *ngIf="currentData.startingGameData.status.detailedState !== 'In Progress'">{{currentData.startingGameData.probablePitchers.home.fullName}}</ion-note>
-      <ion-note *ngIf="currentData.startingGameData.status.detailedState === 'In Progress'">P: {{currentData.currentPlay.matchup.pitcher.fullName}}</ion-note>
-      <ion-note *ngIf="currentData.startingGameData.status.detailedState === 'In Progress'">AB: {{currentData.currentPlay.matchup.batter.fullName}}</ion-note>
+      <ion-note *ngIf="currentData.startingGameData.status.detailedState !== 'In Progress' && currentData.startingGameData.status.detailedState !== 'Final'">{{currentData.startingGameData.probablePitchers.away.fullName}}</ion-note>
+      <ion-note *ngIf="currentData.startingGameData.status.detailedState !== 'In Progress' && currentData.startingGameData.status.detailedState !== 'Final'">{{currentData.startingGameData.probablePitchers.home.fullName}}</ion-note>
+      <ion-note *ngIf="currentData.startingGameData.status.detailedState === 'In Progress' && currentData.startingGameData.status.detailedState !== 'Final'">P: {{currentData.currentPlay.matchup.pitcher.fullName}}</ion-note>
+      <ion-note *ngIf="currentData.startingGameData.status.detailedState === 'In Progress' && currentData.startingGameData.status.detailedState !== 'Final'">AB: {{currentData.currentPlay.matchup.batter.fullName}}</ion-note>
+      <ion-note *ngIf="currentData.startingGameData.status.detailedState === 'Final' && currentData.startingGameData.status.detailedState !== 'In Progress'">W: {{currentData.finalData.winner.fullName}}</ion-note>
+      <ion-note *ngIf="currentData.startingGameData.status.detailedState === 'Final' && currentData.startingGameData.status.detailedState !== 'In Progress'">L: {{currentData.finalData.loser.fullName}}</ion-note>
     </div>
-    <div *ngIf="currentData.startingGameData.status.detailedState !== 'In Progress'" class="game-status">
+    <div *ngIf="currentData.startingGameData.status.detailedState !== 'In Progress' && currentData.startingGameData.status.detailedState !== 'Final'" class="game-status">
       <ion-chip color="dark">Status: {{game.gameStatus}}</ion-chip>
       <ion-chip color="dark">{{game.startTime | date: 'E M/d h:mma' }} ET</ion-chip>
     </div>
     <div *ngIf="currentData.startingGameData.status.detailedState === 'In Progress'" class="game-status">
+      <ion-card-subtitle>Latest:</ion-card-subtitle>
       <ion-note>{{lastEvent}}</ion-note>
     </div>
 
@@ -116,6 +120,9 @@
               </div>
         </div>
     </ion-accordion-group> -->
+    <div class="join-conversation">
+      <ion-note>Join the conversation <ion-icon name="chevron-forward-outline"></ion-icon></ion-note>
+    </div>
   </ion-card> 
 
 </ion-content>
