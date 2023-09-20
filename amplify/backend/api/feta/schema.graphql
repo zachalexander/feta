@@ -64,6 +64,10 @@ type SportsGame @model @auth(rules: [{allow: public}]) {
   homeTeam: String
   awayTeam: String
   gameStatus: String
+  homeTeamWins: String
+  homeTeamLosses: String
+  awayTeamWins: String
+  awayTeamLosses: String
   startTime: String
   lastUpdate: String
   liveGameData: AWSJSON

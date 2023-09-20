@@ -360,26 +360,16 @@ export type CreateSportsGameInput = {
   homeTeam?: string | null;
   awayTeam?: string | null;
   gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  liveGameData?: string | null;
 };
 
 export type ModelSportsGameConditionInput = {
   homeTeam?: ModelStringInput | null;
   awayTeam?: ModelStringInput | null;
   gameStatus?: ModelStringInput | null;
-  homeTeamWins?: ModelStringInput | null;
-  homeTeamLosses?: ModelStringInput | null;
-  awayTeamWins?: ModelStringInput | null;
-  awayTeamLosses?: ModelStringInput | null;
   startTime?: ModelStringInput | null;
   lastUpdate?: ModelStringInput | null;
-  liveGameData?: ModelStringInput | null;
   and?: Array<ModelSportsGameConditionInput | null> | null;
   or?: Array<ModelSportsGameConditionInput | null> | null;
   not?: ModelSportsGameConditionInput | null;
@@ -391,13 +381,8 @@ export type SportsGame = {
   homeTeam?: string | null;
   awayTeam?: string | null;
   gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  liveGameData?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -407,13 +392,8 @@ export type UpdateSportsGameInput = {
   homeTeam?: string | null;
   awayTeam?: string | null;
   gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  liveGameData?: string | null;
 };
 
 export type DeleteSportsGameInput = {
@@ -519,6 +499,24 @@ export type ModelUsernameConnection = {
   nextToken?: string | null;
 };
 
+export type ModelSportsGameFilterInput = {
+  id?: ModelIDInput | null;
+  homeTeam?: ModelStringInput | null;
+  awayTeam?: ModelStringInput | null;
+  gameStatus?: ModelStringInput | null;
+  startTime?: ModelStringInput | null;
+  lastUpdate?: ModelStringInput | null;
+  and?: Array<ModelSportsGameFilterInput | null> | null;
+  or?: Array<ModelSportsGameFilterInput | null> | null;
+  not?: ModelSportsGameFilterInput | null;
+};
+
+export type ModelSportsGameConnection = {
+  __typename: "ModelSportsGameConnection";
+  items: Array<SportsGame | null>;
+  nextToken?: string | null;
+};
+
 export enum ModelSortDirection {
   ASC = "ASC",
   DESC = "DESC"
@@ -532,29 +530,6 @@ export type ModelStringKeyConditionInput = {
   gt?: string | null;
   between?: Array<string | null> | null;
   beginsWith?: string | null;
-};
-
-export type ModelSportsGameFilterInput = {
-  id?: ModelIDInput | null;
-  homeTeam?: ModelStringInput | null;
-  awayTeam?: ModelStringInput | null;
-  gameStatus?: ModelStringInput | null;
-  homeTeamWins?: ModelStringInput | null;
-  homeTeamLosses?: ModelStringInput | null;
-  awayTeamWins?: ModelStringInput | null;
-  awayTeamLosses?: ModelStringInput | null;
-  startTime?: ModelStringInput | null;
-  lastUpdate?: ModelStringInput | null;
-  liveGameData?: ModelStringInput | null;
-  and?: Array<ModelSportsGameFilterInput | null> | null;
-  or?: Array<ModelSportsGameFilterInput | null> | null;
-  not?: ModelSportsGameFilterInput | null;
-};
-
-export type ModelSportsGameConnection = {
-  __typename: "ModelSportsGameConnection";
-  items: Array<SportsGame | null>;
-  nextToken?: string | null;
 };
 
 export type ModelSubscriptionProfilePictureFilterInput = {
@@ -651,13 +626,8 @@ export type ModelSubscriptionSportsGameFilterInput = {
   homeTeam?: ModelSubscriptionStringInput | null;
   awayTeam?: ModelSubscriptionStringInput | null;
   gameStatus?: ModelSubscriptionStringInput | null;
-  homeTeamWins?: ModelSubscriptionStringInput | null;
-  homeTeamLosses?: ModelSubscriptionStringInput | null;
-  awayTeamWins?: ModelSubscriptionStringInput | null;
-  awayTeamLosses?: ModelSubscriptionStringInput | null;
   startTime?: ModelSubscriptionStringInput | null;
   lastUpdate?: ModelSubscriptionStringInput | null;
-  liveGameData?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionSportsGameFilterInput | null> | null;
   or?: Array<ModelSubscriptionSportsGameFilterInput | null> | null;
 };
@@ -1979,13 +1949,8 @@ export type CreateSportsGameMutation = {
   homeTeam?: string | null;
   awayTeam?: string | null;
   gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  liveGameData?: string | null;
 };
 
 export type UpdateSportsGameMutation = {
@@ -1994,13 +1959,8 @@ export type UpdateSportsGameMutation = {
   homeTeam?: string | null;
   awayTeam?: string | null;
   gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  liveGameData?: string | null;
 };
 
 export type DeleteSportsGameMutation = {
@@ -2009,13 +1969,8 @@ export type DeleteSportsGameMutation = {
   homeTeam?: string | null;
   awayTeam?: string | null;
   gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  liveGameData?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -2662,6 +2617,34 @@ export type ListUsernamesQuery = {
   nextToken?: string | null;
 };
 
+export type GetSportsGameQuery = {
+  __typename: "SportsGame";
+  id: string;
+  homeTeam?: string | null;
+  awayTeam?: string | null;
+  gameStatus?: string | null;
+  startTime?: string | null;
+  lastUpdate?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListSportsGamesQuery = {
+  __typename: "ModelSportsGameConnection";
+  items: Array<{
+    __typename: "SportsGame";
+    id: string;
+    homeTeam?: string | null;
+    awayTeam?: string | null;
+    gameStatus?: string | null;
+    startTime?: string | null;
+    lastUpdate?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
 export type ProfilesByProfilepictureIDQuery = {
   __typename: "ModelProfileConnection";
   items: Array<{
@@ -2865,44 +2848,6 @@ export type ImagePostsByProfileIDQuery = {
     mediaSourceDesktop?: string | null;
     downloadableVideo?: string | null;
     posterImage?: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type GetSportsGameQuery = {
-  __typename: "SportsGame";
-  id: string;
-  homeTeam?: string | null;
-  awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  startTime?: string | null;
-  lastUpdate?: string | null;
-  liveGameData?: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListSportsGamesQuery = {
-  __typename: "ModelSportsGameConnection";
-  items: Array<{
-    __typename: "SportsGame";
-    id: string;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    liveGameData?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -4226,13 +4171,8 @@ export type OnCreateSportsGameSubscription = {
   homeTeam?: string | null;
   awayTeam?: string | null;
   gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  liveGameData?: string | null;
 };
 
 export type OnUpdateSportsGameSubscription = {
@@ -4241,13 +4181,10 @@ export type OnUpdateSportsGameSubscription = {
   homeTeam?: string | null;
   awayTeam?: string | null;
   gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  liveGameData?: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type OnDeleteSportsGameSubscription = {
@@ -4256,16 +4193,13 @@ export type OnDeleteSportsGameSubscription = {
   homeTeam?: string | null;
   awayTeam?: string | null;
   gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  liveGameData?: string | null;
   createdAt: string;
   updatedAt: string;
 };
+
+
 // ZACH CREATED
 export type GetUsernameDataQuery = {
   __typename: "Username";
@@ -6252,13 +6186,8 @@ export class APIService {
           homeTeam
           awayTeam
           gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           startTime
           lastUpdate
-          liveGameData
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6283,13 +6212,8 @@ export class APIService {
           homeTeam
           awayTeam
           gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           startTime
           lastUpdate
-          liveGameData
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6299,7 +6223,7 @@ export class APIService {
       gqlAPIServiceArguments.condition = condition;
     }
     const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
+      graphqlOperation(statement, gqlAPIServiceArguments), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku' }
     )) as any;
     return <UpdateSportsGameMutation>response.data.updateSportsGame;
   }
@@ -6314,13 +6238,8 @@ export class APIService {
           homeTeam
           awayTeam
           gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           startTime
           lastUpdate
-          liveGameData
           createdAt
           updatedAt
         }
@@ -7133,6 +7052,65 @@ export class APIService {
     )) as any;
     return <ListUsernamesQuery>response.data.listUsernames;
   }
+  async GetSportsGame(id: string): Promise<GetSportsGameQuery> {
+    const statement = `query GetSportsGame($id: ID!) {
+        getSportsGame(id: $id) {
+          __typename
+          id
+          homeTeam
+          awayTeam
+          gameStatus
+          startTime
+          lastUpdate
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetSportsGameQuery>response.data.getSportsGame;
+  }
+  async ListSportsGames(
+    filter?: ModelSportsGameFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListSportsGamesQuery> {
+    const statement = `query ListSportsGames($filter: ModelSportsGameFilterInput, $limit: Int, $nextToken: String) {
+        listSportsGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            homeTeam
+            awayTeam
+            gameStatus
+            startTime
+            lastUpdate
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListSportsGamesQuery>response.data.listSportsGames;
+  }
   async ProfilesByProfilepictureID(
     profilepictureID: string,
     sortDirection?: ModelSortDirection,
@@ -7461,75 +7439,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ImagePostsByProfileIDQuery>response.data.imagePostsByProfileID;
-  }
-  async GetSportsGame(id: string): Promise<GetSportsGameQuery> {
-    const statement = `query GetSportsGame($id: ID!) {
-        getSportsGame(id: $id) {
-          __typename
-          id
-          homeTeam
-          awayTeam
-          gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
-          startTime
-          lastUpdate
-          liveGameData
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetSportsGameQuery>response.data.getSportsGame;
-  }
-  async ListSportsGames(
-    filter?: ModelSportsGameFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListSportsGamesQuery> {
-    const statement = `query ListSportsGames($filter: ModelSportsGameFilterInput, $limit: Int, $nextToken: String) {
-        listSportsGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            startTime
-            lastUpdate
-            liveGameData
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListSportsGamesQuery>response.data.listSportsGames;
   }
   OnCreateProfilePictureListener(
     filter?: ModelSubscriptionProfilePictureFilterInput
@@ -9121,13 +9030,8 @@ export class APIService {
           homeTeam
           awayTeam
           gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           startTime
           lastUpdate
-          liveGameData
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -9153,13 +9057,8 @@ export class APIService {
           homeTeam
           awayTeam
           gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           startTime
           lastUpdate
-          liveGameData
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -9185,13 +9084,8 @@ export class APIService {
           homeTeam
           awayTeam
           gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
           startTime
           lastUpdate
-          liveGameData
           createdAt
           updatedAt
         }

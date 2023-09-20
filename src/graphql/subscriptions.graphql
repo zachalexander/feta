@@ -1246,6 +1246,10 @@ subscription OnCreateSportsGame(
     homeTeam
     awayTeam
     gameStatus
+    homeTeamWins
+    homeTeamLosses
+    awayTeamWins
+    awayTeamLosses
     startTime
     lastUpdate
     liveGameData
@@ -1261,6 +1265,10 @@ subscription OnUpdateSportsGame(
     homeTeam
     awayTeam
     gameStatus
+    homeTeamWins
+    homeTeamLosses
+    awayTeamWins
+    awayTeamLosses
     startTime
     lastUpdate
     liveGameData
@@ -1276,6 +1284,10 @@ subscription OnDeleteSportsGame(
     homeTeam
     awayTeam
     gameStatus
+    homeTeamWins
+    homeTeamLosses
+    awayTeamWins
+    awayTeamLosses
     startTime
     lastUpdate
     liveGameData

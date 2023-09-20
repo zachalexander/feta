@@ -19,6 +19,13 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "mlboriolesaddgame": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "mlbstatsapinode": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

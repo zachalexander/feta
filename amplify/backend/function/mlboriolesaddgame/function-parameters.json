@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "api": {
+      "feta": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    },
+    "auth": {
+      "feta": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "function": {
+      "mlbstatsapinode": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

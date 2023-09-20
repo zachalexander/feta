@@ -34,6 +34,10 @@
         "mlbstatsapinode": {
           "deploymentBucketName": "amplify-feta-dev-142441-deployment",
           "s3Key": "amplify-builds/mlbstatsapinode-47694878305544714769-build.zip"
+        },
+        "mlboriolesaddgame": {
+          "deploymentBucketName": "amplify-feta-dev-142441-deployment",
+          "s3Key": "amplify-builds/mlboriolesaddgame-74646d2b445137355275-build.zip"
         }
       }
     }

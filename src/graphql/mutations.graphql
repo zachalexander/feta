@@ -1286,6 +1286,10 @@ mutation CreateSportsGame(
     homeTeam
     awayTeam
     gameStatus
+    homeTeamWins
+    homeTeamLosses
+    awayTeamWins
+    awayTeamLosses
     startTime
     lastUpdate
     liveGameData
@@ -1302,6 +1306,10 @@ mutation UpdateSportsGame(
     homeTeam
     awayTeam
     gameStatus
+    homeTeamWins
+    homeTeamLosses
+    awayTeamWins
+    awayTeamLosses
     startTime
     lastUpdate
     liveGameData
@@ -1318,6 +1326,10 @@ mutation DeleteSportsGame(
     homeTeam
     awayTeam
     gameStatus
+    homeTeamWins
+    homeTeamLosses
+    awayTeamWins
+    awayTeamLosses
     startTime
     lastUpdate
     liveGameData

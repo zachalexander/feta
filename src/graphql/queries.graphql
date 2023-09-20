@@ -874,6 +874,10 @@ query GetSportsGame($id: ID!) {
     homeTeam
     awayTeam
     gameStatus
+    homeTeamWins
+    homeTeamLosses
+    awayTeamWins
+    awayTeamLosses
     startTime
     lastUpdate
     liveGameData
@@ -892,6 +896,10 @@ query ListSportsGames(
       homeTeam
       awayTeam
       gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
       startTime
       lastUpdate
       liveGameData

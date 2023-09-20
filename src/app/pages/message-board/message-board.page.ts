@@ -18,6 +18,8 @@ export class MessageBoardPage implements OnInit {
   currentData: any = [];
   lastEvent: any = [];
   lastEventDescription;
+  opponentName;
+  currentHalfInning;
 
   halfInnings = ["Top 1st", "Bottom 1st", "Top 2nd", "Bottom 2nd", "Top 3rd", "Bottom 3rd", "Top 4th", "Bottom 4th", "Top 5th", "Bottom 5th", "Top 6th", "Bottom 6th", "Top 7th", "Bottom 7th", "Top 8th", "Bottom 8th", "Top 9th", "Bottom 9th"]
 
@@ -42,9 +44,9 @@ export class MessageBoardPage implements OnInit {
         next: async (event: any) => {
           const data = event;
           console.log(data.value.data.onUpdateSportsGame)
-          this.baseballData = [data.value.data.onUpdateSportsGame];
-          this.currentData = JSON.parse(this.baseballData[0].liveGameData)
-          console.log(this.currentData)
+          // this.baseballData = [data.value.data.onUpdateSportsGame];
+          // this.currentData = JSON.parse(this.baseballData[0].liveGameData)
+          // console.log(this.currentData)
 
           // this.lastEvent = this.liveData[0]
           // this.lastEventDescription = this.liveData[0].des ? this.liveData[0].des : this.lastEventDescription;
@@ -68,13 +70,16 @@ export class MessageBoardPage implements OnInit {
       })
     ).subscribe(data => {
       this.baseballData = data;
-      console.log(JSON.parse(this.baseballData[0].liveGameData))
+      console.log(this.baseballData)
       this.liveData = JSON.parse(this.baseballData[0].liveGameData).reverse().length !== 0 ? JSON.parse(this.baseballData[0].liveGameData).reverse() : JSON.parse(this.baseballData[1].liveGameData).reverse() 
       console.log(this.liveData[0])
 
+      this.opponentName = this.baseballData[0].awayTeam !== 'Baltimore Orioles' ? this.baseballData[0].awayTeam : this.baseballData[0].homeTeam;
+      this.opponentName = this.opponentName.split(" ").join("-").toLowerCase();
+      this.currentHalfInning = this.liveData[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.liveData[0].currentPlay.about.halfInning.slice(1, 3), " ", this.liveData[0].currentPlay.about.inning.toString());
       this.currentData = this.liveData[0]
-      // this.lastEvent = this.liveData[0]
-      // this.lastEventDescription = this.lastEventDescription;
+      this.lastEvent = this.liveData[0].currentPlay.result.description;
+      console.log(this.lastEvent)
     })
   }
 

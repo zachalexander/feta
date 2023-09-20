@@ -37,6 +37,10 @@ export class SportsService {
           startTime
           homeTeam
           awayTeam
+          awayTeamWins
+          awayTeamLosses
+          homeTeamWins
+          homeTeamLosses
           gameStatus
           lastUpdate
           liveGameData

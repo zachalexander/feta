@@ -69,6 +69,36 @@
     }
   },
   "function": {
+    "mlboriolesaddgame": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "feta"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "feta"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "mlbstatsapinode"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "mlbstatsapinode": {
       "build": true,
       "dependsOn": [
@@ -87,6 +117,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_mlboriolesaddgame_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mlboriolesaddgame"
+        }
+      ]
+    },
+    "AMPLIFY_function_mlboriolesaddgame_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mlboriolesaddgame"
+        }
+      ]
+    },
     "AMPLIFY_function_mlbstatsapinode_deploymentBucketName": {
       "usedBy": [
         {
