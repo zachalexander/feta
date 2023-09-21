@@ -31,8 +31,8 @@
           </div>
           <div class="bases-outs">
             <ion-note *ngIf="game.gameStatus === 'In Progress'">{{game.currentHalfInning}}</ion-note>
-            <ion-note *ngIf="game.gameStatus === 'Final'" class="final">{{game.startTime | date: 'E M/d' }} <br> Final</ion-note>
-            <ion-note *ngIf="game.gameStarted === 'false'" class="final">{{game.startTime | date: 'E M/d' }} <br> {{game.startTime | date: 'h:mm a'}} ET</ion-note>
+            <ion-note *ngIf="game.gameStatus === 'Final'" class="final" color="dark">{{game.startTime | date: 'E M/d' }} <br> Final</ion-note>
+            <ion-note *ngIf="game.gameStarted === 'false'" class="final" color="dark">{{game.startTime | date: 'E M/d' }} <br> {{game.startTime | date: 'h:mm a'}} ET</ion-note>
             <ion-avatar *ngIf="game.gameStatus === 'In Progress'">
               <img *ngIf="!game.initialGameInfo[0].currentPlay.matchup.postOnFirst && !game.initialGameInfo[0].currentPlay.matchup.postOnSecond && !game.initialGameInfo[0].currentPlay.matchup.postOnThird" src="../../../assets/baseball-data/bases-clear.svg" />
               <img *ngIf="game.initialGameInfo[0].currentPlay.matchup.postOnFirst && (!game.initialGameInfo[0].currentPlay.matchup.postOnSecond && !game.initialGameInfo[0].currentPlay.matchup.postOnThird)" src="../../../assets/baseball-data/runner-on-first-only.svg" />
