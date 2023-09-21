@@ -60,7 +60,8 @@ type Username @model @auth(rules: [{allow: private}]) {
 }
 
 type SportsGame @model @auth(rules: [{allow: public}]) {
-  id: ID!
+  id: ID! 
+  sport: String @index(name: "byStartTime", sortKeyFields: ["startTime"])
   homeTeam: String
   awayTeam: String
   gameStatus: String
@@ -68,8 +69,21 @@ type SportsGame @model @auth(rules: [{allow: public}]) {
   homeTeamLosses: String
   awayTeamWins: String
   awayTeamLosses: String
+  initialGameInfo: AWSJSON
   startTime: String
   lastUpdate: String
+  awayTeamLogoSlug: String
+  homeTeamLogoSlug: String
+  gameStarted: String
+  gameEnded: String
+  liveGameID: ID @index(name: "byLiveGameData")
+  livegame: LiveGame @hasOne(fields: ["liveGameID"])
   liveGameData: AWSJSON
+}
+
+type LiveGame @model @auth(rules: [{allow: public}]){
+  id: ID!
+  sport: String
+  gameUpdates: AWSJSON
 }
 

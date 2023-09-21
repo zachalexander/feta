@@ -871,6 +871,7 @@ query ImagePostsByProfileID(
 query GetSportsGame($id: ID!) {
   getSportsGame(id: $id) {
     id
+    sport
     homeTeam
     awayTeam
     gameStatus
@@ -878,8 +879,21 @@ query GetSportsGame($id: ID!) {
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
+    initialGameInfo
     startTime
     lastUpdate
+    awayTeamLogoSlug
+    homeTeamLogoSlug
+    gameStarted
+    gameEnded
+    liveGameID
+    livegame {
+      id
+      sport
+      gameUpdates
+      createdAt
+      updatedAt
+    }
     liveGameData
     createdAt
     updatedAt
@@ -893,6 +907,7 @@ query ListSportsGames(
   listSportsGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      sport
       homeTeam
       awayTeam
       gameStatus
@@ -900,9 +915,141 @@ query ListSportsGames(
       homeTeamLosses
       awayTeamWins
       awayTeamLosses
+      initialGameInfo
       startTime
       lastUpdate
+      awayTeamLogoSlug
+      homeTeamLogoSlug
+      gameStarted
+      gameEnded
+      liveGameID
+      livegame {
+        id
+        sport
+        gameUpdates
+        createdAt
+        updatedAt
+      }
       liveGameData
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query SportsGamesBySportAndStartTime(
+  $sport: String!
+  $startTime: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelSportsGameFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  sportsGamesBySportAndStartTime(
+    sport: $sport
+    startTime: $startTime
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      initialGameInfo
+      startTime
+      lastUpdate
+      awayTeamLogoSlug
+      homeTeamLogoSlug
+      gameStarted
+      gameEnded
+      liveGameID
+      livegame {
+        id
+        sport
+        gameUpdates
+        createdAt
+        updatedAt
+      }
+      liveGameData
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query SportsGamesByLiveGameID(
+  $liveGameID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelSportsGameFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  sportsGamesByLiveGameID(
+    liveGameID: $liveGameID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      initialGameInfo
+      startTime
+      lastUpdate
+      awayTeamLogoSlug
+      homeTeamLogoSlug
+      gameStarted
+      gameEnded
+      liveGameID
+      livegame {
+        id
+        sport
+        gameUpdates
+        createdAt
+        updatedAt
+      }
+      liveGameData
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetLiveGame($id: ID!) {
+  getLiveGame(id: $id) {
+    id
+    sport
+    gameUpdates
+    createdAt
+    updatedAt
+  }
+}
+query ListLiveGames(
+  $filter: ModelLiveGameFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listLiveGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      sport
+      gameUpdates
       createdAt
       updatedAt
     }

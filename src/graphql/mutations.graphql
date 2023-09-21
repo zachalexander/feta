@@ -1283,6 +1283,7 @@ mutation CreateSportsGame(
 ) {
   createSportsGame(input: $input, condition: $condition) {
     id
+    sport
     homeTeam
     awayTeam
     gameStatus
@@ -1290,8 +1291,21 @@ mutation CreateSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
+    initialGameInfo
     startTime
     lastUpdate
+    awayTeamLogoSlug
+    homeTeamLogoSlug
+    gameStarted
+    gameEnded
+    liveGameID
+    livegame {
+      id
+      sport
+      gameUpdates
+      createdAt
+      updatedAt
+    }
     liveGameData
     createdAt
     updatedAt
@@ -1303,6 +1317,7 @@ mutation UpdateSportsGame(
 ) {
   updateSportsGame(input: $input, condition: $condition) {
     id
+    sport
     homeTeam
     awayTeam
     gameStatus
@@ -1310,8 +1325,21 @@ mutation UpdateSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
+    initialGameInfo
     startTime
     lastUpdate
+    awayTeamLogoSlug
+    homeTeamLogoSlug
+    gameStarted
+    gameEnded
+    liveGameID
+    livegame {
+      id
+      sport
+      gameUpdates
+      createdAt
+      updatedAt
+    }
     liveGameData
     createdAt
     updatedAt
@@ -1323,6 +1351,7 @@ mutation DeleteSportsGame(
 ) {
   deleteSportsGame(input: $input, condition: $condition) {
     id
+    sport
     homeTeam
     awayTeam
     gameStatus
@@ -1330,9 +1359,58 @@ mutation DeleteSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
+    initialGameInfo
     startTime
     lastUpdate
+    awayTeamLogoSlug
+    homeTeamLogoSlug
+    gameStarted
+    gameEnded
+    liveGameID
+    livegame {
+      id
+      sport
+      gameUpdates
+      createdAt
+      updatedAt
+    }
     liveGameData
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateLiveGame(
+  $input: CreateLiveGameInput!
+  $condition: ModelLiveGameConditionInput
+) {
+  createLiveGame(input: $input, condition: $condition) {
+    id
+    sport
+    gameUpdates
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateLiveGame(
+  $input: UpdateLiveGameInput!
+  $condition: ModelLiveGameConditionInput
+) {
+  updateLiveGame(input: $input, condition: $condition) {
+    id
+    sport
+    gameUpdates
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteLiveGame(
+  $input: DeleteLiveGameInput!
+  $condition: ModelLiveGameConditionInput
+) {
+  deleteLiveGame(input: $input, condition: $condition) {
+    id
+    sport
+    gameUpdates
     createdAt
     updatedAt
   }

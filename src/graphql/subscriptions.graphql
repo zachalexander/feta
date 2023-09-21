@@ -1243,6 +1243,7 @@ subscription OnCreateSportsGame(
 ) {
   onCreateSportsGame(filter: $filter) {
     id
+    sport
     homeTeam
     awayTeam
     gameStatus
@@ -1250,8 +1251,21 @@ subscription OnCreateSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
+    initialGameInfo
     startTime
     lastUpdate
+    awayTeamLogoSlug
+    homeTeamLogoSlug
+    gameStarted
+    gameEnded
+    liveGameID
+    livegame {
+      id
+      sport
+      gameUpdates
+      createdAt
+      updatedAt
+    }
     liveGameData
     createdAt
     updatedAt
@@ -1262,6 +1276,7 @@ subscription OnUpdateSportsGame(
 ) {
   onUpdateSportsGame(filter: $filter) {
     id
+    sport
     homeTeam
     awayTeam
     gameStatus
@@ -1269,8 +1284,21 @@ subscription OnUpdateSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
+    initialGameInfo
     startTime
     lastUpdate
+    awayTeamLogoSlug
+    homeTeamLogoSlug
+    gameStarted
+    gameEnded
+    liveGameID
+    livegame {
+      id
+      sport
+      gameUpdates
+      createdAt
+      updatedAt
+    }
     liveGameData
     createdAt
     updatedAt
@@ -1281,6 +1309,7 @@ subscription OnDeleteSportsGame(
 ) {
   onDeleteSportsGame(filter: $filter) {
     id
+    sport
     homeTeam
     awayTeam
     gameStatus
@@ -1288,9 +1317,49 @@ subscription OnDeleteSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
+    initialGameInfo
     startTime
     lastUpdate
+    awayTeamLogoSlug
+    homeTeamLogoSlug
+    gameStarted
+    gameEnded
+    liveGameID
+    livegame {
+      id
+      sport
+      gameUpdates
+      createdAt
+      updatedAt
+    }
     liveGameData
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateLiveGame($filter: ModelSubscriptionLiveGameFilterInput) {
+  onCreateLiveGame(filter: $filter) {
+    id
+    sport
+    gameUpdates
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateLiveGame($filter: ModelSubscriptionLiveGameFilterInput) {
+  onUpdateLiveGame(filter: $filter) {
+    id
+    sport
+    gameUpdates
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteLiveGame($filter: ModelSubscriptionLiveGameFilterInput) {
+  onDeleteLiveGame(filter: $filter) {
+    id
+    sport
+    gameUpdates
     createdAt
     updatedAt
   }

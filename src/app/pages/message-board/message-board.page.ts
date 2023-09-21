@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList, ViewChildren, OnChanges, AfterViewInit } from '@angular/core';
-import { APIService } from 'src/app/API.service';
+import { APIService, ModelSortDirection } from 'src/app/API.service';
 import { SportsService } from 'src/app/services/sports.service';
 import { BehaviorSubject, Subscription, finalize } from 'rxjs';
 import { Amplify } from 'aws-amplify';
@@ -43,8 +43,17 @@ export class MessageBoardPage implements OnInit {
       this.api.OnUpdateSportsGameListener().subscribe({
         next: async (event: any) => {
           const data = event;
-          console.log(data.value.data.onUpdateSportsGame)
+
+          this.baseballData.map((game, index) => {
+            if(data.value.data.onUpdateSportsGame.id === game.id){
+              this.baseballData[index] = data.value.data.onUpdateSportsGame;
+              this.baseballData[index].initialGameInfo = JSON.parse(this.baseballData[index].initialGameInfo)
+            }
+          })
+
+          console.log(this.baseballData)
           // this.baseballData = [data.value.data.onUpdateSportsGame];
+          // console.log(this.baseballData)
           // this.currentData = JSON.parse(this.baseballData[0].liveGameData)
           // console.log(this.currentData)
 
@@ -64,24 +73,18 @@ export class MessageBoardPage implements OnInit {
 
 
   async getSportsData(){
-    await this.sportsService.getSportsData().pipe(
-      finalize(() => {
-        // this.loaded = true;
-      })
-    ).subscribe(data => {
-      this.baseballData = data;
+    await this.api.SportsGamesBySportAndStartTime("baseball", null, ModelSortDirection.DESC).then(data => {
+      this.baseballData = data.items;
       console.log(this.baseballData)
-      this.liveData = JSON.parse(this.baseballData[0].liveGameData).reverse().length !== 0 ? JSON.parse(this.baseballData[0].liveGameData).reverse() : JSON.parse(this.baseballData[1].liveGameData).reverse() 
-      console.log(this.liveData[0])
-
-      this.opponentName = this.baseballData[0].awayTeam !== 'Baltimore Orioles' ? this.baseballData[0].awayTeam : this.baseballData[0].homeTeam;
-      this.opponentName = this.opponentName.split(" ").join("-").toLowerCase();
-      this.currentHalfInning = this.liveData[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.liveData[0].currentPlay.about.halfInning.slice(1, 3), " ", this.liveData[0].currentPlay.about.inning.toString());
-      this.currentData = this.liveData[0]
-      this.lastEvent = this.liveData[0].currentPlay.result.description;
-      console.log(this.lastEvent)
+      this.baseballData.map(async game => {
+        game.initialGameInfo = await JSON.parse(game.initialGameInfo)
+        game.liveGameData = await JSON.parse(game.liveGameData)
+        game.currentHalfInning = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.initialGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.initialGameInfo[0].currentPlay.about.inning.toString()) : null;
+        game.lastEvent = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.playEvents[game.initialGameInfo[0].currentPlay.playEvents.length - 1].details.description : null;
+      })
     })
   }
+
 
 
 }

@@ -4,6 +4,7 @@ ion-header {
     background: var(--ion-color-light) !important;
 }
 
+
 .toolbar-wrapper {
     display: flex;
     flex-direction: row;
@@ -58,6 +59,10 @@ ion-header {
         margin-bottom: 0.25em;
     }
 
+    .record {
+        font-size: 0.85em;
+    }
+
     .current-count {
         margin: 0.5em 0em -1.25em 0em;
     }
@@ -93,9 +98,9 @@ ion-header {
     font-weight: 600;
 
     ion-avatar {
-        margin: 1em 0.5em;
-        max-width: 34px;
-        max-height: 34px;
+        margin: 0.5em;
+        max-width: 40px;
+        max-height: 40px;
     }
 
     .team-info-home, .team-info-away {
@@ -121,6 +126,9 @@ ion-toolbar {
 ion-card {
     max-width: 450px;
     margin: 2em auto;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: 1px solid var(--ion-color-light);
 }
 
 ion-note {
@@ -177,4 +185,13 @@ ion-title {
     justify-content: flex-end;
     padding: 1em;
     border-top: 1px solid var(--ion-color-light);
+}
+
+.venue {
+    text-align: center;
+    padding: 0em 0em 1em 0em;
+}
+
+.last-event {
+    text-align: left;
 }

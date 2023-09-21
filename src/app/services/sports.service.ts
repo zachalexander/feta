@@ -29,29 +29,46 @@ export class SportsService {
   async getData(): Promise<any> {
 
     const statement = `query ListSportsGames($filter: ModelSportsGameFilterInput, $limit: Int, $nextToken: String) {
-      listSportsGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
-        __typename
-          items {
+        listSportsGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
-          id
-          startTime
-          homeTeam
-          awayTeam
-          awayTeamWins
-          awayTeamLosses
-          homeTeamWins
-          homeTeamLosses
-          gameStatus
-          lastUpdate
-          liveGameData
+          items {
+            __typename
+            id
+            sorterValue
+            homeTeam
+            awayTeam
+            gameStatus
+            homeTeamWins
+            homeTeamLosses
+            awayTeamWins
+            awayTeamLosses
+            startTime
+            lastUpdate
+            awayTeamLogoSlug
+            homeTeamLogoSlug
+            gameStarted
+            gameEnded
+            liveGameID
+            livegame {
+              __typename
+              id
+              sport
+              createdAt
+              updatedAt
+            }
+            liveGameData
+            createdAt
+            updatedAt
+          }
+          nextToken
         }
-        nextToken
-      }
-    }`;
-
+      }`;
+    const gqlAPIServiceArguments: any = {};
     const response = (await API.graphql(
-      graphqlOperation(statement), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku'}
+      graphqlOperation(statement, gqlAPIServiceArguments), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku' }
     )) as any;
     return response.data.listSportsGames.items;
   }
+
+
 }

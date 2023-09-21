@@ -33,11 +33,11 @@
       "function": {
         "mlbstatsapinode": {
           "deploymentBucketName": "amplify-feta-dev-142441-deployment",
-          "s3Key": "amplify-builds/mlbstatsapinode-47694878305544714769-build.zip"
+          "s3Key": "amplify-builds/mlbstatsapinode-7748724b4c4376544c65-build.zip"
         },
         "mlboriolesaddgame": {
           "deploymentBucketName": "amplify-feta-dev-142441-deployment",
-          "s3Key": "amplify-builds/mlboriolesaddgame-74646d2b445137355275-build.zip"
+          "s3Key": "amplify-builds/mlboriolesaddgame-4f395145342f434d4e4c-build.zip"
         }
       }
     }

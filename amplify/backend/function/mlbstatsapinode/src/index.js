@@ -20,45 +20,20 @@ async function liveGameData(gamePk) {
     return liveData;
 }
 
-async function createLiveData(data) {
-    const gamepk = data.gameData.game.pk;
-    let livePlays = [];
-    let inningData = [];
-    let playData = {}
-
-    let baseballData = data.liveData.plays.allPlays;
+async function updateInitialData(data) {
+    let playData = {};
+    let updatedData = [];
+    let gamepk = data.gameData.game.pk;
     let currentPlay = data.liveData.plays.currentPlay;
     let startingGameData = data.gameData;
     let finalData = data.liveData.decisions;
-    let halfInning;
-    let innings = [];
-    baseballData.forEach(playInfo => {
-        let halfInningPrev = halfInning
-        if (playInfo.about.inning > 3) {
-            halfInning = `${playInfo.about.halfInning}`.charAt(0).toUpperCase().concat(`${playInfo.about.halfInning}`.slice(1), " ", `${playInfo.about.inning.toString()}`, "th")
-        } else if (playInfo.about.inning == 3) {
-            halfInning = `${playInfo.about.halfInning}`.charAt(0).toUpperCase().concat(`${playInfo.about.halfInning}`.slice(1), " ", `${playInfo.about.inning.toString()}`, "rd")
-        } else if (playInfo.about.inning == 2) {
-            halfInning = `${playInfo.about.halfInning}`.charAt(0).toUpperCase().concat(`${playInfo.about.halfInning}`.slice(1), " ", `${playInfo.about.inning.toString()}`, "nd")
-        } else if (playInfo.about.inning == 1) {
-            halfInning = `${playInfo.about.halfInning}`.charAt(0).toUpperCase().concat(`${playInfo.about.halfInning}`.slice(1), " ", `${playInfo.about.inning.toString()}`, "st")
-        }
 
-        playData["currentPlay"] = currentPlay;
-        playData["startingGameData"] = startingGameData;
-        playData["finalData"] = finalData;
+    playData["initialGameData"] = startingGameData
+    playData["finalData"] = data.liveData.decisions
+    playData["currentPlay"] = currentPlay;
 
-        if ((halfInning !== halfInningPrev)) {
-            innings = [];
-            innings.push(playInfo.result)
-            playData[halfInning] = playInfo.result
-        } else {
-            innings.push(playInfo.result)
-            playData[halfInning] = innings
-        }
-    })
-    livePlays.push(playData);
-    return JSON.stringify(livePlays)
+    updatedData.push(playData);
+    return JSON.stringify(updatedData)
 }
 
 export const handler = async (event) => {
@@ -68,8 +43,9 @@ export const handler = async (event) => {
     const data = await getMlbData(formatted_date);
 
     const liveGame = await liveGameData(data['gamePk'])
-    const livePlays = await createLiveData(liveGame)
+    const livePlays = await updateInitialData(liveGame)
 
+    const now = new Date().toISOString()
     const gamePk = data['gamePk']
     const homeTeam = data['teams']['home']['team']['name']
     const awayTeam = data['teams']['away']['team']['name']
@@ -79,7 +55,23 @@ export const handler = async (event) => {
     const homeTeamLosses = data['teams']['home']['leagueRecord']['losses'].toString()
     const startTime = data['gameDate']
     const gameStatus = data['status']['detailedState']
-    const now = new Date().toISOString()
+    const awayTeamLogoSlug = awayTeam.split(" ").join("-").toLowerCase();
+    const homeTeamLogoSlug = homeTeam.split(" ").join("-").toLowerCase();
+    const sport = 'baseball'
+
+    let gameEnded;
+    if (gameStatus == 'Final') {
+        gameEnded = "true";
+    } else {
+        gameEnded = "false";
+    }
+
+    let gameStarted;
+    if (startTime < now) {
+        gameStarted = "true"
+    } else {
+        gameStarted = "false"
+    }
 
     const query = `
         mutation updateSportsGameTable($input: UpdateSportsGameInput = {
@@ -93,7 +85,12 @@ export const handler = async (event) => {
         awayTeam: ${JSON.stringify(awayTeam)},
         startTime: ${JSON.stringify(startTime)},
         gameStatus: ${JSON.stringify(gameStatus)},
-        liveGameData: ${JSON.stringify(livePlays)}
+        awayTeamLogoSlug: ${JSON.stringify(awayTeamLogoSlug)},
+        homeTeamLogoSlug: ${JSON.stringify(homeTeamLogoSlug)},
+        sport: ${JSON.stringify(sport)},
+        gameStarted: ${JSON.stringify(gameStarted)},
+        gameEnded: ${JSON.stringify(gameEnded)},
+        initialGameInfo: ${JSON.stringify(livePlays)}
         }) {	
             	updateSportsGame(input:$input)  {
                 __typename
@@ -103,6 +100,15 @@ export const handler = async (event) => {
                 awayTeam
                 startTime
                 gameStatus
+                homeTeamWins
+                homeTeamLosses
+                awayTeamWins
+                awayTeamLosses
+                awayTeamLogoSlug
+                homeTeamLogoSlug
+                initialGameInfo
+                gameStarted
+                gameEnded
                 liveGameData
             } 
         }
