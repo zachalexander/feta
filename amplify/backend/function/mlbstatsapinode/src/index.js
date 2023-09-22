@@ -31,6 +31,7 @@ async function updateInitialData(data) {
     playData["initialGameData"] = startingGameData
     playData["finalData"] = data.liveData.decisions
     playData["currentPlay"] = currentPlay;
+    playData["latestPlays"] = data.liveData.plays.allPlays.slice(Math.max(data.liveData.plays.allPlays.length - 5, 0)).reverse()
 
     updatedData.push(playData);
     return JSON.stringify(updatedData)

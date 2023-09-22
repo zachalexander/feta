@@ -48,6 +48,8 @@ export class MessageBoardPage implements OnInit {
             if(data.value.data.onUpdateSportsGame.id === game.id){
               this.baseballData[index] = data.value.data.onUpdateSportsGame;
               this.baseballData[index].initialGameInfo = JSON.parse(this.baseballData[index].initialGameInfo)
+              this.baseballData[index].currentHalfInning = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.initialGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.initialGameInfo[0].currentPlay.about.inning.toString()) : null;
+              this.baseballData[index].lastEvent = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.playEvents[game.initialGameInfo[0].currentPlay.playEvents.length - 1].details.description : null;
             }
           })
 
