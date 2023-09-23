@@ -79,11 +79,14 @@
       <ion-note *ngIf="game.initialGameInfo[0].initialGameData.weather.temp && game.initialGameInfo[0].initialGameData.weather.condition">{{game.initialGameInfo[0].initialGameData.weather.temp}}&#xb0;F <br> Condition: {{game.initialGameInfo[0].initialGameData.weather.condition}}</ion-note>
     </div>
     <div *ngIf="game.gameStatus === 'In Progress'" class="game-status">
-      <ion-card-subtitle>Latest:</ion-card-subtitle>
-      <ion-note *ngIf="lastEvent" class="last-event">{{game.lastEvent}}</ion-note>
       <ion-card-subtitle>Latest Plays:</ion-card-subtitle>
       <div class="latest-plays" *ngFor="let play of game.initialGameInfo[0].latestPlays">
-        <ion-note *ngIf="play.result.description"><ion-icon name="chevron-forward-outline"></ion-icon>{{play.result.description}}</ion-note>
+        <div class="play" *ngIf="play.result.description">
+          <ion-icon name="chevron-forward-outline" *ngIf="play.result.description && !play.result.isOut && !play.about.isScoringPlay"></ion-icon><ion-note *ngIf="play.result.description && !play.result.isOut && !play.about.isScoringPlay">{{play.result.description}}</ion-note>
+          <ion-icon name="chevron-forward-outline" *ngIf="play.result.isOut && play.result.description && !play.about.isScoringPlay"></ion-icon><ion-note *ngIf="play.result.isOut && play.result.description && !play.about.isScoringPlay">{{play.result.description}}<span class="outs">&nbsp;{{play.count.outs}} out(s).</span></ion-note>
+          <ion-icon name="chevron-forward-outline" *ngIf="play.result.isOut && play.about.isScoringPlay && play.result.description"></ion-icon><ion-note *ngIf="play.result.isOut && play.about.isScoringPlay && play.result.description">{{play.result.description}}<span class="outs">&nbsp;{{play.count.outs}} out(s).&nbsp;{{game.initialGameInfo[0].initialGameData.teams.away.abbreviation}} {{play.result.awayScore}} - {{game.initialGameInfo[0].initialGameData.teams.home.abbreviation}} {{play.result.homeScore}}</span></ion-note>
+          <ion-icon name="chevron-forward-outline" *ngIf="!play.result.isOut && play.about.isScoringPlay && play.result.description"></ion-icon><ion-note *ngIf="!play.result.isOut && play.about.isScoringPlay && play.result.description">{{play.result.description}}<span class="outs">&nbsp;{{game.initialGameInfo[0].initialGameData.teams.away.abbreviation}} {{play.result.awayScore}} - {{game.initialGameInfo[0].initialGameData.teams.home.abbreviation}} {{play.result.homeScore}}</span></ion-note>
+        </div>
       </div>
     </div>
     <div class="join-conversation" *ngIf="game.gameStarted === 'true'">

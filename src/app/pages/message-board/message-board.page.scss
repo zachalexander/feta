@@ -42,6 +42,12 @@ ion-header {
         font-weight: 600;
     }
 
+    ion-note {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .versus {
         padding: 0 1em;
         display: flex;
@@ -130,11 +136,7 @@ ion-card {
     border: 1px solid var(--ion-color-light);
 }
 
-ion-note {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .play-description {
     display: flex;
@@ -157,10 +159,26 @@ ion-title {
     margin: 0 1em 1em 1em;
     max-width: 450px;
 
-    ion-note {
+    .play  {
         display: flex;
+        flex-direction: row;
         justify-content: flex-start;
+        align-items: flex-start;
     }
+
+    ion-icon {
+        margin-top: 0.25em;
+        min-width: 20px;
+    }
+
+    .outs {
+        font-weight: 600;
+    }
+
+    // ion-note {
+    //     display: flex;
+    //     justify-content: flex-start;
+    // }
 }
 
 .live-description {
