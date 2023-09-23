@@ -15,7 +15,7 @@
     <ion-card-header>
       <div class="last-updated">
         <ion-chip color="warning">Sports</ion-chip>
-        <ion-note color="medium">Last updated {{game.lastUpdate | date: 'MMM d' }} at {{game.lastUpdate | date: 'h:mma'}} ET</ion-note>
+        <ion-note *ngIf="game.gameStatus !== 'Final'" color="medium">Last updated {{game.lastUpdate | date: 'MMM d' }} at {{game.lastUpdate | date: 'h:mma'}} ET</ion-note>
       </div>
       <div class="sports-banner">
         <div class="sports-teams">
