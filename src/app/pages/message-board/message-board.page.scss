@@ -18,6 +18,14 @@ ion-header {
     }
 }
 
+.orioles-outcome {
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    padding: 0em 0em 1em 0em;
+    color: rgb(223, 70, 1);
+}
+
 .last-updated {
     display: flex;
     flex-direction: row;
@@ -28,6 +36,10 @@ ion-header {
 
     ion-text {
         font-size: 0.75rem;
+    }
+
+    ion-chip {
+        margin-bottom: 0.75em;
     }
 }
 

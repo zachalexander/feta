@@ -74,6 +74,8 @@
       <ion-note *ngIf="game.gameStatus === 'Final'">W: {{game.initialGameInfo[0].finalData.winner.fullName}}</ion-note>
       <ion-note *ngIf="game.gameStatus === 'Final'">L: {{game.initialGameInfo[0].finalData.loser.fullName}}</ion-note>
     </div>
+    <ion-note *ngIf="game.gameStatus === 'Final' && game.oriolesOutcome === 'The Orioles won.'" color="medium" class="orioles-outcome">{{game.oriolesOutcome}}</ion-note>
+    <ion-note *ngIf="game.gameStatus === 'Final' && game.oriolesOutcome === 'The Orioles lost.'" color="medium" class="orioles-outcome">{{game.oriolesOutcome}}</ion-note>
     <div class="venue" *ngIf="game.gameStatus === 'Scheduled' || game.gameStatus === 'Pre-Game'">
       <ion-note>{{game.initialGameInfo[0].initialGameData.venue.name}} <br> {{game.initialGameInfo[0].initialGameData.venue.location.city}}, {{game.initialGameInfo[0].initialGameData.venue.location.stateAbbrev}}</ion-note>
       <ion-note *ngIf="game.initialGameInfo[0].initialGameData.weather.temp && game.initialGameInfo[0].initialGameData.weather.condition">{{game.initialGameInfo[0].initialGameData.weather.temp}}&#xb0;F <br> Condition: {{game.initialGameInfo[0].initialGameData.weather.condition}}</ion-note>

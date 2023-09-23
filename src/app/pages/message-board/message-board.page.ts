@@ -83,6 +83,7 @@ export class MessageBoardPage implements OnInit {
         game.liveGameData = await JSON.parse(game.liveGameData)
         game.currentHalfInning = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.initialGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.initialGameInfo[0].currentPlay.about.inning.toString()) : null;
         game.lastEvent = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.playEvents[game.initialGameInfo[0].currentPlay.playEvents.length - 1].details.description : null;
+        game.oriolesOutcome = (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore > game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore > game.initialGameInfo[0].currentPlay.result.awayScore)) ? "The Orioles won." : "The Orioles lost."
       })
     })
   }
