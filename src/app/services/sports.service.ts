@@ -26,6 +26,14 @@ export class SportsService {
     );
   }
 
+  // getCurrentPlayerGameData(): Observable<any> {
+  //   return from(this.getPlayerData()).pipe(
+  //     map((res: any) => {
+  //       return res;
+  //     })
+  //   )
+  // }
+
   async getData(): Promise<any> {
 
     const statement = `query ListSportsGames($filter: ModelSportsGameFilterInput, $limit: Int, $nextToken: String) {
@@ -71,4 +79,26 @@ export class SportsService {
   }
 
 
+  async getPitcherFinalData(personId, gamePk): Promise<any>{
+    if(personId && gamePk) {
+      let response = await fetch(`https://statsapi.mlb.com/api/v1/people/${personId}/stats/game/${gamePk}`).then(data => data.json());
+      return response.stats[0].splits[1].stat.summary as any;
+    }
+  }
+
+  async getBatterData(personId, gamePk): Promise<any> {
+    if (personId && gamePk) {
+      let response = await fetch(`https://statsapi.mlb.com/api/v1/people/${personId}/stats/game/${gamePk}`).then(data => data.json());
+      console.log(response.stats[0].splits[2])
+      return response.stats[0].splits[2].stat.summary as any;
+    }
+  }
+
+  async getPitcherData(personId, gamePk): Promise<any> {
+    if (personId && gamePk) {
+      let response = await fetch(`https://statsapi.mlb.com/api/v1/people/${personId}/stats/game/${gamePk}`).then(data => data.json());
+      console.log(response.stats[0].splits[1])
+      return response.stats[0].splits[1].stat.summary as any;
+    }
+  }
 }

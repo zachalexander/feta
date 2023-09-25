@@ -21,8 +21,6 @@ export class MessageBoardPage implements OnInit {
   opponentName;
   currentHalfInning;
 
-  halfInnings = ["Top 1st", "Bottom 1st", "Top 2nd", "Bottom 2nd", "Top 3rd", "Bottom 3rd", "Top 4th", "Bottom 4th", "Top 5th", "Bottom 5th", "Top 6th", "Bottom 6th", "Top 7th", "Bottom 7th", "Top 8th", "Bottom 8th", "Top 9th", "Bottom 9th"]
-
   constructor(
     private api: APIService,
     private sportsService: SportsService,
@@ -35,7 +33,7 @@ export class MessageBoardPage implements OnInit {
 
   async ngOnInit() {
     this.startSubscriptions();
-    this.getSportsData();
+    await this.getSportsData();
     console.log(this.baseballData)
   }
 
@@ -83,13 +81,26 @@ export class MessageBoardPage implements OnInit {
         game.liveGameData = await JSON.parse(game.liveGameData)
         game.currentHalfInning = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.initialGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.initialGameInfo[0].currentPlay.about.inning.toString()) : null;
         game.lastEvent = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.playEvents[game.initialGameInfo[0].currentPlay.playEvents.length - 1].details.description : null;
-        game.oriolesOutcome = (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore > game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore > game.initialGameInfo[0].currentPlay.result.awayScore)) ? "The Orioles won." : "The Orioles lost."
+        game.oriolesOutcome = (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore > game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore > game.initialGameInfo[0].currentPlay.result.awayScore)) ? "O's WON" : "O's LOST"
+        game.losingPitcherStats = (game.gameStatus === 'Final' && game.initialGameInfo[0].finalData) ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.loser.id, +game.id) as any: null;
+        game.winningPitcherStats = (game.gameStatus === 'Final' && game.initialGameInfo[0].finalData) ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.winner.id, +game.id) as any: null;
+        game.currentBatterStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(game.initialGameInfo[0].currentPlay.matchup.batter.id, +game.id) as any : null;
+        game.currentPitcherStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(game.initialGameInfo[0].currentPlay.matchup.pitcher.id, +game.id) as any : null;
       })
     })
   }
+
+  async getFinalPitcherGameStats(playerId, gamePk) {
+    return await this.sportsService.getPitcherFinalData(playerId, gamePk).then(data => data);
+  }
+
+  async getCurrentBatterGameStats(playerId, gamePk) {
+    return await this.sportsService.getBatterData(playerId, gamePk).then(data => data);
+  }
   
-  
-  
+  async getCurrentPitcherGameStats(playerId, gamePk) {
+    return await this.sportsService.getPitcherData(playerId, gamePk).then(data => data);
+  }
 
 
 

@@ -16,13 +16,13 @@
       <div class="last-updated">
         <ion-chip color="warning">Sports</ion-chip>
         <ion-note *ngIf="game.gameStatus !== 'Final'" color="medium">Last updated {{game.lastUpdate | date: 'MMM d' }} at {{game.lastUpdate | date: 'h:mma'}} ET</ion-note>
+        <ion-note *ngIf="game.gameStatus === 'Final' && game.oriolesOutcome" color="medium" class="orioles-outcome">{{game.oriolesOutcome}}</ion-note>
       </div>
       <div class="sports-banner">
         <div class="sports-teams">
           <div class="team-wrapper-away">
               <ion-avatar>
-                <img *ngIf="game.awayTeam !== 'Baltimore Orioles'" alt="team-logo-away" src="../../../assets/baseball-logos/{{game.awayTeamLogoSlug}}.svg" />
-                <img *ngIf="game.awayTeam === 'Baltimore Orioles'" alt="team-logo-away" src="../../../assets/baseball-logos/baltimore-orioles.svg" />
+                <img alt="team-logo-away" src="https://midfield.mlbstatic.com/v1/team/{{game.initialGameInfo[0].initialGameData.teams.away.id}}/spots/120" />
               </ion-avatar> 
               <div class="team-info-away">
                 <ion-note class="record">{{game.awayTeamWins}} - {{game.awayTeamLosses}}</ion-note>
@@ -53,8 +53,7 @@
           </div>
           <div class="team-wrapper-home">
               <ion-avatar>
-                <img *ngIf="game.homeTeam !== 'Baltimore Orioles'" alt="team-logo-home" src="'../../../assets/baseball-logos/{{game.homeTeamLogoSlug}}.svg" />
-                <img *ngIf="game.homeTeam === 'Baltimore Orioles'" alt="team-logo-home" src="../../../assets/baseball-logos/baltimore-orioles.svg" />
+                <img alt="team-logo-home" src="https://midfield.mlbstatic.com/v1/team/{{game.initialGameInfo[0].initialGameData.teams.home.id}}/spots/120" />
               </ion-avatar> 
               <div class="team-info-home">
                 <ion-note class="record">{{game.homeTeamWins}} - {{game.homeTeamLosses}}</ion-note>
@@ -64,19 +63,45 @@
         </div>
       </div>
     </ion-card-header>
-    <div class="pitcher-duel">
+    <div class="live-board">
+      <div class="current-pitcher-wrapper" *ngIf="game.gameStatus === 'In Progress' && game.gameStatus !== 'Final'">
+        <ion-card-subtitle>Current Pitcher</ion-card-subtitle>
+        <div class="current-pitcher-data">
+          <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{game.initialGameInfo[0].currentPlay.matchup.pitcher.id}}/spots/120" /></ion-avatar>
+          <ion-note class="current-pitcher-stats">{{game.initialGameInfo[0].currentPlay.matchup.pitcher.fullName}}<br>{{game.currentPitcherStats}}</ion-note>
+        </div>
+      </div>
+      <div class="current-batter-wrapper" *ngIf="game.gameStatus === 'In Progress' && game.gameStatus !== 'Final'">
+        <ion-card-subtitle>Current Batter</ion-card-subtitle>
+        <div class="current-batter-data">
+          <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{game.initialGameInfo[0].currentPlay.matchup.batter.id}}/spots/120" /></ion-avatar>
+          <ion-note class="current-batter-stats" *ngIf="game.gameStatus === 'In Progress'">{{game.initialGameInfo[0].currentPlay.matchup.batter.fullName}}<br>{{game.currentBatterStats}}</ion-note>
+        </div>
+      </div>
+    </div>
+    <div class="pitcher-duel" *ngIf="game.gameStatus !== 'Final'">
       <ion-note *ngIf="game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final' && game.initialGameInfo[0].initialGameData.probablePitchers.away">SP: {{game.initialGameInfo[0].initialGameData.probablePitchers.away.fullName}}</ion-note>
       <ion-note *ngIf="game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final' && !game.initialGameInfo[0].initialGameData.probablePitchers.away">SP: TBD</ion-note>
       <ion-note *ngIf="game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final' && !game.initialGameInfo[0].initialGameData.probablePitchers.home">SP: TBD</ion-note>
-      <ion-note *ngIf="game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final' && game.initialGameInfo[0].initialGameData.probablePitchers.home">SP: {{game.initialGameInfo[0].initialGameData.probablePitchers.home.fullName}}</ion-note>
-      <ion-note *ngIf="game.gameStatus === 'In Progress'">P: {{game.initialGameInfo[0].currentPlay.matchup.pitcher.fullName}}</ion-note>
-      <ion-note *ngIf="game.gameStatus === 'In Progress'">AB: {{game.initialGameInfo[0].currentPlay.matchup.batter.fullName}}</ion-note>
-      <ion-note *ngIf="game.gameStatus === 'Final'">W: {{game.initialGameInfo[0].finalData.winner.fullName}}</ion-note>
-      <ion-note *ngIf="game.gameStatus === 'Final'">L: {{game.initialGameInfo[0].finalData.loser.fullName}}</ion-note>
+      <ion-note *ngIf="game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final' && game.initialGameInfo[0].initialGameData.probablePitchers.home">SP: {{game.initialGameInfo[0].initialGameData.probablePitchers.home.fullName}}</ion-note>        
     </div>
-    <ion-note *ngIf="game.gameStatus === 'Final' && game.oriolesOutcome === 'The Orioles won.'" color="medium" class="orioles-outcome">{{game.oriolesOutcome}}</ion-note>
-    <ion-note *ngIf="game.gameStatus === 'Final' && game.oriolesOutcome === 'The Orioles lost.'" color="medium" class="orioles-outcome">{{game.oriolesOutcome}}</ion-note>
-    <div class="venue" *ngIf="game.gameStatus === 'Scheduled' || game.gameStatus === 'Pre-Game'">
+    <div class="final-pitchers" *ngIf="game.gameStatus === 'Final' && game.initialGameInfo[0].finalData">
+      <div class="duel">
+        <div class="left-side">
+          <ion-avatar class="headshot"><img src="https://midfield.mlbstatic.com/v1/people/{{game.initialGameInfo[0].finalData.winner.id}}/spots/120" /></ion-avatar>
+          <ion-note class="final-stats">W: {{game.initialGameInfo[0].finalData.winner.fullName.split(" ").slice(-1).join(' ')}}
+            <br>{{game.winningPitcherStats}}
+          </ion-note>
+        </div>
+        <div class="right-side">
+          <ion-avatar class="headshot"><img src="https://midfield.mlbstatic.com/v1/people/{{game.initialGameInfo[0].finalData.loser.id}}/spots/120" /></ion-avatar>
+          <ion-note class="final-stats">L: {{game.initialGameInfo[0].finalData.loser.fullName.split(" ").slice(-1).join(' ')}}
+            <br>{{game.losingPitcherStats}}
+          </ion-note>
+        </div>
+      </div>
+    </div>
+    <div class="venue" *ngIf="game.gameStatus === 'Scheduled' || game.gameStatus === 'Pre-Game' || game.gameStatus === 'Warmup'">
       <ion-note>{{game.initialGameInfo[0].initialGameData.venue.name}} <br> {{game.initialGameInfo[0].initialGameData.venue.location.city}}, {{game.initialGameInfo[0].initialGameData.venue.location.stateAbbrev}}</ion-note>
       <ion-note *ngIf="game.initialGameInfo[0].initialGameData.weather.temp && game.initialGameInfo[0].initialGameData.weather.condition">{{game.initialGameInfo[0].initialGameData.weather.temp}}&#xb0;F <br> Condition: {{game.initialGameInfo[0].initialGameData.weather.condition}}</ion-note>
     </div>
@@ -92,7 +117,7 @@
       </div>
     </div>
     <div class="join-conversation" *ngIf="game.gameStarted === 'true'">
-      <ion-note color="dark">Join the conversation <ion-icon name="chevron-forward-outline"></ion-icon></ion-note>
+      <ion-chip color="dark">Join the conversation<ion-icon size="small" name="chevron-forward-outline"></ion-icon></ion-chip>
     </div>
   </ion-card> 
 
