@@ -4,6 +4,12 @@ ion-header {
     background: var(--ion-color-light) !important;
 }
 
+ion-refresher.refresher-active {
+    display: flex;
+    justify-content: center;
+    background: #fff;
+}
+
 ion-toolbar {
     display: flex;
     max-width: 550px;
@@ -43,7 +49,6 @@ ion-card {
     padding: 0.25em 1em;
     border-radius: 20em;
     background: rgb(223, 70, 1, 0.1);
-    border: 1px solid rgb(223, 70, 1);
 }
 
 .last-updated {
@@ -53,6 +58,11 @@ ion-card {
     align-items: center;
     margin-bottom: 1em;
     border-bottom: 1px solid var(--ion-color-light);
+
+    .live-updates{
+        display: flex;
+        align-items: center;
+    }
 
     ion-text {
         font-size: 0.75rem;
@@ -172,14 +182,37 @@ ion-title {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    margin: 0 1em 1em 1em;
+    margin: 1em 1em 1em 2em;
     max-width: 450px;
+    border-top: 1px solid var(--ion-color-light);
+    padding-top: 1em;
 
     .play  {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
+
+        .play-wrapper-top {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .play-wrapper-bottom {
+            width: 90%;
+
+            .play-text {
+                padding: 0.5em;
+                display: flex;
+                justify-content: center;
+                margin: 0.5em;
+                font-size: 0.85em;
+                border-top: 1px solid var(--ion-color-light);
+                border-bottom: 1px solid var(--ion-color-light);
+            }
+        }
+
+
     }
 
     ion-icon {
@@ -208,6 +241,7 @@ ion-title {
 
 .score {
     font-size: 2em;
+    font-weight: 900 !important;
 }
 
 .live-board {
@@ -248,16 +282,49 @@ ion-title {
 
 .pitcher-duel {
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     padding-bottom: 1em;
     margin: 0em 0em 1em 0em;
     border-bottom: 1px solid var(--ion-color-light);
+
+    ion-card-subtitle {
+        text-align: center;
+        margin-bottom: 1em;
+    }
+
+    .left-side, .right-side {
+        min-width: 50%;
+    }
+
+    .left-side {
+        border-right: 1px solid var(--ion-color-light);
+    }
+
+    .stats-wrapper {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9em;
+        text-align: center;
+    }
 
     .current-batter-stats, .current-pitcher-stats {
         display: flex;
         justify-content: center;
         text-align: center;
         font-size: 0.90em;
+    }
+}
+
+.pregame-pitchers {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    min-width: 100%;
+
+    ion-avatar {
+        max-width: 36px;
+        max-height: 36px;
     }
 }
 
@@ -300,8 +367,20 @@ ion-title {
 }
 
 .venue {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     text-align: center;
     padding: 0em 0em 1em 0em;
+
+    .left-side {
+        width: 70%;
+        border-right: 1px solid var(--ion-color-light);
+    }
+
+    .right-side {
+        width: 30%;
+    }
 }
 
 .last-event {
@@ -317,3 +396,4 @@ ion-title {
 .final-stats {
     font-size: 0.90em;
 }
+

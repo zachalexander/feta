@@ -4,6 +4,11 @@ ion-tabs {
     margin: auto;
 }
 
+ion-icon {
+    min-height: 30px;
+    min-width: 30px;
+}
+
 ion-tabs, ion-tab-bar, ion-tab-button {
     background: var(--ion-color-light)
 }

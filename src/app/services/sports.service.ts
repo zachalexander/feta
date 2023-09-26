@@ -89,7 +89,6 @@ export class SportsService {
   async getBatterData(personId, gamePk): Promise<any> {
     if (personId && gamePk) {
       let response = await fetch(`https://statsapi.mlb.com/api/v1/people/${personId}/stats/game/${gamePk}`).then(data => data.json());
-      console.log(response.stats[0].splits[2])
       return response.stats[0].splits[2].stat.summary as any;
     }
   }
@@ -97,8 +96,20 @@ export class SportsService {
   async getPitcherData(personId, gamePk): Promise<any> {
     if (personId && gamePk) {
       let response = await fetch(`https://statsapi.mlb.com/api/v1/people/${personId}/stats/game/${gamePk}`).then(data => data.json());
-      console.log(response.stats[0].splits[1])
       return response.stats[0].splits[1].stat.summary as any;
     }
+  }
+
+  async getPitcherSeasonData(personId): Promise<any> {
+    if (personId) {
+      let response = await fetch(`https://statsapi.mlb.com/api/v1/people/${personId}/stats?stats=season&group=pitching`).then(data => data.json());
+      return response.stats[0].splits as any;
+    }
+  }
+
+  async updateOriolesData(){
+    let response = await fetch(`https://l73a4t7hnq2fwro4pyqiz54c2e0nlqgr.lambda-url.us-east-1.on.aws/`).then(data => data.json())
+    console.log(response.data.updateSportsGame)
+    return response.data.updateSportsGame as any;
   }
 }

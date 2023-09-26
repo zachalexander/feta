@@ -31,7 +31,26 @@ async function updateInitialData(data) {
     playData["initialGameData"] = startingGameData
     playData["finalData"] = data.liveData.decisions
     playData["currentPlay"] = currentPlay;
-    playData["latestPlays"] = data.liveData.plays.allPlays.slice(Math.max(data.liveData.plays.allPlays.length - 5, 0)).reverse()
+    playData["latestPlays"] = data.liveData.plays.allPlays.slice(Math.max(data.liveData.plays.allPlays.length - 6, 0)).reverse()
+
+    playData["latestPlays"].map((play, index) => {
+        console.log(play.about.hasOut)
+
+        if (play.about.hasOut && play.count.outs === 3) {
+
+            if (play.about.inning > 3) {
+                playData["latestPlays"][index - 1].result.test = "End of ".concat(play.about.halfInning, " ", play.about.inning, "th");
+            }
+
+            if (play.about.inning === 2) {
+                playData["latestPlays"][index - 1].result.test = "End of ".concat(play.about.halfInning, " ", play.about.inning, "nd");
+            }
+
+            if (play.about.inning === 1) {
+                playData["latestPlays"][index - 1].result.test = "End of ".concat(play.about.halfInning, " ", play.about.inning, "st");
+            }
+        }
+    })
 
     updatedData.push(playData);
     return JSON.stringify(updatedData)
