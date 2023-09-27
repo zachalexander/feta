@@ -332,14 +332,49 @@ ion-title {
     display: flex;
     justify-content: space-evenly;
     padding-bottom: 1em;
-    margin: 0em 0em 1em 0em;
     flex-direction: row;
+
+    .name-pic-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .record {
+            margin-bottom: 0.5em;
+            font-weight: 600;
+        }
+    }
 
     .duel {
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
         width: 100%;
+    }
+
+    .left-side,
+    .right-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+    }
+
+    .left-side {
+        border-right: 1px solid var(--ion-color-light);
+    }
+
+    .game-stats {
+        text-align: center;
+    }
+    ion-card-subtitle {
+        margin: 0;
+    }
+
+    ion-note {
+        font-size: 0.9em;
     }
     
     ion-avatar {

@@ -96,21 +96,30 @@ export class MessageBoardPage implements OnInit {
       this.baseballData = data.items;
       this.baseballData.map(async game => {
         game.initialGameInfo = await JSON.parse(game.initialGameInfo)
+        game.losingPitcherStats = [];
+        game.winningPitcherStats = [];
+        game.oriolesOutcome = [];
+        // game.startingAwayPitcherStats = [];
+        // game.startingHomePitcherStats = [];
+        game.currentHalfInning = null;
+        game.currentBatterStats = [];
+        game.currentPitcherStats = [];
+
         if(game.gameStatus === 'Final') {
           game.oriolesOutcome = (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore > game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore > game.initialGameInfo[0].currentPlay.result.awayScore)) ? "O's WON" : (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore < game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore < game.initialGameInfo[0].currentPlay.result.awayScore)) ? "O's LOST" : null;
-          game.losingPitcherStats = (game.initialGameInfo[0].finalData && game.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.loser.id, +game.id) as any: null;
-          game.winningPitcherStats = (game.gameStatus === 'Final' && game.initialGameInfo[0].finalData) ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.winner.id, +game.id) as any: null;
+          game.losingPitcherStats = (game.initialGameInfo[0].finalData && game.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.loser.id, +game.id) : [];
+          game.winningPitcherStats = (game.gameStatus === 'Final' && game.initialGameInfo[0].finalData) ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.winner.id, +game.id) : [];
         }
 
         if(game.gameStatus === 'Scheduled' || game.gameStatus === 'Pre-Game' || game.gameStatus === 'Warmup'){
-          game.startingAwayPitcherStats = ((game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.initialGameInfo[0].initialGameData.probablePitchers.away.id) as any : null;
-          game.startingHomePitcherStats = ((game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.initialGameInfo[0].initialGameData.probablePitchers.home.id) as any : null;
+          game.startingAwayPitcherStats = ((game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.initialGameInfo[0].initialGameData.probablePitchers.away.id) as any : [];
+          game.startingHomePitcherStats = ((game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.initialGameInfo[0].initialGameData.probablePitchers.home.id) as any : [];
         }
 
         if(game.gameStatus === 'In Progress'){
           game.currentHalfInning = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.initialGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.initialGameInfo[0].currentPlay.about.inning.toString()) : null;        
-          game.currentBatterStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(game.initialGameInfo[0].currentPlay.matchup.batter.id, +game.id) as any : null;
-          game.currentPitcherStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(game.initialGameInfo[0].currentPlay.matchup.pitcher.id, +game.id) as any : null;
+          game.currentBatterStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(game.initialGameInfo[0].currentPlay.matchup.batter.id, +game.id) as any : [];
+          game.currentPitcherStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(game.initialGameInfo[0].currentPlay.matchup.pitcher.id, +game.id) as any : [];
         }
       })
     })

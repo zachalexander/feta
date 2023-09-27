@@ -38,16 +38,16 @@ async function updateInitialData(data) {
 
         if (play.about.hasOut && play.count.outs === 3) {
 
-            if (play.about.inning > 3) {
-                playData["latestPlays"][index - 1].result.test = "End of ".concat(play.about.halfInning, " ", play.about.inning, "th");
+            if (play.about.inning > 3 && playData["latestPlays"][index]) {
+                playData["latestPlays"][index].result.endInning = "End of ".concat(play.about.halfInning, " ", play.about.inning, "th");
             }
 
-            if (play.about.inning === 2) {
-                playData["latestPlays"][index - 1].result.test = "End of ".concat(play.about.halfInning, " ", play.about.inning, "nd");
+            if (play.about.inning === 2 && playData["latestPlays"][index]) {
+                playData["latestPlays"][index].result.endInning = "End of ".concat(play.about.halfInning, " ", play.about.inning, "nd");
             }
 
-            if (play.about.inning === 1) {
-                playData["latestPlays"][index - 1].result.test = "End of ".concat(play.about.halfInning, " ", play.about.inning, "st");
+            if (play.about.inning === 1 && playData["latestPlays"][index]) {
+                playData["latestPlays"][index].result.endInning = "End of ".concat(play.about.halfInning, " ", play.about.inning, "st");
             }
         }
     })

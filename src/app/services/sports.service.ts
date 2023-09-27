@@ -82,7 +82,9 @@ export class SportsService {
   async getPitcherFinalData(personId, gamePk): Promise<any>{
     if(personId && gamePk) {
       let response = await fetch(`https://statsapi.mlb.com/api/v1/people/${personId}/stats/game/${gamePk}`).then(data => data.json());
-      return response.stats[0].splits[1].stat.summary as any;
+      if(response.stats[0].splits[1].stat){
+        return response.stats[0].splits[1].stat as any;
+      }
     }
   }
 
