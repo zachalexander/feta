@@ -109,6 +109,13 @@ export class SportsService {
     }
   }
 
+  async getBatterSeasonData(personId): Promise<any> {
+    if (personId) {
+      let response = await fetch(`https://statsapi.mlb.com/api/v1/people/${personId}/stats?stats=season&group=batting`).then(data => data.json());
+      return response.stats[0].splits[0].stat as any;
+    }
+  }
+
   async updateOriolesData(){
     let response = await fetch(`https://l73a4t7hnq2fwro4pyqiz54c2e0nlqgr.lambda-url.us-east-1.on.aws/`).then(data => data.json())
     return response.data.updateSportsGame as any;

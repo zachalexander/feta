@@ -33,12 +33,15 @@ ion-item {
 
 .bottom {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 90%;
     margin: auto;
 
 
-
+    .overall-matchup-data {
+        display: flex;
+        flex-direction: row;
+    }
 
 
     ion-card-subtitle {
@@ -69,7 +72,7 @@ ion-item {
     .batter-stats, .pitcher-stats {
         display: flex;
         flex-direction: row;
-        font-size: 0.8em;
+        font-size: 0.75em;
         
         .current-batter-stats {
             margin-left: 1em;
@@ -146,5 +149,12 @@ ion-item {
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+}
+
+.last-update {
+
+    ion-note {
+        font-size: 0.9em;
     }
 }

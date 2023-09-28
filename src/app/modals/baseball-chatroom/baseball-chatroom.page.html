@@ -51,20 +51,29 @@
       <ion-icon *ngIf="baseballData.gameStatus === 'In Progress' && accordionOpen" class="see-more" name="chevron-up" (click)="openAccordion()"></ion-icon>
       <ion-accordion value="at-bat" id="accordion" *ngIf="baseballData.gameStatus === 'In Progress'">
         <div class="bottom" slot="content">
-          <div class="batter">
-            <ion-card-subtitle>At Bat</ion-card-subtitle>
-            <div class="batter-stats">
-              <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{baseballData.basicGameInfo[0].currentPlay.matchup.batter.id}}/spots/120" /></ion-avatar>
-              <ion-note class="current-batter-stats" *ngIf="baseballData.gameStatus === 'In Progress'">{{baseballData.basicGameInfo[0].currentPlay.matchup.batter.fullName}}<br>{{baseballData.currentBatterStats}}</ion-note>
+            <div class="overall-matchup-data">
+              <div class="batter">
+                <ion-card-subtitle>At Bat</ion-card-subtitle>
+                <div class="batter-stats">
+                  <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{baseballData.basicGameInfo[0].currentPlay.matchup.batter.id}}/spots/120" /></ion-avatar>
+                  <ion-note class="current-batter-stats" *ngIf="baseballData.gameStatus === 'In Progress'">{{baseballData.basicGameInfo[0].currentPlay.matchup.batter.fullName}}<br>{{baseballData.currentBatterStats}}</ion-note>
+                </div>
+              </div>
+              <div class="pitcher">
+                <ion-card-subtitle>Pitching</ion-card-subtitle>
+                <div class="pitcher-stats">
+                  <ion-note class="current-pitcher-stats" *ngIf="baseballData.gameStatus === 'In Progress'">{{baseballData.basicGameInfo[0].currentPlay.matchup.pitcher.fullName}}<br>{{baseballData.currentPitcherStats}}</ion-note>
+                  <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{baseballData.basicGameInfo[0].currentPlay.matchup.pitcher.id}}/spots/120" /></ion-avatar>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="pitcher">
-            <ion-card-subtitle>Pitching</ion-card-subtitle>
-            <div class="pitcher-stats">
-              <ion-note class="current-pitcher-stats" *ngIf="baseballData.gameStatus === 'In Progress'">{{baseballData.basicGameInfo[0].currentPlay.matchup.pitcher.fullName}}<br>{{baseballData.currentPitcherStats}}</ion-note>
-              <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{baseballData.basicGameInfo[0].currentPlay.matchup.pitcher.id}}/spots/120" /></ion-avatar>
+            <div class="plays">
+              <div class= "last-update" *ngFor="let pitch of baseballData.basicGameInfo[0].currentPlay.playEvents">
+                <ion-chip color="success" [outline]="true" *ngIf="pitch.isPitch && pitch.details.call.code === 'B'">{{pitch.pitchNumber}}</ion-chip>&nbsp;<ion-note *ngIf="pitch.isPitch && pitch.details.call.code === 'B'">{{pitch.pitchData.endSpeed}} MPH {{pitch.details.type.description}} -- {{pitch.details.description}}</ion-note>
+                <ion-chip color="danger" [outline]="true" *ngIf="pitch.isPitch && (pitch.details.call.code === 'S' || pitch.details.call.code === 'F' || pitch.details.call.code === 'C')">{{pitch.pitchNumber}}</ion-chip>&nbsp;<ion-note *ngIf="pitch.isPitch && (pitch.details.call.code === 'S' || pitch.details.call.code === 'F' || pitch.details.call.code === 'C')">{{pitch.pitchData.endSpeed}} MPH {{pitch.details.type.description}} -- {{pitch.details.description}}</ion-note>
+                <ion-chip color="primary" [outline]="true" *ngIf="pitch.isPitch && pitch.details.call.code === 'X'">{{pitch.pitchNumber}}</ion-chip>&nbsp;<ion-note *ngIf="pitch.isPitch && pitch.details.call.code === 'X'">{{pitch.pitchData.endSpeed}} MPH {{pitch.details.type.description}} -- {{pitch.details.description}}</ion-note>
+              </div>
             </div>
-          </div>
         </div>
       </ion-accordion>
   </ion-toolbar>

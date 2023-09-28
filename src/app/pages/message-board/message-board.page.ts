@@ -90,6 +90,7 @@ export class MessageBoardPage implements OnInit {
           const data = event;
           this.hubData.map(async (game) => {
             if(data.value.data.onUpdateSportsGame.id === game.sportsgame.id){
+              console.log(data.value.data.onUpdateSportsGame)
               game.sportsgame.losingPitcherStats = [];
               game.sportsgame.winningPitcherStats = [];
               game.sportsgame.oriolesOutcome = [];
@@ -111,10 +112,10 @@ export class MessageBoardPage implements OnInit {
                 game.sportsgame.startingHomePitcherStats = ((game.sportsgame.gameStatus !== 'In Progress' && game.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.sportsgame.basicGameInfo[0].initialGameData.probablePitchers.home.id) as any : null;
               }
 
-              if (game.gameStatus === 'In Progress') {
-                game.sportsgame.currentHalfInning = game.gameStatus === 'In Progress' ? game.basicGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.basicGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.basicGameInfo[0].currentPlay.about.inning.toString()) : null;
-                game.sportsgame.currentBatterStats = (game.gameStatus !== 'Final' && game.basicGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(game.basicGameInfo[0].currentPlay.matchup.batter.id, +game.id) as any : null;
-                game.sportsgame.currentPitcherStats = (game.gameStatus !== 'Final' && game.basicGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(game.basicGameInfo[0].currentPlay.matchup.pitcher.id, +game.id) as any : null;
+              if (game.sportsgame.gameStatus === 'In Progress') {
+                game.sportsgame.currentHalfInning = game.sportsgame.gameStatus === 'In Progress' ? game.sportsgame.basicGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.sportsgame.basicGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.sportsgame.basicGameInfo[0].currentPlay.about.inning.toString()) : null;
+                game.sportsgame.currentBatterStats = (game.sportsgame.gameStatus !== 'Final' && game.sportsgame.basicGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(game.sportsgame.basicGameInfo[0].currentPlay.matchup.batter.id, +game.sportsgame.id) as any : null;
+                game.sportsgame.currentPitcherStats = (game.sportsgame.gameStatus !== 'Final' && game.sportsgame.basicGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(game.sportsgame.basicGameInfo[0].currentPlay.matchup.pitcher.id, +game.sportsgame.id) as any : null;
               }
             }
           })
