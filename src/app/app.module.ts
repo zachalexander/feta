@@ -24,6 +24,7 @@ import { ProfileMenuModalPage } from './modals/profile-menu-modal/profile-menu-m
 import { CreateMediaModalPage } from './modals/create-media-modal/create-media-modal.page';
 import { ProfilePicturePage } from './pages/profile-picture/profile-picture.page';
 import { LikeListModalPage } from './modals/like-list-modal/like-list-modal.page';
+import { BaseballChatroomPage } from './modals/baseball-chatroom/baseball-chatroom.page';
 
 import { SwiperModule } from 'swiper/angular';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -53,6 +54,7 @@ Amplify.configure(awsvideoconfig);
     ProfilePicturePage,
     CreateMediaModalPage,
     LikeListModalPage,
+    BaseballChatroomPage
   ],
   imports: [
     BrowserModule, 

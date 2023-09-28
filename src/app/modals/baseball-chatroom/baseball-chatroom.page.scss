@@ -1,0 +1,150 @@
+.top {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.see-more {
+    display: flex;
+    margin: -0.5em 0.5em 0.5em 0.5em;
+    width: 90%;
+    zoom: 1.5;
+}
+
+
+ion-accordion {
+    background: inherit;
+    
+    div.input-wrapper {
+        display: none !important;
+    }
+}
+
+
+ion-item {
+    width: 90%;
+    background: var(--ion-color-light);
+
+    .item-native {
+        --padding: 0 !important;
+    }
+}
+
+.bottom {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: auto;
+
+
+
+
+
+    ion-card-subtitle {
+        text-align: center;
+    }
+
+    .batter {
+        width: 50%;
+        border-right: 1px solid var(--ion-color-medium);
+        margin: 0.5em 0.5em 0.5em -0.5em;
+
+        ion-avatar {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    .pitcher {
+        width: 50%;
+        margin: 0.5em -0.5em 0.5em 0.5em;
+
+        ion-avatar {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    .batter-stats, .pitcher-stats {
+        display: flex;
+        flex-direction: row;
+        font-size: 0.8em;
+        
+        .current-batter-stats {
+            margin-left: 1em;
+            text-align: left;
+        }
+
+        .current-pitcher-stats {
+            margin-right: 1em;
+            text-align: right;
+        }
+    }
+}
+.scoreboard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    min-width: 95%;
+    min-height: 80px;
+
+    .scoreboard-logo-away, .scoreboard-logo-home {
+        margin-top: 0.25em;
+        height: 40px;
+        width: 40px;
+    }
+
+    .scoreboard-logo-away {
+        margin-right: 0.5em;
+    }
+
+    .scoreboard-logo-home {
+        margin-left: 0.5em;
+    }
+
+    .bases-outs-inprogress {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin: 0.5em 0em 0em 0em;
+    }
+
+    .bases-outs {
+        text-align: center;
+    }
+
+    .half-inning {
+        font-size: 0.9em;
+        font-weight: 600;
+    }
+
+    .score {
+        font-size: 2em;
+        font-weight: 900;
+    }
+
+    .current-count {
+        margin-top: -1em;
+        font-size: 0.9em;
+        font-weight: 600;
+    }
+
+    .number-of-outs {
+        margin-top: -1em;
+    }
+
+    .final {
+        font-size: 0.85em;
+        font-weight: 600;
+        line-height: 0%;
+    }
+
+    .away-info, .home-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}

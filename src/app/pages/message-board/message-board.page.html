@@ -139,20 +139,20 @@
         <ion-card-subtitle>Latest Plays</ion-card-subtitle>
         <div class="latest-plays" *ngFor="let play of post.sportsgame.basicGameInfo[0].latestPlays">
           <div class="play" *ngIf="play.result.description">
+            <div class="play-wrapper-bottom" *ngIf="play.result.endInning">
+              <ion-card-subtitle class="play-text" *ngIf="play.result.endInning">{{play.result.endInning}}</ion-card-subtitle>
+            </div>
             <div class="play-wrapper-top">
               <ion-icon name="chevron-forward-outline" *ngIf="play.result.description && !play.result.isOut && !play.about.isScoringPlay"></ion-icon><ion-note *ngIf="play.result.description && !play.result.isOut && !play.about.isScoringPlay">{{play.result.description}}</ion-note>
               <ion-icon name="chevron-forward-outline" *ngIf="play.result.isOut && play.result.description && !play.about.isScoringPlay"></ion-icon><ion-note *ngIf="play.result.isOut && play.result.description && !play.about.isScoringPlay">{{play.result.description}}<span class="outs">&nbsp;{{play.count.outs}} out(s).</span></ion-note>
               <ion-icon name="chevron-forward-outline" *ngIf="play.result.isOut && play.about.isScoringPlay && play.result.description"></ion-icon><ion-note *ngIf="play.result.isOut && play.about.isScoringPlay && play.result.description">{{play.result.description}}<span class="outs">&nbsp;{{play.count.outs}} out(s).&nbsp;{{post.sportsgame.basicGameInfo[0].initialGameData.teams.away.abbreviation}} {{play.result.awayScore}} - {{post.sportsgame.basicGameInfo[0].initialGameData.teams.home.abbreviation}} {{play.result.homeScore}}</span></ion-note>
               <ion-icon name="chevron-forward-outline" *ngIf="!play.result.isOut && play.about.isScoringPlay && play.result.description"></ion-icon><ion-note *ngIf="!play.result.isOut && play.about.isScoringPlay && play.result.description">{{play.result.description}}<span class="outs">&nbsp;{{post.sportsgame.basicGameInfo[0].initialGameData.teams.away.abbreviation}} {{play.result.awayScore}} - {{post.sportsgame.basicGameInfo[0].initialGameData.teams.home.abbreviation}} {{play.result.homeScore}}</span></ion-note>
             </div>
-            <div class="play-wrapper-bottom" *ngIf="play.result.endInning">
-              <ion-card-subtitle class="play-text" *ngIf="play.result.endInning">{{play.result.endInning}}</ion-card-subtitle>
-            </div>
           </div>
         </div>
       </div>
       <div class="join-conversation" *ngIf="post.sportsgame.gameStarted === 'true'">
-        <ion-chip color="dark">Join the conversation<ion-icon size="small" name="chevron-forward-outline"></ion-icon></ion-chip>
+        <ion-chip (click)="openBaseballChatroom(post.sportsgame, post.sportsgame.id)" color="dark">Join the conversation<ion-icon size="small" name="chevron-forward-outline"></ion-icon></ion-chip>
       </div>
     </div>
 

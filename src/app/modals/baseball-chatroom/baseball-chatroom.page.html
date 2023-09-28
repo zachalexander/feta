@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="top">
+
+      <div class="scoreboard" slot="start">
+        <div class="away-info">
+          <ion-avatar>
+            <img class="scoreboard-logo-away" alt="team-logo-away" src="https://midfield.mlbstatic.com/v1/team/{{baseballData.basicGameInfo[0].initialGameData.teams.away.id}}/spots/120" />
+          </ion-avatar>
+          <ion-note class="score" color="dark">{{baseballData.basicGameInfo[0].currentPlay.result.awayScore}}</ion-note>
+        </div>
+  
+        <div *ngIf="baseballData.gameStatus === 'Final' || baseballData.gameStarted === 'false'" class="bases-outs">
+            <ion-note *ngIf="baseballData.gameStatus === 'Final'" class="final" color="dark">{{baseballData.startTime | date: 'E M/d' }} <br> Final</ion-note>
+            <ion-note *ngIf="baseballData.gameStarted === 'false'" class="final" color="dark">{{baseballData.startTime | date: 'E M/d' }} <br> {{baseballData.startTime | date: 'h:mm a'}} ET</ion-note>
+        </div>
+  
+        <div *ngIf="baseballData.gameStatus === 'In Progress'" class="bases-outs-inprogress">
+          <ion-note class="half-inning" *ngIf="baseballData.gameStatus === 'In Progress'">{{baseballData.currentHalfInning}}</ion-note>
+          <ion-avatar *ngIf="baseballData.gameStatus === 'In Progress'">
+            <img *ngIf="!baseballData.basicGameInfo[0].currentPlay.matchup.postOnFirst && !baseballData.basicGameInfo[0].currentPlay.matchup.postOnSecond && !baseballData.basicGameInfo[0].currentPlay.matchup.postOnThird" src="../../../assets/baseball-data/bases-clear.svg" />
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.matchup.postOnFirst && (!baseballData.basicGameInfo[0].currentPlay.matchup.postOnSecond && !baseballData.basicGameInfo[0].currentPlay.matchup.postOnThird)" src="../../../assets/baseball-data/runner-on-first-only.svg" />
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.matchup.postOnSecond && (!baseballData.basicGameInfo[0].currentPlay.matchup.postOnFirst && !baseballData.basicGameInfo[0].currentPlay.matchup.postOnThird)" src="../../../assets/baseball-data/runner-second-only.svg" />
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.matchup.postOnThird && (!baseballData.basicGameInfo[0].currentPlay.matchup.postOnFirst && !baseballData.basicGameInfo[0].currentPlay.matchup.postOnSecond)" src="../../../assets/baseball-data/runner-third-only.svg" />
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.matchup.postOnFirst && baseballData.basicGameInfo[0].currentPlay.matchup.postOnSecond && !baseballData.basicGameInfo[0].currentPlay.matchup.postOnThird" src="../../../assets/baseball-data/runners-first-second.svg" />
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.matchup.postOnSecond && baseballData.basicGameInfo[0].currentPlay.matchup.postOnThird && !baseballData.basicGameInfo[0].currentPlay.matchup.postOnFirst" src="../../../assets/baseball-data/runners-second-third.svg" />
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.matchup.postOnFirst && baseballData.basicGameInfo[0].currentPlay.matchup.postOnSecond && baseballData.basicGameInfo[0].currentPlay.matchup.postOnThird" src="../../../assets/baseball-data/bases-loaded.svg" />
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.matchup.postOnFirst && baseballData.basicGameInfo[0].currentPlay.matchup.postOnThird && !baseballData.basicGameInfo[0].currentPlay.matchup.postOnSecond" src="../../../assets/baseball-data/runners-corners.svg" />
+          </ion-avatar>
+          <ion-note *ngIf="baseballData.gameStatus === 'In Progress'" class="current-count">{{baseballData.basicGameInfo[0].currentPlay.count.balls}} - {{baseballData.basicGameInfo[0].currentPlay.count.strikes}}</ion-note>
+          <ion-avatar class="number-of-outs" *ngIf="baseballData.gameStatus === 'In Progress'">
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.count.outs === 0" src="../../../assets/baseball-data/no-outs.svg" />
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.count.outs === 1" src="../../../assets/baseball-data/one-out.svg" />
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.count.outs === 2" src="../../../assets/baseball-data/two-outs.svg" />
+            <img *ngIf="baseballData.basicGameInfo[0].currentPlay.count.outs === 3" src="../../../assets/baseball-data/three-outs.svg" />
+          </ion-avatar>
+        </div>
+  
+        <div class="home-info">
+          <ion-note class="score" color="dark">{{baseballData.basicGameInfo[0].currentPlay.result.homeScore}}</ion-note>
+          <ion-avatar>
+            <img class="scoreboard-logo-home" alt="team-logo-away" src="https://midfield.mlbstatic.com/v1/team/{{baseballData.basicGameInfo[0].initialGameData.teams.home.id}}/spots/120" />
+          </ion-avatar>
+        </div>
+      </div>
+      <div class="exit">
+        <ion-icon slot="end" (click)="backToHub()" name="close-outline"></ion-icon>
+      </div>
+    </div>
+      <ion-icon *ngIf="baseballData.gameStatus === 'In Progress' && !accordionOpen" class="see-more" name="chevron-down" (click)="openAccordion()"></ion-icon>
+      <ion-icon *ngIf="baseballData.gameStatus === 'In Progress' && accordionOpen" class="see-more" name="chevron-up" (click)="openAccordion()"></ion-icon>
+      <ion-accordion value="at-bat" id="accordion" *ngIf="baseballData.gameStatus === 'In Progress'">
+        <div class="bottom" slot="content">
+          <div class="batter">
+            <ion-card-subtitle>At Bat</ion-card-subtitle>
+            <div class="batter-stats">
+              <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{baseballData.basicGameInfo[0].currentPlay.matchup.batter.id}}/spots/120" /></ion-avatar>
+              <ion-note class="current-batter-stats" *ngIf="baseballData.gameStatus === 'In Progress'">{{baseballData.basicGameInfo[0].currentPlay.matchup.batter.fullName}}<br>{{baseballData.currentBatterStats}}</ion-note>
+            </div>
+          </div>
+          <div class="pitcher">
+            <ion-card-subtitle>Pitching</ion-card-subtitle>
+            <div class="pitcher-stats">
+              <ion-note class="current-pitcher-stats" *ngIf="baseballData.gameStatus === 'In Progress'">{{baseballData.basicGameInfo[0].currentPlay.matchup.pitcher.fullName}}<br>{{baseballData.currentPitcherStats}}</ion-note>
+              <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{baseballData.basicGameInfo[0].currentPlay.matchup.pitcher.id}}/spots/120" /></ion-avatar>
+            </div>
+          </div>
+        </div>
+      </ion-accordion>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content>
+<!-- 
+<ion-footer lines="none" *ngIf="!noInput && editComment" class="comment-footer">
+  <form [formGroup]="updateCommentForm" (ngSubmit)="postUpdatedComment(updateCommentForm.value)">
+    <p class="comment-text-edit-card">
+      <ion-avatar class="comment-input-user-pic">
+        <img id="avatar" src="{{currentUserProfilePicture}}">
+      </ion-avatar>
+      <ion-textarea #editCommentInput class="form-text-area" lines="none" formControlName="comment" id="userEditComment"
+        rows="1" minLength="300" autoGrow="true">
+        <ion-button color="clear" class="comment-submit"
+          (click)="postUpdatedComment(updateCommentForm.value)">Post</ion-button>
+      </ion-textarea>
+    </p>
+  </form>
+</ion-footer> -->
