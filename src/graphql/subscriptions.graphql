@@ -1251,22 +1251,38 @@ subscription OnCreateSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
-    initialGameInfo
+    basicGameInfo
     startTime
     lastUpdate
-    awayTeamLogoSlug
-    homeTeamLogoSlug
     gameStarted
     gameEnded
-    liveGameID
-    livegame {
+    liveGameChatRoomID
+    livegamechatroom {
       id
       sport
-      gameUpdates
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
-    liveGameData
     createdAt
     updatedAt
   }
@@ -1284,22 +1300,38 @@ subscription OnUpdateSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
-    initialGameInfo
+    basicGameInfo
     startTime
     lastUpdate
-    awayTeamLogoSlug
-    homeTeamLogoSlug
     gameStarted
     gameEnded
-    liveGameID
-    livegame {
+    liveGameChatRoomID
+    livegamechatroom {
       id
       sport
-      gameUpdates
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
-    liveGameData
     createdAt
     updatedAt
   }
@@ -1317,49 +1349,260 @@ subscription OnDeleteSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
-    initialGameInfo
+    basicGameInfo
     startTime
     lastUpdate
-    awayTeamLogoSlug
-    homeTeamLogoSlug
     gameStarted
     gameEnded
-    liveGameID
-    livegame {
+    liveGameChatRoomID
+    livegamechatroom {
       id
       sport
-      gameUpdates
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
-    liveGameData
     createdAt
     updatedAt
   }
 }
-subscription OnCreateLiveGame($filter: ModelSubscriptionLiveGameFilterInput) {
-  onCreateLiveGame(filter: $filter) {
+subscription OnCreateLiveGameChatRoom(
+  $filter: ModelSubscriptionLiveGameChatRoomFilterInput
+) {
+  onCreateLiveGameChatRoom(filter: $filter) {
     id
     sport
-    gameUpdates
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
 }
-subscription OnUpdateLiveGame($filter: ModelSubscriptionLiveGameFilterInput) {
-  onUpdateLiveGame(filter: $filter) {
+subscription OnUpdateLiveGameChatRoom(
+  $filter: ModelSubscriptionLiveGameChatRoomFilterInput
+) {
+  onUpdateLiveGameChatRoom(filter: $filter) {
     id
     sport
-    gameUpdates
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
 }
-subscription OnDeleteLiveGame($filter: ModelSubscriptionLiveGameFilterInput) {
-  onDeleteLiveGame(filter: $filter) {
+subscription OnDeleteLiveGameChatRoom(
+  $filter: ModelSubscriptionLiveGameChatRoomFilterInput
+) {
+  onDeleteLiveGameChatRoom(filter: $filter) {
     id
     sport
-    gameUpdates
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateHubPosts($filter: ModelSubscriptionHubPostsFilterInput) {
+  onCreateHubPosts(filter: $filter) {
+    id
+    sortKey
+    postType
+    timePosted
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateHubPosts($filter: ModelSubscriptionHubPostsFilterInput) {
+  onUpdateHubPosts(filter: $filter) {
+    id
+    sortKey
+    postType
+    timePosted
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteHubPosts($filter: ModelSubscriptionHubPostsFilterInput) {
+  onDeleteHubPosts(filter: $filter) {
+    id
+    sortKey
+    postType
+    timePosted
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }

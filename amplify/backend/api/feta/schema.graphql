@@ -69,21 +69,28 @@ type SportsGame @model @auth(rules: [{allow: public}]) {
   homeTeamLosses: String
   awayTeamWins: String
   awayTeamLosses: String
-  initialGameInfo: AWSJSON
+  basicGameInfo: AWSJSON
   startTime: String
   lastUpdate: String
-  awayTeamLogoSlug: String
-  homeTeamLogoSlug: String
   gameStarted: String
   gameEnded: String
-  liveGameID: ID @index(name: "byLiveGameData")
-  livegame: LiveGame @hasOne(fields: ["liveGameID"])
-  liveGameData: AWSJSON
+  liveGameChatRoomID: ID @index(name: "byLiveGameChatRoomData")
+  livegamechatroom: LiveGameChatRoom @hasOne(fields: ["liveGameChatRoomID"])
 }
 
-type LiveGame @model @auth(rules: [{allow: public}]){
+type LiveGameChatRoom @model @auth(rules: [{allow: public}]){
   id: ID!
   sport: String
-  gameUpdates: AWSJSON
+  sportsGameID: ID
+  sportsgame: SportsGame @hasOne(fields: ["sportsGameID"])
+}
+
+type HubPosts @model @auth(rules: [{allow: public}]){
+  id: ID!
+  sortKey: String @index(name: "byTimePosted", sortKeyFields: ["timePosted"])
+  postType: String
+  timePosted: String
+  sportsGameID: ID
+  sportsgame: SportsGame @hasOne(fields: ["sportsGameID"])
 }
 

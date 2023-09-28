@@ -26,15 +26,15 @@ export type __SubscriptionContainer = {
   onCreateUsername: OnCreateUsernameSubscription;
   onUpdateUsername: OnUpdateUsernameSubscription;
   onDeleteUsername: OnDeleteUsernameSubscription;
+  onCreateHubPosts: OnCreateHubPostsSubscription;
+  onUpdateHubPosts: OnUpdateHubPostsSubscription;
+  onDeleteHubPosts: OnDeleteHubPostsSubscription;
   onCreateSportsGame: OnCreateSportsGameSubscription;
   onUpdateSportsGame: OnUpdateSportsGameSubscription;
   onDeleteSportsGame: OnDeleteSportsGameSubscription;
   onCreateLiveGameChatRoom: OnCreateLiveGameChatRoomSubscription;
   onUpdateLiveGameChatRoom: OnUpdateLiveGameChatRoomSubscription;
   onDeleteLiveGameChatRoom: OnDeleteLiveGameChatRoomSubscription;
-  onCreateHubPosts: OnCreateHubPostsSubscription;
-  onUpdateHubPosts: OnUpdateHubPostsSubscription;
-  onDeleteHubPosts: OnDeleteHubPostsSubscription;
 };
 
 export type CreateProfilePictureInput = {
@@ -361,42 +361,34 @@ export type DeleteUsernameInput = {
   id: string;
 };
 
-export type CreateSportsGameInput = {
+export type CreateHubPostsInput = {
   id?: string | null;
-  sport?: string | null;
-  homeTeam?: string | null;
-  awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
-  startTime?: string | null;
-  lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
-  liveGameChatRoomID?: string | null;
+  postType?: string | null;
+  timePosted?: string | null;
 };
 
-export type ModelSportsGameConditionInput = {
-  sport?: ModelStringInput | null;
-  homeTeam?: ModelStringInput | null;
-  awayTeam?: ModelStringInput | null;
-  gameStatus?: ModelStringInput | null;
-  homeTeamWins?: ModelStringInput | null;
-  homeTeamLosses?: ModelStringInput | null;
-  awayTeamWins?: ModelStringInput | null;
-  awayTeamLosses?: ModelStringInput | null;
-  basicGameInfo?: ModelStringInput | null;
-  startTime?: ModelStringInput | null;
-  lastUpdate?: ModelStringInput | null;
-  gameStarted?: ModelStringInput | null;
-  gameEnded?: ModelStringInput | null;
-  liveGameChatRoomID?: ModelIDInput | null;
-  and?: Array<ModelSportsGameConditionInput | null> | null;
-  or?: Array<ModelSportsGameConditionInput | null> | null;
-  not?: ModelSportsGameConditionInput | null;
+export type ModelHubPostsConditionInput = {
+  postType?: ModelStringInput | null;
+  timePosted?: ModelStringInput | null;
+  and?: Array<ModelHubPostsConditionInput | null> | null;
+  or?: Array<ModelHubPostsConditionInput | null> | null;
+  not?: ModelHubPostsConditionInput | null;
+};
+
+export type HubPosts = {
+  __typename: "HubPosts";
+  id: string;
+  postType?: string | null;
+  timePosted?: string | null;
+  sportsgame?: ModelSportsGameConnection | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ModelSportsGameConnection = {
+  __typename: "ModelSportsGameConnection";
+  items: Array<SportsGame | null>;
+  nextToken?: string | null;
 };
 
 export type SportsGame = {
@@ -410,25 +402,84 @@ export type SportsGame = {
   homeTeamLosses?: string | null;
   awayTeamWins?: string | null;
   awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  initialGameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
+  awayTeamLogoSlug?: string | null;
+  homeTeamLogoSlug?: string | null;
   gameStarted?: string | null;
   gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
   livegamechatroom?: LiveGameChatRoom | null;
+  liveGameData?: string | null;
   createdAt: string;
   updatedAt: string;
+  hubPostsSportsgameId?: string | null;
 };
 
 export type LiveGameChatRoom = {
   __typename: "LiveGameChatRoom";
   id: string;
   sport?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: SportsGame | null;
+  gameUpdates?: string | null;
   createdAt: string;
   updatedAt: string;
+};
+
+export type UpdateHubPostsInput = {
+  id: string;
+  postType?: string | null;
+  timePosted?: string | null;
+};
+
+export type DeleteHubPostsInput = {
+  id: string;
+};
+
+export type CreateSportsGameInput = {
+  id?: string | null;
+  sport?: string | null;
+  homeTeam?: string | null;
+  awayTeam?: string | null;
+  gameStatus?: string | null;
+  homeTeamWins?: string | null;
+  homeTeamLosses?: string | null;
+  awayTeamWins?: string | null;
+  awayTeamLosses?: string | null;
+  initialGameInfo?: string | null;
+  startTime?: string | null;
+  lastUpdate?: string | null;
+  awayTeamLogoSlug?: string | null;
+  homeTeamLogoSlug?: string | null;
+  gameStarted?: string | null;
+  gameEnded?: string | null;
+  liveGameChatRoomID?: string | null;
+  liveGameData?: string | null;
+  hubPostsSportsgameId?: string | null;
+};
+
+export type ModelSportsGameConditionInput = {
+  sport?: ModelStringInput | null;
+  homeTeam?: ModelStringInput | null;
+  awayTeam?: ModelStringInput | null;
+  gameStatus?: ModelStringInput | null;
+  homeTeamWins?: ModelStringInput | null;
+  homeTeamLosses?: ModelStringInput | null;
+  awayTeamWins?: ModelStringInput | null;
+  awayTeamLosses?: ModelStringInput | null;
+  initialGameInfo?: ModelStringInput | null;
+  startTime?: ModelStringInput | null;
+  lastUpdate?: ModelStringInput | null;
+  awayTeamLogoSlug?: ModelStringInput | null;
+  homeTeamLogoSlug?: ModelStringInput | null;
+  gameStarted?: ModelStringInput | null;
+  gameEnded?: ModelStringInput | null;
+  liveGameChatRoomID?: ModelIDInput | null;
+  liveGameData?: ModelStringInput | null;
+  and?: Array<ModelSportsGameConditionInput | null> | null;
+  or?: Array<ModelSportsGameConditionInput | null> | null;
+  not?: ModelSportsGameConditionInput | null;
+  hubPostsSportsgameId?: ModelIDInput | null;
 };
 
 export type UpdateSportsGameInput = {
@@ -441,12 +492,16 @@ export type UpdateSportsGameInput = {
   homeTeamLosses?: string | null;
   awayTeamWins?: string | null;
   awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  initialGameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
+  awayTeamLogoSlug?: string | null;
+  homeTeamLogoSlug?: string | null;
   gameStarted?: string | null;
   gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
+  liveGameData?: string | null;
+  hubPostsSportsgameId?: string | null;
 };
 
 export type DeleteSportsGameInput = {
@@ -456,12 +511,12 @@ export type DeleteSportsGameInput = {
 export type CreateLiveGameChatRoomInput = {
   id?: string | null;
   sport?: string | null;
-  sportsGameID?: string | null;
+  gameUpdates?: string | null;
 };
 
 export type ModelLiveGameChatRoomConditionInput = {
   sport?: ModelStringInput | null;
-  sportsGameID?: ModelIDInput | null;
+  gameUpdates?: ModelStringInput | null;
   and?: Array<ModelLiveGameChatRoomConditionInput | null> | null;
   or?: Array<ModelLiveGameChatRoomConditionInput | null> | null;
   not?: ModelLiveGameChatRoomConditionInput | null;
@@ -470,52 +525,10 @@ export type ModelLiveGameChatRoomConditionInput = {
 export type UpdateLiveGameChatRoomInput = {
   id: string;
   sport?: string | null;
-  sportsGameID?: string | null;
+  gameUpdates?: string | null;
 };
 
 export type DeleteLiveGameChatRoomInput = {
-  id: string;
-};
-
-export type CreateHubPostsInput = {
-  id?: string | null;
-  sortKey?: string | null;
-  postType?: string | null;
-  timePosted?: string | null;
-  sportsGameID?: string | null;
-};
-
-export type ModelHubPostsConditionInput = {
-  sortKey?: ModelStringInput | null;
-  postType?: ModelStringInput | null;
-  timePosted?: ModelStringInput | null;
-  sportsGameID?: ModelIDInput | null;
-  and?: Array<ModelHubPostsConditionInput | null> | null;
-  or?: Array<ModelHubPostsConditionInput | null> | null;
-  not?: ModelHubPostsConditionInput | null;
-};
-
-export type HubPosts = {
-  __typename: "HubPosts";
-  id: string;
-  sortKey?: string | null;
-  postType?: string | null;
-  timePosted?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: SportsGame | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateHubPostsInput = {
-  id: string;
-  sortKey?: string | null;
-  postType?: string | null;
-  timePosted?: string | null;
-  sportsGameID?: string | null;
-};
-
-export type DeleteHubPostsInput = {
   id: string;
 };
 
@@ -618,6 +631,21 @@ export type ModelUsernameConnection = {
   nextToken?: string | null;
 };
 
+export type ModelHubPostsFilterInput = {
+  id?: ModelIDInput | null;
+  postType?: ModelStringInput | null;
+  timePosted?: ModelStringInput | null;
+  and?: Array<ModelHubPostsFilterInput | null> | null;
+  or?: Array<ModelHubPostsFilterInput | null> | null;
+  not?: ModelHubPostsFilterInput | null;
+};
+
+export type ModelHubPostsConnection = {
+  __typename: "ModelHubPostsConnection";
+  items: Array<HubPosts | null>;
+  nextToken?: string | null;
+};
+
 export enum ModelSortDirection {
   ASC = "ASC",
   DESC = "DESC"
@@ -643,27 +671,25 @@ export type ModelSportsGameFilterInput = {
   homeTeamLosses?: ModelStringInput | null;
   awayTeamWins?: ModelStringInput | null;
   awayTeamLosses?: ModelStringInput | null;
-  basicGameInfo?: ModelStringInput | null;
+  initialGameInfo?: ModelStringInput | null;
   startTime?: ModelStringInput | null;
   lastUpdate?: ModelStringInput | null;
+  awayTeamLogoSlug?: ModelStringInput | null;
+  homeTeamLogoSlug?: ModelStringInput | null;
   gameStarted?: ModelStringInput | null;
   gameEnded?: ModelStringInput | null;
   liveGameChatRoomID?: ModelIDInput | null;
+  liveGameData?: ModelStringInput | null;
   and?: Array<ModelSportsGameFilterInput | null> | null;
   or?: Array<ModelSportsGameFilterInput | null> | null;
   not?: ModelSportsGameFilterInput | null;
-};
-
-export type ModelSportsGameConnection = {
-  __typename: "ModelSportsGameConnection";
-  items: Array<SportsGame | null>;
-  nextToken?: string | null;
+  hubPostsSportsgameId?: ModelIDInput | null;
 };
 
 export type ModelLiveGameChatRoomFilterInput = {
   id?: ModelIDInput | null;
   sport?: ModelStringInput | null;
-  sportsGameID?: ModelIDInput | null;
+  gameUpdates?: ModelStringInput | null;
   and?: Array<ModelLiveGameChatRoomFilterInput | null> | null;
   or?: Array<ModelLiveGameChatRoomFilterInput | null> | null;
   not?: ModelLiveGameChatRoomFilterInput | null;
@@ -672,23 +698,6 @@ export type ModelLiveGameChatRoomFilterInput = {
 export type ModelLiveGameChatRoomConnection = {
   __typename: "ModelLiveGameChatRoomConnection";
   items: Array<LiveGameChatRoom | null>;
-  nextToken?: string | null;
-};
-
-export type ModelHubPostsFilterInput = {
-  id?: ModelIDInput | null;
-  sortKey?: ModelStringInput | null;
-  postType?: ModelStringInput | null;
-  timePosted?: ModelStringInput | null;
-  sportsGameID?: ModelIDInput | null;
-  and?: Array<ModelHubPostsFilterInput | null> | null;
-  or?: Array<ModelHubPostsFilterInput | null> | null;
-  not?: ModelHubPostsFilterInput | null;
-};
-
-export type ModelHubPostsConnection = {
-  __typename: "ModelHubPostsConnection";
-  items: Array<HubPosts | null>;
   nextToken?: string | null;
 };
 
@@ -781,6 +790,14 @@ export type ModelSubscriptionUsernameFilterInput = {
   or?: Array<ModelSubscriptionUsernameFilterInput | null> | null;
 };
 
+export type ModelSubscriptionHubPostsFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  postType?: ModelSubscriptionStringInput | null;
+  timePosted?: ModelSubscriptionStringInput | null;
+  and?: Array<ModelSubscriptionHubPostsFilterInput | null> | null;
+  or?: Array<ModelSubscriptionHubPostsFilterInput | null> | null;
+};
+
 export type ModelSubscriptionSportsGameFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   sport?: ModelSubscriptionStringInput | null;
@@ -791,12 +808,15 @@ export type ModelSubscriptionSportsGameFilterInput = {
   homeTeamLosses?: ModelSubscriptionStringInput | null;
   awayTeamWins?: ModelSubscriptionStringInput | null;
   awayTeamLosses?: ModelSubscriptionStringInput | null;
-  basicGameInfo?: ModelSubscriptionStringInput | null;
+  initialGameInfo?: ModelSubscriptionStringInput | null;
   startTime?: ModelSubscriptionStringInput | null;
   lastUpdate?: ModelSubscriptionStringInput | null;
+  awayTeamLogoSlug?: ModelSubscriptionStringInput | null;
+  homeTeamLogoSlug?: ModelSubscriptionStringInput | null;
   gameStarted?: ModelSubscriptionStringInput | null;
   gameEnded?: ModelSubscriptionStringInput | null;
   liveGameChatRoomID?: ModelSubscriptionIDInput | null;
+  liveGameData?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionSportsGameFilterInput | null> | null;
   or?: Array<ModelSubscriptionSportsGameFilterInput | null> | null;
 };
@@ -804,19 +824,9 @@ export type ModelSubscriptionSportsGameFilterInput = {
 export type ModelSubscriptionLiveGameChatRoomFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   sport?: ModelSubscriptionStringInput | null;
-  sportsGameID?: ModelSubscriptionIDInput | null;
+  gameUpdates?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionLiveGameChatRoomFilterInput | null> | null;
   or?: Array<ModelSubscriptionLiveGameChatRoomFilterInput | null> | null;
-};
-
-export type ModelSubscriptionHubPostsFilterInput = {
-  id?: ModelSubscriptionIDInput | null;
-  sortKey?: ModelSubscriptionStringInput | null;
-  postType?: ModelSubscriptionStringInput | null;
-  timePosted?: ModelSubscriptionStringInput | null;
-  sportsGameID?: ModelSubscriptionIDInput | null;
-  and?: Array<ModelSubscriptionHubPostsFilterInput | null> | null;
-  or?: Array<ModelSubscriptionHubPostsFilterInput | null> | null;
 };
 
 export type CreateProfilePictureMutation = {
@@ -2130,6 +2140,117 @@ export type DeleteUsernameMutation = {
   usernameProfileId?: string | null;
 };
 
+export type CreateHubPostsMutation = {
+  __typename: "HubPosts";
+  id: string;
+  postType?: string | null;
+  timePosted?: string | null;
+  sportsgame?: {
+    __typename: "ModelSportsGameConnection";
+    items: Array<{
+      __typename: "SportsGame";
+      id: string;
+      sport?: string | null;
+      homeTeam?: string | null;
+      awayTeam?: string | null;
+      gameStatus?: string | null;
+      homeTeamWins?: string | null;
+      homeTeamLosses?: string | null;
+      awayTeamWins?: string | null;
+      awayTeamLosses?: string | null;
+      initialGameInfo?: string | null;
+      startTime?: string | null;
+      lastUpdate?: string | null;
+      awayTeamLogoSlug?: string | null;
+      homeTeamLogoSlug?: string | null;
+      gameStarted?: string | null;
+      gameEnded?: string | null;
+      liveGameChatRoomID?: string | null;
+      liveGameData?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      hubPostsSportsgameId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateHubPostsMutation = {
+  __typename: "HubPosts";
+  id: string;
+  postType?: string | null;
+  timePosted?: string | null;
+  sportsgame?: {
+    __typename: "ModelSportsGameConnection";
+    items: Array<{
+      __typename: "SportsGame";
+      id: string;
+      sport?: string | null;
+      homeTeam?: string | null;
+      awayTeam?: string | null;
+      gameStatus?: string | null;
+      homeTeamWins?: string | null;
+      homeTeamLosses?: string | null;
+      awayTeamWins?: string | null;
+      awayTeamLosses?: string | null;
+      initialGameInfo?: string | null;
+      startTime?: string | null;
+      lastUpdate?: string | null;
+      awayTeamLogoSlug?: string | null;
+      homeTeamLogoSlug?: string | null;
+      gameStarted?: string | null;
+      gameEnded?: string | null;
+      liveGameChatRoomID?: string | null;
+      liveGameData?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      hubPostsSportsgameId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteHubPostsMutation = {
+  __typename: "HubPosts";
+  id: string;
+  postType?: string | null;
+  timePosted?: string | null;
+  sportsgame?: {
+    __typename: "ModelSportsGameConnection";
+    items: Array<{
+      __typename: "SportsGame";
+      id: string;
+      sport?: string | null;
+      homeTeam?: string | null;
+      awayTeam?: string | null;
+      gameStatus?: string | null;
+      homeTeamWins?: string | null;
+      homeTeamLosses?: string | null;
+      awayTeamWins?: string | null;
+      awayTeamLosses?: string | null;
+      initialGameInfo?: string | null;
+      startTime?: string | null;
+      lastUpdate?: string | null;
+      awayTeamLogoSlug?: string | null;
+      homeTeamLogoSlug?: string | null;
+      gameStarted?: string | null;
+      gameEnded?: string | null;
+      liveGameChatRoomID?: string | null;
+      liveGameData?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      hubPostsSportsgameId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type CreateSportsGameMutation = {
   __typename: "SportsGame";
   id: string;
@@ -2141,9 +2262,11 @@ export type CreateSportsGameMutation = {
   homeTeamLosses?: string | null;
   awayTeamWins?: string | null;
   awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  initialGameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
+  awayTeamLogoSlug?: string | null;
+  homeTeamLogoSlug?: string | null;
   gameStarted?: string | null;
   gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
@@ -2151,32 +2274,14 @@ export type CreateSportsGameMutation = {
     __typename: "LiveGameChatRoom";
     id: string;
     sport?: string | null;
-    sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    gameUpdates?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
+  liveGameData?: string | null;
   createdAt: string;
   updatedAt: string;
+  hubPostsSportsgameId?: string | null;
 };
 
 export type UpdateSportsGameMutation = {
@@ -2190,9 +2295,11 @@ export type UpdateSportsGameMutation = {
   homeTeamLosses?: string | null;
   awayTeamWins?: string | null;
   awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  initialGameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
+  awayTeamLogoSlug?: string | null;
+  homeTeamLogoSlug?: string | null;
   gameStarted?: string | null;
   gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
@@ -2200,26 +2307,14 @@ export type UpdateSportsGameMutation = {
     __typename: "LiveGameChatRoom";
     id: string;
     sport?: string | null;
-    sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
-      liveGameChatRoomID?: string | null;
-    } | null;
+    gameUpdates?: string | null;
+    createdAt: string;
+    updatedAt: string;
   } | null;
+  liveGameData?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  hubPostsSportsgameId?: string | null;
 };
 
 export type DeleteSportsGameMutation = {
@@ -2233,9 +2328,11 @@ export type DeleteSportsGameMutation = {
   homeTeamLosses?: string | null;
   awayTeamWins?: string | null;
   awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  initialGameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
+  awayTeamLogoSlug?: string | null;
+  homeTeamLogoSlug?: string | null;
   gameStarted?: string | null;
   gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
@@ -2243,67 +2340,21 @@ export type DeleteSportsGameMutation = {
     __typename: "LiveGameChatRoom";
     id: string;
     sport?: string | null;
-    sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    gameUpdates?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
+  liveGameData?: string | null;
   createdAt: string;
   updatedAt: string;
+  hubPostsSportsgameId?: string | null;
 };
 
 export type CreateLiveGameChatRoomMutation = {
   __typename: "LiveGameChatRoom";
   id: string;
   sport?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  gameUpdates?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -2312,35 +2363,7 @@ export type UpdateLiveGameChatRoomMutation = {
   __typename: "LiveGameChatRoom";
   id: string;
   sport?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  gameUpdates?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -2349,152 +2372,7 @@ export type DeleteLiveGameChatRoomMutation = {
   __typename: "LiveGameChatRoom";
   id: string;
   sport?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateHubPostsMutation = {
-  __typename: "HubPosts";
-  id: string;
-  sortKey?: string | null;
-  postType?: string | null;
-  timePosted?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateHubPostsMutation = {
-  __typename: "HubPosts";
-  id: string;
-  sortKey?: string | null;
-  postType?: string | null;
-  timePosted?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteHubPostsMutation = {
-  __typename: "HubPosts";
-  id: string;
-  sortKey?: string | null;
-  postType?: string | null;
-  timePosted?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  gameUpdates?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -3141,6 +3019,60 @@ export type ListUsernamesQuery = {
   nextToken?: string | null;
 };
 
+export type GetHubPostsQuery = {
+  __typename: "HubPosts";
+  id: string;
+  postType?: string | null;
+  timePosted?: string | null;
+  sportsgame?: {
+    __typename: "ModelSportsGameConnection";
+    items: Array<{
+      __typename: "SportsGame";
+      id: string;
+      sport?: string | null;
+      homeTeam?: string | null;
+      awayTeam?: string | null;
+      gameStatus?: string | null;
+      homeTeamWins?: string | null;
+      homeTeamLosses?: string | null;
+      awayTeamWins?: string | null;
+      awayTeamLosses?: string | null;
+      initialGameInfo?: string | null;
+      startTime?: string | null;
+      lastUpdate?: string | null;
+      awayTeamLogoSlug?: string | null;
+      homeTeamLogoSlug?: string | null;
+      gameStarted?: string | null;
+      gameEnded?: string | null;
+      liveGameChatRoomID?: string | null;
+      liveGameData?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      hubPostsSportsgameId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListHubPostsQuery = {
+  __typename: "ModelHubPostsConnection";
+  items: Array<{
+    __typename: "HubPosts";
+    id: string;
+    postType?: string | null;
+    timePosted?: string | null;
+    sportsgame?: {
+      __typename: "ModelSportsGameConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
 export type ProfilesByProfilepictureIDQuery = {
   __typename: "ModelProfileConnection";
   items: Array<{
@@ -3361,9 +3293,11 @@ export type GetSportsGameQuery = {
   homeTeamLosses?: string | null;
   awayTeamWins?: string | null;
   awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  initialGameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
+  awayTeamLogoSlug?: string | null;
+  homeTeamLogoSlug?: string | null;
   gameStarted?: string | null;
   gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
@@ -3371,32 +3305,14 @@ export type GetSportsGameQuery = {
     __typename: "LiveGameChatRoom";
     id: string;
     sport?: string | null;
-    sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    gameUpdates?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
+  liveGameData?: string | null;
   createdAt: string;
   updatedAt: string;
+  hubPostsSportsgameId?: string | null;
 };
 
 export type ListSportsGamesQuery = {
@@ -3412,9 +3328,11 @@ export type ListSportsGamesQuery = {
     homeTeamLosses?: string | null;
     awayTeamWins?: string | null;
     awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    initialGameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
+    awayTeamLogoSlug?: string | null;
+    homeTeamLogoSlug?: string | null;
     gameStarted?: string | null;
     gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
@@ -3422,12 +3340,14 @@ export type ListSportsGamesQuery = {
       __typename: "LiveGameChatRoom";
       id: string;
       sport?: string | null;
-      sportsGameID?: string | null;
+      gameUpdates?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
+    liveGameData?: string | null;
     createdAt: string;
     updatedAt: string;
+    hubPostsSportsgameId?: string | null;
   } | null>;
   nextToken?: string | null;
 };
@@ -3445,9 +3365,11 @@ export type SportsGamesBySportAndStartTimeQuery = {
     homeTeamLosses?: string | null;
     awayTeamWins?: string | null;
     awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    initialGameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
+    awayTeamLogoSlug?: string | null;
+    homeTeamLogoSlug?: string | null;
     gameStarted?: string | null;
     gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
@@ -3455,12 +3377,14 @@ export type SportsGamesBySportAndStartTimeQuery = {
       __typename: "LiveGameChatRoom";
       id: string;
       sport?: string | null;
-      sportsGameID?: string | null;
+      gameUpdates?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
+    liveGameData?: string | null;
     createdAt: string;
     updatedAt: string;
+    hubPostsSportsgameId?: string | null;
   } | null>;
   nextToken?: string | null;
 };
@@ -3478,9 +3402,11 @@ export type SportsGamesByLiveGameChatRoomIDQuery = {
     homeTeamLosses?: string | null;
     awayTeamWins?: string | null;
     awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    initialGameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
+    awayTeamLogoSlug?: string | null;
+    homeTeamLogoSlug?: string | null;
     gameStarted?: string | null;
     gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
@@ -3488,12 +3414,14 @@ export type SportsGamesByLiveGameChatRoomIDQuery = {
       __typename: "LiveGameChatRoom";
       id: string;
       sport?: string | null;
-      sportsGameID?: string | null;
+      gameUpdates?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
+    liveGameData?: string | null;
     createdAt: string;
     updatedAt: string;
+    hubPostsSportsgameId?: string | null;
   } | null>;
   nextToken?: string | null;
 };
@@ -3502,35 +3430,7 @@ export type GetLiveGameChatRoomQuery = {
   __typename: "LiveGameChatRoom";
   id: string;
   sport?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  gameUpdates?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -3541,136 +3441,7 @@ export type ListLiveGameChatRoomsQuery = {
     __typename: "LiveGameChatRoom";
     id: string;
     sport?: string | null;
-    sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type GetHubPostsQuery = {
-  __typename: "HubPosts";
-  id: string;
-  sortKey?: string | null;
-  postType?: string | null;
-  timePosted?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListHubPostsQuery = {
-  __typename: "ModelHubPostsConnection";
-  items: Array<{
-    __typename: "HubPosts";
-    id: string;
-    sortKey?: string | null;
-    postType?: string | null;
-    timePosted?: string | null;
-    sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type HubPostsBySortKeyAndTimePostedQuery = {
-  __typename: "ModelHubPostsConnection";
-  items: Array<{
-    __typename: "HubPosts";
-    id: string;
-    sortKey?: string | null;
-    postType?: string | null;
-    timePosted?: string | null;
-    sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    gameUpdates?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -4988,6 +4759,117 @@ export type OnDeleteUsernameSubscription = {
   usernameProfileId?: string | null;
 };
 
+export type OnCreateHubPostsSubscription = {
+  __typename: "HubPosts";
+  id: string;
+  postType?: string | null;
+  timePosted?: string | null;
+  sportsgame?: {
+    __typename: "ModelSportsGameConnection";
+    items: Array<{
+      __typename: "SportsGame";
+      id: string;
+      sport?: string | null;
+      homeTeam?: string | null;
+      awayTeam?: string | null;
+      gameStatus?: string | null;
+      homeTeamWins?: string | null;
+      homeTeamLosses?: string | null;
+      awayTeamWins?: string | null;
+      awayTeamLosses?: string | null;
+      initialGameInfo?: string | null;
+      startTime?: string | null;
+      lastUpdate?: string | null;
+      awayTeamLogoSlug?: string | null;
+      homeTeamLogoSlug?: string | null;
+      gameStarted?: string | null;
+      gameEnded?: string | null;
+      liveGameChatRoomID?: string | null;
+      liveGameData?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      hubPostsSportsgameId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateHubPostsSubscription = {
+  __typename: "HubPosts";
+  id: string;
+  postType?: string | null;
+  timePosted?: string | null;
+  sportsgame?: {
+    __typename: "ModelSportsGameConnection";
+    items: Array<{
+      __typename: "SportsGame";
+      id: string;
+      sport?: string | null;
+      homeTeam?: string | null;
+      awayTeam?: string | null;
+      gameStatus?: string | null;
+      homeTeamWins?: string | null;
+      homeTeamLosses?: string | null;
+      awayTeamWins?: string | null;
+      awayTeamLosses?: string | null;
+      initialGameInfo?: string | null;
+      startTime?: string | null;
+      lastUpdate?: string | null;
+      awayTeamLogoSlug?: string | null;
+      homeTeamLogoSlug?: string | null;
+      gameStarted?: string | null;
+      gameEnded?: string | null;
+      liveGameChatRoomID?: string | null;
+      liveGameData?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      hubPostsSportsgameId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteHubPostsSubscription = {
+  __typename: "HubPosts";
+  id: string;
+  postType?: string | null;
+  timePosted?: string | null;
+  sportsgame?: {
+    __typename: "ModelSportsGameConnection";
+    items: Array<{
+      __typename: "SportsGame";
+      id: string;
+      sport?: string | null;
+      homeTeam?: string | null;
+      awayTeam?: string | null;
+      gameStatus?: string | null;
+      homeTeamWins?: string | null;
+      homeTeamLosses?: string | null;
+      awayTeamWins?: string | null;
+      awayTeamLosses?: string | null;
+      initialGameInfo?: string | null;
+      startTime?: string | null;
+      lastUpdate?: string | null;
+      awayTeamLogoSlug?: string | null;
+      homeTeamLogoSlug?: string | null;
+      gameStarted?: string | null;
+      gameEnded?: string | null;
+      liveGameChatRoomID?: string | null;
+      liveGameData?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      hubPostsSportsgameId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type OnCreateSportsGameSubscription = {
   __typename: "SportsGame";
   id: string;
@@ -4999,9 +4881,11 @@ export type OnCreateSportsGameSubscription = {
   homeTeamLosses?: string | null;
   awayTeamWins?: string | null;
   awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  initialGameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
+  awayTeamLogoSlug?: string | null;
+  homeTeamLogoSlug?: string | null;
   gameStarted?: string | null;
   gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
@@ -5009,32 +4893,14 @@ export type OnCreateSportsGameSubscription = {
     __typename: "LiveGameChatRoom";
     id: string;
     sport?: string | null;
-    sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    gameUpdates?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
+  liveGameData?: string | null;
   createdAt: string;
   updatedAt: string;
+  hubPostsSportsgameId?: string | null;
 };
 
 export type OnUpdateSportsGameSubscription = {
@@ -5048,9 +4914,11 @@ export type OnUpdateSportsGameSubscription = {
   homeTeamLosses?: string | null;
   awayTeamWins?: string | null;
   awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  initialGameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
+  awayTeamLogoSlug?: string | null;
+  homeTeamLogoSlug?: string | null;
   gameStarted?: string | null;
   gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
@@ -5058,26 +4926,12 @@ export type OnUpdateSportsGameSubscription = {
     __typename: "LiveGameChatRoom";
     id: string;
     sport?: string | null;
-    sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
-      liveGameChatRoomID?: string | null;
-    } | null;
+    gameUpdates?: string | null;
+    createdAt: string;
+    updatedAt: string;
   } | null;
+  liveGameData?: string | null;
+  hubPostsSportsgameId?: string | null;
 };
 
 export type OnDeleteSportsGameSubscription = {
@@ -5091,9 +4945,11 @@ export type OnDeleteSportsGameSubscription = {
   homeTeamLosses?: string | null;
   awayTeamWins?: string | null;
   awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  initialGameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
+  awayTeamLogoSlug?: string | null;
+  homeTeamLogoSlug?: string | null;
   gameStarted?: string | null;
   gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
@@ -5101,67 +4957,21 @@ export type OnDeleteSportsGameSubscription = {
     __typename: "LiveGameChatRoom";
     id: string;
     sport?: string | null;
-    sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    gameUpdates?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
+  liveGameData?: string | null;
   createdAt: string;
   updatedAt: string;
+  hubPostsSportsgameId?: string | null;
 };
 
 export type OnCreateLiveGameChatRoomSubscription = {
   __typename: "LiveGameChatRoom";
   id: string;
   sport?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  gameUpdates?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -5170,35 +4980,7 @@ export type OnUpdateLiveGameChatRoomSubscription = {
   __typename: "LiveGameChatRoom";
   id: string;
   sport?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  gameUpdates?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -5207,155 +4989,11 @@ export type OnDeleteLiveGameChatRoomSubscription = {
   __typename: "LiveGameChatRoom";
   id: string;
   sport?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  gameUpdates?: string | null;
   createdAt: string;
   updatedAt: string;
 };
 
-export type OnCreateHubPostsSubscription = {
-  __typename: "HubPosts";
-  id: string;
-  sortKey?: string | null;
-  postType?: string | null;
-  timePosted?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateHubPostsSubscription = {
-  __typename: "HubPosts";
-  id: string;
-  sortKey?: string | null;
-  postType?: string | null;
-  timePosted?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteHubPostsSubscription = {
-  __typename: "HubPosts";
-  id: string;
-  sortKey?: string | null;
-  postType?: string | null;
-  timePosted?: string | null;
-  sportsGameID?: string | null;
-  sportsgame?: {
-    __typename: "SportsGame";
-    id: string;
-    sport?: string | null;
-    homeTeam?: string | null;
-    awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
-    startTime?: string | null;
-    lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
-    liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
 
 // ZACH CREATED
 export type GetUsernameDataQuery = {
@@ -7332,6 +6970,165 @@ export class APIService {
     )) as any;
     return <DeleteUsernameMutation>response.data.deleteUsername;
   }
+  async CreateHubPosts(
+    input: CreateHubPostsInput,
+    condition?: ModelHubPostsConditionInput
+  ): Promise<CreateHubPostsMutation> {
+    const statement = `mutation CreateHubPosts($input: CreateHubPostsInput!, $condition: ModelHubPostsConditionInput) {
+        createHubPosts(input: $input, condition: $condition) {
+          __typename
+          id
+          postType
+          timePosted
+          sportsgame {
+            __typename
+            items {
+              __typename
+              id
+              sport
+              homeTeam
+              awayTeam
+              gameStatus
+              homeTeamWins
+              homeTeamLosses
+              awayTeamWins
+              awayTeamLosses
+              initialGameInfo
+              startTime
+              lastUpdate
+              awayTeamLogoSlug
+              homeTeamLogoSlug
+              gameStarted
+              gameEnded
+              liveGameChatRoomID
+              liveGameData
+              createdAt
+              updatedAt
+              hubPostsSportsgameId
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateHubPostsMutation>response.data.createHubPosts;
+  }
+  async UpdateHubPosts(
+    input: UpdateHubPostsInput,
+    condition?: ModelHubPostsConditionInput
+  ): Promise<UpdateHubPostsMutation> {
+    const statement = `mutation UpdateHubPosts($input: UpdateHubPostsInput!, $condition: ModelHubPostsConditionInput) {
+        updateHubPosts(input: $input, condition: $condition) {
+          __typename
+          id
+          postType
+          timePosted
+          sportsgame {
+            __typename
+            items {
+              __typename
+              id
+              sport
+              homeTeam
+              awayTeam
+              gameStatus
+              homeTeamWins
+              homeTeamLosses
+              awayTeamWins
+              awayTeamLosses
+              initialGameInfo
+              startTime
+              lastUpdate
+              awayTeamLogoSlug
+              homeTeamLogoSlug
+              gameStarted
+              gameEnded
+              liveGameChatRoomID
+              liveGameData
+              createdAt
+              updatedAt
+              hubPostsSportsgameId
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateHubPostsMutation>response.data.updateHubPosts;
+  }
+  async DeleteHubPosts(
+    input: DeleteHubPostsInput,
+    condition?: ModelHubPostsConditionInput
+  ): Promise<DeleteHubPostsMutation> {
+    const statement = `mutation DeleteHubPosts($input: DeleteHubPostsInput!, $condition: ModelHubPostsConditionInput) {
+        deleteHubPosts(input: $input, condition: $condition) {
+          __typename
+          id
+          postType
+          timePosted
+          sportsgame {
+            __typename
+            items {
+              __typename
+              id
+              sport
+              homeTeam
+              awayTeam
+              gameStatus
+              homeTeamWins
+              homeTeamLosses
+              awayTeamWins
+              awayTeamLosses
+              initialGameInfo
+              startTime
+              lastUpdate
+              awayTeamLogoSlug
+              homeTeamLogoSlug
+              gameStarted
+              gameEnded
+              liveGameChatRoomID
+              liveGameData
+              createdAt
+              updatedAt
+              hubPostsSportsgameId
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteHubPostsMutation>response.data.deleteHubPosts;
+  }
   async CreateSportsGame(
     input: CreateSportsGameInput,
     condition?: ModelSportsGameConditionInput
@@ -7348,9 +7145,11 @@ export class APIService {
           homeTeamLosses
           awayTeamWins
           awayTeamLosses
-          basicGameInfo
+          initialGameInfo
           startTime
           lastUpdate
+          awayTeamLogoSlug
+          homeTeamLogoSlug
           gameStarted
           gameEnded
           liveGameChatRoomID
@@ -7358,32 +7157,14 @@ export class APIService {
             __typename
             id
             sport
-            sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
-              startTime
-              lastUpdate
-              gameStarted
-              gameEnded
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-            }
+            gameUpdates
             createdAt
             updatedAt
           }
+          liveGameData
           createdAt
           updatedAt
+          hubPostsSportsgameId
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7413,9 +7194,11 @@ export class APIService {
           homeTeamLosses
           awayTeamWins
           awayTeamLosses
-          basicGameInfo
+          initialGameInfo
           startTime
           lastUpdate
+          awayTeamLogoSlug
+          homeTeamLogoSlug
           gameStarted
           gameEnded
           liveGameChatRoomID
@@ -7423,26 +7206,14 @@ export class APIService {
             __typename
             id
             sport
-            sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
-              startTime
-              lastUpdate
-              gameStarted
-              gameEnded
-              liveGameChatRoomID
-            }
+            gameUpdates
+            createdAt
+            updatedAt
           }
+          liveGameData
+          createdAt
+          updatedAt
+          hubPostsSportsgameId
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7472,9 +7243,11 @@ export class APIService {
           homeTeamLosses
           awayTeamWins
           awayTeamLosses
-          basicGameInfo
+          initialGameInfo
           startTime
           lastUpdate
+          awayTeamLogoSlug
+          homeTeamLogoSlug
           gameStarted
           gameEnded
           liveGameChatRoomID
@@ -7482,32 +7255,14 @@ export class APIService {
             __typename
             id
             sport
-            sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
-              startTime
-              lastUpdate
-              gameStarted
-              gameEnded
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-            }
+            gameUpdates
             createdAt
             updatedAt
           }
+          liveGameData
           createdAt
           updatedAt
+          hubPostsSportsgameId
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7530,35 +7285,7 @@ export class APIService {
           __typename
           id
           sport
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
+          gameUpdates
           createdAt
           updatedAt
         }
@@ -7583,35 +7310,7 @@ export class APIService {
           __typename
           id
           sport
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
+          gameUpdates
           createdAt
           updatedAt
         }
@@ -7636,35 +7335,7 @@ export class APIService {
           __typename
           id
           sport
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
+          gameUpdates
           createdAt
           updatedAt
         }
@@ -7679,171 +7350,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteLiveGameChatRoomMutation>response.data.deleteLiveGameChatRoom;
-  }
-  async CreateHubPosts(
-    input: CreateHubPostsInput,
-    condition?: ModelHubPostsConditionInput
-  ): Promise<CreateHubPostsMutation> {
-    const statement = `mutation CreateHubPosts($input: CreateHubPostsInput!, $condition: ModelHubPostsConditionInput) {
-        createHubPosts(input: $input, condition: $condition) {
-          __typename
-          id
-          sortKey
-          postType
-          timePosted
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateHubPostsMutation>response.data.createHubPosts;
-  }
-  async UpdateHubPosts(
-    input: UpdateHubPostsInput,
-    condition?: ModelHubPostsConditionInput
-  ): Promise<UpdateHubPostsMutation> {
-    const statement = `mutation UpdateHubPosts($input: UpdateHubPostsInput!, $condition: ModelHubPostsConditionInput) {
-        updateHubPosts(input: $input, condition: $condition) {
-          __typename
-          id
-          sortKey
-          postType
-          timePosted
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateHubPostsMutation>response.data.updateHubPosts;
-  }
-  async DeleteHubPosts(
-    input: DeleteHubPostsInput,
-    condition?: ModelHubPostsConditionInput
-  ): Promise<DeleteHubPostsMutation> {
-    const statement = `mutation DeleteHubPosts($input: DeleteHubPostsInput!, $condition: ModelHubPostsConditionInput) {
-        deleteHubPosts(input: $input, condition: $condition) {
-          __typename
-          id
-          sortKey
-          postType
-          timePosted
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteHubPostsMutation>response.data.deleteHubPosts;
   }
   async GetProfilePicture(id: string): Promise<GetProfilePictureQuery> {
     const statement = `query GetProfilePicture($id: ID!) {
@@ -8642,6 +8148,91 @@ export class APIService {
     )) as any;
     return <ListUsernamesQuery>response.data.listUsernames;
   }
+  async GetHubPosts(id: string): Promise<GetHubPostsQuery> {
+    const statement = `query GetHubPosts($id: ID!) {
+        getHubPosts(id: $id) {
+          __typename
+          id
+          postType
+          timePosted
+          sportsgame {
+            __typename
+            items {
+              __typename
+              id
+              sport
+              homeTeam
+              awayTeam
+              gameStatus
+              homeTeamWins
+              homeTeamLosses
+              awayTeamWins
+              awayTeamLosses
+              initialGameInfo
+              startTime
+              lastUpdate
+              awayTeamLogoSlug
+              homeTeamLogoSlug
+              gameStarted
+              gameEnded
+              liveGameChatRoomID
+              liveGameData
+              createdAt
+              updatedAt
+              hubPostsSportsgameId
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetHubPostsQuery>response.data.getHubPosts;
+  }
+  async ListHubPosts(
+    filter?: ModelHubPostsFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListHubPostsQuery> {
+    const statement = `query ListHubPosts($filter: ModelHubPostsFilterInput, $limit: Int, $nextToken: String) {
+        listHubPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            postType
+            timePosted
+            sportsgame {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku' }
+    )) as any;
+    return <ListHubPostsQuery>response.data.listHubPosts;
+  }
   async ProfilesByProfilepictureID(
     profilepictureID: string,
     sortDirection?: ModelSortDirection,
@@ -8984,9 +8575,11 @@ export class APIService {
           homeTeamLosses
           awayTeamWins
           awayTeamLosses
-          basicGameInfo
+          initialGameInfo
           startTime
           lastUpdate
+          awayTeamLogoSlug
+          homeTeamLogoSlug
           gameStarted
           gameEnded
           liveGameChatRoomID
@@ -8994,32 +8587,14 @@ export class APIService {
             __typename
             id
             sport
-            sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
-              startTime
-              lastUpdate
-              gameStarted
-              gameEnded
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-            }
+            gameUpdates
             createdAt
             updatedAt
           }
+          liveGameData
           createdAt
           updatedAt
+          hubPostsSportsgameId
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -9049,9 +8624,11 @@ export class APIService {
             homeTeamLosses
             awayTeamWins
             awayTeamLosses
-            basicGameInfo
+            initialGameInfo
             startTime
             lastUpdate
+            awayTeamLogoSlug
+            homeTeamLogoSlug
             gameStarted
             gameEnded
             liveGameChatRoomID
@@ -9059,12 +8636,14 @@ export class APIService {
               __typename
               id
               sport
-              sportsGameID
+              gameUpdates
               createdAt
               updatedAt
             }
+            liveGameData
             createdAt
             updatedAt
+            hubPostsSportsgameId
           }
           nextToken
         }
@@ -9106,9 +8685,11 @@ export class APIService {
             homeTeamLosses
             awayTeamWins
             awayTeamLosses
-            basicGameInfo
+            initialGameInfo
             startTime
             lastUpdate
+            awayTeamLogoSlug
+            homeTeamLogoSlug
             gameStarted
             gameEnded
             liveGameChatRoomID
@@ -9116,12 +8697,14 @@ export class APIService {
               __typename
               id
               sport
-              sportsGameID
+              gameUpdates
               createdAt
               updatedAt
             }
+            liveGameData
             createdAt
             updatedAt
+            hubPostsSportsgameId
           }
           nextToken
         }
@@ -9172,9 +8755,11 @@ export class APIService {
             homeTeamLosses
             awayTeamWins
             awayTeamLosses
-            basicGameInfo
+            initialGameInfo
             startTime
             lastUpdate
+            awayTeamLogoSlug
+            homeTeamLogoSlug
             gameStarted
             gameEnded
             liveGameChatRoomID
@@ -9182,12 +8767,14 @@ export class APIService {
               __typename
               id
               sport
-              sportsGameID
+              gameUpdates
               createdAt
               updatedAt
             }
+            liveGameData
             createdAt
             updatedAt
+            hubPostsSportsgameId
           }
           nextToken
         }
@@ -9220,35 +8807,7 @@ export class APIService {
           __typename
           id
           sport
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
+          gameUpdates
           createdAt
           updatedAt
         }
@@ -9273,27 +8832,7 @@ export class APIService {
             __typename
             id
             sport
-            sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
-              startTime
-              lastUpdate
-              gameStarted
-              gameEnded
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-            }
+            gameUpdates
             createdAt
             updatedAt
           }
@@ -9314,180 +8853,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListLiveGameChatRoomsQuery>response.data.listLiveGameChatRooms;
-  }
-  async GetHubPosts(id: string): Promise<GetHubPostsQuery> {
-    const statement = `query GetHubPosts($id: ID!) {
-        getHubPosts(id: $id) {
-          __typename
-          id
-          sortKey
-          postType
-          timePosted
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetHubPostsQuery>response.data.getHubPosts;
-  }
-  async ListHubPosts(
-    filter?: ModelHubPostsFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListHubPostsQuery> {
-    const statement = `query ListHubPosts($filter: ModelHubPostsFilterInput, $limit: Int, $nextToken: String) {
-        listHubPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            sortKey
-            postType
-            timePosted
-            sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
-              startTime
-              lastUpdate
-              gameStarted
-              gameEnded
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku' }
-    )) as any;
-    return <ListHubPostsQuery>response.data.listHubPosts;
-  }
-  async HubPostsBySortKeyAndTimePosted(
-    sortKey: string,
-    timePosted?: ModelStringKeyConditionInput,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelHubPostsFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<HubPostsBySortKeyAndTimePostedQuery> {
-    const statement = `query HubPostsBySortKeyAndTimePosted($sortKey: String!, $timePosted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelHubPostsFilterInput, $limit: Int, $nextToken: String) {
-        hubPostsBySortKeyAndTimePosted(sortKey: $sortKey, timePosted: $timePosted, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            sortKey
-            postType
-            timePosted
-            sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
-              startTime
-              lastUpdate
-              gameStarted
-              gameEnded
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      sortKey
-    };
-    if (timePosted) {
-      gqlAPIServiceArguments.timePosted = timePosted;
-    }
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku' }
-    )) as any;
-    return <HubPostsBySortKeyAndTimePostedQuery>(
-      response.data.hubPostsBySortKeyAndTimePosted
-    );
   }
   OnCreateProfilePictureListener(
     filter?: ModelSubscriptionProfilePictureFilterInput
@@ -11067,6 +10432,168 @@ export class APIService {
     >;
   }
 
+  OnCreateHubPostsListener(
+    filter?: ModelSubscriptionHubPostsFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateHubPosts">>
+  > {
+    const statement = `subscription OnCreateHubPosts($filter: ModelSubscriptionHubPostsFilterInput) {
+        onCreateHubPosts(filter: $filter) {
+          __typename
+          id
+          postType
+          timePosted
+          sportsgame {
+            __typename
+            items {
+              __typename
+              id
+              sport
+              homeTeam
+              awayTeam
+              gameStatus
+              homeTeamWins
+              homeTeamLosses
+              awayTeamWins
+              awayTeamLosses
+              initialGameInfo
+              startTime
+              lastUpdate
+              awayTeamLogoSlug
+              homeTeamLogoSlug
+              gameStarted
+              gameEnded
+              liveGameChatRoomID
+              liveGameData
+              createdAt
+              updatedAt
+              hubPostsSportsgameId
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateHubPosts">>
+    >;
+  }
+
+  OnUpdateHubPostsListener(
+    filter?: ModelSubscriptionHubPostsFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateHubPosts">>
+  > {
+    const statement = `subscription OnUpdateHubPosts($filter: ModelSubscriptionHubPostsFilterInput) {
+        onUpdateHubPosts(filter: $filter) {
+          __typename
+          id
+          postType
+          timePosted
+          sportsgame {
+            __typename
+            items {
+              __typename
+              id
+              sport
+              homeTeam
+              awayTeam
+              gameStatus
+              homeTeamWins
+              homeTeamLosses
+              awayTeamWins
+              awayTeamLosses
+              initialGameInfo
+              startTime
+              lastUpdate
+              awayTeamLogoSlug
+              homeTeamLogoSlug
+              gameStarted
+              gameEnded
+              liveGameChatRoomID
+              liveGameData
+              createdAt
+              updatedAt
+              hubPostsSportsgameId
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateHubPosts">>
+    >;
+  }
+
+  OnDeleteHubPostsListener(
+    filter?: ModelSubscriptionHubPostsFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteHubPosts">>
+  > {
+    const statement = `subscription OnDeleteHubPosts($filter: ModelSubscriptionHubPostsFilterInput) {
+        onDeleteHubPosts(filter: $filter) {
+          __typename
+          id
+          postType
+          timePosted
+          sportsgame {
+            __typename
+            items {
+              __typename
+              id
+              sport
+              homeTeam
+              awayTeam
+              gameStatus
+              homeTeamWins
+              homeTeamLosses
+              awayTeamWins
+              awayTeamLosses
+              initialGameInfo
+              startTime
+              lastUpdate
+              awayTeamLogoSlug
+              homeTeamLogoSlug
+              gameStarted
+              gameEnded
+              liveGameChatRoomID
+              liveGameData
+              createdAt
+              updatedAt
+              hubPostsSportsgameId
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteHubPosts">>
+    >;
+  }
+
   OnCreateSportsGameListener(
     filter?: ModelSubscriptionSportsGameFilterInput
   ): Observable<
@@ -11084,9 +10611,11 @@ export class APIService {
           homeTeamLosses
           awayTeamWins
           awayTeamLosses
-          basicGameInfo
+          initialGameInfo
           startTime
           lastUpdate
+          awayTeamLogoSlug
+          homeTeamLogoSlug
           gameStarted
           gameEnded
           liveGameChatRoomID
@@ -11094,32 +10623,14 @@ export class APIService {
             __typename
             id
             sport
-            sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
-              startTime
-              lastUpdate
-              gameStarted
-              gameEnded
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-            }
+            gameUpdates
             createdAt
             updatedAt
           }
+          liveGameData
           createdAt
           updatedAt
+          hubPostsSportsgameId
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -11127,7 +10638,7 @@ export class APIService {
       gqlAPIServiceArguments.filter = filter;
     }
     return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
+      graphqlOperation(statement, gqlAPIServiceArguments), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku' }
     ) as Observable<
       SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateSportsGame">>
     >;
@@ -11150,9 +10661,11 @@ export class APIService {
           homeTeamLosses
           awayTeamWins
           awayTeamLosses
-          basicGameInfo
+          initialGameInfo
           startTime
           lastUpdate
+          awayTeamLogoSlug
+          homeTeamLogoSlug
           gameStarted
           gameEnded
           liveGameChatRoomID
@@ -11160,28 +10673,12 @@ export class APIService {
             __typename
             id
             sport
-            sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
-              startTime
-              lastUpdate
-              gameStarted
-              gameEnded
-              liveGameChatRoomID
-            }
+            gameUpdates
             createdAt
             updatedAt
           }
+          liveGameData
+          hubPostsSportsgameId
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -11212,9 +10709,11 @@ export class APIService {
           homeTeamLosses
           awayTeamWins
           awayTeamLosses
-          basicGameInfo
+          initialGameInfo
           startTime
           lastUpdate
+          awayTeamLogoSlug
+          homeTeamLogoSlug
           gameStarted
           gameEnded
           liveGameChatRoomID
@@ -11222,32 +10721,14 @@ export class APIService {
             __typename
             id
             sport
-            sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
-              startTime
-              lastUpdate
-              gameStarted
-              gameEnded
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-            }
+            gameUpdates
             createdAt
             updatedAt
           }
+          liveGameData
           createdAt
           updatedAt
+          hubPostsSportsgameId
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -11273,35 +10754,7 @@ export class APIService {
           __typename
           id
           sport
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
+          gameUpdates
           createdAt
           updatedAt
         }
@@ -11331,35 +10784,7 @@ export class APIService {
           __typename
           id
           sport
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
+          gameUpdates
           createdAt
           updatedAt
         }
@@ -11389,35 +10814,7 @@ export class APIService {
           __typename
           id
           sport
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
+          gameUpdates
           createdAt
           updatedAt
         }
@@ -11432,174 +10829,6 @@ export class APIService {
       SubscriptionResponse<
         Pick<__SubscriptionContainer, "onDeleteLiveGameChatRoom">
       >
-    >;
-  }
-
-  OnCreateHubPostsListener(
-    filter?: ModelSubscriptionHubPostsFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateHubPosts">>
-  > {
-    const statement = `subscription OnCreateHubPosts($filter: ModelSubscriptionHubPostsFilterInput) {
-        onCreateHubPosts(filter: $filter) {
-          __typename
-          id
-          sortKey
-          postType
-          timePosted
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateHubPosts">>
-    >;
-  }
-
-  OnUpdateHubPostsListener(
-    filter?: ModelSubscriptionHubPostsFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateHubPosts">>
-  > {
-    const statement = `subscription OnUpdateHubPosts($filter: ModelSubscriptionHubPostsFilterInput) {
-        onUpdateHubPosts(filter: $filter) {
-          __typename
-          id
-          sortKey
-          postType
-          timePosted
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments), { authMode: 'API_KEY', 'x-api-key': 'da2-d237viicnjbmphh333shl54iku' }
-    ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateHubPosts">>
-    >;
-  }
-
-  OnDeleteHubPostsListener(
-    filter?: ModelSubscriptionHubPostsFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteHubPosts">>
-  > {
-    const statement = `subscription OnDeleteHubPosts($filter: ModelSubscriptionHubPostsFilterInput) {
-        onDeleteHubPosts(filter: $filter) {
-          __typename
-          id
-          sortKey
-          postType
-          timePosted
-          sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
-            startTime
-            lastUpdate
-            gameStarted
-            gameEnded
-            liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteHubPosts">>
     >;
   }
 }

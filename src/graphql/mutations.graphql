@@ -1291,22 +1291,38 @@ mutation CreateSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
-    initialGameInfo
+    basicGameInfo
     startTime
     lastUpdate
-    awayTeamLogoSlug
-    homeTeamLogoSlug
     gameStarted
     gameEnded
-    liveGameID
-    livegame {
+    liveGameChatRoomID
+    livegamechatroom {
       id
       sport
-      gameUpdates
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
-    liveGameData
     createdAt
     updatedAt
   }
@@ -1325,22 +1341,38 @@ mutation UpdateSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
-    initialGameInfo
+    basicGameInfo
     startTime
     lastUpdate
-    awayTeamLogoSlug
-    homeTeamLogoSlug
     gameStarted
     gameEnded
-    liveGameID
-    livegame {
+    liveGameChatRoomID
+    livegamechatroom {
       id
       sport
-      gameUpdates
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
-    liveGameData
     createdAt
     updatedAt
   }
@@ -1359,58 +1391,272 @@ mutation DeleteSportsGame(
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
-    initialGameInfo
+    basicGameInfo
     startTime
     lastUpdate
-    awayTeamLogoSlug
-    homeTeamLogoSlug
     gameStarted
     gameEnded
-    liveGameID
-    livegame {
+    liveGameChatRoomID
+    livegamechatroom {
       id
       sport
-      gameUpdates
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
-    liveGameData
     createdAt
     updatedAt
   }
 }
-mutation CreateLiveGame(
-  $input: CreateLiveGameInput!
-  $condition: ModelLiveGameConditionInput
+mutation CreateLiveGameChatRoom(
+  $input: CreateLiveGameChatRoomInput!
+  $condition: ModelLiveGameChatRoomConditionInput
 ) {
-  createLiveGame(input: $input, condition: $condition) {
+  createLiveGameChatRoom(input: $input, condition: $condition) {
     id
     sport
-    gameUpdates
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
 }
-mutation UpdateLiveGame(
-  $input: UpdateLiveGameInput!
-  $condition: ModelLiveGameConditionInput
+mutation UpdateLiveGameChatRoom(
+  $input: UpdateLiveGameChatRoomInput!
+  $condition: ModelLiveGameChatRoomConditionInput
 ) {
-  updateLiveGame(input: $input, condition: $condition) {
+  updateLiveGameChatRoom(input: $input, condition: $condition) {
     id
     sport
-    gameUpdates
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
 }
-mutation DeleteLiveGame(
-  $input: DeleteLiveGameInput!
-  $condition: ModelLiveGameConditionInput
+mutation DeleteLiveGameChatRoom(
+  $input: DeleteLiveGameChatRoomInput!
+  $condition: ModelLiveGameChatRoomConditionInput
 ) {
-  deleteLiveGame(input: $input, condition: $condition) {
+  deleteLiveGameChatRoom(input: $input, condition: $condition) {
     id
     sport
-    gameUpdates
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateHubPosts(
+  $input: CreateHubPostsInput!
+  $condition: ModelHubPostsConditionInput
+) {
+  createHubPosts(input: $input, condition: $condition) {
+    id
+    sortKey
+    postType
+    timePosted
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateHubPosts(
+  $input: UpdateHubPostsInput!
+  $condition: ModelHubPostsConditionInput
+) {
+  updateHubPosts(input: $input, condition: $condition) {
+    id
+    sortKey
+    postType
+    timePosted
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteHubPosts(
+  $input: DeleteHubPostsInput!
+  $condition: ModelHubPostsConditionInput
+) {
+  deleteHubPosts(input: $input, condition: $condition) {
+    id
+    sortKey
+    postType
+    timePosted
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }

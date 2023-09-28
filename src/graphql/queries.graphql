@@ -879,22 +879,38 @@ query GetSportsGame($id: ID!) {
     homeTeamLosses
     awayTeamWins
     awayTeamLosses
-    initialGameInfo
+    basicGameInfo
     startTime
     lastUpdate
-    awayTeamLogoSlug
-    homeTeamLogoSlug
     gameStarted
     gameEnded
-    liveGameID
-    livegame {
+    liveGameChatRoomID
+    livegamechatroom {
       id
       sport
-      gameUpdates
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
-    liveGameData
     createdAt
     updatedAt
   }
@@ -915,22 +931,19 @@ query ListSportsGames(
       homeTeamLosses
       awayTeamWins
       awayTeamLosses
-      initialGameInfo
+      basicGameInfo
       startTime
       lastUpdate
-      awayTeamLogoSlug
-      homeTeamLogoSlug
       gameStarted
       gameEnded
-      liveGameID
-      livegame {
+      liveGameChatRoomID
+      livegamechatroom {
         id
         sport
-        gameUpdates
+        sportsGameID
         createdAt
         updatedAt
       }
-      liveGameData
       createdAt
       updatedAt
     }
@@ -963,37 +976,34 @@ query SportsGamesBySportAndStartTime(
       homeTeamLosses
       awayTeamWins
       awayTeamLosses
-      initialGameInfo
+      basicGameInfo
       startTime
       lastUpdate
-      awayTeamLogoSlug
-      homeTeamLogoSlug
       gameStarted
       gameEnded
-      liveGameID
-      livegame {
+      liveGameChatRoomID
+      livegamechatroom {
         id
         sport
-        gameUpdates
+        sportsGameID
         createdAt
         updatedAt
       }
-      liveGameData
       createdAt
       updatedAt
     }
     nextToken
   }
 }
-query SportsGamesByLiveGameID(
-  $liveGameID: ID!
+query SportsGamesByLiveGameChatRoomID(
+  $liveGameChatRoomID: ID!
   $sortDirection: ModelSortDirection
   $filter: ModelSportsGameFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  sportsGamesByLiveGameID(
-    liveGameID: $liveGameID
+  sportsGamesByLiveGameChatRoomID(
+    liveGameChatRoomID: $liveGameChatRoomID
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -1009,47 +1019,210 @@ query SportsGamesByLiveGameID(
       homeTeamLosses
       awayTeamWins
       awayTeamLosses
-      initialGameInfo
+      basicGameInfo
       startTime
       lastUpdate
-      awayTeamLogoSlug
-      homeTeamLogoSlug
       gameStarted
       gameEnded
-      liveGameID
-      livegame {
+      liveGameChatRoomID
+      livegamechatroom {
         id
         sport
-        gameUpdates
+        sportsGameID
         createdAt
         updatedAt
       }
-      liveGameData
       createdAt
       updatedAt
     }
     nextToken
   }
 }
-query GetLiveGame($id: ID!) {
-  getLiveGame(id: $id) {
+query GetLiveGameChatRoom($id: ID!) {
+  getLiveGameChatRoom(id: $id) {
     id
     sport
-    gameUpdates
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
 }
-query ListLiveGames(
-  $filter: ModelLiveGameFilterInput
+query ListLiveGameChatRooms(
+  $filter: ModelLiveGameChatRoomFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listLiveGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listLiveGameChatRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       sport
-      gameUpdates
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetHubPosts($id: ID!) {
+  getHubPosts(id: $id) {
+    id
+    sortKey
+    postType
+    timePosted
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameStatus
+      homeTeamWins
+      homeTeamLosses
+      awayTeamWins
+      awayTeamLosses
+      basicGameInfo
+      startTime
+      lastUpdate
+      gameStarted
+      gameEnded
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListHubPosts(
+  $filter: ModelHubPostsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listHubPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      sortKey
+      postType
+      timePosted
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query HubPostsBySortKeyAndTimePosted(
+  $sortKey: String!
+  $timePosted: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelHubPostsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  hubPostsBySortKeyAndTimePosted(
+    sortKey: $sortKey
+    timePosted: $timePosted
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      sortKey
+      postType
+      timePosted
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

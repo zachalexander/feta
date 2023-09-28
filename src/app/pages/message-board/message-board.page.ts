@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList,
 import { APIService, ModelSortDirection } from 'src/app/API.service';
 import { SportsService } from 'src/app/services/sports.service';
 import { BehaviorSubject, Subscription, finalize } from 'rxjs';
-import { Amplify } from 'aws-amplify';
+import { Amplify, Hub } from 'aws-amplify';
+import { CONNECTION_STATE_CHANGE, ConnectionState } from '@aws-amplify/pubsub';
 import awsconfig from './../../../aws-exports';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { ModalController, Platform, AlertController } from '@ionic/angular';
@@ -16,8 +17,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class MessageBoardPage implements OnInit {
 
   onUpdateSportsGame: Subscription | null = null;
+  onUpdateHubPost: Subscription | null = null;
   data: any;
   baseballData: any = [];
+  hubData: any = [];
   liveData: any = [];
   currentData: any = [];
   lastEvent: any = [];
@@ -25,6 +28,8 @@ export class MessageBoardPage implements OnInit {
   opponentName;
   currentHalfInning;
   mobilePlatform;
+
+  priorConnectionState: ConnectionState;
 
   constructor(
     private api: APIService,
@@ -44,41 +49,61 @@ export class MessageBoardPage implements OnInit {
 
   async ngOnInit() {
     this.startSubscriptions();
-    await this.getSportsData();
-    console.log(this.baseballData)
+    await this.getHubData();
+    console.log(this.hubData)
+
+    Hub.listen('api', (data: any) => {
+      const { payload } = data;
+      if (payload.event === CONNECTION_STATE_CHANGE) {
+        const connectionState = payload.data.connectionState as ConnectionState;
+        console.log(connectionState)
+      }
+    })
   }
 
   startSubscriptions() {
+    this.onUpdateHubPost = <Subscription>(
+      this.api.OnUpdateHubPostsListener().subscribe({
+        next: async (event: any) => {
+          const data = event;
+          console.log(data)
+        }
+      })
+    )
     this.onUpdateSportsGame = <Subscription>(
       this.api.OnUpdateSportsGameListener().subscribe({
         next: async (event: any) => {
           const data = event;
+          this.hubData.map(async (game) => {
+            if(data.value.data.onUpdateSportsGame.id === game.sportsgame.id){
+              game.sportsgame.losingPitcherStats = [];
+              game.sportsgame.winningPitcherStats = [];
+              game.sportsgame.oriolesOutcome = [];
+              game.sportsgame.currentHalfInning = null;
+              game.sportsgame.currentBatterStats = [];
+              game.sportsgame.currentPitcherStats = [];
+              game.sportsgame = data.value.data.onUpdateSportsGame;
+              game.sportsgame.basicGameInfo = JSON.parse(data.value.data.onUpdateSportsGame.basicGameInfo)
+              game.sportsgame.currentHalfInning = game.sportsgame.gameStatus === 'In Progress' ? game.sportsgame.basicGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.sportsgame.basicGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.sportsgame.basicGameInfo[0].currentPlay.about.inning.toString()) : null;
 
-          this.baseballData.map(async (game, index) => {
-            if(data.value.data.onUpdateSportsGame.id === game.id){
-              this.baseballData[index] = data.value.data.onUpdateSportsGame;
-              this.baseballData[index].initialGameInfo = JSON.parse(this.baseballData[index].initialGameInfo)
-              this.baseballData[index].currentHalfInning = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.initialGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.initialGameInfo[0].currentPlay.about.inning.toString()) : null;
-
-              if (game.gameStatus === 'Final') {
-                this.baseballData[index].oriolesOutcome = (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore > game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore > game.initialGameInfo[0].currentPlay.result.awayScore)) ? "O's WON" : (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore < game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore < game.initialGameInfo[0].currentPlay.result.awayScore)) ? "O's LOST" : null;
-                this.baseballData[index].losingPitcherStats = (game.initialGameInfo[0].finalData && game.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.loser.id, +game.id) as any : null;
-                this.baseballData[index].winningPitcherStats = (game.gameStatus === 'Final' && game.initialGameInfo[0].finalData) ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.winner.id, +game.id) as any : null;
+              if (game.sportsgame.gameStatus === 'Final') {
+                game.sportsgame.oriolesOutcome = (game.sportsgame.gameStatus === 'Final' && (game.sportsgame.awayTeam === 'Baltimore Orioles' && game.sportsgame.basicGameInfo[0].currentPlay.result.awayScore > game.basicGameInfo[0].currentPlay.result.homeScore) || (game.sportsgame.homeTeam === 'Baltimore Orioles' && game.sportsgame.basicGameInfo[0].currentPlay.result.homeScore > game.sportsgame.basicGameInfo[0].currentPlay.result.awayScore)) ? "O's WON" : (game.sportsgame.gameStatus === 'Final' && (game.sportsgame.awayTeam === 'Baltimore Orioles' && game.sportsgame.basicGameInfo[0].currentPlay.result.awayScore < game.sportsgame.basicGameInfo[0].currentPlay.result.homeScore) || (game.sportsgame.homeTeam === 'Baltimore Orioles' && game.sportsgame.basicGameInfo[0].currentPlay.result.homeScore < game.sportsgame.basicGameInfo[0].currentPlay.result.awayScore)) ? "O's LOST" : null;
+                game.sportsgame.losingPitcherStats = (game.sportsgame.basicGameInfo[0].finalData && game.sportsgame.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(game.sportsgame.basicGameInfo[0].finalData.loser.id, +game.sportsgame.id) as any : null;
+                game.sportsgame.winningPitcherStats = (game.sportsgame.gameStatus === 'Final' && game.sportsgame.basicGameInfo[0].finalData) ? await this.getFinalPitcherGameStats(game.sportsgame.basicGameInfo[0].finalData.winner.id, +game.sportsgame.id) as any : null;
               }
 
-              if (game.gameStatus === 'Scheduled' || game.gameStatus === 'Pre-Game' || game.gameStatus === 'Warmup') {
-                this.baseballData[index].startingAwayPitcherStats = ((game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.initialGameInfo[0].initialGameData.probablePitchers.away.id) as any : null;
-                this.baseballData[index].startingHomePitcherStats = ((game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.initialGameInfo[0].initialGameData.probablePitchers.home.id) as any : null;
+              if (game.sportsgame.gameStatus === 'Scheduled' || game.sportsgame.gameStatus === 'Pre-Game' || game.sportsgame.gameStatus === 'Warmup') {
+                game.sportsgame.startingAwayPitcherStats = ((game.sportsgame.gameStatus !== 'In Progress' && game.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.sportsgame.basicGameInfo[0].initialGameData.probablePitchers.away.id) as any : null;
+                game.sportsgame.startingHomePitcherStats = ((game.sportsgame.gameStatus !== 'In Progress' && game.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.sportsgame.basicGameInfo[0].initialGameData.probablePitchers.home.id) as any : null;
               }
 
               if (game.gameStatus === 'In Progress') {
-                this.baseballData[index].currentHalfInning = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.initialGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.initialGameInfo[0].currentPlay.about.inning.toString()) : null;
-                this.baseballData[index].currentBatterStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(game.initialGameInfo[0].currentPlay.matchup.batter.id, +game.id) as any : null;
-                this.baseballData[index].currentPitcherStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(game.initialGameInfo[0].currentPlay.matchup.pitcher.id, +game.id) as any : null;
+                game.sportsgame.currentHalfInning = game.gameStatus === 'In Progress' ? game.basicGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.basicGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.basicGameInfo[0].currentPlay.about.inning.toString()) : null;
+                game.sportsgame.currentBatterStats = (game.gameStatus !== 'Final' && game.basicGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(game.basicGameInfo[0].currentPlay.matchup.batter.id, +game.id) as any : null;
+                game.sportsgame.currentPitcherStats = (game.gameStatus !== 'Final' && game.basicGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(game.basicGameInfo[0].currentPlay.matchup.pitcher.id, +game.id) as any : null;
               }
             }
           })
-          console.log(this.baseballData)
         }
       })
     )
@@ -88,38 +113,42 @@ export class MessageBoardPage implements OnInit {
     if (this.onUpdateSportsGame) {
       await this.onUpdateSportsGame.unsubscribe();
     }
+    if (this.onUpdateHubPost) {
+      await this.onUpdateHubPost.unsubscribe();
+    }
   }
 
 
-  async getSportsData(){
-    await this.api.SportsGamesBySportAndStartTime("baseball", null, ModelSortDirection.DESC).then(data => {
-      this.baseballData = data.items;
-      this.baseballData.map(async game => {
-        game.initialGameInfo = await JSON.parse(game.initialGameInfo)
-        game.losingPitcherStats = [];
-        game.winningPitcherStats = [];
-        game.oriolesOutcome = [];
-        // game.startingAwayPitcherStats = [];
-        // game.startingHomePitcherStats = [];
-        game.currentHalfInning = null;
-        game.currentBatterStats = [];
-        game.currentPitcherStats = [];
+  async getHubData(){
+    await this.api.HubPostsBySortKeyAndTimePosted("hubpost", null, ModelSortDirection.DESC).then(data => {
+      this.hubData = data.items;
 
-        if(game.gameStatus === 'Final') {
-          game.oriolesOutcome = (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore > game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore > game.initialGameInfo[0].currentPlay.result.awayScore)) ? "O's WON" : (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore < game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore < game.initialGameInfo[0].currentPlay.result.awayScore)) ? "O's LOST" : null;
-          game.losingPitcherStats = (game.initialGameInfo[0].finalData && game.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.loser.id, +game.id) : [];
-          game.winningPitcherStats = (game.gameStatus === 'Final' && game.initialGameInfo[0].finalData) ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.winner.id, +game.id) : [];
-        }
+      this.hubData.map(async hubs => {
+        if(hubs.postType === 'sport' && hubs.sportsgame.sport === 'baseball'){
+          hubs.sportsgame.basicGameInfo = await JSON.parse(hubs.sportsgame.basicGameInfo)
+          hubs.sportsgame.losingPitcherStats = [];
+          hubs.sportsgame.winningPitcherStats = [];
+          hubs.sportsgame.oriolesOutcome = [];
+          hubs.sportsgame.currentHalfInning = null;
+          hubs.sportsgame.currentBatterStats = [];
+          hubs.sportsgame.currentPitcherStats = [];
 
-        if(game.gameStatus === 'Scheduled' || game.gameStatus === 'Pre-Game' || game.gameStatus === 'Warmup'){
-          game.startingAwayPitcherStats = ((game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.initialGameInfo[0].initialGameData.probablePitchers.away.id) as any : [];
-          game.startingHomePitcherStats = ((game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.initialGameInfo[0].initialGameData.probablePitchers.home.id) as any : [];
-        }
+          if (hubs.sportsgame.gameStatus === 'Final') {
+            hubs.sportsgame.oriolesOutcome = (hubs.sportsgame.gameStatus === 'Final' && (hubs.sportsgame.awayTeam === 'Baltimore Orioles' && hubs.sportsgame.basicGameInfo[0].currentPlay.result.awayScore > hubs.sportsgame.basicGameInfo[0].currentPlay.result.homeScore) || (hubs.sportsgame.homeTeam === 'Baltimore Orioles' && hubs.sportsgame.basicGameInfo[0].currentPlay.result.homeScore > hubs.sportsgame.basicGameInfo[0].currentPlay.result.awayScore)) ? "O's WON" : (hubs.sportsgame.gameStatus === 'Final' && (hubs.sportsgame.awayTeam === 'Baltimore Orioles' && hubs.sportsgame.basicGameInfo[0].currentPlay.result.awayScore < hubs.sportsgame.basicGameInfo[0].currentPlay.result.homeScore) || (hubs.sportsgame.homeTeam === 'Baltimore Orioles' && hubs.sportsgame.basicGameInfo[0].currentPlay.result.homeScore < hubs.sportsgame.basicGameInfo[0].currentPlay.result.awayScore)) ? "O's LOST" : null;
+            hubs.sportsgame.losingPitcherStats = (hubs.sportsgame.basicGameInfo[0].finalData && hubs.sportsgame.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(hubs.sportsgame.basicGameInfo[0].finalData.loser.id, +hubs.sportsgame.id) : [];
+            hubs.sportsgame.winningPitcherStats = (hubs.sportsgame.gameStatus === 'Final' && hubs.sportsgame.basicGameInfo[0].finalData) ? await this.getFinalPitcherGameStats(hubs.sportsgame.basicGameInfo[0].finalData.winner.id, +hubs.sportsgame.id) : [];
+          }
 
-        if(game.gameStatus === 'In Progress'){
-          game.currentHalfInning = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.initialGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.initialGameInfo[0].currentPlay.about.inning.toString()) : null;        
-          game.currentBatterStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(game.initialGameInfo[0].currentPlay.matchup.batter.id, +game.id) as any : [];
-          game.currentPitcherStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(game.initialGameInfo[0].currentPlay.matchup.pitcher.id, +game.id) as any : [];
+          if (hubs.sportsgame.gameStatus === 'Scheduled' || hubs.sportsgame.gameStatus === 'Pre-Game' || hubs.sportsgame.gameStatus === 'Warmup') {
+            hubs.sportsgame.startingAwayPitcherStats = ((hubs.sportsgame.gameStatus !== 'In Progress' && hubs.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(hubs.sportsgame.basicGameInfo[0].initialGameData.probablePitchers.away.id) as any : [];
+            hubs.sportsgame.startingHomePitcherStats = ((hubs.sportsgame.gameStatus !== 'In Progress' && hubs.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(hubs.sportsgame.basicGameInfo[0].initialGameData.probablePitchers.home.id) as any : [];
+          }
+
+          if (hubs.sportsgame.gameStatus === 'In Progress') {
+            hubs.sportsgame.currentHalfInning = hubs.sportsgame.gameStatus === 'In Progress' ? hubs.sportsgame.basicGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(hubs.sportsgame.basicGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", hubs.sportsgame.basicGameInfo[0].currentPlay.about.inning.toString()) : null;
+            hubs.sportsgame.currentBatterStats = (hubs.sportsgame.gameStatus !== 'Final' && hubs.sportsgame.basicGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(hubs.sportsgame.basicGameInfo[0].currentPlay.matchup.batter.id, +hubs.sportsgame.id) as any : [];
+            hubs.sportsgame.currentPitcherStats = (hubs.sportsgame.gameStatus !== 'Final' && hubs.sportsgame.basicGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(hubs.sportsgame.basicGameInfo[0].currentPlay.matchup.pitcher.id, +hubs.sportsgame.id) as any : [];
+          }
         }
       })
     })
@@ -153,34 +182,7 @@ export class MessageBoardPage implements OnInit {
         buttons: ['OK']
       })
 
-      await this.sportsService.updateOriolesData().then(async (data) => {
-        this.baseballData.map(async (game) => {
-          if(data.id === game.id){
-            if (game.gameStatus === 'Final') {
-              game.oriolesOutcome = (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore > game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore > game.initialGameInfo[0].currentPlay.result.awayScore)) ? "O's WON" : (game.gameStatus === 'Final' && (game.awayTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.awayScore < game.initialGameInfo[0].currentPlay.result.homeScore) || (game.homeTeam === 'Baltimore Orioles' && game.initialGameInfo[0].currentPlay.result.homeScore < game.initialGameInfo[0].currentPlay.result.awayScore)) ? "O's LOST" : null;
-              game.losingPitcherStats = (game.initialGameInfo[0].finalData && game.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.loser.id, +game.id) as any : null;
-              game.winningPitcherStats = (game.gameStatus === 'Final' && game.initialGameInfo[0].finalData) ? await this.getFinalPitcherGameStats(game.initialGameInfo[0].finalData.winner.id, +game.id) as any : null;
-            }
-
-            if (game.gameStatus === 'Scheduled' || game.gameStatus === 'Pre-Game' || game.gameStatus === 'Warmup') {
-              game.startingAwayPitcherStats = ((game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.initialGameInfo[0].initialGameData.probablePitchers.away.id) as any : null;
-              game.startingHomePitcherStats = ((game.gameStatus !== 'In Progress' && game.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.initialGameInfo[0].initialGameData.probablePitchers.home.id) as any : null;
-            }
-
-            if (game.gameStatus === 'In Progress') {
-              game.currentHalfInning = game.gameStatus === 'In Progress' ? game.initialGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.initialGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", game.initialGameInfo[0].currentPlay.about.inning.toString()) : null;
-              game.currentBatterStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(game.initialGameInfo[0].currentPlay.matchup.batter.id, +game.id) as any : null;
-              game.currentPitcherStats = (game.gameStatus !== 'Final' && game.initialGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(game.initialGameInfo[0].currentPlay.matchup.pitcher.id, +game.id) as any : null;
-            }
-          }
-        })
-        const currentRoute = this.router.url;
-
-        this.router.navigateByUrl('/message-board', { skipLocationChange: true }).then(() => {
-          this.router.navigate([currentRoute]); // navigate to same route
-        }); 
-      }).catch(async error => {
-        console.log(error, 'failed to update')
+      await this.sportsService.updateOriolesData().then(async (data) => data).catch(async error => {
         await alert.present();
       }).finally(() => {
         event.target.complete();

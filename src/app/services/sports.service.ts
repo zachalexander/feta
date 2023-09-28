@@ -111,7 +111,6 @@ export class SportsService {
 
   async updateOriolesData(){
     let response = await fetch(`https://l73a4t7hnq2fwro4pyqiz54c2e0nlqgr.lambda-url.us-east-1.on.aws/`).then(data => data.json())
-    console.log(response.data.updateSportsGame)
     return response.data.updateSportsGame as any;
   }
 }

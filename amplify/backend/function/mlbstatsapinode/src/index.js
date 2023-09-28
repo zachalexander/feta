@@ -75,8 +75,6 @@ export const handler = async (event) => {
     const homeTeamLosses = data['teams']['home']['leagueRecord']['losses'].toString()
     const startTime = data['gameDate']
     const gameStatus = data['status']['detailedState']
-    const awayTeamLogoSlug = awayTeam.split(" ").join("-").toLowerCase();
-    const homeTeamLogoSlug = homeTeam.split(" ").join("-").toLowerCase();
     const sport = 'baseball'
 
     let gameEnded;
@@ -105,31 +103,27 @@ export const handler = async (event) => {
         awayTeam: ${JSON.stringify(awayTeam)},
         startTime: ${JSON.stringify(startTime)},
         gameStatus: ${JSON.stringify(gameStatus)},
-        awayTeamLogoSlug: ${JSON.stringify(awayTeamLogoSlug)},
-        homeTeamLogoSlug: ${JSON.stringify(homeTeamLogoSlug)},
-        sport: ${JSON.stringify(sport)},
         gameStarted: ${JSON.stringify(gameStarted)},
         gameEnded: ${JSON.stringify(gameEnded)},
-        initialGameInfo: ${JSON.stringify(livePlays)}
+        sport: ${JSON.stringify(sport)},
+        basicGameInfo: ${JSON.stringify(livePlays)}
         }) {	
             	updateSportsGame(input:$input)  {
                 __typename
                 id
                 lastUpdate
                 homeTeam
-                awayTeam
-                startTime
-                gameStatus
                 homeTeamWins
                 homeTeamLosses
                 awayTeamWins
                 awayTeamLosses
-                awayTeamLogoSlug
-                homeTeamLogoSlug
-                initialGameInfo
+                awayTeam
+                startTime
+                gameStatus
                 gameStarted
                 gameEnded
-                liveGameData
+                sport
+                basicGameInfo
             } 
         }
     `;

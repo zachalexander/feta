@@ -83,16 +83,13 @@ export const handler = async (event) => {
         homeTeamLosses: ${JSON.stringify(homeTeamLosses)},
         awayTeamWins: ${JSON.stringify(awayTeamWins)},
         awayTeamLosses: ${JSON.stringify(awayTeamLosses)},
-        awayTeamLogoSlug: ${JSON.stringify(awayTeamLogoSlug)},
-        homeTeamLogoSlug: ${JSON.stringify(homeTeamLogoSlug)},
         awayTeam: ${JSON.stringify(awayTeam)},
         startTime: ${JSON.stringify(startTime)},
         gameStatus: ${JSON.stringify(gameStatus)},
         sport: ${JSON.stringify(sport)},
         gameStarted: ${JSON.stringify(gameStarted)},
         gameEnded: ${JSON.stringify(gameEnded)},
-        liveGameData: ${JSON.stringify(livePlays)},
-        initialGameInfo: ${JSON.stringify(livePlays)},
+        basicGameInfo: ${JSON.stringify(livePlays)},
     }) {
         createSportsGame(input: $input) {
             id
@@ -102,13 +99,42 @@ export const handler = async (event) => {
             homeTeamLosses
             awayTeamWins
             awayTeamLosses
-            homeTeamLogoSlug
-            awayTeamLogoSlug
             awayTeam
             startTime
             gameStatus
-            liveGameData
-            initialGameInfo
+            basicGameInfo
+            sport
+        }
+    }`;
+
+    let chatroomId = gamePk.toString().concat("-chatroom")
+    const query_create_chatroom = `mutation createLiveGameChatRoomTable($input: CreateLiveGameChatRoomInput = {
+        id: ${JSON.stringify(chatroomId)},
+        sport: ${JSON.stringify('baseball')},
+        sportsGameID: ${JSON.stringify(gamePk)}
+    }) {
+        createLiveGameChatRoom(input: $input) {
+            id
+            sport
+            sportsGameID
+        }
+    }`;
+
+    let value = Math.floor(Math.random() * 10000)
+
+    let hubId = value.toString().concat("-hubpost")
+    const query_create_hubpost = `mutation createHubPostsTable($input: CreateHubPostsInput = {
+        id: ${JSON.stringify(hubId)},
+        sortKey: ${JSON.stringify('hubpost')},
+        postType: ${JSON.stringify('sport')},
+        timePosted: ${JSON.stringify(now)},
+        sportsGameID: ${JSON.stringify(gamePk)}
+    }) {
+        createHubPosts(input: $input) {
+            id
+            postType
+            timePosted
+            sportsGameID
         }
     }`;
 
@@ -121,16 +147,44 @@ export const handler = async (event) => {
         body: JSON.stringify({ "query": `${query_create_item}` })
     };
 
+    const options_chatroom = {
+        method: 'POST',
+        headers: {
+            'x-api-key': GRAPHQL_API_KEY,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "query": `${query_create_chatroom}` })
+    };
+
+    const options_hubpost = {
+        method: 'POST',
+        headers: {
+            'x-api-key': GRAPHQL_API_KEY,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "query": `${query_create_hubpost}` })
+    };
+
     const request = await new Request(GRAPHQL_ENDPOINT, options);
+    const request_add_chatroom = await new Request(GRAPHQL_ENDPOINT, options_chatroom)
+    const request_add_hubpost = await new Request(GRAPHQL_ENDPOINT, options_hubpost)
 
     let statusCode = 200;
     let body;
+    let body_chatroom;
+    let body_hubpost;
     let response;
+    let response_add_chatroom;
+    let response_add_hubpost;
 
     try {
         response = await fetch(request);
+        response_add_chatroom = await fetch(request_add_chatroom)
+        response_add_hubpost = await fetch(request_add_hubpost)
         body = await response.json();
-        return body;
+        body_chatroom = await response_add_chatroom.json();
+        body_hubpost = await response_add_hubpost.json();
+        return [body, body_chatroom, body_hubpost];
     } catch (error) {
         statusCode = 400;
         body = {
