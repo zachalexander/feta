@@ -198,12 +198,11 @@ ion-item {
 
             ion-note {
                 font-size: 0.85em;
-                font-weight: 600;
             }
 
             ion-avatar {
-                max-height: 25px;
-                max-width: 25px;
+                max-height: 30px;
+                max-width: 30px;
             }
         }
     }
@@ -222,6 +221,7 @@ ion-footer {
     display: flex;
     flex-direction: row;
     border-top: 1px solid var(--ion-color-light);
+    margin-bottom: 0.75em;
 
     form {
         min-width: 100%;

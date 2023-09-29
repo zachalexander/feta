@@ -90,7 +90,8 @@
           <div class="top-chat-right">
             <ion-note color="light">{{chat.username.username}}&nbsp;</ion-note>
             <ion-avatar>
-              <img src="../../../assets/avatar.svg" />
+              <img *ngIf="!chat.profile.profilePictureUrl" src="../../../assets/avatar.svg" />
+              <img *ngIf="chat.profile.profilePictureUrl" src="{{chat.profile.profilePictureUrl}}" />
             </ion-avatar>
           </div>
         </div>
@@ -104,7 +105,8 @@
         <div class="top-chat">
           <div class="top-chat-left">
             <ion-avatar>
-              <img src="../../../assets/avatar.svg" />
+              <img *ngIf="!chat.profile.profilePictureUrl" src="../../../assets/avatar.svg" />
+              <img *ngIf="chat.profile.profilePictureUrl" src="{{chat.profile.profilePictureUrl}}" />
             </ion-avatar>
             <ion-note color="dark">&nbsp;{{chat.username.username}}</ion-note>
           </div>
@@ -128,7 +130,7 @@
       <ion-avatar class="chat-user-pic">
         <img id="avatar" src="../../../assets/avatar.svg">
       </ion-avatar>
-      <ion-textarea lines="none" formControlName="chat" rows="1" minLength="300" autoGrow="true" class="chat-text-area">
+      <ion-textarea placeholder="How 'bout dem O's..." lines="none" formControlName="chat" rows="1" minLength="300" autoGrow="true" class="chat-text-area">
       </ion-textarea>
       <ion-chip color="primary" (click)="createChat(postChat.value)">Post</ion-chip>
     </ion-item>

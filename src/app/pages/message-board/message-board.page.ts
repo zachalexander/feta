@@ -48,9 +48,9 @@ export class MessageBoardPage implements OnInit {
   async ngOnInit() {
     this.startSubscriptions();
     await this.getHubData();
-    await this.openBaseballChatroom(this.hubData[1].sportsgame, "716402")
+    // await this.openBaseballChatroom(this.hubData[1].sportsgame, "716402")
 
-    // console.log(this.hubData)
+    console.log(this.hubData)
 
     Hub.listen('api', (data: any) => {
       const { payload } = data;

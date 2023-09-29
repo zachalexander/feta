@@ -5,6 +5,7 @@ import { APIService, ModelSortDirection } from 'src/app/API.service';
 import { SportsService } from 'src/app/services/sports.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonContent } from '@ionic/angular';
+import { Storage } from '@aws-amplify/storage';
 
 
 @Component({
@@ -60,9 +61,14 @@ export class BaseballChatroomPage implements OnInit {
   }
 
   async getChats(livegamechatroomid){
-    return await this.api.ChatsByLiveGameChatRoomIDAndTimePosted(livegamechatroomid, null, ModelSortDirection.ASC).then(data => data.items)
+    return await this.api.ChatsByLiveGameChatRoomIDAndTimePosted(livegamechatroomid, null, ModelSortDirection.ASC).then(data => data)
   }
 
+  ionViewDidLoad(){
+    setTimeout(() => {
+      this.ionContent.scrollToBottom(50);
+    }, 50)
+  }
 
   async ngOnInit() {
     this.accordionOpen = false;
@@ -70,8 +76,9 @@ export class BaseballChatroomPage implements OnInit {
     this.liveGameChatRoomID = this.sportsGameID + "-chatroom"
     this.userProfileID = localStorage.getItem('profileID');
     this.userUsernameID = localStorage.getItem('usernameID')
-    this.chats = await this.getChats(this.liveGameChatRoomID);
-    await this.ionContent.scrollToBottom().then(() => console.log('scrolled to bottom!'))
+    this.chats = await this.getChats(this.liveGameChatRoomID) as any;
+    this.ionViewDidLoad();
+    console.log(this.chats)
   }
 
   ngAfterViewInit(){
@@ -90,7 +97,8 @@ export class BaseballChatroomPage implements OnInit {
       this.api.OnCreateChatsListener().subscribe({
         next: async (event: any) => {
           const data = event;
-          this.chats.push(data.value.data.onCreateChats)
+          data.value.data.onCreateChats.profile.profilePictureUrl = await Storage.get('profile-pictures/' + await (await this.api.GetProfilePictureProfileID(data.value.data.onCreateChats.profile.id)).imageurl)
+          this.chats.push(data.value.data.onCreateChats);
           this.ionContent.scrollToBottom().then(() => console.log('scrolled to bottom!'))
         }
       })
@@ -158,12 +166,10 @@ export class BaseballChatroomPage implements OnInit {
 
   async createChat(chatMessage) {
     let time = new Date().toISOString()
-    await this.api.CreateChats({chat: chatMessage.chat, timePosted: time, profileID: this.userProfileID, usernameID: this.userUsernameID, sortKey: "chat", liveGameChatRoomID: this.liveGameChatRoomID}).then(response => {
-      console.log(response)
-    }).finally(() => {
+    await this.api.CreateChats({chat: chatMessage.chat, timePosted: time, profileID: this.userProfileID, usernameID: this.userUsernameID, sortKey: "chat", liveGameChatRoomID: this.liveGameChatRoomID}).then(response => response).finally(() => {
       this.postChat.reset();
     })
-    this.ionContent.scrollToBottom().then(() => console.log('scrolled to bottom!'))
+    this.ionContent.scrollToBottom(400);
   }
 
 }

@@ -14112,9 +14112,14 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ChatsByLiveGameChatRoomIDAndTimePostedQuery>(
-      response.data.chatsByLiveGameChatRoomIDAndTimePosted
-    );
+
+    let data = response.data.chatsByLiveGameChatRoomIDAndTimePosted.items;
+
+    data.map(async chats => {
+      chats.profile.profilePictureUrl = await Storage.get('profile-pictures/' + await (await this.GetProfilePictureProfileID(chats.profile.id)).imageurl)
+    })
+
+    return data;
   }
   async GetChatLikes(id: string): Promise<GetChatLikesQuery> {
     const statement = `query GetChatLikes($id: ID!) {
