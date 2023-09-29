@@ -166,11 +166,17 @@ ion-item {
     padding: 0.15em 0.25em;
     border-radius: 10px;
     width: 95%;
+
+    ion-item {
+        width: 100%;
+        border-radius: 10px;
+    }
     
     .chat-item-wrapper {
         display: flex;
         flex-direction: column;
         width: 100%;
+        padding: 1em -0.5em 1em 1em;
     }
 
     .top-chat {
@@ -180,10 +186,15 @@ ion-item {
         justify-content: space-between;
         margin: 0.5em 0em;
 
-        .top-chat-left {
+        .top-chat-left, .top-chat-right {
             display: flex;
             flex-direction: row;
             align-items: center;
+
+            .time-posted {
+                font-weight: 400;
+                font-size: 0.75em;
+            }
 
             ion-note {
                 font-size: 0.85em;
@@ -191,19 +202,14 @@ ion-item {
             }
 
             ion-avatar {
-                max-height: 30px;
-                max-width: 30px;
-                margin-right: 0.5em;
+                max-height: 25px;
+                max-width: 25px;
             }
-        }
-
-        .top-chat-right {
-            font-size: 0.8em;
         }
     }
 
     .middle-chat {
-        margin: 0.25em 0em;
+        margin: 0.25em -0.5em 1em 0em;
 
         ion-note {
             font-size: 0.9em;

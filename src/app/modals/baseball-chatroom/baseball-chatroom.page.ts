@@ -91,6 +91,7 @@ export class BaseballChatroomPage implements OnInit {
         next: async (event: any) => {
           const data = event;
           this.chats.push(data.value.data.onCreateChats)
+          this.ionContent.scrollToBottom().then(() => console.log('scrolled to bottom!'))
         }
       })
     )

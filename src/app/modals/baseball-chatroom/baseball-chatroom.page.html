@@ -80,27 +80,45 @@
 </ion-header>
 
 <ion-content>
-  <ion-item *ngFor="let chat of chats" class="chat-wrapper" lines="none" color="light">
-    <div class="chat-item-wrapper">
-      <div class="top-chat">
-        <div class="top-chat-left">
-          <ion-avatar>
-            <img src="../../../assets/avatar.svg" />
-          </ion-avatar>
-          <ion-note>{{chat.username.username}}</ion-note>
+  <div *ngFor="let chat of chats" class="chat-wrapper">
+    <ion-item *ngIf="chat.username.id === this.userUsernameID" lines="none" color="primary">
+      <div class="chat-item-wrapper" >
+        <div class="top-chat">
+          <div class="top-chat-left">
+            <ion-note class="time-posted" color="light">{{chat.timePosted | date: 'MMM dd'}} at {{chat.timePosted | date: 'h:mma'}}</ion-note>
+          </div>
+          <div class="top-chat-right">
+            <ion-note color="light">{{chat.username.username}}&nbsp;</ion-note>
+            <ion-avatar>
+              <img src="../../../assets/avatar.svg" />
+            </ion-avatar>
+          </div>
         </div>
-        <div class="top-chat-right">
-          <ion-note>{{chat.timePosted | date: 'MMM dd'}} at {{chat.timePosted | date: 'h:mma'}}</ion-note>
+        <div class="middle-chat">
+          <ion-note color="light">{{chat.chat}} </ion-note>
         </div>
       </div>
-      <div class="middle-chat">
-        <ion-note>{{chat.chat}} </ion-note>
+    </ion-item>
+    <ion-item *ngIf="chat.username.id !== this.userUsernameID" lines="none" color="light">
+      <div class="chat-item-wrapper">
+        <div class="top-chat">
+          <div class="top-chat-left">
+            <ion-avatar>
+              <img src="../../../assets/avatar.svg" />
+            </ion-avatar>
+            <ion-note color="dark">&nbsp;{{chat.username.username}}</ion-note>
+          </div>
+          <div class="top-chat-right">
+            <ion-note class="time-posted" color="dark">{{chat.timePosted | date: 'MMM dd'}} at {{chat.timePosted | date: 'h:mma'}}</ion-note>
+          </div>
+        </div>
+        <div class="middle-chat">
+          <ion-note color="dark">{{chat.chat}} </ion-note>
+        </div>
       </div>
-    </div>
-  </ion-item>
-  <div class="empty-div">
-
+    </ion-item>
   </div>
+  <div class="empty-div"></div>
 
 </ion-content>
 
