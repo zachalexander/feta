@@ -5308,7 +5308,7 @@ export type ChatsBySortKeyAndTimePostedQuery = {
   nextToken?: string | null;
 };
 
-export type ChatsByLiveGameChatRoomIDAndTimePostedQuery = {
+export type ChatsByLiveGameChatRoomIDQuery = {
   __typename: "ModelChatsConnection";
   items: Array<{
     __typename: "Chats";
@@ -7043,6 +7043,8 @@ export type OnUpdateSportsGameSubscription = {
     updatedAt: string;
     owner?: string | null;
   } | null;
+  createdAt: string;
+  updatedAt: string;
   owner?: string | null;
 };
 
@@ -14021,16 +14023,15 @@ export class APIService {
       response.data.chatsBySortKeyAndTimePosted
     );
   }
-  async ChatsByLiveGameChatRoomIDAndTimePosted(
+  async ChatsByLiveGameChatRoomID(
     liveGameChatRoomID: string,
-    timePosted?: ModelStringKeyConditionInput,
     sortDirection?: ModelSortDirection,
     filter?: ModelChatsFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ChatsByLiveGameChatRoomIDAndTimePostedQuery> {
-    const statement = `query ChatsByLiveGameChatRoomIDAndTimePosted($liveGameChatRoomID: ID!, $timePosted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelChatsFilterInput, $limit: Int, $nextToken: String) {
-        chatsByLiveGameChatRoomIDAndTimePosted(liveGameChatRoomID: $liveGameChatRoomID, timePosted: $timePosted, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<ChatsByLiveGameChatRoomIDQuery> {
+    const statement = `query ChatsByLiveGameChatRoomID($liveGameChatRoomID: ID!, $sortDirection: ModelSortDirection, $filter: ModelChatsFilterInput, $limit: Int, $nextToken: String) {
+        chatsByLiveGameChatRoomID(liveGameChatRoomID: $liveGameChatRoomID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
@@ -14094,9 +14095,6 @@ export class APIService {
     const gqlAPIServiceArguments: any = {
       liveGameChatRoomID
     };
-    if (timePosted) {
-      gqlAPIServiceArguments.timePosted = timePosted;
-    }
     if (sortDirection) {
       gqlAPIServiceArguments.sortDirection = sortDirection;
     }
@@ -14112,8 +14110,8 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ChatsByLiveGameChatRoomIDAndTimePostedQuery>(
-      response.data.chatsByLiveGameChatRoomIDAndTimePosted
+    return <ChatsByLiveGameChatRoomIDQuery>(
+      response.data.chatsByLiveGameChatRoomID
     );
   }
   async GetChatLikes(id: string): Promise<GetChatLikesQuery> {
@@ -16176,6 +16174,8 @@ export class APIService {
             updatedAt
             owner
           }
+          createdAt
+          updatedAt
           owner
         }
       }`;

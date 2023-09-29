@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { BehaviorSubject, Subscription, finalize } from 'rxjs';
 import { APIService, ModelSortDirection } from 'src/app/API.service';
 import { SportsService } from 'src/app/services/sports.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IonContent } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-baseball-chatroom',
@@ -13,16 +16,30 @@ export class BaseballChatroomPage implements OnInit {
 
   onUpdateSportsGame: Subscription | null = null;
   onUpdateHubPost: Subscription | null = null;
+  onUpdateChats: Subscription | null = null;
+  postChat = {} as FormGroup;
+  @ViewChild(IonContent) ionContent: IonContent;
   
   baseballData;
   sportsGameID;
+  liveGameChatRoomID;
   accordionOpen;
+
+  userProfileID;
+  userUsernameID;
+
+  chats = [];
+  livechatroomdata;
 
   constructor(
     private modalController: ModalController,
     private api: APIService,
     private sportsService: SportsService
-  ) { }
+  ) { 
+    this.postChat = new FormGroup({
+      chat: new FormControl('')
+    })
+  }
 
 
   openAccordion(){
@@ -42,9 +59,23 @@ export class BaseballChatroomPage implements OnInit {
     }
   }
 
-  ngOnInit() {
+  async getChats(livegamechatroomid){
+    return await this.api.ChatsByLiveGameChatRoomIDAndTimePosted(livegamechatroomid, null, ModelSortDirection.ASC).then(data => data.items)
+  }
+
+
+  async ngOnInit() {
     this.accordionOpen = false;
     this.startSubscriptions();
+    this.liveGameChatRoomID = this.sportsGameID + "-chatroom"
+    this.userProfileID = localStorage.getItem('profileID');
+    this.userUsernameID = localStorage.getItem('usernameID')
+    this.chats = await this.getChats(this.liveGameChatRoomID);
+    await this.ionContent.scrollToBottom().then(() => console.log('scrolled to bottom!'))
+  }
+
+  ngAfterViewInit(){
+    this.ionContent.scrollToBottom();
   }
 
   backToHub() {
@@ -54,11 +85,19 @@ export class BaseballChatroomPage implements OnInit {
   }
 
   startSubscriptions() {
+
+    this.onUpdateChats = <Subscription>(
+      this.api.OnCreateChatsListener().subscribe({
+        next: async (event: any) => {
+          const data = event;
+          this.chats.push(data.value.data.onCreateChats)
+        }
+      })
+    )
     this.onUpdateHubPost = <Subscription>(
       this.api.OnUpdateHubPostsListener().subscribe({
         next: async (event: any) => {
           const data = event;
-          console.log(data)
         }
       })
     )
@@ -66,9 +105,6 @@ export class BaseballChatroomPage implements OnInit {
       this.api.OnUpdateSportsGameListener().subscribe({
         next: async (event: any) => {
           const data = event;
-          console.log(this.baseballData)
-          console.log(data)
-          // this.hubData.map(async (game) => {
           if (data.value.data.onUpdateSportsGame.id === this.baseballData.id) {
             console.log(data.value.data.onUpdateSportsGame)
             this.baseballData.losingPitcherStats = [];
@@ -98,7 +134,6 @@ export class BaseballChatroomPage implements OnInit {
               this.baseballData.currentPitcherStats = (this.baseballData.gameStatus !== 'Final' && this.baseballData.basicGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(this.baseballData.basicGameInfo[0].currentPlay.matchup.pitcher.id, +this.baseballData.id) as any : null;
             }
           }
-          // })
         }
       })
     )
@@ -118,6 +153,16 @@ export class BaseballChatroomPage implements OnInit {
 
   async getCurrentPitcherGameStats(playerId, gamePk) {
     return await this.sportsService.getPitcherData(playerId, gamePk).then(data => data);
+  }
+
+  async createChat(chatMessage) {
+    let time = new Date().toISOString()
+    await this.api.CreateChats({chat: chatMessage.chat, timePosted: time, profileID: this.userProfileID, usernameID: this.userUsernameID, sortKey: "chat", liveGameChatRoomID: this.liveGameChatRoomID}).then(response => {
+      console.log(response)
+    }).finally(() => {
+      this.postChat.reset();
+    })
+    this.ionContent.scrollToBottom().then(() => console.log('scrolled to bottom!'))
   }
 
 }

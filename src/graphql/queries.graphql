@@ -25,6 +25,7 @@ query GetProfilePicture($id: ID!) {
         posterImage
         createdAt
         updatedAt
+        owner
       }
       Username {
         id
@@ -34,6 +35,7 @@ query GetProfilePicture($id: ID!) {
         updatedAt
         usernameImagePostsId
         usernameProfileId
+        owner
       }
       first_name
       last_name
@@ -45,6 +47,7 @@ query GetProfilePicture($id: ID!) {
         createdAt
         updatedAt
         profilePictureProfileId
+        owner
       }
       bio
       birthday
@@ -52,11 +55,13 @@ query GetProfilePicture($id: ID!) {
       updatedAt
       profileUsernameId
       profileImagePostsId
+      owner
     }
     profileID
     createdAt
     updatedAt
     profilePictureProfileId
+    owner
   }
 }
 query ListProfilePictures(
@@ -83,11 +88,13 @@ query ListProfilePictures(
         updatedAt
         profileUsernameId
         profileImagePostsId
+        owner
       }
       profileID
       createdAt
       updatedAt
       profilePictureProfileId
+      owner
     }
     nextToken
   }
@@ -115,6 +122,7 @@ query GetProfile($id: ID!) {
         updatedAt
         usernameImagePostsId
         usernameProfileId
+        owner
       }
       profileID
       profile {
@@ -132,6 +140,7 @@ query GetProfile($id: ID!) {
         updatedAt
         profileUsernameId
         profileImagePostsId
+        owner
       }
       s3_key
       mediaSourceMobile
@@ -140,6 +149,7 @@ query GetProfile($id: ID!) {
       posterImage
       createdAt
       updatedAt
+      owner
     }
     Username {
       id
@@ -161,6 +171,7 @@ query GetProfile($id: ID!) {
         posterImage
         createdAt
         updatedAt
+        owner
       }
       Profile {
         id
@@ -177,11 +188,13 @@ query GetProfile($id: ID!) {
         updatedAt
         profileUsernameId
         profileImagePostsId
+        owner
       }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
+      owner
     }
     first_name
     last_name
@@ -204,11 +217,13 @@ query GetProfile($id: ID!) {
         updatedAt
         profileUsernameId
         profileImagePostsId
+        owner
       }
       profileID
       createdAt
       updatedAt
       profilePictureProfileId
+      owner
     }
     bio
     birthday
@@ -216,6 +231,7 @@ query GetProfile($id: ID!) {
     updatedAt
     profileUsernameId
     profileImagePostsId
+    owner
   }
 }
 query ListProfiles(
@@ -246,6 +262,7 @@ query ListProfiles(
         posterImage
         createdAt
         updatedAt
+        owner
       }
       Username {
         id
@@ -255,6 +272,7 @@ query ListProfiles(
         updatedAt
         usernameImagePostsId
         usernameProfileId
+        owner
       }
       first_name
       last_name
@@ -266,6 +284,7 @@ query ListProfiles(
         createdAt
         updatedAt
         profilePictureProfileId
+        owner
       }
       bio
       birthday
@@ -273,351 +292,7 @@ query ListProfiles(
       updatedAt
       profileUsernameId
       profileImagePostsId
-    }
-    nextToken
-  }
-}
-query GetImagePost($id: ID!) {
-  getImagePost(id: $id) {
-    id
-    sorterValue
-    description
-    time_posted
-    likes
-    comments
-    usernameID
-    username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameProfileId
-    }
-    profileID
-    profile {
-      id
-      email
-      relation
-      cognitoID
-      usernameID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-      }
-      first_name
-      last_name
-      profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-      }
-      bio
-      birthday
-      createdAt
-      updatedAt
-      profileUsernameId
-      profileImagePostsId
-    }
-    s3_key
-    mediaSourceMobile
-    mediaSourceDesktop
-    downloadableVideo
-    posterImage
-    createdAt
-    updatedAt
-  }
-}
-query ListImagePosts(
-  $filter: ModelImagePostFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listImagePosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      sorterValue
-      description
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      s3_key
-      mediaSourceMobile
-      mediaSourceDesktop
-      downloadableVideo
-      posterImage
-      createdAt
-      updatedAt
-    }
-    nextToken
-  }
-}
-query GetComments($id: ID!) {
-  getComments(id: $id) {
-    id
-    usernameID
-    comment
-    time_posted
-    imagePostsID
-    createdAt
-    updatedAt
-  }
-}
-query ListComments(
-  $filter: ModelCommentsFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      usernameID
-      comment
-      time_posted
-      imagePostsID
-      createdAt
-      updatedAt
-    }
-    nextToken
-  }
-}
-query GetUsername($id: ID!) {
-  getUsername(id: $id) {
-    id
-    username
-    profileID
-    ImagePosts {
-      id
-      sorterValue
-      description
-      time_posted
-      likes
-      comments
-      usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-      }
-      profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      s3_key
-      mediaSourceMobile
-      mediaSourceDesktop
-      downloadableVideo
-      posterImage
-      createdAt
-      updatedAt
-    }
-    Profile {
-      id
-      email
-      relation
-      cognitoID
-      usernameID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-      }
-      first_name
-      last_name
-      profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-      }
-      bio
-      birthday
-      createdAt
-      updatedAt
-      profileUsernameId
-      profileImagePostsId
-    }
-    createdAt
-    updatedAt
-    usernameImagePostsId
-    usernameProfileId
-  }
-}
-query ListUsernames(
-  $filter: ModelUsernameFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listUsernames(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        likes
-        comments
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameProfileId
+      owner
     }
     nextToken
   }
@@ -658,6 +333,7 @@ query ProfilesByProfilepictureID(
         posterImage
         createdAt
         updatedAt
+        owner
       }
       Username {
         id
@@ -667,6 +343,7 @@ query ProfilesByProfilepictureID(
         updatedAt
         usernameImagePostsId
         usernameProfileId
+        owner
       }
       first_name
       last_name
@@ -678,6 +355,7 @@ query ProfilesByProfilepictureID(
         createdAt
         updatedAt
         profilePictureProfileId
+        owner
       }
       bio
       birthday
@@ -685,6 +363,180 @@ query ProfilesByProfilepictureID(
       updatedAt
       profileUsernameId
       profileImagePostsId
+      owner
+    }
+    nextToken
+  }
+}
+query GetImagePost($id: ID!) {
+  getImagePost(id: $id) {
+    id
+    sorterValue
+    description
+    time_posted
+    likes
+    comments
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    s3_key
+    mediaSourceMobile
+    mediaSourceDesktop
+    downloadableVideo
+    posterImage
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListImagePosts(
+  $filter: ModelImagePostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listImagePosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      sorterValue
+      description
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
+      posterImage
+      createdAt
+      updatedAt
+      owner
     }
     nextToken
   }
@@ -721,6 +573,7 @@ query ImagePostsBySorterValueAndTime_posted(
         updatedAt
         usernameImagePostsId
         usernameProfileId
+        owner
       }
       profileID
       profile {
@@ -738,6 +591,7 @@ query ImagePostsBySorterValueAndTime_posted(
         updatedAt
         profileUsernameId
         profileImagePostsId
+        owner
       }
       s3_key
       mediaSourceMobile
@@ -746,6 +600,7 @@ query ImagePostsBySorterValueAndTime_posted(
       posterImage
       createdAt
       updatedAt
+      owner
     }
     nextToken
   }
@@ -780,6 +635,7 @@ query ImagePostsByUsernameID(
         updatedAt
         usernameImagePostsId
         usernameProfileId
+        owner
       }
       profileID
       profile {
@@ -797,6 +653,7 @@ query ImagePostsByUsernameID(
         updatedAt
         profileUsernameId
         profileImagePostsId
+        owner
       }
       s3_key
       mediaSourceMobile
@@ -805,6 +662,7 @@ query ImagePostsByUsernameID(
       posterImage
       createdAt
       updatedAt
+      owner
     }
     nextToken
   }
@@ -839,6 +697,7 @@ query ImagePostsByProfileID(
         updatedAt
         usernameImagePostsId
         usernameProfileId
+        owner
       }
       profileID
       profile {
@@ -856,6 +715,7 @@ query ImagePostsByProfileID(
         updatedAt
         profileUsernameId
         profileImagePostsId
+        owner
       }
       s3_key
       mediaSourceMobile
@@ -864,6 +724,203 @@ query ImagePostsByProfileID(
       posterImage
       createdAt
       updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetComments($id: ID!) {
+  getComments(id: $id) {
+    id
+    usernameID
+    comment
+    time_posted
+    imagePostsID
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListComments(
+  $filter: ModelCommentsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      usernameID
+      comment
+      time_posted
+      imagePostsID
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetUsername($id: ID!) {
+  getUsername(id: $id) {
+    id
+    username
+    profileID
+    ImagePosts {
+      id
+      sorterValue
+      description
+      time_posted
+      likes
+      comments
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      s3_key
+      mediaSourceMobile
+      mediaSourceDesktop
+      downloadableVideo
+      posterImage
+      createdAt
+      updatedAt
+      owner
+    }
+    Profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    createdAt
+    updatedAt
+    usernameImagePostsId
+    usernameProfileId
+    owner
+  }
+}
+query ListUsernames(
+  $filter: ModelUsernameFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsernames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
     }
     nextToken
   }
@@ -907,12 +964,19 @@ query GetSportsGame($id: ID!) {
         liveGameChatRoomID
         createdAt
         updatedAt
+        owner
+      }
+      chatsID
+      chats {
+        nextToken
       }
       createdAt
       updatedAt
+      owner
     }
     createdAt
     updatedAt
+    owner
   }
 }
 query ListSportsGames(
@@ -941,11 +1005,14 @@ query ListSportsGames(
         id
         sport
         sportsGameID
+        chatsID
         createdAt
         updatedAt
+        owner
       }
       createdAt
       updatedAt
+      owner
     }
     nextToken
   }
@@ -986,11 +1053,14 @@ query SportsGamesBySportAndStartTime(
         id
         sport
         sportsGameID
+        chatsID
         createdAt
         updatedAt
+        owner
       }
       createdAt
       updatedAt
+      owner
     }
     nextToken
   }
@@ -1029,11 +1099,14 @@ query SportsGamesByLiveGameChatRoomID(
         id
         sport
         sportsGameID
+        chatsID
         createdAt
         updatedAt
+        owner
       }
       createdAt
       updatedAt
+      owner
     }
     nextToken
   }
@@ -1063,14 +1136,34 @@ query GetLiveGameChatRoom($id: ID!) {
         id
         sport
         sportsGameID
+        chatsID
         createdAt
         updatedAt
+        owner
       }
       createdAt
       updatedAt
+      owner
+    }
+    chatsID
+    chats {
+      items {
+        id
+        sortKey
+        usernameID
+        profileID
+        chat
+        timePosted
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
     }
     createdAt
     updatedAt
+    owner
   }
 }
 query ListLiveGameChatRooms(
@@ -1101,9 +1194,15 @@ query ListLiveGameChatRooms(
         liveGameChatRoomID
         createdAt
         updatedAt
+        owner
+      }
+      chatsID
+      chats {
+        nextToken
       }
       createdAt
       updatedAt
+      owner
     }
     nextToken
   }
@@ -1135,14 +1234,18 @@ query GetHubPosts($id: ID!) {
         id
         sport
         sportsGameID
+        chatsID
         createdAt
         updatedAt
+        owner
       }
       createdAt
       updatedAt
+      owner
     }
     createdAt
     updatedAt
+    owner
   }
 }
 query ListHubPosts(
@@ -1175,9 +1278,11 @@ query ListHubPosts(
         liveGameChatRoomID
         createdAt
         updatedAt
+        owner
       }
       createdAt
       updatedAt
+      owner
     }
     nextToken
   }
@@ -1222,9 +1327,523 @@ query HubPostsBySortKeyAndTimePosted(
         liveGameChatRoomID
         createdAt
         updatedAt
+        owner
       }
       createdAt
       updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetChats($id: ID!) {
+  getChats(id: $id) {
+    id
+    sortKey
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    chat
+    timePosted
+    likes {
+      items {
+        id
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+        chatsLikesId
+        owner
+      }
+      nextToken
+    }
+    liveGameChatRoomID
+    livegamechatroom {
+      id
+      sport
+      sportsGameID
+      sportsgame {
+        id
+        sport
+        homeTeam
+        awayTeam
+        gameStatus
+        homeTeamWins
+        homeTeamLosses
+        awayTeamWins
+        awayTeamLosses
+        basicGameInfo
+        startTime
+        lastUpdate
+        gameStarted
+        gameEnded
+        liveGameChatRoomID
+        createdAt
+        updatedAt
+        owner
+      }
+      chatsID
+      chats {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListChats(
+  $filter: ModelChatsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      sortKey
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      chat
+      timePosted
+      likes {
+        nextToken
+      }
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        chatsID
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query ChatsBySortKeyAndTimePosted(
+  $sortKey: String!
+  $timePosted: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelChatsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  chatsBySortKeyAndTimePosted(
+    sortKey: $sortKey
+    timePosted: $timePosted
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      sortKey
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      chat
+      timePosted
+      likes {
+        nextToken
+      }
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        chatsID
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query ChatsByLiveGameChatRoomIDAndTimePosted(
+  $liveGameChatRoomID: ID!
+  $timePosted: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelChatsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  chatsByLiveGameChatRoomIDAndTimePosted(
+    liveGameChatRoomID: $liveGameChatRoomID
+    timePosted: $timePosted
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      sortKey
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      chat
+      timePosted
+      likes {
+        nextToken
+      }
+      liveGameChatRoomID
+      livegamechatroom {
+        id
+        sport
+        sportsGameID
+        chatsID
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetChatLikes($id: ID!) {
+  getChatLikes(id: $id) {
+    id
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        likes
+        comments
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    createdAt
+    updatedAt
+    chatsLikesId
+    owner
+  }
+}
+query ListChatLikes(
+  $filter: ModelChatLikesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listChatLikes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      chatsLikesId
+      owner
     }
     nextToken
   }

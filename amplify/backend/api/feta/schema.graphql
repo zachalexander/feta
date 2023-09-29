@@ -2,14 +2,22 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 
 
-type ProfilePicture @model @auth(rules: [{allow: private}]) {
+type ProfilePicture @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]) {
   id: ID!
   imageurl: String
   Profile: Profile @belongsTo
   profileID: String
 }
 
-type Profile @model @auth(rules: [{allow: private}]) {
+type Profile @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]) {
   id: ID!
   email: String
   relation: String
@@ -25,7 +33,11 @@ type Profile @model @auth(rules: [{allow: private}]) {
   birthday: AWSDateTime
 }
 
-type ImagePost @model @auth(rules: [{allow: private}]) {
+type ImagePost @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]) {
   id: ID!
   sorterValue: String @index(name: "byTimePosted", sortKeyFields: ["time_posted"])
   description: String
@@ -43,7 +55,11 @@ type ImagePost @model @auth(rules: [{allow: private}]) {
   posterImage: String
 }
 
-type Comments @model @auth(rules: [{allow: private}]) {
+type Comments @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]) {
   id: ID!
   usernameID: String
   comment: String
@@ -51,7 +67,11 @@ type Comments @model @auth(rules: [{allow: private}]) {
   imagePostsID: String
 }
 
-type Username @model @auth(rules: [{allow: private}]) {
+type Username @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]) {
   id: ID!
   username: String
   profileID: String
@@ -59,7 +79,11 @@ type Username @model @auth(rules: [{allow: private}]) {
   Profile: Profile @belongsTo
 }
 
-type SportsGame @model @auth(rules: [{allow: public}]) {
+type SportsGame @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]) {
   id: ID! 
   sport: String @index(name: "byStartTime", sortKeyFields: ["startTime"])
   homeTeam: String
@@ -78,19 +102,60 @@ type SportsGame @model @auth(rules: [{allow: public}]) {
   livegamechatroom: LiveGameChatRoom @hasOne(fields: ["liveGameChatRoomID"])
 }
 
-type LiveGameChatRoom @model @auth(rules: [{allow: public}]){
+type LiveGameChatRoom @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]){
   id: ID!
   sport: String
   sportsGameID: ID
   sportsgame: SportsGame @hasOne(fields: ["sportsGameID"])
+  chatsID: ID
+  chats: [Chats] @hasMany(indexName: "byLiveGameChatRoom", fields: ["id"])
 }
 
-type HubPosts @model @auth(rules: [{allow: public}]){
+type HubPosts @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]){
   id: ID!
   sortKey: String @index(name: "byTimePosted", sortKeyFields: ["timePosted"])
   postType: String
   timePosted: String
   sportsGameID: ID
   sportsgame: SportsGame @hasOne(fields: ["sportsGameID"])
+}
+
+type Chats @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]){
+  id: ID!
+  sortKey: String @index(name: "byTimePosted", sortKeyFields: ["timePosted"])
+  usernameID: ID
+  username: Username @hasOne(fields: ["usernameID"])
+  profileID: ID
+  profile: Profile @hasOne(fields: ["profileID"])
+  chat: String
+  timePosted: String
+  likes: [ChatLikes] @hasMany
+  liveGameChatRoomID: ID! @index(name: "byLiveGameChatRoom", sortKeyFields: ["timePosted"])
+  livegamechatroom: LiveGameChatRoom @hasOne(fields: ["liveGameChatRoomID"])
+}
+
+type ChatLikes @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]
+  ) {
+  id: ID!
+  usernameID: ID
+  username: Username @hasOne(fields: ["usernameID"])
+  profileID: ID
+  profile: Profile @hasOne(fields: ["profileID"])
 }
 

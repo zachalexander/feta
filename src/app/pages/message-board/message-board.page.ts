@@ -48,12 +48,21 @@ export class MessageBoardPage implements OnInit {
   async ngOnInit() {
     this.startSubscriptions();
     await this.getHubData();
+    await this.openBaseballChatroom(this.hubData[1].sportsgame, "716402")
+
+    // console.log(this.hubData)
 
     Hub.listen('api', (data: any) => {
       const { payload } = data;
       if (payload.event === CONNECTION_STATE_CHANGE) {
-        const connectionState = payload.data.connectionState as ConnectionState;
-        console.log(connectionState)
+
+        if (this.priorConnectionState === ConnectionState.Connecting && payload.data.connectionState === ConnectionState.Connected){
+            this.getHubData();
+        }
+
+        this.priorConnectionState = payload.data.connectionState;
+        // const connectionState = payload.data.connectionState as ConnectionState;
+        // console.log(connectionState)
       }
     })
   }

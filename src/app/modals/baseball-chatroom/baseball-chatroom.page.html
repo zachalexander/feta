@@ -80,20 +80,39 @@
 </ion-header>
 
 <ion-content>
+  <ion-item *ngFor="let chat of chats" class="chat-wrapper" lines="none" color="light">
+    <div class="chat-item-wrapper">
+      <div class="top-chat">
+        <div class="top-chat-left">
+          <ion-avatar>
+            <img src="../../../assets/avatar.svg" />
+          </ion-avatar>
+          <ion-note>{{chat.username.username}}</ion-note>
+        </div>
+        <div class="top-chat-right">
+          <ion-note>{{chat.timePosted | date: 'MMM dd'}} at {{chat.timePosted | date: 'h:mma'}}</ion-note>
+        </div>
+      </div>
+      <div class="middle-chat">
+        <ion-note>{{chat.chat}} </ion-note>
+      </div>
+    </div>
+  </ion-item>
+  <div class="empty-div">
+
+  </div>
 
 </ion-content>
-<!-- 
-<ion-footer lines="none" *ngIf="!noInput && editComment" class="comment-footer">
-  <form [formGroup]="updateCommentForm" (ngSubmit)="postUpdatedComment(updateCommentForm.value)">
-    <p class="comment-text-edit-card">
-      <ion-avatar class="comment-input-user-pic">
-        <img id="avatar" src="{{currentUserProfilePicture}}">
+
+<ion-footer lines="none">
+  <form [formGroup]="postChat" (ngSubmit)="createChat(postChat.value)">
+    <ion-item class="chat-box" lines="none">
+      <ion-avatar class="chat-user-pic">
+        <img id="avatar" src="../../../assets/avatar.svg">
       </ion-avatar>
-      <ion-textarea #editCommentInput class="form-text-area" lines="none" formControlName="comment" id="userEditComment"
-        rows="1" minLength="300" autoGrow="true">
-        <ion-button color="clear" class="comment-submit"
-          (click)="postUpdatedComment(updateCommentForm.value)">Post</ion-button>
+      <ion-textarea lines="none" formControlName="chat" rows="1" minLength="300" autoGrow="true" class="chat-text-area">
       </ion-textarea>
-    </p>
+      <ion-chip color="primary" (click)="createChat(postChat.value)">Post</ion-chip>
+    </ion-item>
   </form>
-</ion-footer> -->
+</ion-footer>
