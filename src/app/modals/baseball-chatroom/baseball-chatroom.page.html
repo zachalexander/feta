@@ -81,14 +81,14 @@
 
 <ion-content>
   <div *ngFor="let chat of chats" class="chat-wrapper">
-    <ion-item *ngIf="chat.username.id === this.userUsernameID" lines="none" color="primary">
+    <ion-card class="chat-bubble-user" *ngIf="chat.username.id === this.userUsernameID" lines="none" color="light">
       <div class="chat-item-wrapper" >
         <div class="top-chat">
           <div class="top-chat-left">
-            <ion-note class="time-posted" color="light">{{chat.timePosted | date: 'MMM dd'}} at {{chat.timePosted | date: 'h:mma'}}</ion-note>
+            <ion-note class="time-posted" color="dark">{{chat.timePosted | date: 'MMM'}} {{chat.timePosted | date: 'd' }} at {{chat.timePosted | date: 'h:mma'}} ET</ion-note>
           </div>
           <div class="top-chat-right">
-            <ion-note color="light">{{chat.username.username}}&nbsp;</ion-note>
+            <ion-note color="dark">{{chat.username.username}}&nbsp;</ion-note>
             <ion-avatar>
               <img *ngIf="!chat.profile.profilePictureUrl" src="../../../assets/avatar.svg" />
               <img *ngIf="chat.profile.profilePictureUrl" src="{{chat.profile.profilePictureUrl}}" />
@@ -96,11 +96,19 @@
           </div>
         </div>
         <div class="middle-chat">
-          <ion-note color="light">{{chat.chat}} </ion-note>
+          <ion-note color="dark">{{chat.chat}} </ion-note>
+        </div>
+        <div class="bottom-chat">
+          <ion-chip>
+            <ion-label color="dark">0</ion-label><ion-icon color="dark" name="thumbs-up-outline"></ion-icon>
+          </ion-chip>
+          <ion-chip>
+            <ion-label color="dark">Reply</ion-label><ion-icon color="dark" name="return-down-forward-outline"></ion-icon>
+          </ion-chip>
         </div>
       </div>
-    </ion-item>
-    <ion-item *ngIf="chat.username.id !== this.userUsernameID" lines="none" color="light">
+    </ion-card>
+    <ion-card class="chat-bubble-otheruser" *ngIf="chat.username.id !== this.userUsernameID" lines="none" color="light">
       <div class="chat-item-wrapper">
         <div class="top-chat">
           <div class="top-chat-left">
@@ -117,8 +125,16 @@
         <div class="middle-chat">
           <ion-note color="dark">{{chat.chat}} </ion-note>
         </div>
+        <div class="bottom-chat">
+          <ion-chip>
+            <ion-label color="dark">0</ion-label><ion-icon color="dark" name="thumbs-up-outline"></ion-icon>
+          </ion-chip>
+          <ion-chip>
+            <ion-label color="dark">Reply</ion-label><ion-icon color="dark" name="return-down-forward-outline"></ion-icon>
+          </ion-chip>
+        </div>
       </div>
-    </ion-item>
+    </ion-card>
   </div>
   <div class="empty-div"></div>
 
@@ -130,9 +146,9 @@
       <ion-avatar class="chat-user-pic">
         <img id="avatar" src="../../../assets/avatar.svg">
       </ion-avatar>
-      <ion-textarea placeholder="How 'bout dem O's..." lines="none" formControlName="chat" rows="1" minLength="300" autoGrow="true" class="chat-text-area">
+      <ion-textarea (ionChange)="userTypedEvent($event)" shape="round" placeholder="How 'bout dem O's..." lines="none" formControlName="chat" rows="1" minLength="300" autoGrow="true" class="chat-text-area">
+        <ion-icon (click)="createChat(postChat.value)" *ngIf="userTyped" color="dark" size="large" name="arrow-up-circle"></ion-icon>
       </ion-textarea>
-      <ion-chip color="primary" (click)="createChat(postChat.value)">Post</ion-chip>
     </ion-item>
   </form>
 </ion-footer>

@@ -6,6 +6,7 @@ import { SportsService } from 'src/app/services/sports.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonContent } from '@ionic/angular';
 import { Storage } from '@aws-amplify/storage';
+import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class BaseballChatroomPage implements OnInit {
 
   userProfileID;
   userUsernameID;
+  userTyped;
 
   chats = [];
   livechatroomdata;
@@ -66,19 +68,21 @@ export class BaseballChatroomPage implements OnInit {
 
   ionViewDidLoad(){
     setTimeout(() => {
-      this.ionContent.scrollToBottom(50);
+      this.ionContent.scrollToBottom(400);
     }, 50)
   }
 
   async ngOnInit() {
     this.accordionOpen = false;
+    this.userTyped = false;
     this.startSubscriptions();
     this.liveGameChatRoomID = this.sportsGameID + "-chatroom"
     this.userProfileID = localStorage.getItem('profileID');
     this.userUsernameID = localStorage.getItem('usernameID')
     this.chats = await this.getChats(this.liveGameChatRoomID) as any;
     this.ionViewDidLoad();
-    console.log(this.chats)
+    this.userTyped = false;
+    document.querySelector<HTMLElement>(".textarea-wrapper").style.minWidth = "100%";
   }
 
   ngAfterViewInit(){
@@ -99,7 +103,9 @@ export class BaseballChatroomPage implements OnInit {
           const data = event;
           data.value.data.onCreateChats.profile.profilePictureUrl = await Storage.get('profile-pictures/' + await (await this.api.GetProfilePictureProfileID(data.value.data.onCreateChats.profile.id)).imageurl)
           this.chats.push(data.value.data.onCreateChats);
-          this.ionContent.scrollToBottom().then(() => console.log('scrolled to bottom!'))
+          setTimeout(() => {
+            this.ionContent.scrollToBottom(400);
+          }, 500)
         }
       })
     )
@@ -169,7 +175,19 @@ export class BaseballChatroomPage implements OnInit {
     await this.api.CreateChats({chat: chatMessage.chat, timePosted: time, profileID: this.userProfileID, usernameID: this.userUsernameID, sortKey: "chat", liveGameChatRoomID: this.liveGameChatRoomID}).then(response => response).finally(() => {
       this.postChat.reset();
     })
-    this.ionContent.scrollToBottom(400);
+    setTimeout(() => {
+      this.ionContent.scrollToBottom(400);
+    }, 500)
+  }
+
+  async userTypedEvent(event){
+    if(event.detail.value.length > 0){
+      document.querySelector<HTMLElement>(".textarea-wrapper").style.minWidth = "85%";
+      this.userTyped = true;
+    } else {
+      document.querySelector<HTMLElement>(".textarea-wrapper").style.minWidth = "100%";
+      this.userTyped = false;
+    }
   }
 
 }
