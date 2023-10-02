@@ -7,6 +7,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonContent } from '@ionic/angular';
 import { Storage } from '@aws-amplify/storage';
 import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
+import { Amplify, Hub } from 'aws-amplify';
+import { CONNECTION_STATE_CHANGE, ConnectionState } from '@aws-amplify/pubsub';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class BaseballChatroomPage implements OnInit {
   onUpdateChats: Subscription | null = null;
   postChat = {} as FormGroup;
   @ViewChild(IonContent) ionContent: IonContent;
+  priorConnectionState: ConnectionState;
   
   baseballData;
   sportsGameID;
@@ -83,6 +86,21 @@ export class BaseballChatroomPage implements OnInit {
     this.ionViewDidLoad();
     this.userTyped = false;
     document.querySelector<HTMLElement>(".textarea-wrapper").style.minWidth = "100%";
+
+
+    Hub.listen('api', (data: any) => {
+      const { payload } = data;
+      if (payload.event === CONNECTION_STATE_CHANGE) {
+
+        if (this.priorConnectionState === ConnectionState.Connecting && payload.data.connectionState === ConnectionState.Connected) {
+          this.getChats(this.liveGameChatRoomID)
+        }
+
+        this.priorConnectionState = payload.data.connectionState;
+        // const connectionState = payload.data.connectionState as ConnectionState;
+        // console.log(connectionState)
+      }
+    })
   }
 
   ngAfterViewInit(){
