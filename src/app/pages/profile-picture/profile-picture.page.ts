@@ -46,7 +46,10 @@ export class ProfilePicturePage {
     });
     await loading.present();
 
-    this.profilePic = await Storage.get('profile-pictures/' + await this.getProfilePicture(localStorage.getItem('profileID')))
+    this.profilePic = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'));
+    this.profilePic = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + this.profilePic.imageurl;
+
+    console.log(this.profilePic)
 
 
     if(!this.profilePic){
@@ -139,8 +142,8 @@ export class ProfilePicturePage {
 
     const blob = await fetch(this.croppedImage).then(res => res.blob())
     const username = await localStorage.getItem('username')
-    const filename = 'profile-pictures/' + localStorage.getItem('profileID') + '.jpg'
-    const imagekitFilename = localStorage.getItem('profileID') + '.jpg'
+    const filename = 'profile-pictures/' + localStorage.getItem('profileID') + '&' + Math.random().toString(36).slice(2, 7) + '.jpg'
+    const imagekitFilename = localStorage.getItem('profileID') + '&' + Math.random().toString(36).slice(2, 7) + '.jpg'
 
     try {
       let profileID = localStorage.getItem('profileID')
@@ -180,10 +183,11 @@ export class ProfilePicturePage {
         } else {
 
           const uploadToS3 = new Promise(resolve => {
-             resolve(this.submitToS3(filename, blob))
+             resolve(this.submitToS3('profile-pictures/' + imagekitFilename, blob))
           })
 
-          uploadToS3.then(() => {
+          uploadToS3.then(async () => {
+            await this.api.UpdateProfilePicture({id: profilepictureID, imageurl: imagekitFilename })
             this.router.navigate(['/profile/', username]).then(() => { window.location.reload()})
             loading.dismiss();
           })

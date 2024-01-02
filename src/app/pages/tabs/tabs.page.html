@@ -10,10 +10,10 @@
       <ion-icon *ngIf="timelineclick" name="images"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button (click)="messageClick()" tab="message-board">
+    <!-- <ion-tab-button (click)="messageClick()" tab="message-board">
       <ion-icon *ngIf="!messageclick" name="people-circle-outline"></ion-icon><small>Hub</small>
       <ion-icon *ngIf="messageclick" name="people-circle"></ion-icon>
-    </ion-tab-button>
+    </ion-tab-button> -->
 
     <ion-tab-button class="profile-button" (click)="profileClick()" tab="profile/{{username}}">
       <ion-avatar class="profile-pic-avatar">
@@ -31,12 +31,12 @@
     </ion-tab-button>
 
     <ion-tab-button tab="timeline" disabled="true">
-      <ion-icon name="image-outline"></ion-icon>
+      <ion-icon name="images-outline"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="message-board" disabled="true">
+    <!-- <ion-tab-button tab="message-board" disabled="true">
       <ion-icon name="chatbubbles-outline"></ion-icon>
-    </ion-tab-button>
+    </ion-tab-button> -->
 
     <ion-tab-button tab="profile/{{username}}" disabled="true">
       <ion-icon name="person-circle-outline"></ion-icon>

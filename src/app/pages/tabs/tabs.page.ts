@@ -25,31 +25,41 @@ export class TabsPage {
   ) {}
 
   async ngOnInit(){
-    this.username = localStorage.getItem('username');
 
-    this.profilePicture = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'))
-    this.profilePicture = await Storage.get('profile-pictures/' + this.profilePicture.imageurl)
+    setTimeout(async () => {
 
-    if(this.profilePicture){
-      this.hasProfilePic = true;
-    } else {
-      this.hasProfilePic = false;
-    }
+      this.username = localStorage.getItem('username');
+  
+      this.profilePicture = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'))
 
-    if(this.username){
-      this.needRegister = false;
-      if(this.router.url == '/home'){
-        this.homeclick = true;
-      } else if(this.router.url == '/timeline'){
-        this.timelineclick = true;
-      } else if(this.router.url == '/message-board'){
-        this.messageclick = true;
-      } else {
-        this.profileclick = true;
+      console.log(this.profilePicture)
+  
+      if(this.profilePicture){
+        this.profilePicture = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + this.profilePicture.imageurl;
       }
-    } else {
-      this.needRegister = true;
-    }
+  
+      if(this.profilePicture){
+        this.hasProfilePic = true;
+      } else {
+        this.hasProfilePic = false;
+      }
+    
+      if(this.username){
+        this.needRegister = false;
+        if(this.router.url === '/home'){
+          this.homeclick = true;
+        } else if(this.router.url === '/timeline'){
+          this.timelineclick = true;
+        } else if(this.router.url === '/message-board'){
+          this.messageclick = true;
+        } else {
+          this.profileclick = true;
+        }
+      } else {
+        this.needRegister = true;
+      }
+
+    }, 500)
 
   }
 

@@ -10,7 +10,6 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { AddPhotoComponent } from './components/add-photo/add-photo.component';
 
 import { Amplify } from 'aws-amplify';
 import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
@@ -47,7 +46,6 @@ Amplify.configure(awsvideoconfig);
   declarations: [
     AppComponent, 
     LoginComponent,
-    AddPhotoComponent,
     CreateProfileModalPage,
     UpdateProfileModalPage,
     ProfileMenuModalPage,

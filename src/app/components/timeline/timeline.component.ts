@@ -285,13 +285,13 @@ export class TimelineComponent implements OnInit {
     //   }
     // });
 
-    setTimeout(() => {
-      if (this.data.length < 2) {
-        this.profileSearch = true;
-      } else  {
-        this.profileSearch = false;
-      }
-    }, 1000)
+    // setTimeout(() => {
+    //   if (this.data.length < 2) {
+    //     this.profileSearch = true;
+    //   } else  {
+    //     this.profileSearch = false;
+    //   }
+    // }, 1000)
 
 
   }

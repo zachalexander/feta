@@ -200,7 +200,7 @@ export class CreateProfileModalPage implements OnInit{
 
     let newProfile = await this.api.GetUserProfileFromCognitoId(this.cognitoID);
 
-    await this.createUsername({username: profile.username, profileID: newProfile.id})
+    await this.createUsername({username: profile.username.toLowerCase(), profileID: newProfile.id})
 
     let newUsername = await this.api.GetUsernameDataFromProfileId(newProfile.id)
 

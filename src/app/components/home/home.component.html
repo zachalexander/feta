@@ -22,7 +22,7 @@
         </ion-card-content>
       </ion-card>
       <ion-card *ngIf="already_registered">
-        <img alt="Alexander family photo" src="../../../assets/family-photo-4.png" />
+        <img alt="Alexander family photo" src="../../../assets/family-photo-5.png" />
         <ion-card-content>
           <div class="hello-div">
             <ion-card-title>Hi, {{username}}!</ion-card-title>
@@ -32,7 +32,7 @@
           <ion-button (click)="toTimeline()" class="timeline-button" mode="ios" color="dark" shape="round">View our timeline</ion-button>
         </ion-card-content>
       </ion-card>
-      <div class="row-1">
+      <!-- <div class="row-1">
         <ion-card *ngIf="already_registered" class="members_card">
           <img class="members" src="../../../assets/undraw_community.svg" />
           <ion-card-content>
@@ -48,11 +48,11 @@
               <ion-button mode="ios" shape="round" color="light">Read our terms</ion-button>
             </div>
           </ion-card-content>
-        </ion-card>
-      </div>
+        </ion-card> -->
+      <!-- </div> -->
 
       <!-- if user is not registered -->
-      <ion-grid *ngIf="createProfile">
+      <ion-grid *ngIf="createProfile && !already_registered">
         <ion-row *ngIf="createProfile">
           <ion-card *ngIf="createProfile" class="create-profile">
             <img src="../../../assets/undraw_having_fun.svg" />

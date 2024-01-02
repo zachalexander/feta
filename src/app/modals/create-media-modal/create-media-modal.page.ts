@@ -44,15 +44,10 @@ export class CreateMediaModalPage {
 
   constructor(
     private modalController: ModalController,
-    private navParams: NavParams,
     private api: APIService,
     private router: Router,
-    private mediaService: MediaService,
     private sanitizer: DomSanitizer,
     private loadingController: LoadingController,
-    private imageResizer: ImageResizer,
-    private videoEditor: VideoEditor,
-    private cachingService: CachingService
   ) {    
     this.postImageForm = new FormGroup({
     description: new FormControl('')
@@ -80,7 +75,6 @@ export class CreateMediaModalPage {
     this.usernameID = profile.usernameID;
 
     await this.loadMediaFromStorage().then(() => loading.dismiss())
-
     
   }
 
@@ -104,7 +98,8 @@ export class CreateMediaModalPage {
       this.path.substring(this.path.length - 3) === 'mov' ||
       this.path.substring(this.path.length - 3) === 'ogg' ||
       this.path.substring(this.path.length - 3) === 'ebM'){
-
+        this.isImage = false;
+        
         if (Capacitor.getPlatform() === "web"){
     
           let blobUrl = URL.createObjectURL(this.blob) as any;
@@ -168,20 +163,6 @@ export class CreateMediaModalPage {
     const blob = new Blob(byteArrays, { type: contentType });
     return blob;
   };
-
-  // async convertUrlToBase64(url) {
-  //   const response = await fetch(`${url}`);
-  //   const blob = await response.blob();
-
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader;
-  //     reader.onerror = reject;
-  //     reader.onload = () => {
-  //       resolve(reader.result);
-  //     };
-  //     reader.readAsDataURL(blob);
-  //   })
-  // }
 
   async closeModal(imagepost) {
 

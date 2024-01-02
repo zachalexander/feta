@@ -83,6 +83,7 @@ export class BaseballChatroomPage implements OnInit {
     this.userProfileID = localStorage.getItem('profileID');
     this.userUsernameID = localStorage.getItem('usernameID')
     this.chats = await this.getChats(this.liveGameChatRoomID) as any;
+    console.log(this.chats)
     this.ionViewDidLoad();
     this.userTyped = false;
     document.querySelector<HTMLElement>(".textarea-wrapper").style.minWidth = "100%";

@@ -70,10 +70,10 @@ export class HomeComponent {
       cssClass: 'spinner-loading'
     });
 
-    loading.present();
-
-    await this.loadUserData();
-    await this.listProfiles();
+    loading.present().then(async () => {
+      await this.loadUserData();
+      await this.listProfiles();
+    });
 
     loading.dismiss();
   }

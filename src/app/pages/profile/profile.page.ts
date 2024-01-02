@@ -32,6 +32,7 @@ export class ProfilePage {
   photosPostedCount: number;
   videosPostedCount: number;
   profileData: any = {};
+  profilePictureUrl: any;
   profileMediaData: Array<any> = new Array();
   profileImageData: Array<any> = new Array();
   noPhotosYet;
@@ -67,18 +68,19 @@ export class ProfilePage {
 
     
     // grab the username from the url
-    this.activatedRoute.params.subscribe((params) => this.urlUser = params['username']);
+    this.activatedRoute.params.subscribe((params) => this.urlUser = params['username'].toLowerCase());
     
     let profileID = await this.api.GetUsernameProfile(this.urlUser)
     let profile = await this.api.GetProfile(profileID);
     this.profileData = profile;
-    this.profileData.username = await this.api.GetUsernameFromProfileId(this.profileData.id).then(async username => username);
+    this.profileData.username = localStorage.getItem('username');
     let mediaCountCheck = await this.mediaService.getUserProfileMediaCount(this.profileData.id)
     let cachedUrl = 'profile-data-' + this.profileData.id + '?={0,n}'
     let cachedData = await this.cachingService.getCachedRequest(cachedUrl);
+    this.profilePictureUrl = await this.api.GetProfilePictureProfileID(this.profileData.id)
 
     if (this.profileData.profilepictureID) {
-      this.profilePhoto = await Storage.get('profile-pictures/' + await this.getProfilePicture(profileID))
+      this.profilePhoto = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + this.profilePictureUrl.imageurl;
     } else {
       this.profilePhoto = false;
     }

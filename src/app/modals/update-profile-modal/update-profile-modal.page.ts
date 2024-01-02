@@ -26,6 +26,7 @@ export class UpdateProfileModalPage implements OnInit {
   birthdate;
   relation: String;
   currentUserProfile: any;
+  profilePictureUrl: any;
   profilePic: any;
   profile;
   dateSelected;
@@ -214,8 +215,10 @@ export class UpdateProfileModalPage implements OnInit {
     this.updateProfileForm.controls['relation'].setValue(this.relation)
     this.updateProfileForm.controls['bio'].setValue(this.bio)
 
+    this.profilePictureUrl = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'))
+
     if(this.currentUserProfile.profilepicture){
-      let imageurl = await Storage.get('profile-pictures/' + await this.getProfilePicture(localStorage.getItem('profileID')))
+      let imageurl = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + this.profilePictureUrl.imageurl;
       this.profilePic = imageurl;
       loading.dismiss();
     } else {
@@ -243,7 +246,7 @@ export class UpdateProfileModalPage implements OnInit {
     loading.present();
 
     let updateUsername = new Promise(resolve => {
-      resolve(this.api.UpdateUsername({id: this.profile.usernameID, username: profile.username}))
+      resolve(this.api.UpdateUsername({id: this.profile.usernameID, username: profile.username.toLowerCase()}))
     })
 
     if(this.dateAdjust){
@@ -259,7 +262,7 @@ export class UpdateProfileModalPage implements OnInit {
     await new Promise(resolve => {
       resolve(updateUsername.then(async () => {await this.api.UpdateProfile({id: this.profile.id, first_name: profile.first_name, last_name: profile.last_name, birthday: profile.birthday_actual, relation: profile.relation, bio: profile.bio})}))
     }).then(() => {
-      this.router.navigate(['/profile', profile.username]).then(() => { window.location.reload()});
+      this.router.navigate(['/profile', profile.username.toLowerCase()]).then(() => { window.location.reload()});
       loading.dismiss();
     }).catch((e) => {
       console.log("error updating profile...", e);
@@ -267,7 +270,7 @@ export class UpdateProfileModalPage implements OnInit {
 
 
     await localStorage.removeItem('username')
-    await localStorage.setItem('username', profile.username)
+    await localStorage.setItem('username', profile.username.toLowerCase())
     
   }
 
