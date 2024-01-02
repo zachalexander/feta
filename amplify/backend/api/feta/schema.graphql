@@ -42,8 +42,8 @@ type ImagePost @model @auth(rules: [
   sorterValue: String @index(name: "byTimePosted", sortKeyFields: ["time_posted"])
   description: String
   time_posted: AWSDateTime
-  likes: AWSJSON
-  comments: AWSJSON
+  likes: [Likes] @hasMany
+  comments: [Comments] @hasMany
   usernameID: ID! @index(name: "byUsername")
   username: Username @hasOne(fields: ["usernameID"])
   profileID: ID! @index(name: "byProfile")
@@ -55,13 +55,28 @@ type ImagePost @model @auth(rules: [
   posterImage: String
 }
 
+type Likes @model @auth(rules: [
+      { allow: owner }
+      { allow: public, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+    ]) {
+      id: ID!
+      usernameID: ID! @index(name: "byUsername")
+      username: Username @hasOne(fields: ["usernameID"])
+      profileID: ID! @index(name: "byProfile")
+      profile: Profile @hasOne(fields: ["profileID"])
+    }
+
 type Comments @model @auth(rules: [
       { allow: owner }
       { allow: public, operations: [create, read, update, delete] }
       { allow: private, operations: [create, read, update, delete] }
     ]) {
   id: ID!
-  usernameID: String
+  usernameID: ID!
+  username: Username @hasOne(fields: ["usernameID"])
+  profileID: ID! @index(name: "byProfile")
+  profile: Profile @hasOne(fields: ["profileID"])
   comment: String
   time_posted: AWSDateTime
   imagePostsID: String

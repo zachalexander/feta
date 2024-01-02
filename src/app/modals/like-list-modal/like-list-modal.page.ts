@@ -28,32 +28,32 @@ export class LikeListModalPage implements OnInit {
 
     await this.api.GetPostLikes(this.imageID).then(async image => {
 
-      let likeData = JSON.parse(image.likes).usernames
+      // let likeData = JSON.parse(image.likes).usernames
 
-      let usernames = [];
-      await likeData.map(async (usernameIDs) => {
-        let user = await this.api.GetUsername(usernameIDs.toString())
-        let profile = await this.api.GetProfile(user.profileID)
-        let photoUrl: string;
+      // let usernames = [];
+      // await likeData.map(async (usernameIDs) => {
+      //   let user = await this.api.GetUsername(usernameIDs.toString())
+      //   let profile = await this.api.GetProfile(user.profileID)
+      //   let photoUrl: string;
 
-        if(profile.profilepictureID !== null){
-          let profilePicUrl = await this.api.GetProfilePictureProfileID(user.profileID)
-          console.log(profilePicUrl)
-          if(profilePicUrl){
-            photoUrl = await Storage.get('profile-pictures/' + await this.getProfilePicture(profile.id))
-            this.image = true;
-          } else {
-            photoUrl = '../../../assets/avatar.svg';
-            this.image = false;
-          }
-        } else {
-          photoUrl = '../../../assets/avatar.svg';
-          this.image = false;
-        }
+      //   if(profile.profilepictureID !== null){
+      //     let profilePicUrl = await this.api.GetProfilePictureProfileID(user.profileID)
+      //     console.log(profilePicUrl)
+      //     if(profilePicUrl){
+      //       photoUrl = await Storage.get('profile-pictures/' + await this.getProfilePicture(profile.id))
+      //       this.image = true;
+      //     } else {
+      //       photoUrl = '../../../assets/avatar.svg';
+      //       this.image = false;
+      //     }
+      //   } else {
+      //     photoUrl = '../../../assets/avatar.svg';
+      //     this.image = false;
+      //   }
 
-        usernames.push([user.username, profile.first_name, photoUrl, this.image])
-      })
-      this.likes = usernames;
+      //   usernames.push([user.username, profile.first_name, photoUrl, this.image])
+      // })
+      // this.likes = usernames;
     })
   }
 

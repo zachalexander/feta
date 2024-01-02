@@ -39,6 +39,7 @@ export class CreateMediaModalPage {
   blob;
   isImage = false;
   encoder: any;
+  profile: any;
   
   browser: any;
 
@@ -69,7 +70,8 @@ export class CreateMediaModalPage {
     loading.present();
 
     this.browser = localStorage.getItem('User-browser')
-    let profile = await this.api.GetProfile(localStorage.getItem('profileID'));
+    let profile = this.profile;
+    console.log(profile);
 
     this.profileID = profile.id;
     this.usernameID = profile.usernameID;
@@ -98,8 +100,9 @@ export class CreateMediaModalPage {
       this.path.substring(this.path.length - 3) === 'mov' ||
       this.path.substring(this.path.length - 3) === 'ogg' ||
       this.path.substring(this.path.length - 3) === 'ebM'){
-        this.isImage = false;
         
+        this.isImage = false;
+
         if (Capacitor.getPlatform() === "web"){
     
           let blobUrl = URL.createObjectURL(this.blob) as any;
@@ -133,7 +136,6 @@ export class CreateMediaModalPage {
             path: this.path,
             directory: APP_DIRECTORY
           })
-
           console.log(file_uri)
 
           this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
@@ -184,12 +186,12 @@ export class CreateMediaModalPage {
 
     loading.present();
 
-    let usernameID = await (await this.api.GetUsernameDataFromProfileId(this.profileID)).id
+    let usernameID = localStorage.getItem('usernameID');
 
-    imagepost.description = imagepost.description
-    imagepost.time_posted = new Date().toISOString()
-    imagepost.usernameID = usernameID
-    imagepost.profileID = this.profileID
+    imagepost.description = imagepost.description;
+    imagepost.time_posted = new Date().toISOString();
+    imagepost.usernameID = usernameID;
+    imagepost.profileID = this.profileID;
     imagepost.sorterValue = "media"
     
     if(extension === 'mov' || extension === 'mp4' || extension === 'webm' || extension === 'ogg' || extension === 'MOV'){

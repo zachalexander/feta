@@ -17,8 +17,6 @@ subscription OnCreateProfilePicture(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -85,8 +83,6 @@ subscription OnUpdateProfilePicture(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -153,8 +149,6 @@ subscription OnDeleteProfilePicture(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -218,8 +212,12 @@ subscription OnCreateProfile(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -267,8 +265,6 @@ subscription OnCreateProfile(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -356,8 +352,12 @@ subscription OnUpdateProfile(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -405,8 +405,6 @@ subscription OnUpdateProfile(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -494,8 +492,12 @@ subscription OnDeleteProfile(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -543,8 +545,6 @@ subscription OnDeleteProfile(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -626,8 +626,33 @@ subscription OnCreateImagePost(
     sorterValue
     description
     time_posted
-    likes
-    comments
+    likes {
+      items {
+        id
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+        imagePostLikesId
+        owner
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        usernameID
+        profileID
+        comment
+        time_posted
+        imagePostsID
+        createdAt
+        updatedAt
+        imagePostCommentsId
+        owner
+      }
+      nextToken
+    }
     usernameID
     username {
       id
@@ -638,8 +663,6 @@ subscription OnCreateImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -686,8 +709,6 @@ subscription OnCreateImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -748,8 +769,33 @@ subscription OnUpdateImagePost(
     sorterValue
     description
     time_posted
-    likes
-    comments
+    likes {
+      items {
+        id
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+        imagePostLikesId
+        owner
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        usernameID
+        profileID
+        comment
+        time_posted
+        imagePostsID
+        createdAt
+        updatedAt
+        imagePostCommentsId
+        owner
+      }
+      nextToken
+    }
     usernameID
     username {
       id
@@ -760,8 +806,6 @@ subscription OnUpdateImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -808,8 +852,6 @@ subscription OnUpdateImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -870,8 +912,33 @@ subscription OnDeleteImagePost(
     sorterValue
     description
     time_posted
-    likes
-    comments
+    likes {
+      items {
+        id
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+        imagePostLikesId
+        owner
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        usernameID
+        profileID
+        comment
+        time_posted
+        imagePostsID
+        createdAt
+        updatedAt
+        imagePostCommentsId
+        owner
+      }
+      nextToken
+    }
     usernameID
     username {
       id
@@ -882,8 +949,6 @@ subscription OnDeleteImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -930,8 +995,6 @@ subscription OnDeleteImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -983,6 +1046,333 @@ subscription OnDeleteImagePost(
     owner
   }
 }
+subscription OnCreateLikes(
+  $filter: ModelSubscriptionLikesFilterInput
+  $owner: String
+) {
+  onCreateLikes(filter: $filter, owner: $owner) {
+    id
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    createdAt
+    updatedAt
+    imagePostLikesId
+    owner
+  }
+}
+subscription OnUpdateLikes(
+  $filter: ModelSubscriptionLikesFilterInput
+  $owner: String
+) {
+  onUpdateLikes(filter: $filter, owner: $owner) {
+    id
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    createdAt
+    updatedAt
+    imagePostLikesId
+    owner
+  }
+}
+subscription OnDeleteLikes(
+  $filter: ModelSubscriptionLikesFilterInput
+  $owner: String
+) {
+  onDeleteLikes(filter: $filter, owner: $owner) {
+    id
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    createdAt
+    updatedAt
+    imagePostLikesId
+    owner
+  }
+}
 subscription OnCreateComments(
   $filter: ModelSubscriptionCommentsFilterInput
   $owner: String
@@ -990,11 +1380,108 @@ subscription OnCreateComments(
   onCreateComments(filter: $filter, owner: $owner) {
     id
     usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
     comment
     time_posted
     imagePostsID
     createdAt
     updatedAt
+    imagePostCommentsId
     owner
   }
 }
@@ -1005,11 +1492,108 @@ subscription OnUpdateComments(
   onUpdateComments(filter: $filter, owner: $owner) {
     id
     usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
     comment
     time_posted
     imagePostsID
     createdAt
     updatedAt
+    imagePostCommentsId
     owner
   }
 }
@@ -1020,11 +1604,108 @@ subscription OnDeleteComments(
   onDeleteComments(filter: $filter, owner: $owner) {
     id
     usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
     comment
     time_posted
     imagePostsID
     createdAt
     updatedAt
+    imagePostCommentsId
     owner
   }
 }
@@ -1041,8 +1722,12 @@ subscription OnCreateUsername(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -1092,8 +1777,6 @@ subscription OnCreateUsername(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1155,8 +1838,12 @@ subscription OnUpdateUsername(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -1206,8 +1893,6 @@ subscription OnUpdateUsername(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1269,8 +1954,12 @@ subscription OnDeleteUsername(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -1320,8 +2009,6 @@ subscription OnDeleteUsername(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1864,8 +2551,6 @@ subscription OnCreateChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1912,8 +2597,6 @@ subscription OnCreateChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2024,8 +2707,6 @@ subscription OnUpdateChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2072,8 +2753,6 @@ subscription OnUpdateChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2184,8 +2863,6 @@ subscription OnDeleteChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2232,8 +2909,6 @@ subscription OnDeleteChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2343,8 +3018,6 @@ subscription OnCreateChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2391,8 +3064,6 @@ subscription OnCreateChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2456,8 +3127,6 @@ subscription OnUpdateChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2504,8 +3173,6 @@ subscription OnUpdateChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2569,8 +3236,6 @@ subscription OnDeleteChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2617,8 +3282,6 @@ subscription OnDeleteChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key

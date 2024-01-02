@@ -17,8 +17,6 @@ mutation CreateProfilePicture(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -85,8 +83,6 @@ mutation UpdateProfilePicture(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -153,8 +149,6 @@ mutation DeleteProfilePicture(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -218,8 +212,12 @@ mutation CreateProfile(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -267,8 +265,6 @@ mutation CreateProfile(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -356,8 +352,12 @@ mutation UpdateProfile(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -405,8 +405,6 @@ mutation UpdateProfile(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -494,8 +492,12 @@ mutation DeleteProfile(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -543,8 +545,6 @@ mutation DeleteProfile(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -626,8 +626,33 @@ mutation CreateImagePost(
     sorterValue
     description
     time_posted
-    likes
-    comments
+    likes {
+      items {
+        id
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+        imagePostLikesId
+        owner
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        usernameID
+        profileID
+        comment
+        time_posted
+        imagePostsID
+        createdAt
+        updatedAt
+        imagePostCommentsId
+        owner
+      }
+      nextToken
+    }
     usernameID
     username {
       id
@@ -638,8 +663,6 @@ mutation CreateImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -686,8 +709,6 @@ mutation CreateImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -748,8 +769,33 @@ mutation UpdateImagePost(
     sorterValue
     description
     time_posted
-    likes
-    comments
+    likes {
+      items {
+        id
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+        imagePostLikesId
+        owner
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        usernameID
+        profileID
+        comment
+        time_posted
+        imagePostsID
+        createdAt
+        updatedAt
+        imagePostCommentsId
+        owner
+      }
+      nextToken
+    }
     usernameID
     username {
       id
@@ -760,8 +806,6 @@ mutation UpdateImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -808,8 +852,6 @@ mutation UpdateImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -870,8 +912,33 @@ mutation DeleteImagePost(
     sorterValue
     description
     time_posted
-    likes
-    comments
+    likes {
+      items {
+        id
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+        imagePostLikesId
+        owner
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        usernameID
+        profileID
+        comment
+        time_posted
+        imagePostsID
+        createdAt
+        updatedAt
+        imagePostCommentsId
+        owner
+      }
+      nextToken
+    }
     usernameID
     username {
       id
@@ -882,8 +949,6 @@ mutation DeleteImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -930,8 +995,6 @@ mutation DeleteImagePost(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -983,6 +1046,333 @@ mutation DeleteImagePost(
     owner
   }
 }
+mutation CreateLikes(
+  $input: CreateLikesInput!
+  $condition: ModelLikesConditionInput
+) {
+  createLikes(input: $input, condition: $condition) {
+    id
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    createdAt
+    updatedAt
+    imagePostLikesId
+    owner
+  }
+}
+mutation UpdateLikes(
+  $input: UpdateLikesInput!
+  $condition: ModelLikesConditionInput
+) {
+  updateLikes(input: $input, condition: $condition) {
+    id
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    createdAt
+    updatedAt
+    imagePostLikesId
+    owner
+  }
+}
+mutation DeleteLikes(
+  $input: DeleteLikesInput!
+  $condition: ModelLikesConditionInput
+) {
+  deleteLikes(input: $input, condition: $condition) {
+    id
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    createdAt
+    updatedAt
+    imagePostLikesId
+    owner
+  }
+}
 mutation CreateComments(
   $input: CreateCommentsInput!
   $condition: ModelCommentsConditionInput
@@ -990,11 +1380,108 @@ mutation CreateComments(
   createComments(input: $input, condition: $condition) {
     id
     usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
     comment
     time_posted
     imagePostsID
     createdAt
     updatedAt
+    imagePostCommentsId
     owner
   }
 }
@@ -1005,11 +1492,108 @@ mutation UpdateComments(
   updateComments(input: $input, condition: $condition) {
     id
     usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
     comment
     time_posted
     imagePostsID
     createdAt
     updatedAt
+    imagePostCommentsId
     owner
   }
 }
@@ -1020,11 +1604,108 @@ mutation DeleteComments(
   deleteComments(input: $input, condition: $condition) {
     id
     usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
     comment
     time_posted
     imagePostsID
     createdAt
     updatedAt
+    imagePostCommentsId
     owner
   }
 }
@@ -1041,8 +1722,12 @@ mutation CreateUsername(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -1092,8 +1777,6 @@ mutation CreateUsername(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1155,8 +1838,12 @@ mutation UpdateUsername(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -1206,8 +1893,6 @@ mutation UpdateUsername(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1269,8 +1954,12 @@ mutation DeleteUsername(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -1320,8 +2009,6 @@ mutation DeleteUsername(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1864,8 +2551,6 @@ mutation CreateChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1912,8 +2597,6 @@ mutation CreateChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2024,8 +2707,6 @@ mutation UpdateChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2072,8 +2753,6 @@ mutation UpdateChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2184,8 +2863,6 @@ mutation DeleteChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2232,8 +2909,6 @@ mutation DeleteChats(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2343,8 +3018,6 @@ mutation CreateChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2391,8 +3064,6 @@ mutation CreateChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2456,8 +3127,6 @@ mutation UpdateChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2504,8 +3173,6 @@ mutation UpdateChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2569,8 +3236,6 @@ mutation DeleteChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -2617,8 +3282,6 @@ mutation DeleteChatLikes(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key

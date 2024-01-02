@@ -20,6 +20,9 @@ export type __SubscriptionContainer = {
   onCreateImagePost: OnCreateImagePostSubscription;
   onUpdateImagePost: OnUpdateImagePostSubscription;
   onDeleteImagePost: OnDeleteImagePostSubscription;
+  onCreateLikes: OnCreateLikesSubscription;
+  onUpdateLikes: OnUpdateLikesSubscription;
+  onDeleteLikes: OnDeleteLikesSubscription;
   onCreateComments: OnCreateCommentsSubscription;
   onUpdateComments: OnUpdateCommentsSubscription;
   onDeleteComments: OnDeleteCommentsSubscription;
@@ -154,8 +157,8 @@ export type ImagePost = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  likes?: string | null;
-  comments?: string | null;
+  likes?: ModelLikesConnection | null;
+  comments?: ModelCommentsConnection | null;
   usernameID: string;
   username?: Username | null;
   profileID: string;
@@ -170,6 +173,25 @@ export type ImagePost = {
   owner?: string | null;
 };
 
+export type ModelLikesConnection = {
+  __typename: "ModelLikesConnection";
+  items: Array<Likes | null>;
+  nextToken?: string | null;
+};
+
+export type Likes = {
+  __typename: "Likes";
+  id: string;
+  usernameID: string;
+  username?: Username | null;
+  profileID: string;
+  profile?: Profile | null;
+  createdAt: string;
+  updatedAt: string;
+  imagePostLikesId?: string | null;
+  owner?: string | null;
+};
+
 export type Username = {
   __typename: "Username";
   id: string;
@@ -181,6 +203,28 @@ export type Username = {
   updatedAt: string;
   usernameImagePostsId?: string | null;
   usernameProfileId?: string | null;
+  owner?: string | null;
+};
+
+export type ModelCommentsConnection = {
+  __typename: "ModelCommentsConnection";
+  items: Array<Comments | null>;
+  nextToken?: string | null;
+};
+
+export type Comments = {
+  __typename: "Comments";
+  id: string;
+  usernameID: string;
+  username?: Username | null;
+  profileID: string;
+  profile?: Profile | null;
+  comment?: string | null;
+  time_posted?: string | null;
+  imagePostsID?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -251,8 +295,6 @@ export type CreateImagePostInput = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  likes?: string | null;
-  comments?: string | null;
   usernameID: string;
   profileID: string;
   s3_key?: string | null;
@@ -266,8 +308,6 @@ export type ModelImagePostConditionInput = {
   sorterValue?: ModelStringInput | null;
   description?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
-  likes?: ModelStringInput | null;
-  comments?: ModelStringInput | null;
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
@@ -285,8 +325,6 @@ export type UpdateImagePostInput = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  likes?: string | null;
-  comments?: string | null;
   usernameID?: string | null;
   profileID?: string | null;
   s3_key?: string | null;
@@ -300,42 +338,63 @@ export type DeleteImagePostInput = {
   id: string;
 };
 
+export type CreateLikesInput = {
+  id?: string | null;
+  usernameID: string;
+  profileID: string;
+  imagePostLikesId?: string | null;
+};
+
+export type ModelLikesConditionInput = {
+  usernameID?: ModelIDInput | null;
+  profileID?: ModelIDInput | null;
+  and?: Array<ModelLikesConditionInput | null> | null;
+  or?: Array<ModelLikesConditionInput | null> | null;
+  not?: ModelLikesConditionInput | null;
+  imagePostLikesId?: ModelIDInput | null;
+};
+
+export type UpdateLikesInput = {
+  id: string;
+  usernameID?: string | null;
+  profileID?: string | null;
+  imagePostLikesId?: string | null;
+};
+
+export type DeleteLikesInput = {
+  id: string;
+};
+
 export type CreateCommentsInput = {
   id?: string | null;
-  usernameID?: string | null;
+  usernameID: string;
+  profileID: string;
   comment?: string | null;
   time_posted?: string | null;
   imagePostsID?: string | null;
+  imagePostCommentsId?: string | null;
 };
 
 export type ModelCommentsConditionInput = {
-  usernameID?: ModelStringInput | null;
+  usernameID?: ModelIDInput | null;
+  profileID?: ModelIDInput | null;
   comment?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
   imagePostsID?: ModelStringInput | null;
   and?: Array<ModelCommentsConditionInput | null> | null;
   or?: Array<ModelCommentsConditionInput | null> | null;
   not?: ModelCommentsConditionInput | null;
-};
-
-export type Comments = {
-  __typename: "Comments";
-  id: string;
-  usernameID?: string | null;
-  comment?: string | null;
-  time_posted?: string | null;
-  imagePostsID?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
+  imagePostCommentsId?: ModelIDInput | null;
 };
 
 export type UpdateCommentsInput = {
   id: string;
   usernameID?: string | null;
+  profileID?: string | null;
   comment?: string | null;
   time_posted?: string | null;
   imagePostsID?: string | null;
+  imagePostCommentsId?: string | null;
 };
 
 export type DeleteCommentsInput = {
@@ -694,8 +753,6 @@ export type ModelImagePostFilterInput = {
   sorterValue?: ModelStringInput | null;
   description?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
-  likes?: ModelStringInput | null;
-  comments?: ModelStringInput | null;
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
@@ -724,21 +781,27 @@ export type ModelStringKeyConditionInput = {
   beginsWith?: string | null;
 };
 
+export type ModelLikesFilterInput = {
+  id?: ModelIDInput | null;
+  usernameID?: ModelIDInput | null;
+  profileID?: ModelIDInput | null;
+  and?: Array<ModelLikesFilterInput | null> | null;
+  or?: Array<ModelLikesFilterInput | null> | null;
+  not?: ModelLikesFilterInput | null;
+  imagePostLikesId?: ModelIDInput | null;
+};
+
 export type ModelCommentsFilterInput = {
   id?: ModelIDInput | null;
-  usernameID?: ModelStringInput | null;
+  usernameID?: ModelIDInput | null;
+  profileID?: ModelIDInput | null;
   comment?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
   imagePostsID?: ModelStringInput | null;
   and?: Array<ModelCommentsFilterInput | null> | null;
   or?: Array<ModelCommentsFilterInput | null> | null;
   not?: ModelCommentsFilterInput | null;
-};
-
-export type ModelCommentsConnection = {
-  __typename: "ModelCommentsConnection";
-  items: Array<Comments | null>;
-  nextToken?: string | null;
+  imagePostCommentsId?: ModelIDInput | null;
 };
 
 export type ModelUsernameFilterInput = {
@@ -899,8 +962,6 @@ export type ModelSubscriptionImagePostFilterInput = {
   sorterValue?: ModelSubscriptionStringInput | null;
   description?: ModelSubscriptionStringInput | null;
   time_posted?: ModelSubscriptionStringInput | null;
-  likes?: ModelSubscriptionStringInput | null;
-  comments?: ModelSubscriptionStringInput | null;
   usernameID?: ModelSubscriptionIDInput | null;
   profileID?: ModelSubscriptionIDInput | null;
   s3_key?: ModelSubscriptionStringInput | null;
@@ -912,9 +973,18 @@ export type ModelSubscriptionImagePostFilterInput = {
   or?: Array<ModelSubscriptionImagePostFilterInput | null> | null;
 };
 
+export type ModelSubscriptionLikesFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  usernameID?: ModelSubscriptionIDInput | null;
+  profileID?: ModelSubscriptionIDInput | null;
+  and?: Array<ModelSubscriptionLikesFilterInput | null> | null;
+  or?: Array<ModelSubscriptionLikesFilterInput | null> | null;
+};
+
 export type ModelSubscriptionCommentsFilterInput = {
   id?: ModelSubscriptionIDInput | null;
-  usernameID?: ModelSubscriptionStringInput | null;
+  usernameID?: ModelSubscriptionIDInput | null;
+  profileID?: ModelSubscriptionIDInput | null;
   comment?: ModelSubscriptionStringInput | null;
   time_posted?: ModelSubscriptionStringInput | null;
   imagePostsID?: ModelSubscriptionStringInput | null;
@@ -1006,8 +1076,6 @@ export type CreateProfilePictureMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1075,8 +1143,6 @@ export type UpdateProfilePictureMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1144,8 +1210,6 @@ export type DeleteProfilePictureMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1209,8 +1273,14 @@ export type CreateProfileMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -1262,8 +1332,6 @@ export type CreateProfileMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1352,8 +1420,14 @@ export type UpdateProfileMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -1405,8 +1479,6 @@ export type UpdateProfileMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1495,8 +1567,14 @@ export type DeleteProfileMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -1548,8 +1626,6 @@ export type DeleteProfileMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1631,8 +1707,37 @@ export type CreateImagePostMutation = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  likes?: string | null;
-  comments?: string | null;
+  likes?: {
+    __typename: "ModelLikesConnection";
+    items: Array<{
+      __typename: "Likes";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+      imagePostLikesId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentsConnection";
+    items: Array<{
+      __typename: "Comments";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      comment?: string | null;
+      time_posted?: string | null;
+      imagePostsID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      imagePostCommentsId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   usernameID: string;
   username?: {
     __typename: "Username";
@@ -1645,8 +1750,6 @@ export type CreateImagePostMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1696,8 +1799,6 @@ export type CreateImagePostMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1757,8 +1858,37 @@ export type UpdateImagePostMutation = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  likes?: string | null;
-  comments?: string | null;
+  likes?: {
+    __typename: "ModelLikesConnection";
+    items: Array<{
+      __typename: "Likes";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+      imagePostLikesId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentsConnection";
+    items: Array<{
+      __typename: "Comments";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      comment?: string | null;
+      time_posted?: string | null;
+      imagePostsID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      imagePostCommentsId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   usernameID: string;
   username?: {
     __typename: "Username";
@@ -1771,8 +1901,6 @@ export type UpdateImagePostMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1822,8 +1950,6 @@ export type UpdateImagePostMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1883,8 +2009,37 @@ export type DeleteImagePostMutation = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  likes?: string | null;
-  comments?: string | null;
+  likes?: {
+    __typename: "ModelLikesConnection";
+    items: Array<{
+      __typename: "Likes";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+      imagePostLikesId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentsConnection";
+    items: Array<{
+      __typename: "Comments";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      comment?: string | null;
+      time_posted?: string | null;
+      imagePostsID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      imagePostCommentsId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   usernameID: string;
   username?: {
     __typename: "Username";
@@ -1897,8 +2052,6 @@ export type DeleteImagePostMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -1948,8 +2101,6 @@ export type DeleteImagePostMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -2003,39 +2154,690 @@ export type DeleteImagePostMutation = {
   owner?: string | null;
 };
 
+export type CreateLikesMutation = {
+  __typename: "Likes";
+  id: string;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  imagePostLikesId?: string | null;
+  owner?: string | null;
+};
+
+export type UpdateLikesMutation = {
+  __typename: "Likes";
+  id: string;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  imagePostLikesId?: string | null;
+  owner?: string | null;
+};
+
+export type DeleteLikesMutation = {
+  __typename: "Likes";
+  id: string;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  imagePostLikesId?: string | null;
+  owner?: string | null;
+};
+
 export type CreateCommentsMutation = {
   __typename: "Comments";
   id: string;
-  usernameID?: string | null;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
   comment?: string | null;
   time_posted?: string | null;
   imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
 export type UpdateCommentsMutation = {
   __typename: "Comments";
   id: string;
-  usernameID?: string | null;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
   comment?: string | null;
   time_posted?: string | null;
   imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
 export type DeleteCommentsMutation = {
   __typename: "Comments";
   id: string;
-  usernameID?: string | null;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
   comment?: string | null;
   time_posted?: string | null;
   imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -2050,8 +2852,14 @@ export type CreateUsernameMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -2105,8 +2913,6 @@ export type CreateUsernameMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -2168,8 +2974,14 @@ export type UpdateUsernameMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -2223,8 +3035,6 @@ export type UpdateUsernameMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -2286,8 +3096,14 @@ export type DeleteUsernameMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -2341,8 +3157,6 @@ export type DeleteUsernameMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -2886,8 +3700,6 @@ export type CreateChatsMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -2937,8 +3749,6 @@ export type CreateChatsMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3055,8 +3865,6 @@ export type UpdateChatsMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3106,8 +3914,6 @@ export type UpdateChatsMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3224,8 +4030,6 @@ export type DeleteChatsMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3275,8 +4079,6 @@ export type DeleteChatsMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3392,8 +4194,6 @@ export type CreateChatLikesMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3443,8 +4243,6 @@ export type CreateChatLikesMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3509,8 +4307,6 @@ export type UpdateChatLikesMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3560,8 +4356,6 @@ export type UpdateChatLikesMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3626,8 +4420,6 @@ export type DeleteChatLikesMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3677,8 +4469,6 @@ export type DeleteChatLikesMutation = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3745,8 +4535,6 @@ export type GetProfilePictureQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3843,8 +4631,14 @@ export type GetProfileQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -3896,8 +4690,6 @@ export type GetProfileQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -3988,8 +4780,6 @@ export type ListProfilesQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -4051,8 +4841,6 @@ export type ProfilesByProfilepictureIDQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -4105,8 +4893,37 @@ export type GetImagePostQuery = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  likes?: string | null;
-  comments?: string | null;
+  likes?: {
+    __typename: "ModelLikesConnection";
+    items: Array<{
+      __typename: "Likes";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+      imagePostLikesId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentsConnection";
+    items: Array<{
+      __typename: "Comments";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      comment?: string | null;
+      time_posted?: string | null;
+      imagePostsID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      imagePostCommentsId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   usernameID: string;
   username?: {
     __typename: "Username";
@@ -4119,8 +4936,6 @@ export type GetImagePostQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -4170,8 +4985,6 @@ export type GetImagePostQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -4233,8 +5046,14 @@ export type ListImagePostsQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -4286,8 +5105,18 @@ export type ImagePostsBySorterValueAndTime_postedQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      id: string;
+      username?: string | null;
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      id: string;
+      username?: string | null;
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -4339,8 +5168,14 @@ export type ImagePostsByUsernameIDQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -4392,8 +5227,14 @@ export type ImagePostsByProfileIDQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -4437,15 +5278,364 @@ export type ImagePostsByProfileIDQuery = {
   nextToken?: string | null;
 };
 
+export type GetLikesQuery = {
+  __typename: "Likes";
+  id: string;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  imagePostLikesId?: string | null;
+  owner?: string | null;
+};
+
+export type ListLikesQuery = {
+  __typename: "ModelLikesConnection";
+  items: Array<{
+    __typename: "Likes";
+    id: string;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    imagePostLikesId?: string | null;
+    owner?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type LikesByUsernameIDQuery = {
+  __typename: "ModelLikesConnection";
+  items: Array<{
+    __typename: "Likes";
+    id: string;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    imagePostLikesId?: string | null;
+    owner?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type LikesByProfileIDQuery = {
+  __typename: "ModelLikesConnection";
+  items: Array<{
+    __typename: "Likes";
+    id: string;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    imagePostLikesId?: string | null;
+    owner?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
 export type GetCommentsQuery = {
   __typename: "Comments";
   id: string;
-  usernameID?: string | null;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
   comment?: string | null;
   time_posted?: string | null;
   imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -4454,12 +5644,90 @@ export type ListCommentsQuery = {
   items: Array<{
     __typename: "Comments";
     id: string;
-    usernameID?: string | null;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
     comment?: string | null;
     time_posted?: string | null;
     imagePostsID?: string | null;
     createdAt: string;
     updatedAt: string;
+    imagePostCommentsId?: string | null;
+    owner?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type CommentsByProfileIDQuery = {
+  __typename: "ModelCommentsConnection";
+  items: Array<{
+    __typename: "Comments";
+    id: string;
+    usernameID: string;
+    username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    profileID: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    comment?: string | null;
+    time_posted?: string | null;
+    imagePostsID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    imagePostCommentsId?: string | null;
     owner?: string | null;
   } | null>;
   nextToken?: string | null;
@@ -4476,8 +5744,14 @@ export type GetUsernameQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -4531,8 +5805,6 @@ export type GetUsernameQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -4596,8 +5868,6 @@ export type ListUsernamesQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -5033,8 +6303,6 @@ export type GetChatsQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -5084,8 +6352,6 @@ export type GetChatsQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -5384,8 +6650,6 @@ export type GetChatLikesQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -5435,8 +6699,6 @@ export type GetChatLikesQuery = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -5547,8 +6809,6 @@ export type OnCreateProfilePictureSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -5616,8 +6876,6 @@ export type OnUpdateProfilePictureSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -5685,8 +6943,6 @@ export type OnDeleteProfilePictureSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -5750,8 +7006,14 @@ export type OnCreateProfileSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -5803,8 +7065,6 @@ export type OnCreateProfileSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -5893,8 +7153,14 @@ export type OnUpdateProfileSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -5946,8 +7212,6 @@ export type OnUpdateProfileSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -6036,8 +7300,14 @@ export type OnDeleteProfileSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -6089,8 +7359,6 @@ export type OnDeleteProfileSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -6172,8 +7440,37 @@ export type OnCreateImagePostSubscription = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  likes?: string | null;
-  comments?: string | null;
+  likes?: {
+    __typename: "ModelLikesConnection";
+    items: Array<{
+      __typename: "Likes";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+      imagePostLikesId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentsConnection";
+    items: Array<{
+      __typename: "Comments";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      comment?: string | null;
+      time_posted?: string | null;
+      imagePostsID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      imagePostCommentsId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   usernameID: string;
   username?: {
     __typename: "Username";
@@ -6186,8 +7483,6 @@ export type OnCreateImagePostSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -6237,8 +7532,6 @@ export type OnCreateImagePostSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -6298,8 +7591,37 @@ export type OnUpdateImagePostSubscription = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  likes?: string | null;
-  comments?: string | null;
+  likes?: {
+    __typename: "ModelLikesConnection";
+    items: Array<{
+      __typename: "Likes";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+      imagePostLikesId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentsConnection";
+    items: Array<{
+      __typename: "Comments";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      comment?: string | null;
+      time_posted?: string | null;
+      imagePostsID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      imagePostCommentsId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   usernameID: string;
   username?: {
     __typename: "Username";
@@ -6312,8 +7634,6 @@ export type OnUpdateImagePostSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -6363,8 +7683,6 @@ export type OnUpdateImagePostSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -6424,8 +7742,37 @@ export type OnDeleteImagePostSubscription = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  likes?: string | null;
-  comments?: string | null;
+  likes?: {
+    __typename: "ModelLikesConnection";
+    items: Array<{
+      __typename: "Likes";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+      imagePostLikesId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentsConnection";
+    items: Array<{
+      __typename: "Comments";
+      id: string;
+      usernameID: string;
+      profileID: string;
+      comment?: string | null;
+      time_posted?: string | null;
+      imagePostsID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      imagePostCommentsId?: string | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   usernameID: string;
   username?: {
     __typename: "Username";
@@ -6438,8 +7785,6 @@ export type OnDeleteImagePostSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -6489,8 +7834,6 @@ export type OnDeleteImagePostSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -6544,39 +7887,690 @@ export type OnDeleteImagePostSubscription = {
   owner?: string | null;
 };
 
+export type OnCreateLikesSubscription = {
+  __typename: "Likes";
+  id: string;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  imagePostLikesId?: string | null;
+  owner?: string | null;
+};
+
+export type OnUpdateLikesSubscription = {
+  __typename: "Likes";
+  id: string;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  imagePostLikesId?: string | null;
+  owner?: string | null;
+};
+
+export type OnDeleteLikesSubscription = {
+  __typename: "Likes";
+  id: string;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  imagePostLikesId?: string | null;
+  owner?: string | null;
+};
+
 export type OnCreateCommentsSubscription = {
   __typename: "Comments";
   id: string;
-  usernameID?: string | null;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
   comment?: string | null;
   time_posted?: string | null;
   imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
 export type OnUpdateCommentsSubscription = {
   __typename: "Comments";
   id: string;
-  usernameID?: string | null;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
   comment?: string | null;
   time_posted?: string | null;
   imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
 export type OnDeleteCommentsSubscription = {
   __typename: "Comments";
   id: string;
-  usernameID?: string | null;
+  usernameID: string;
+  username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileUsernameId?: string | null;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
+  profileID: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null;
   comment?: string | null;
   time_posted?: string | null;
   imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -6591,8 +8585,14 @@ export type OnCreateUsernameSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -6646,8 +8646,6 @@ export type OnCreateUsernameSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -6709,8 +8707,14 @@ export type OnUpdateUsernameSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -6764,8 +8768,6 @@ export type OnUpdateUsernameSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -6827,8 +8829,14 @@ export type OnDeleteUsernameSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: string | null;
-    comments?: string | null;
+    likes?: {
+      __typename: "ModelLikesConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentsConnection";
+      nextToken?: string | null;
+    } | null;
     usernameID: string;
     username?: {
       __typename: "Username";
@@ -6882,8 +8890,6 @@ export type OnDeleteUsernameSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -7043,6 +9049,8 @@ export type OnUpdateSportsGameSubscription = {
     updatedAt: string;
     owner?: string | null;
   } | null;
+  createdAt: string;
+  updatedAt: string;
   owner?: string | null;
 };
 
@@ -7425,8 +9433,6 @@ export type OnCreateChatsSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -7476,8 +9482,6 @@ export type OnCreateChatsSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -7594,8 +9598,6 @@ export type OnUpdateChatsSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -7645,8 +9647,6 @@ export type OnUpdateChatsSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -7763,8 +9763,6 @@ export type OnDeleteChatsSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -7814,8 +9812,6 @@ export type OnDeleteChatsSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -7931,8 +9927,6 @@ export type OnCreateChatLikesSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -7982,8 +9976,6 @@ export type OnCreateChatLikesSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -8048,8 +10040,6 @@ export type OnUpdateChatLikesSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -8099,8 +10089,6 @@ export type OnUpdateChatLikesSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -8165,8 +10153,6 @@ export type OnDeleteChatLikesSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -8216,8 +10202,6 @@ export type OnDeleteChatLikesSubscription = {
       sorterValue?: string | null;
       description?: string | null;
       time_posted?: string | null;
-      likes?: string | null;
-      comments?: string | null;
       usernameID: string;
       profileID: string;
       s3_key?: string | null;
@@ -8691,6 +10675,7 @@ export class APIService {
     return <GetProfilePictureQuery>response.data.listProfilePictures.items[0];
   }
 
+  
   async CreateProfilePicture(
     input: CreateProfilePictureInput,
     condition?: ModelProfilePictureConditionInput
@@ -8713,8 +10698,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -8798,8 +10781,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -8883,8 +10864,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -8964,8 +10943,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -9017,8 +11002,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -9123,8 +11106,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -9176,8 +11165,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -9282,8 +11269,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -9335,8 +11328,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -9434,8 +11425,37 @@ export class APIService {
           sorterValue
           description
           time_posted
-          likes
-          comments
+          likes {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              createdAt
+              updatedAt
+              imagePostLikesId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              comment
+              time_posted
+              imagePostsID
+              createdAt
+              updatedAt
+              imagePostCommentsId
+              owner
+            }
+            nextToken
+          }
           usernameID
           username {
             __typename
@@ -9448,8 +11468,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -9499,8 +11517,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -9576,8 +11592,37 @@ export class APIService {
           sorterValue
           description
           time_posted
-          likes
-          comments
+          likes {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              createdAt
+              updatedAt
+              imagePostLikesId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              comment
+              time_posted
+              imagePostsID
+              createdAt
+              updatedAt
+              imagePostCommentsId
+              owner
+            }
+            nextToken
+          }
           usernameID
           username {
             __typename
@@ -9590,8 +11635,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -9641,8 +11684,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -9718,8 +11759,37 @@ export class APIService {
           sorterValue
           description
           time_posted
-          likes
-          comments
+          likes {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              createdAt
+              updatedAt
+              imagePostLikesId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              comment
+              time_posted
+              imagePostsID
+              createdAt
+              updatedAt
+              imagePostCommentsId
+              owner
+            }
+            nextToken
+          }
           usernameID
           username {
             __typename
@@ -9732,8 +11802,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -9783,8 +11851,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -9849,6 +11915,393 @@ export class APIService {
     )) as any;
     return <DeleteImagePostMutation>response.data.deleteImagePost;
   }
+  async CreateLikes(
+    input: CreateLikesInput,
+    condition?: ModelLikesConditionInput
+  ): Promise<CreateLikesMutation> {
+    const statement = `mutation CreateLikes($input: CreateLikesInput!, $condition: ModelLikesConditionInput) {
+        createLikes(input: $input, condition: $condition) {
+          __typename
+          id
+          usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
+          createdAt
+          updatedAt
+          imagePostLikesId
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateLikesMutation>response.data.createLikes;
+  }
+  async UpdateLikes(
+    input: UpdateLikesInput,
+    condition?: ModelLikesConditionInput
+  ): Promise<UpdateLikesMutation> {
+    const statement = `mutation UpdateLikes($input: UpdateLikesInput!, $condition: ModelLikesConditionInput) {
+        updateLikes(input: $input, condition: $condition) {
+          __typename
+          id
+          usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
+          createdAt
+          updatedAt
+          imagePostLikesId
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateLikesMutation>response.data.updateLikes;
+  }
+  async DeleteLikes(
+    input: DeleteLikesInput,
+    condition?: ModelLikesConditionInput
+  ): Promise<DeleteLikesMutation> {
+    const statement = `mutation DeleteLikes($input: DeleteLikesInput!, $condition: ModelLikesConditionInput) {
+        deleteLikes(input: $input, condition: $condition) {
+          __typename
+          id
+          usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
+          createdAt
+          updatedAt
+          imagePostLikesId
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteLikesMutation>response.data.deleteLikes;
+  }
   async CreateComments(
     input: CreateCommentsInput,
     condition?: ModelCommentsConditionInput
@@ -9858,11 +12311,115 @@ export class APIService {
           __typename
           id
           usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
           comment
           time_posted
           imagePostsID
           createdAt
           updatedAt
+          imagePostCommentsId
           owner
         }
       }`;
@@ -9886,11 +12443,115 @@ export class APIService {
           __typename
           id
           usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
           comment
           time_posted
           imagePostsID
           createdAt
           updatedAt
+          imagePostCommentsId
           owner
         }
       }`;
@@ -9914,11 +12575,115 @@ export class APIService {
           __typename
           id
           usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
           comment
           time_posted
           imagePostsID
           createdAt
           updatedAt
+          imagePostCommentsId
           owner
         }
       }`;
@@ -9949,8 +12714,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -10004,8 +12775,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -10083,8 +12852,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -10138,8 +12913,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -10217,8 +12990,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -10272,8 +13051,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -10977,8 +13754,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11028,8 +13803,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11162,8 +13935,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11213,8 +13984,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11347,8 +14116,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11398,8 +14165,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11531,8 +14296,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11582,8 +14345,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11664,8 +14425,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11715,8 +14474,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11797,8 +14554,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11848,8 +14603,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -11929,8 +14682,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -12058,8 +14809,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -12111,8 +14868,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -12217,8 +14972,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -12303,8 +15056,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -12381,8 +15132,37 @@ export class APIService {
           sorterValue
           description
           time_posted
-          likes
-          comments
+          likes {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              createdAt
+              updatedAt
+              imagePostLikesId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              comment
+              time_posted
+              imagePostsID
+              createdAt
+              updatedAt
+              imagePostCommentsId
+              owner
+            }
+            nextToken
+          }
           usernameID
           username {
             __typename
@@ -12395,8 +15175,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -12446,8 +15224,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -12523,8 +15299,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -12600,8 +15382,20 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              items {
+                id
+              }
+              nextToken
+            }
+            comments {
+              __typename
+              items {
+                id
+              }
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -12625,6 +15419,9 @@ export class APIService {
               first_name
               last_name
               profilepictureID
+              profilepicture {
+                imageurl
+              }
               bio
               birthday
               createdAt
@@ -12666,6 +15463,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
+    console.log(response.data.imagePostsBySorterValueAndTime_posted)
     return <ImagePostsBySorterValueAndTime_postedQuery>(
       response.data.imagePostsBySorterValueAndTime_posted
     );
@@ -12686,8 +15484,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -12767,8 +15571,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -12832,17 +15642,453 @@ export class APIService {
     )) as any;
     return <ImagePostsByProfileIDQuery>response.data.imagePostsByProfileID;
   }
+  async GetLikes(id: string): Promise<GetLikesQuery> {
+    const statement = `query GetLikes($id: ID!) {
+        getLikes(id: $id) {
+          __typename
+          id
+          usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
+          createdAt
+          updatedAt
+          imagePostLikesId
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetLikesQuery>response.data.getLikes;
+  }
+  async ListLikes(
+    filter?: ModelLikesFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListLikesQuery> {
+    const statement = `query ListLikes($filter: ModelLikesFilterInput, $limit: Int, $nextToken: String) {
+        listLikes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            usernameID
+            username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            profileID
+            profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            imagePostLikesId
+            owner
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListLikesQuery>response.data.listLikes;
+  }
+  async LikesByUsernameID(
+    usernameID: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelLikesFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<LikesByUsernameIDQuery> {
+    const statement = `query LikesByUsernameID($usernameID: ID!, $sortDirection: ModelSortDirection, $filter: ModelLikesFilterInput, $limit: Int, $nextToken: String) {
+        likesByUsernameID(usernameID: $usernameID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            usernameID
+            username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            profileID
+            profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            imagePostLikesId
+            owner
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      usernameID
+    };
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <LikesByUsernameIDQuery>response.data.likesByUsernameID;
+  }
+  async LikesByProfileID(
+    profileID: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelLikesFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<LikesByProfileIDQuery> {
+    const statement = `query LikesByProfileID($profileID: ID!, $sortDirection: ModelSortDirection, $filter: ModelLikesFilterInput, $limit: Int, $nextToken: String) {
+        likesByProfileID(profileID: $profileID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            usernameID
+            username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            profileID
+            profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            imagePostLikesId
+            owner
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      profileID
+    };
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <LikesByProfileIDQuery>response.data.likesByProfileID;
+  }
   async GetComments(id: string): Promise<GetCommentsQuery> {
     const statement = `query GetComments($id: ID!) {
         getComments(id: $id) {
           __typename
           id
           usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
           comment
           time_posted
           imagePostsID
           createdAt
           updatedAt
+          imagePostCommentsId
           owner
         }
       }`;
@@ -12866,11 +16112,42 @@ export class APIService {
             __typename
             id
             usernameID
+            username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            profileID
+            profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
             comment
             time_posted
             imagePostsID
             createdAt
             updatedAt
+            imagePostCommentsId
             owner
           }
           nextToken
@@ -12891,6 +16168,81 @@ export class APIService {
     )) as any;
     return <ListCommentsQuery>response.data.listComments;
   }
+  async CommentsByProfileID(
+    profileID: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelCommentsFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<CommentsByProfileIDQuery> {
+    const statement = `query CommentsByProfileID($profileID: ID!, $sortDirection: ModelSortDirection, $filter: ModelCommentsFilterInput, $limit: Int, $nextToken: String) {
+        commentsByProfileID(profileID: $profileID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            usernameID
+            username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            profileID
+            profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            comment
+            time_posted
+            imagePostsID
+            createdAt
+            updatedAt
+            imagePostCommentsId
+            owner
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      profileID
+    };
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CommentsByProfileIDQuery>response.data.commentsByProfileID;
+  }
   async GetUsername(id: string): Promise<GetUsernameQuery> {
     const statement = `query GetUsername($id: ID!) {
         getUsername(id: $id) {
@@ -12904,8 +16256,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -12959,8 +16317,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -13038,8 +16394,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -13683,8 +17037,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -13734,8 +17086,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -14112,14 +17462,9 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-
-    let data = response.data.chatsByLiveGameChatRoomIDAndTimePosted.items;
-
-    data.map(async chats => {
-      chats.profile.profilePictureUrl = await Storage.get('profile-pictures/' + await (await this.GetProfilePictureProfileID(chats.profile.id)).imageurl)
-    })
-
-    return data;
+    return <ChatsByLiveGameChatRoomIDAndTimePostedQuery>(
+      response.data.chatsByLiveGameChatRoomIDAndTimePosted
+    );
   }
   async GetChatLikes(id: string): Promise<GetChatLikesQuery> {
     const statement = `query GetChatLikes($id: ID!) {
@@ -14138,8 +17483,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -14189,8 +17532,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -14339,8 +17680,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -14433,8 +17772,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -14527,8 +17864,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -14615,8 +17950,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -14668,8 +18009,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -14779,8 +18118,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -14832,8 +18177,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -14943,8 +18286,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -14996,8 +18345,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -15100,8 +18447,37 @@ export class APIService {
           sorterValue
           description
           time_posted
-          likes
-          comments
+          likes {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              createdAt
+              updatedAt
+              imagePostLikesId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              comment
+              time_posted
+              imagePostsID
+              createdAt
+              updatedAt
+              imagePostCommentsId
+              owner
+            }
+            nextToken
+          }
           usernameID
           username {
             __typename
@@ -15114,8 +18490,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -15165,8 +18539,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -15247,8 +18619,37 @@ export class APIService {
           sorterValue
           description
           time_posted
-          likes
-          comments
+          likes {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              createdAt
+              updatedAt
+              imagePostLikesId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              comment
+              time_posted
+              imagePostsID
+              createdAt
+              updatedAt
+              imagePostCommentsId
+              owner
+            }
+            nextToken
+          }
           usernameID
           username {
             __typename
@@ -15261,8 +18662,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -15312,8 +18711,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -15394,8 +18791,37 @@ export class APIService {
           sorterValue
           description
           time_posted
-          likes
-          comments
+          likes {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              createdAt
+              updatedAt
+              imagePostLikesId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              usernameID
+              profileID
+              comment
+              time_posted
+              imagePostsID
+              createdAt
+              updatedAt
+              imagePostCommentsId
+              owner
+            }
+            nextToken
+          }
           usernameID
           username {
             __typename
@@ -15408,8 +18834,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -15459,8 +18883,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -15528,6 +18950,408 @@ export class APIService {
     >;
   }
 
+  OnCreateLikesListener(
+    filter?: ModelSubscriptionLikesFilterInput,
+    owner?: string
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateLikes">>
+  > {
+    const statement = `subscription OnCreateLikes($filter: ModelSubscriptionLikesFilterInput, $owner: String) {
+        onCreateLikes(filter: $filter, owner: $owner) {
+          __typename
+          id
+          usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
+          createdAt
+          updatedAt
+          imagePostLikesId
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateLikes">>
+    >;
+  }
+
+  OnUpdateLikesListener(
+    filter?: ModelSubscriptionLikesFilterInput,
+    owner?: string
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateLikes">>
+  > {
+    const statement = `subscription OnUpdateLikes($filter: ModelSubscriptionLikesFilterInput, $owner: String) {
+        onUpdateLikes(filter: $filter, owner: $owner) {
+          __typename
+          id
+          usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
+          createdAt
+          updatedAt
+          imagePostLikesId
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateLikes">>
+    >;
+  }
+
+  OnDeleteLikesListener(
+    filter?: ModelSubscriptionLikesFilterInput,
+    owner?: string
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteLikes">>
+  > {
+    const statement = `subscription OnDeleteLikes($filter: ModelSubscriptionLikesFilterInput, $owner: String) {
+        onDeleteLikes(filter: $filter, owner: $owner) {
+          __typename
+          id
+          usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
+          createdAt
+          updatedAt
+          imagePostLikesId
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteLikes">>
+    >;
+  }
+
   OnCreateCommentsListener(
     filter?: ModelSubscriptionCommentsFilterInput,
     owner?: string
@@ -15539,11 +19363,115 @@ export class APIService {
           __typename
           id
           usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
           comment
           time_posted
           imagePostsID
           createdAt
           updatedAt
+          imagePostCommentsId
           owner
         }
       }`;
@@ -15572,11 +19500,115 @@ export class APIService {
           __typename
           id
           usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
           comment
           time_posted
           imagePostsID
           createdAt
           updatedAt
+          imagePostCommentsId
           owner
         }
       }`;
@@ -15605,11 +19637,115 @@ export class APIService {
           __typename
           id
           usernameID
+          username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileUsernameId
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
+          profileID
+          profile {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
+            profileUsernameId
+            profileImagePostsId
+            owner
+          }
           comment
           time_posted
           imagePostsID
           createdAt
           updatedAt
+          imagePostCommentsId
           owner
         }
       }`;
@@ -15645,8 +19781,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -15700,8 +19842,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -15784,8 +19924,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -15839,8 +19985,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -15923,8 +20067,14 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes
-            comments
+            likes {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
             usernameID
             username {
               __typename
@@ -15978,8 +20128,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -16181,6 +20329,8 @@ export class APIService {
             updatedAt
             owner
           }
+          createdAt
+          updatedAt
           owner
         }
       }`;
@@ -16743,8 +20893,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -16794,8 +20942,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -16933,8 +21079,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -16984,8 +21128,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -17123,8 +21265,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -17174,8 +21314,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -17312,8 +21450,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -17363,8 +21499,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -17450,8 +21584,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -17501,8 +21633,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -17588,8 +21718,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key
@@ -17639,8 +21767,6 @@ export class APIService {
               sorterValue
               description
               time_posted
-              likes
-              comments
               usernameID
               profileID
               s3_key

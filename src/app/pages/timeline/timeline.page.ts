@@ -29,6 +29,7 @@ export class TimelinePage implements OnInit {
   mediaSubmitted: any;
   selected: any;
   dataReturned: any;
+  profile: any;
 
   constructor(
     private modalController: ModalController,
@@ -46,14 +47,14 @@ export class TimelinePage implements OnInit {
     this.addMediaClick = false;
     this.mediaSubmitted = false;
 
-    // await this.mediaService.getTimelineData().pipe(
-    //   finalize(() => {
-    //     this.loaded = true;
-    //   })
-    // ).subscribe(data => {
-    //   this.timelineData = data[0];
-    //   this.nextToken = data[2];
-    // })
+    this.profile = await this.api.GetProfile(localStorage.getItem('profileID'))
+
+    await this.api.ImagePostsBySorterValueAndTime_posted("media").then(data => {
+      this.timelineData = data.items;
+      console.log(this.timelineData)
+      this.nextToken = data[2];
+      this.loaded = true;
+    })
   }
 
   async fileSelected(event){
@@ -92,7 +93,8 @@ export class TimelinePage implements OnInit {
       component: CreateMediaModalPage,
       componentProps: {
         "path": `${this.currentFolder}/${this.selected.name}`,
-        "file_name": `${this.selected.name}`
+        "file_name": `${this.selected.name}`,
+        "profile": this.profile
       }
     });
 

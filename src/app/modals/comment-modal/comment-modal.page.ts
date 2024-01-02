@@ -106,32 +106,32 @@ export class CommentModalPage implements OnInit {
 
   async postWrittenComment(imagepost) {
 
-    let userComment = imagepost.comment;
-    let time_posted = new Date().toISOString()
-    let comments = await this.api.getImageComments(this.imageID).then(image => image)
+    // let userComment = imagepost.comment;
+    // let time_posted = new Date().toISOString()
+    // let comments = await this.api.getImageComments(this.imageID).then(image => image)
 
-    if (!comments) {
-      try {
-        const result = await this.createComment(userComment, time_posted).then(() => console.log('success'))
-        this.writeCommentForm.reset();
-      } catch (error) {
-        this.failureCallback(error)
-      }
+    // if (!comments) {
+    //   try {
+    //     const result = await this.createComment(userComment, time_posted).then(() => console.log('success'))
+    //     this.writeCommentForm.reset();
+    //   } catch (error) {
+    //     this.failureCallback(error)
+    //   }
 
-    } else {
-      try {
-        const result = this.createComment(userComment, time_posted).then(() => console.log('success'))
-        this.writeCommentForm.reset();
-      } catch (error) {
-        this.failureCallback(error)
-      }
-    }
+    // } else {
+    //   try {
+    //     const result = this.createComment(userComment, time_posted).then(() => console.log('success'))
+    //     this.writeCommentForm.reset();
+    //   } catch (error) {
+    //     this.failureCallback(error)
+    //   }
+    // }
   }
 
   createComment(userComment, time_posted) {
-    return new Promise(async (resolve, reject) =>
-      resolve(await this.api.CreateComments({ usernameID: localStorage.getItem('usernameID'), comment: userComment, time_posted: time_posted, imagePostsID: this.imageID }))
-    )
+    // return new Promise(async (resolve, reject) =>
+    //   // resolve(await this.api.CreateComments({ usernameID: localStorage.getItem('usernameID'), comment: userComment, time_posted: time_posted, imagePostsID: this.imageID }))
+    // )
   }
 
   async updateComment(id, editSlider, comment) {

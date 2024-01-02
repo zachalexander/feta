@@ -14,8 +14,6 @@ query GetProfilePicture($id: ID!) {
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -111,8 +109,12 @@ query GetProfile($id: ID!) {
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -160,8 +162,6 @@ query GetProfile($id: ID!) {
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -251,8 +251,6 @@ query ListProfiles(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -322,8 +320,6 @@ query ProfilesByProfilepictureID(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -374,8 +370,33 @@ query GetImagePost($id: ID!) {
     sorterValue
     description
     time_posted
-    likes
-    comments
+    likes {
+      items {
+        id
+        usernameID
+        profileID
+        createdAt
+        updatedAt
+        imagePostLikesId
+        owner
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        usernameID
+        profileID
+        comment
+        time_posted
+        imagePostsID
+        createdAt
+        updatedAt
+        imagePostCommentsId
+        owner
+      }
+      nextToken
+    }
     usernameID
     username {
       id
@@ -386,8 +407,6 @@ query GetImagePost($id: ID!) {
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -434,8 +453,6 @@ query GetImagePost($id: ID!) {
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -498,8 +515,12 @@ query ListImagePosts(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -562,8 +583,12 @@ query ImagePostsBySorterValueAndTime_posted(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -624,8 +649,12 @@ query ImagePostsByUsernameID(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -686,8 +715,12 @@ query ImagePostsByProfileID(
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -729,15 +762,369 @@ query ImagePostsByProfileID(
     nextToken
   }
 }
+query GetLikes($id: ID!) {
+  getLikes(id: $id) {
+    id
+    usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    createdAt
+    updatedAt
+    imagePostLikesId
+    owner
+  }
+}
+query ListLikes(
+  $filter: ModelLikesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listLikes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      imagePostLikesId
+      owner
+    }
+    nextToken
+  }
+}
+query LikesByUsernameID(
+  $usernameID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelLikesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  likesByUsernameID(
+    usernameID: $usernameID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      imagePostLikesId
+      owner
+    }
+    nextToken
+  }
+}
+query LikesByProfileID(
+  $profileID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelLikesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  likesByProfileID(
+    profileID: $profileID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      imagePostLikesId
+      owner
+    }
+    nextToken
+  }
+}
 query GetComments($id: ID!) {
   getComments(id: $id) {
     id
     usernameID
+    username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
+    profileID
+    profile {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
+      profileUsernameId
+      profileImagePostsId
+      owner
+    }
     comment
     time_posted
     imagePostsID
     createdAt
     updatedAt
+    imagePostCommentsId
     owner
   }
 }
@@ -750,11 +1137,96 @@ query ListComments(
     items {
       id
       usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
       comment
       time_posted
       imagePostsID
       createdAt
       updatedAt
+      imagePostCommentsId
+      owner
+    }
+    nextToken
+  }
+}
+query CommentsByProfileID(
+  $profileID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelCommentsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  commentsByProfileID(
+    profileID: $profileID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      usernameID
+      username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      profileID
+      profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileUsernameId
+        profileImagePostsId
+        owner
+      }
+      comment
+      time_posted
+      imagePostsID
+      createdAt
+      updatedAt
+      imagePostCommentsId
       owner
     }
     nextToken
@@ -770,8 +1242,12 @@ query GetUsername($id: ID!) {
       sorterValue
       description
       time_posted
-      likes
-      comments
+      likes {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
       usernameID
       username {
         id
@@ -821,8 +1297,6 @@ query GetUsername($id: ID!) {
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -886,8 +1360,6 @@ query ListUsernames(
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1350,8 +1822,6 @@ query GetChats($id: ID!) {
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1398,8 +1868,6 @@ query GetChats($id: ID!) {
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1706,8 +2174,6 @@ query GetChatLikes($id: ID!) {
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key
@@ -1754,8 +2220,6 @@ query GetChatLikes($id: ID!) {
         sorterValue
         description
         time_posted
-        likes
-        comments
         usernameID
         profileID
         s3_key

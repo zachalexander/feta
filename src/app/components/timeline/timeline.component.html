@@ -29,13 +29,13 @@
           <ion-item lines="none" mode="ios">
             <div class="top-wrapper">
               <div class="start-top-wrapper">
-                <ion-avatar *ngIf="!image.profilePicture" class="upload-pic-container">
+                <ion-avatar *ngIf="!image.profile.profilepicture.imageurl" class="upload-pic-container">
                   <img id="avatar" src="../../../assets/avatar.svg">
                 </ion-avatar>
-                <ion-avatar *ngIf="image.profilePicture" class="upload-pic-container">
-                  <img id="avatar" [src]="image.profilePicture">
+                <ion-avatar *ngIf="image.profile.profilepicture.imageurl" class="upload-pic-container">
+                  <img id="avatar" src="https://ik.imagekit.io/bkf4g8lrl/profile-photos/{{image.profile.profilepicture.imageurl}}">
                 </ion-avatar>
-                <ion-label class="top-card"><small class="card-username" routerLink="/profile/{{image.username}}">{{image.username}}</small></ion-label>
+                <ion-label class="top-card"><small class="card-username" routerLink="/profile/{{image.username.username}}">{{image.username.username}}</small></ion-label>
               </div>
               <ion-label (click)="presentActionSheet(image.username, image.id, image.s3_key, image.downloadableVideo, image.isVideo)" class="top-card" slot="end"><ion-icon name="ellipsis-horizontal-sharp"></ion-icon></ion-label>
             </div>
@@ -94,7 +94,7 @@
             </div>
             <!-- shows the post description and the user that posted the image -->
             <ion-card-content class="ion-no-padding" lines="none" class="image-description">
-              <strong class="username-description" routerLink="/profile/{{image.username}}">{{image.username}}</strong> {{image.description}}
+              <strong class="username-description" routerLink="/profile/{{image.username.username}}">{{image.username.username}}</strong> {{image.description}}
               <ion-card-subtitle color="medium" class="date-ago-text" lines="none"><small>{{image.time_posted | dateAsAgo}}</small></ion-card-subtitle>
             </ion-card-content>
 

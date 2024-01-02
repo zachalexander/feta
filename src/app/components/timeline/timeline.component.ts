@@ -761,7 +761,7 @@ export class TimelineComponent implements OnInit {
             this.data.filter((media) => {
               if(media.id == imageId){
                 media.likes = post.likes
-                media.like_count = JSON.parse(post.likes)['usernames'].length
+                // media.like_count = JSON.parse(post.likes)['usernames'].length
               }
               return media;
             })
@@ -786,13 +786,13 @@ export class TimelineComponent implements OnInit {
           let commentsArray: [] = await this.api.getImageComments(imageId)
           let commentLength: string = commentsArray.length.toString()
 
-          await this.api.UpdateImagePost({ id: imageId, comments: commentLength })
+          // await this.api.UpdateImagePost({ id: imageId, comments: commentLength })
 
           let timelineData = await this.api.ListImagePosts();
 
           timelineData.items.map(values => {
             if (values.id === imageId) {
-              values.comments = commentLength
+              // values.comments = commentLength
             }
           })
 
@@ -812,13 +812,13 @@ export class TimelineComponent implements OnInit {
           let commentsArray: [] = await this.api.getImageComments(imageId)
           let commentLength: string = commentsArray.length.toString()
 
-          await this.api.UpdateImagePost({id: imageId, comments: commentLength})
+          // await this.api.UpdateImagePost({id: imageId, comments: commentLength})
 
           let timelineData = await this.api.ListImagePosts();
 
           timelineData.items.map(values => {
             if(values.id === imageId){
-              values.comments = commentLength
+              // values.comments = commentLength
             }
           })
 

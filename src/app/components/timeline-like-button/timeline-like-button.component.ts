@@ -54,7 +54,7 @@ export class TimelineLikeButtonComponent implements OnInit {
       likeArray.push(this.usernameID)
       likeArray = [...new Set(likeArray)];
 
-      this.api.UpdateImagePost({id: this.imageId, likes: JSON.stringify({usernames: likeArray})})
+      // this.api.UpdateImagePost({id: this.imageId, likes: JSON.stringify({usernames: likeArray})})
       this.likeclicked = false;
     } else {
       likeArray = JSON.parse(likeArray).usernames;
@@ -63,12 +63,12 @@ export class TimelineLikeButtonComponent implements OnInit {
       if(index > -1){
         likeArray.splice(index, 1);
         likeArray = [...new Set(likeArray)];
-        this.api.UpdateImagePost({id: this.imageId, likes: JSON.stringify({usernames: likeArray})})
+        // this.api.UpdateImagePost({id: this.imageId, likes: JSON.stringify({usernames: likeArray})})
         this.likeclicked = false;
       } else {
         likeArray.push(this.usernameID)
         likeArray = [...new Set(likeArray)];
-        this.api.UpdateImagePost({id: this.imageId, likes: JSON.stringify({usernames: likeArray})})
+        // this.api.UpdateImagePost({id: this.imageId, likes: JSON.stringify({usernames: likeArray})})
         this.likeclicked = false;
       }
     }

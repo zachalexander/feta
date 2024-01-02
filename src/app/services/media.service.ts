@@ -366,11 +366,9 @@ export class MediaService {
       imagePostsBySorterValueAndTime_posted(sorterValue: "media", sortDirection: DESC, limit: 4) {
         items {
           usernameID
-          comments
           createdAt
           description
           id
-          likes
           time_posted
           updatedAt
           s3_key
@@ -378,6 +376,16 @@ export class MediaService {
           mediaSourceMobile
           mediaSourceDesktop
           downloadableVideo
+          likes {
+            items {
+              id
+            }
+          }
+          comments {
+            items {
+              id
+            }
+          }
           profile {
             profilepicture {
               imageurl
@@ -393,51 +401,53 @@ export class MediaService {
 
     const response = (await API.graphql(graphqlOperation(statement))) as any;
     let array: any = response.data.imagePostsBySorterValueAndTime_posted.items;
+    console.log(array);
 
+    this.mediaPosted = array;
 
-    this.mediaPosted = [];
-    await Promise.all(array.map(async posts => {
-      console.log(posts)
-      if (await this.checkForVideo(posts.s3_key)) {
-        this.mediaPosted.push({
-          mediaSourceMobile: await Storage.get(posts.s3_key, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
-          mediaSourceDesktop: null,
-          s3_key: posts.s3_key,
-          downloadableVideo: posts.downloadableVideo,
-          isVideo: true,
-          time_posted: new Date(posts.time_posted),
-          usernameID: posts.usernameID,
-          description: posts.description,
-          id: posts.id,
-          likes: posts.likes,
-          posterImage: await Storage.get(posts.posterImage, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
-          comments: +(await this.commentLength(posts.id)).toString(),
-          like_count: await this.getLikeCount(posts.likes),
-          username: posts.username.username,
-          userLiked: await this.getLikeData(posts.likes, currentUser),
-          profilePicture: await this.checkForProfilePhoto(posts.profile.profilepicture)
-        })
-      } else {
-        this.mediaPosted.push({
-          mediaSourceMobile: posts.mediaSourceMobile,
-          mediaSourceDesktop: posts.mediaSourceDesktop,
-          s3_key: posts.s3_key,
-          downloadableVideo: posts.downloadableVideo,
-          isVideo: false,
-          time_posted: new Date(posts.time_posted),
-          usernameID: posts.usernameID,
-          description: posts.description,
-          id: posts.id,
-          likes: posts.likes,
-          comments: +(await this.commentLength(posts.id)).toString(),
-          like_count: await this.getLikeCount(posts.likes),
-          username: posts.username.username,
-          userLiked: await this.getLikeData(posts.likes, currentUser),
-          profilePicture: await this.checkForProfilePhoto(posts.profile.profilepicture)
-        })
-      }
-    }))
-    this.mediaPosted = this.sortByDate(this.mediaPosted)
+    // this.mediaPosted = [];
+    // await Promise.all(array.map(async posts => {
+    //   console.log(posts)
+    //   if (await this.checkForVideo(posts.s3_key)) {
+    //     this.mediaPosted.push({
+    //       mediaSourceMobile: await Storage.get(posts.s3_key, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+    //       mediaSourceDesktop: null,
+    //       s3_key: posts.s3_key,
+    //       downloadableVideo: posts.downloadableVideo,
+    //       isVideo: true,
+    //       time_posted: new Date(posts.time_posted),
+    //       usernameID: posts.usernameID,
+    //       description: posts.description,
+    //       id: posts.id,
+    //       likes: posts.likes,
+    //       posterImage: await Storage.get(posts.posterImage, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
+    //       comments: +(await this.commentLength(posts.id)).toString(),
+    //       like_count: await this.getLikeCount(posts.likes),
+    //       username: posts.username.username,
+    //       userLiked: await this.getLikeData(posts.likes, currentUser),
+    //       profilePicture: await this.checkForProfilePhoto(posts.profile.profilepicture)
+    //     })
+    //   } else {
+    //     this.mediaPosted.push({
+    //       mediaSourceMobile: posts.mediaSourceMobile,
+    //       mediaSourceDesktop: posts.mediaSourceDesktop,
+    //       s3_key: posts.s3_key,
+    //       downloadableVideo: posts.downloadableVideo,
+    //       isVideo: false,
+    //       time_posted: new Date(posts.time_posted),
+    //       usernameID: posts.usernameID,
+    //       description: posts.description,
+    //       id: posts.id,
+    //       likes: posts.likes,
+    //       comments: +(await this.commentLength(posts.id)).toString(),
+    //       like_count: await this.getLikeCount(posts.likes),
+    //       username: posts.username.username,
+    //       userLiked: await this.getLikeData(posts.likes, currentUser),
+    //       profilePicture: await this.checkForProfilePhoto(posts.profile.profilepicture)
+    //     })
+    //   }
+    // }))
+    // this.mediaPosted = this.sortByDate(this.mediaPosted)
     return [this.mediaPosted, this.mediaPosted.length, response.data.imagePostsBySorterValueAndTime_posted.nextToken]
   }
 
