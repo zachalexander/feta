@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { APIService } from 'src/app/API.service';
-import { Storage } from 'aws-amplify'
 
 @Component({
   selector: 'app-tabs',
@@ -11,6 +9,7 @@ import { Storage } from 'aws-amplify'
 export class TabsPage {
 
   username;
+  urlUser;
   homeclick;
   timelineclick;
   messageclick;
@@ -20,47 +19,33 @@ export class TabsPage {
   hasProfilePic: boolean;
 
   constructor(
-    private router: Router,
-    private api: APIService
+    private api: APIService,
   ) {}
-
+  
   async ngOnInit(){
 
     setTimeout(async () => {
-
-      this.username = localStorage.getItem('username');
-  
-      this.profilePicture = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'))
-
-      console.log(this.profilePicture)
-  
-      if(this.profilePicture){
-        this.profilePicture = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + this.profilePicture.imageurl;
-      }
-  
-      if(this.profilePicture){
-        this.hasProfilePic = true;
-      } else {
-        this.hasProfilePic = false;
-      }
-    
-      if(this.username){
-        this.needRegister = false;
-        if(this.router.url === '/home'){
-          this.homeclick = true;
-        } else if(this.router.url === '/timeline'){
-          this.timelineclick = true;
-        } else if(this.router.url === '/message-board'){
-          this.messageclick = true;
-        } else {
-          this.profileclick = true;
-        }
-      } else {
+      this.username = localStorage.getItem('username')
+      if(!this.username){
         this.needRegister = true;
+      } else {
+  
+        this.needRegister = false;
+        this.username = localStorage.getItem('username');
+  
+        this.profilePicture = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'));
+    
+        if(this.profilePicture){
+          this.profilePicture = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + this.profilePicture.imageurl;
+  
+            if(this.profilePicture){
+              this.hasProfilePic = true;
+            } else {
+              this.hasProfilePic = false;
+            }
+        }
       }
-
-    }, 500)
-
+    }, 2000)
   }
 
   homeClick(){

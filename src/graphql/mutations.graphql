@@ -12,6 +12,16 @@ mutation CreateProfilePicture(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -26,16 +36,6 @@ mutation CreateProfilePicture(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -54,7 +54,6 @@ mutation CreateProfilePicture(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -78,6 +77,16 @@ mutation UpdateProfilePicture(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -92,16 +101,6 @@ mutation UpdateProfilePicture(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -120,7 +119,6 @@ mutation UpdateProfilePicture(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -144,6 +142,16 @@ mutation DeleteProfilePicture(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -158,16 +166,6 @@ mutation DeleteProfilePicture(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -186,7 +184,6 @@ mutation DeleteProfilePicture(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -207,6 +204,48 @@ mutation CreateProfile(
     relation
     cognitoID
     usernameID
+    Username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
     ImagePosts {
       id
       sorterValue
@@ -243,7 +282,6 @@ mutation CreateProfile(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -254,49 +292,6 @@ mutation CreateProfile(
       posterImage
       createdAt
       updatedAt
-      owner
-    }
-    Username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-        owner
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameProfileId
       owner
     }
     first_name
@@ -318,7 +313,6 @@ mutation CreateProfile(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -332,7 +326,6 @@ mutation CreateProfile(
     birthday
     createdAt
     updatedAt
-    profileUsernameId
     profileImagePostsId
     owner
   }
@@ -347,6 +340,48 @@ mutation UpdateProfile(
     relation
     cognitoID
     usernameID
+    Username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
     ImagePosts {
       id
       sorterValue
@@ -383,7 +418,6 @@ mutation UpdateProfile(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -394,49 +428,6 @@ mutation UpdateProfile(
       posterImage
       createdAt
       updatedAt
-      owner
-    }
-    Username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-        owner
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameProfileId
       owner
     }
     first_name
@@ -458,7 +449,6 @@ mutation UpdateProfile(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -472,7 +462,6 @@ mutation UpdateProfile(
     birthday
     createdAt
     updatedAt
-    profileUsernameId
     profileImagePostsId
     owner
   }
@@ -487,6 +476,48 @@ mutation DeleteProfile(
     relation
     cognitoID
     usernameID
+    Username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
     ImagePosts {
       id
       sorterValue
@@ -523,7 +554,6 @@ mutation DeleteProfile(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -534,49 +564,6 @@ mutation DeleteProfile(
       posterImage
       createdAt
       updatedAt
-      owner
-    }
-    Username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-        owner
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameProfileId
       owner
     }
     first_name
@@ -598,7 +585,6 @@ mutation DeleteProfile(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -612,7 +598,6 @@ mutation DeleteProfile(
     birthday
     createdAt
     updatedAt
-    profileUsernameId
     profileImagePostsId
     owner
   }
@@ -687,7 +672,6 @@ mutation CreateImagePost(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -704,6 +688,16 @@ mutation CreateImagePost(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -718,16 +712,6 @@ mutation CreateImagePost(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -746,7 +730,6 @@ mutation CreateImagePost(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -830,7 +813,6 @@ mutation UpdateImagePost(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -847,6 +829,16 @@ mutation UpdateImagePost(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -861,16 +853,6 @@ mutation UpdateImagePost(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -889,7 +871,6 @@ mutation UpdateImagePost(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -973,7 +954,6 @@ mutation DeleteImagePost(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -990,6 +970,16 @@ mutation DeleteImagePost(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1004,16 +994,6 @@ mutation DeleteImagePost(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1032,7 +1012,6 @@ mutation DeleteImagePost(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1086,7 +1065,6 @@ mutation CreateLikes(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1103,6 +1081,16 @@ mutation CreateLikes(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1117,16 +1105,6 @@ mutation CreateLikes(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1145,7 +1123,6 @@ mutation CreateLikes(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1195,7 +1172,6 @@ mutation UpdateLikes(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1212,6 +1188,16 @@ mutation UpdateLikes(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1226,16 +1212,6 @@ mutation UpdateLikes(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1254,7 +1230,6 @@ mutation UpdateLikes(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1304,7 +1279,6 @@ mutation DeleteLikes(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1321,6 +1295,16 @@ mutation DeleteLikes(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1335,16 +1319,6 @@ mutation DeleteLikes(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1363,7 +1337,6 @@ mutation DeleteLikes(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1413,7 +1386,6 @@ mutation CreateComments(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1430,6 +1402,16 @@ mutation CreateComments(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1444,16 +1426,6 @@ mutation CreateComments(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1472,7 +1444,6 @@ mutation CreateComments(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1525,7 +1496,6 @@ mutation UpdateComments(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1542,6 +1512,16 @@ mutation UpdateComments(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1556,16 +1536,6 @@ mutation UpdateComments(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1584,7 +1554,6 @@ mutation UpdateComments(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1637,7 +1606,6 @@ mutation DeleteComments(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1654,6 +1622,16 @@ mutation DeleteComments(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1668,16 +1646,6 @@ mutation DeleteComments(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1696,7 +1664,6 @@ mutation DeleteComments(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1753,7 +1720,6 @@ mutation CreateUsername(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1772,6 +1738,16 @@ mutation CreateUsername(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1786,16 +1762,6 @@ mutation CreateUsername(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1814,7 +1780,6 @@ mutation CreateUsername(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1869,7 +1834,6 @@ mutation UpdateUsername(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1888,6 +1852,16 @@ mutation UpdateUsername(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1902,16 +1876,6 @@ mutation UpdateUsername(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1930,7 +1894,6 @@ mutation UpdateUsername(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1985,7 +1948,6 @@ mutation DeleteUsername(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -2004,6 +1966,16 @@ mutation DeleteUsername(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -2018,16 +1990,6 @@ mutation DeleteUsername(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -2046,7 +2008,6 @@ mutation DeleteUsername(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -2575,7 +2536,6 @@ mutation CreateChats(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -2592,6 +2552,16 @@ mutation CreateChats(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -2606,16 +2576,6 @@ mutation CreateChats(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -2634,7 +2594,6 @@ mutation CreateChats(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -2731,7 +2690,6 @@ mutation UpdateChats(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -2748,6 +2706,16 @@ mutation UpdateChats(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -2762,16 +2730,6 @@ mutation UpdateChats(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -2790,7 +2748,6 @@ mutation UpdateChats(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -2887,7 +2844,6 @@ mutation DeleteChats(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -2904,6 +2860,16 @@ mutation DeleteChats(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -2918,16 +2884,6 @@ mutation DeleteChats(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -2946,7 +2902,6 @@ mutation DeleteChats(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -3042,7 +2997,6 @@ mutation CreateChatLikes(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -3059,6 +3013,16 @@ mutation CreateChatLikes(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -3073,16 +3037,6 @@ mutation CreateChatLikes(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -3101,7 +3055,6 @@ mutation CreateChatLikes(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -3151,7 +3104,6 @@ mutation UpdateChatLikes(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -3168,6 +3120,16 @@ mutation UpdateChatLikes(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -3182,16 +3144,6 @@ mutation UpdateChatLikes(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -3210,7 +3162,6 @@ mutation UpdateChatLikes(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -3260,7 +3211,6 @@ mutation DeleteChatLikes(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -3277,6 +3227,16 @@ mutation DeleteChatLikes(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -3291,16 +3251,6 @@ mutation DeleteChatLikes(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -3319,7 +3269,6 @@ mutation DeleteChatLikes(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }

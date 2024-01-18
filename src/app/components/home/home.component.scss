@@ -1,62 +1,189 @@
 @import url('https://fonts.googleapis.com/css2?family=Baumans&family=Cormorant&family=Gentium+Book+Plus&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto+Slab:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap');
 
-ion-toolbar {
-  max-width: 550px;
-  margin: auto;
+.wave {
+  animation-name: wave-animation;
+  /* Refers to the name of your @keyframes element below */
+  animation-duration: 2.5s;
+  /* Change to speed up or slow down */
+  animation-iteration-count: infinite;
+  /* Never stop waving :) */
+  transform-origin: 70% 70%;
+  /* Pivot around the bottom-left palm */
+  display: inline-block;
 }
 
-ion-icon {
-  min-width: 24px;
-  min-height: 24px;
-  padding-right: 1em;
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0.0deg)
+  }
 
+  10% {
+    transform: rotate(14.0deg)
+  }
+
+  /* The following five values can be played with to make the waving more or less extreme */
+  20% {
+    transform: rotate(-8.0deg)
+  }
+
+  30% {
+    transform: rotate(14.0deg)
+  }
+
+  40% {
+    transform: rotate(-4.0deg)
+  }
+
+  50% {
+    transform: rotate(10.0deg)
+  }
+
+  60% {
+    transform: rotate(0.0deg)
+  }
+
+  /* Reset for the last half to pause */
+  100% {
+    transform: rotate(0.0deg)
+  }
+}
+
+ion-toolbar {
+  max-width: 550px;
+  padding: 0em 1em;
+  margin: auto;
+
+  ion-note {
+      font-family: 'Cormorant', cursive !important;
+      color: var(--ion-color-dark);
+      font-weight: 400;
+      font-size: 1.5em;
+      display: flex;
+      justify-content: center;
+      letter-spacing: -1px;
+      padding: none;
+    }
+
+  ion-icon {
+    min-width: 24px;
+    min-height: 24px;
+  }
 }
 
 ion-card {
   max-width: 500px;
   padding: 0;
-  margin: 0.5em auto;
+  margin: 0.25em auto;
+
+  .card-headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5em 1em;
+
+    .last-post {
+      font-size: 0.85em;
+    }
+
+    ion-label {
+      font-size: 0.85em;
+    }
+
+    ion-chip {
+      color: var(--ion-color-tertiary) !important;
+    }
+
+    ion-chip:hover {
+      cursor: pointer;
+    }
+
+    ion-icon {
+      margin-left: 0em;
+    }
+
+    .icon-last {
+      margin-left: -0.75em;
+    }
+  }
+
+
+
+  ion-card-subtitle {
+    text-align: center;
+  }
+
+  .image-wrapper {
+    height: 400px;
+
+    img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
 }
 
-ion-title {
-  font-family: 'Cormorant', cursive !important;
-  font-weight: 400;
-  font-size: 1.75em;
-  display: flex;
-  justify-content: center;
-  letter-spacing: -1px;
+.create-profile {
+  min-height: 100%;
+  margin: 0em;
+
+  .card-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 50px;
+
+    img {
+      height: 40vh;
+      width: 100%;
+      object-fit: contain;
+      padding: 0em 2em 0em 3em;
+    }
+
+    ion-card-title {
+      font-family: 'Cormorant', sans-serif !important;
+      justify-content: center;
+      font-size: 2em;
+    }
+  }
 }
+
+// after registration
 
 .hello-div {
-  padding: 0.5em;
-}
-
-ion-card-title {
-    font-family: 'Cormorant', cursive !important;
-    font-weight: 400;
-    font-size: 2.5em;
-    display: flex;
-    justify-content: flex-start;
-    letter-spacing: -1px;
-    margin: 0;
-    padding: 0.15em 0em;
-}
-
-.timeline-button {
   display: flex;
-  max-width: 50%;
-  margin-bottom: 1em;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2em 0.5em;
+
+  ion-card-title {
+      font-family: 'Cormorant', cursive !important;
+      font-weight: 400;
+      font-size: 2.5em;
+      display: flex;
+      justify-content: flex-start;
+      letter-spacing: -1px;
+      margin: 0;
+      padding: 0.15em 0em;
+    }
+
+  small {
+    max-width: 80%;
+    text-align: center;
+  }
 }
-
-
 
 small {
   font-size: 1em;
 }
 
-.row-1 {
+.row-1, .row-2 {
 
   display: flex;
   flex-direction: row;
@@ -64,54 +191,85 @@ small {
   max-width: 500px;
   margin: auto;
 
-  ion-card {
-    width: 50%;
-    margin: 0em 1.25em;
+  ion-button {
+    font-size: 0.9em;
+    padding: 0.5em 0.25em;
   }
 
-  .terms_card {
-    padding: 0em 0em 0em 0em;
+  ion-card {
+    width: 50%;
+  }
+
+  ion-card:hover {
+    cursor: pointer;
+  }
+
+  .rules_card, .why_card {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     margin-left: 0.25em;
-    margin-top: 0em;
-
-    img {
-        max-width: 80%;
-        max-height: 80%;
-        border: 0;
-        padding: 1em;
-      }
+    height: 25vh;
   }
 
-  .members_card {
-    padding: 0em 0em 0em 0em;
+  .members_card, .terms_card {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     margin-right: 0.25em;
-    margin-top: 0em;
-
-    img {
-        max-width: 80%;
-        max-height: 80%;
-        border: 0;
-        padding: 1em;
-      }
+    height: 25vh;
   }
 
   .members, .terms {
     display: flex;
-    margin: 1em auto -1em auto;
     width: 100%;
     height: 100%;
   }
 
+  .members_card:hover, .terms_card:hover {
+    background: var(--ion-color-light);
+  }
+
   .members_div, .terms_div {
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0em;
+
+    .card-footer {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0px;
+      border-top: 1px solid var(--ion-color-light);
+    }
+
+    .icon-last {
+      margin-left: -0.75em;
+    }
+
+    img {
+      height: 70%;
+      padding: 1em 2em;
+    };
+
+    .strong-class {
+      margin-left: 0.25em;
+      color: var(--ion-color-tertiary);
+    }
+
+    ion-note {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   // .members_button, .terms_button {
@@ -180,5 +338,18 @@ ion-row {
   flex-direction: column;
   max-width: 400px;
   margin: 0 auto;
+
+  .error-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 1em;
+  }
+
+  ion-card-title {
+    font-size: 1em;
+    padding: 0 2em;
+  }
 
 }

@@ -1,15 +1,40 @@
 
   <ion-header class="ion-no-border" mode="md">
     <ion-toolbar color="light">
-        <ion-title>
-          Friedman Alexander
-        </ion-title>
+        <ion-note slot="start">Friedman Alexander</ion-note>
         <ion-icon (click)="openMenu()" class="menu-button" slot="end" name="menu"></ion-icon>
     </ion-toolbar>
   </ion-header>
   <ion-content>
 
+    <div class="top" *ngIf="already_registered">
+      <ion-card>
+        <div class="hello-div">
+          <ion-card-title color="tertiary">Hi, {{username}}! &nbsp;<span class="wave">👋</span></ion-card-title>
+          <small>We are excited to share our story with you -- welcome to our family space.</small>
+        </div>
+      </ion-card>
+    </div>
+
       <!-- if user is registered -->
+      <div class="row-1">
+        <ion-card *ngIf="already_registered" class="members_card" (click)="openUsersList()">
+          <div class="members_div">
+            <img class="members" src="../../../assets/undraw_community.svg" />
+            <div class="card-footer">
+              <ion-note color="dark">View all <strong class="strong-class">{{fetaProfileCount}}&nbsp;</strong>members</ion-note>
+            </div>
+          </div>
+        </ion-card>
+        <ion-card *ngIf="already_registered" class="rules_card" (click)="openRules()">
+          <div class="terms_div">
+              <img class="terms" src="../../../assets/undraw_terms.svg" />
+              <div class="card-footer">
+                <ion-note mode="ios" shape="round" color="dark">App Rules & Guidelines</ion-note>
+              </div>
+            </div>
+        </ion-card>
+      </div>
 
       <ion-card *ngIf="!profilepicid && already_registered" color="danger">
         <ion-card-content (click)="uploadProfilePic()">
@@ -22,47 +47,58 @@
         </ion-card-content>
       </ion-card>
       <ion-card *ngIf="already_registered">
-        <img alt="Alexander family photo" src="../../../assets/family-photo-5.png" />
-        <ion-card-content>
-          <div class="hello-div">
-            <ion-card-title>Hi, {{username}}!</ion-card-title>
-            <small>We are excited to share our story with you -- welcome to our family space.</small>
+        <div class="card-headline">
+          <ion-note class="last-post" color="dark" *ngIf="lastTimelinePost"><strong>{{lastTimelinePost.username.username}}'s</strong> latest post on {{lastTimelinePost.createdAt | date: 'MMM d, YYYY' }}</ion-note>
+          <ion-chip (click)="toTimeline()" class="timeline-button" mode="ios" color="tertiary" shape="round">
+            <ion-label>View full timeline</ion-label>
+            <ion-icon color="tertiary" name="chevron-forward"></ion-icon>
+            <ion-icon color="tertiary" class="icon-last" name="chevron-forward"></ion-icon>
+          </ion-chip>
+        </div>
+        <div class="image-wrapper">
+          <div class="swiper-zoom-container">
+            <img *ngIf="!lastTimelinePost.isVideo && mobilePlatform" id="photo_{{lastTimelinePost.imagesID}}" class="swiper-lazy"
+              [src]="lastTimelinePost.mediaSourceMobile" loading="lazy" style="background: var(--ion-color-light)" />
+            <img *ngIf="!lastTimelinePost.isVideo && !mobilePlatform" id="photo_{{lastTimelinePost.imagesID}}" class="swiper-lazy"
+              [src]="lastTimelinePost.mediaSourceDesktop" loading="lazy" style="background: var(--ion-color-light)" />
           </div>
-          <br>
-          <ion-button (click)="toTimeline()" class="timeline-button" mode="ios" color="dark" shape="round">View our timeline</ion-button>
-        </ion-card-content>
+        </div>
       </ion-card>
-      <!-- <div class="row-1">
-        <ion-card *ngIf="already_registered" class="members_card">
-          <img class="members" src="../../../assets/undraw_community.svg" />
-          <ion-card-content>
-            <div class="members_div">
-              <ion-button mode="ios" shape="round" color="light">View all <strong>&nbsp;{{fetaProfileCount}}&nbsp;members</strong></ion-button>
+
+      <div class="row-2">
+        <ion-card *ngIf="already_registered" class="terms_card" (click)="openTerms()">
+          <div class="terms_div">
+            <img class="terms" src="../../../assets/undraw_contract.svg" />
+            <div class="card-footer">
+              <ion-note mode="ios" shape="round" color="dark">Read our terms</ion-note>
             </div>
-          </ion-card-content>
+          </div>
         </ion-card>
-        <ion-card *ngIf="already_registered" class="terms_card">
-          <img class="terms" src="../../../assets/undraw_terms.svg" />
-          <ion-card-content>
-            <div class="terms_div">
-              <ion-button mode="ios" shape="round" color="light">Read our terms</ion-button>
+        <ion-card *ngIf="already_registered" class="why_card" (click)="openTheWhy()">
+          <div class="members_div">
+            <img class="members" src="../../../assets/undraw_product_explainer.svg" />
+            <div class="card-footer">
+              <ion-note color="dark">Why make this app?</ion-note>
             </div>
-          </ion-card-content>
-        </ion-card> -->
-      <!-- </div> -->
+          </div>
+        </ion-card>
+      </div>
+     
 
       <!-- if user is not registered -->
       <ion-grid *ngIf="createProfile && !already_registered">
         <ion-row *ngIf="createProfile">
           <ion-card *ngIf="createProfile" class="create-profile">
-            <img src="../../../assets/undraw_having_fun.svg" />
-            <ion-card-header>
-              <ion-card-title>Welcome to feta!</ion-card-title>
-              <ion-card-subtitle>Let's get started by creating a profile</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content class="ion-padding">
-              <ion-button color="light" class="lets-go-button" (click)="openModal()">Let's Go&nbsp;<ion-icon name="arrow-forward-circle-outline"></ion-icon> </ion-button>
-            </ion-card-content>
+            <div class="card-wrapper">
+              <img src="../../../assets/undraw_family.svg" />
+              <ion-card-header>
+                <ion-card-title>Welcome to our family app!</ion-card-title>
+                <ion-card-subtitle>Let's get started by creating a profile</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content class="ion-padding">
+                <ion-button color="light" class="lets-go-button" (click)="openModal()">Let's Go&nbsp;<ion-icon name="arrow-forward-circle-outline"></ion-icon> </ion-button>
+              </ion-card-content>
+            </div>
           </ion-card>
         </ion-row>
       </ion-grid>
@@ -73,11 +109,14 @@
           <ion-card *ngIf="errorPage" color="danger" class="error-card">
             <ion-card-header>
               <ion-card-subtitle>Login Error</ion-card-subtitle>
-              <ion-card-title>Oh no! Looks like there was an error. </ion-card-title>
+              <ion-card-title>Oh no! It looks like there was an error while trying to log in. </ion-card-title>
             </ion-card-header>
-            <ion-card-content class="ion-padding">
-              <a href="mailto: alexander.d.zachary@gmail.com"><ion-button fill="light">Contact Zach</ion-button></a>
-            </ion-card-content>
+
+            <div class="error-content">
+              <a href="mailto: alexander.d.zachary@gmail.com"><ion-chip color="light">Email Support</ion-chip></a>
+              <ion-chip color="light" (click)="attemptReLogin()">Try logging in again</ion-chip>
+            </div>
+
           </ion-card>
         </ion-row>
       </ion-grid>

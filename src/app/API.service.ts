@@ -136,8 +136,8 @@ export type Profile = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
-  ImagePosts?: ImagePost | null;
   Username?: Username | null;
+  ImagePosts?: ImagePost | null;
   first_name?: string | null;
   last_name?: string | null;
   profilepictureID?: string | null;
@@ -146,8 +146,21 @@ export type Profile = {
   birthday?: string | null;
   createdAt: string;
   updatedAt: string;
-  profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
+  owner?: string | null;
+};
+
+export type Username = {
+  __typename: "Username";
+  id: string;
+  username?: string | null;
+  profileID?: string | null;
+  ImagePosts?: ImagePost | null;
+  Profile?: Profile | null;
+  createdAt: string;
+  updatedAt: string;
+  usernameImagePostsId?: string | null;
+  usernameProfileId?: string | null;
   owner?: string | null;
 };
 
@@ -189,20 +202,6 @@ export type Likes = {
   createdAt: string;
   updatedAt: string;
   imagePostLikesId?: string | null;
-  owner?: string | null;
-};
-
-export type Username = {
-  __typename: "Username";
-  id: string;
-  username?: string | null;
-  profileID?: string | null;
-  ImagePosts?: ImagePost | null;
-  Profile?: Profile | null;
-  createdAt: string;
-  updatedAt: string;
-  usernameImagePostsId?: string | null;
-  usernameProfileId?: string | null;
   owner?: string | null;
 };
 
@@ -250,7 +249,6 @@ export type CreateProfileInput = {
   profilepictureID?: string | null;
   bio?: string | null;
   birthday?: string | null;
-  profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
 };
 
@@ -258,7 +256,7 @@ export type ModelProfileConditionInput = {
   email?: ModelStringInput | null;
   relation?: ModelStringInput | null;
   cognitoID?: ModelStringInput | null;
-  usernameID?: ModelStringInput | null;
+  usernameID?: ModelIDInput | null;
   first_name?: ModelStringInput | null;
   last_name?: ModelStringInput | null;
   profilepictureID?: ModelIDInput | null;
@@ -267,7 +265,6 @@ export type ModelProfileConditionInput = {
   and?: Array<ModelProfileConditionInput | null> | null;
   or?: Array<ModelProfileConditionInput | null> | null;
   not?: ModelProfileConditionInput | null;
-  profileUsernameId?: ModelIDInput | null;
   profileImagePostsId?: ModelIDInput | null;
 };
 
@@ -282,7 +279,6 @@ export type UpdateProfileInput = {
   profilepictureID?: string | null;
   bio?: string | null;
   birthday?: string | null;
-  profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
 };
 
@@ -724,7 +720,7 @@ export type ModelProfileFilterInput = {
   email?: ModelStringInput | null;
   relation?: ModelStringInput | null;
   cognitoID?: ModelStringInput | null;
-  usernameID?: ModelStringInput | null;
+  usernameID?: ModelIDInput | null;
   first_name?: ModelStringInput | null;
   last_name?: ModelStringInput | null;
   profilepictureID?: ModelIDInput | null;
@@ -733,7 +729,6 @@ export type ModelProfileFilterInput = {
   and?: Array<ModelProfileFilterInput | null> | null;
   or?: Array<ModelProfileFilterInput | null> | null;
   not?: ModelProfileFilterInput | null;
-  profileUsernameId?: ModelIDInput | null;
   profileImagePostsId?: ModelIDInput | null;
 };
 
@@ -947,7 +942,7 @@ export type ModelSubscriptionProfileFilterInput = {
   email?: ModelSubscriptionStringInput | null;
   relation?: ModelSubscriptionStringInput | null;
   cognitoID?: ModelSubscriptionStringInput | null;
-  usernameID?: ModelSubscriptionStringInput | null;
+  usernameID?: ModelSubscriptionIDInput | null;
   first_name?: ModelSubscriptionStringInput | null;
   last_name?: ModelSubscriptionStringInput | null;
   profilepictureID?: ModelSubscriptionIDInput | null;
@@ -1070,6 +1065,17 @@ export type CreateProfilePictureMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -1085,17 +1091,6 @@ export type CreateProfilePictureMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -1115,7 +1110,6 @@ export type CreateProfilePictureMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -1137,6 +1131,17 @@ export type UpdateProfilePictureMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -1152,17 +1157,6 @@ export type UpdateProfilePictureMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -1182,7 +1176,6 @@ export type UpdateProfilePictureMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -1204,6 +1197,17 @@ export type DeleteProfilePictureMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -1219,17 +1223,6 @@ export type DeleteProfilePictureMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -1249,7 +1242,6 @@ export type DeleteProfilePictureMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -1267,6 +1259,51 @@ export type CreateProfileMutation = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
+  Username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
@@ -1308,7 +1345,6 @@ export type CreateProfileMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -1319,52 +1355,6 @@ export type CreateProfileMutation = {
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
-  } | null;
-  Username?: {
-    __typename: "Username";
-    id: string;
-    username?: string | null;
-    profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    usernameImagePostsId?: string | null;
-    usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
   first_name?: string | null;
@@ -1388,7 +1378,6 @@ export type CreateProfileMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -1402,7 +1391,6 @@ export type CreateProfileMutation = {
   birthday?: string | null;
   createdAt: string;
   updatedAt: string;
-  profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
   owner?: string | null;
 };
@@ -1414,6 +1402,51 @@ export type UpdateProfileMutation = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
+  Username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
@@ -1455,7 +1488,6 @@ export type UpdateProfileMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -1466,52 +1498,6 @@ export type UpdateProfileMutation = {
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
-  } | null;
-  Username?: {
-    __typename: "Username";
-    id: string;
-    username?: string | null;
-    profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    usernameImagePostsId?: string | null;
-    usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
   first_name?: string | null;
@@ -1535,7 +1521,6 @@ export type UpdateProfileMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -1549,7 +1534,6 @@ export type UpdateProfileMutation = {
   birthday?: string | null;
   createdAt: string;
   updatedAt: string;
-  profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
   owner?: string | null;
 };
@@ -1561,6 +1545,51 @@ export type DeleteProfileMutation = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
+  Username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
@@ -1602,7 +1631,6 @@ export type DeleteProfileMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -1613,52 +1641,6 @@ export type DeleteProfileMutation = {
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
-  } | null;
-  Username?: {
-    __typename: "Username";
-    id: string;
-    username?: string | null;
-    profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    usernameImagePostsId?: string | null;
-    usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
   first_name?: string | null;
@@ -1682,7 +1664,6 @@ export type DeleteProfileMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -1696,7 +1677,6 @@ export type DeleteProfileMutation = {
   birthday?: string | null;
   createdAt: string;
   updatedAt: string;
-  profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
   owner?: string | null;
 };
@@ -1775,7 +1755,6 @@ export type CreateImagePostMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -1793,6 +1772,17 @@ export type CreateImagePostMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -1808,17 +1798,6 @@ export type CreateImagePostMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -1838,7 +1817,6 @@ export type CreateImagePostMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -1926,7 +1904,6 @@ export type UpdateImagePostMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -1944,6 +1921,17 @@ export type UpdateImagePostMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -1959,17 +1947,6 @@ export type UpdateImagePostMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -1989,7 +1966,6 @@ export type UpdateImagePostMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -2077,7 +2053,6 @@ export type DeleteImagePostMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -2095,6 +2070,17 @@ export type DeleteImagePostMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -2110,17 +2096,6 @@ export type DeleteImagePostMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -2140,7 +2115,6 @@ export type DeleteImagePostMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -2194,7 +2168,6 @@ export type CreateLikesMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -2212,6 +2185,17 @@ export type CreateLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -2227,17 +2211,6 @@ export type CreateLikesMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -2257,7 +2230,6 @@ export type CreateLikesMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -2307,7 +2279,6 @@ export type UpdateLikesMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -2325,6 +2296,17 @@ export type UpdateLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -2340,17 +2322,6 @@ export type UpdateLikesMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -2370,7 +2341,6 @@ export type UpdateLikesMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -2420,7 +2390,6 @@ export type DeleteLikesMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -2438,6 +2407,17 @@ export type DeleteLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -2453,17 +2433,6 @@ export type DeleteLikesMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -2483,7 +2452,6 @@ export type DeleteLikesMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -2533,7 +2501,6 @@ export type CreateCommentsMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -2551,6 +2518,17 @@ export type CreateCommentsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -2566,17 +2544,6 @@ export type CreateCommentsMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -2596,7 +2563,6 @@ export type CreateCommentsMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -2649,7 +2615,6 @@ export type UpdateCommentsMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -2667,6 +2632,17 @@ export type UpdateCommentsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -2682,17 +2658,6 @@ export type UpdateCommentsMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -2712,7 +2677,6 @@ export type UpdateCommentsMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -2765,7 +2729,6 @@ export type DeleteCommentsMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -2783,6 +2746,17 @@ export type DeleteCommentsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -2798,17 +2772,6 @@ export type DeleteCommentsMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -2828,7 +2791,6 @@ export type DeleteCommentsMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -2887,7 +2849,6 @@ export type CreateUsernameMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -2907,6 +2868,17 @@ export type CreateUsernameMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -2922,17 +2894,6 @@ export type CreateUsernameMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -2952,7 +2913,6 @@ export type CreateUsernameMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -3009,7 +2969,6 @@ export type UpdateUsernameMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -3029,6 +2988,17 @@ export type UpdateUsernameMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -3044,17 +3014,6 @@ export type UpdateUsernameMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -3074,7 +3033,6 @@ export type UpdateUsernameMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -3131,7 +3089,6 @@ export type DeleteUsernameMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -3151,6 +3108,17 @@ export type DeleteUsernameMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -3166,17 +3134,6 @@ export type DeleteUsernameMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -3196,7 +3153,6 @@ export type DeleteUsernameMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -3725,7 +3681,6 @@ export type CreateChatsMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -3743,6 +3698,17 @@ export type CreateChatsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -3758,17 +3724,6 @@ export type CreateChatsMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -3788,7 +3743,6 @@ export type CreateChatsMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -3890,7 +3844,6 @@ export type UpdateChatsMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -3908,6 +3861,17 @@ export type UpdateChatsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -3923,17 +3887,6 @@ export type UpdateChatsMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -3953,7 +3906,6 @@ export type UpdateChatsMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -4055,7 +4007,6 @@ export type DeleteChatsMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -4073,6 +4024,17 @@ export type DeleteChatsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -4088,17 +4050,6 @@ export type DeleteChatsMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -4118,7 +4069,6 @@ export type DeleteChatsMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -4219,7 +4169,6 @@ export type CreateChatLikesMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -4237,6 +4186,17 @@ export type CreateChatLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -4252,17 +4212,6 @@ export type CreateChatLikesMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -4282,7 +4231,6 @@ export type CreateChatLikesMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -4332,7 +4280,6 @@ export type UpdateChatLikesMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -4350,6 +4297,17 @@ export type UpdateChatLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -4365,17 +4323,6 @@ export type UpdateChatLikesMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -4395,7 +4342,6 @@ export type UpdateChatLikesMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -4445,7 +4391,6 @@ export type DeleteChatLikesMutation = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -4463,6 +4408,17 @@ export type DeleteChatLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -4478,17 +4434,6 @@ export type DeleteChatLikesMutation = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -4508,7 +4453,6 @@ export type DeleteChatLikesMutation = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -4529,6 +4473,17 @@ export type GetProfilePictureQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -4544,17 +4499,6 @@ export type GetProfilePictureQuery = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -4574,7 +4518,6 @@ export type GetProfilePictureQuery = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -4605,7 +4548,6 @@ export type ListProfilePicturesQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -4625,6 +4567,51 @@ export type GetProfileQuery = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
+  Username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
@@ -4666,7 +4653,6 @@ export type GetProfileQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -4677,52 +4663,6 @@ export type GetProfileQuery = {
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
-  } | null;
-  Username?: {
-    __typename: "Username";
-    id: string;
-    username?: string | null;
-    profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    usernameImagePostsId?: string | null;
-    usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
   first_name?: string | null;
@@ -4746,7 +4686,6 @@ export type GetProfileQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -4760,7 +4699,6 @@ export type GetProfileQuery = {
   birthday?: string | null;
   createdAt: string;
   updatedAt: string;
-  profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
   owner?: string | null;
 };
@@ -4774,6 +4712,17 @@ export type ListProfilesQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -4789,17 +4738,6 @@ export type ListProfilesQuery = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -4819,7 +4757,66 @@ export type ListProfilesQuery = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
+    profileImagePostsId?: string | null;
+    owner?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type ProfilesByUsernameIDQuery = {
+  __typename: "ModelProfileConnection";
+  items: Array<{
+    __typename: "Profile";
+    id: string;
+    email?: string | null;
+    relation?: string | null;
+    cognitoID?: string | null;
+    usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    first_name?: string | null;
+    last_name?: string | null;
+    profilepictureID?: string | null;
+    profilepicture?: {
+      __typename: "ProfilePicture";
+      id: string;
+      imageurl?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureProfileId?: string | null;
+      owner?: string | null;
+    } | null;
+    bio?: string | null;
+    birthday?: string | null;
+    createdAt: string;
+    updatedAt: string;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null>;
@@ -4835,6 +4832,17 @@ export type ProfilesByProfilepictureIDQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -4850,17 +4858,6 @@ export type ProfilesByProfilepictureIDQuery = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -4880,7 +4877,6 @@ export type ProfilesByProfilepictureIDQuery = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null>;
@@ -4961,7 +4957,6 @@ export type GetImagePostQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -4979,6 +4974,17 @@ export type GetImagePostQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -4994,17 +5000,6 @@ export type GetImagePostQuery = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -5024,7 +5019,6 @@ export type GetImagePostQuery = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -5081,7 +5075,6 @@ export type ListImagePostsQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5107,14 +5100,10 @@ export type ImagePostsBySorterValueAndTime_postedQuery = {
     time_posted?: string | null;
     likes?: {
       __typename: "ModelLikesConnection";
-      id: string;
-      username?: string | null;
       nextToken?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentsConnection";
-      id: string;
-      username?: string | null;
       nextToken?: string | null;
     } | null;
     usernameID: string;
@@ -5144,7 +5133,6 @@ export type ImagePostsBySorterValueAndTime_postedQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5203,7 +5191,6 @@ export type ImagePostsByUsernameIDQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5262,7 +5249,6 @@ export type ImagePostsByProfileIDQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5318,7 +5304,6 @@ export type GetLikesQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5336,6 +5321,17 @@ export type GetLikesQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -5351,17 +5347,6 @@ export type GetLikesQuery = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -5381,7 +5366,6 @@ export type GetLikesQuery = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -5423,7 +5407,6 @@ export type ListLikesQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5467,7 +5450,6 @@ export type LikesByUsernameIDQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5511,7 +5493,6 @@ export type LikesByProfileIDQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5563,7 +5544,6 @@ export type GetCommentsQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5581,6 +5561,17 @@ export type GetCommentsQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -5596,17 +5587,6 @@ export type GetCommentsQuery = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -5626,7 +5606,6 @@ export type GetCommentsQuery = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -5671,7 +5650,6 @@ export type ListCommentsQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5718,7 +5696,6 @@ export type CommentsByProfileIDQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5779,7 +5756,6 @@ export type GetUsernameQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -5799,6 +5775,17 @@ export type GetUsernameQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -5814,17 +5801,6 @@ export type GetUsernameQuery = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -5844,7 +5820,6 @@ export type GetUsernameQuery = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -5893,7 +5868,6 @@ export type ListUsernamesQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -6328,7 +6302,6 @@ export type GetChatsQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -6346,6 +6319,17 @@ export type GetChatsQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -6361,17 +6345,6 @@ export type GetChatsQuery = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -6391,7 +6364,6 @@ export type GetChatsQuery = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -6485,7 +6457,6 @@ export type ListChatsQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -6546,7 +6517,6 @@ export type ChatsBySortKeyAndTimePostedQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -6607,7 +6577,6 @@ export type ChatsByLiveGameChatRoomIDAndTimePostedQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -6675,7 +6644,6 @@ export type GetChatLikesQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -6693,6 +6661,17 @@ export type GetChatLikesQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -6708,17 +6687,6 @@ export type GetChatLikesQuery = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -6738,7 +6706,6 @@ export type GetChatLikesQuery = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -6780,7 +6747,6 @@ export type ListChatLikesQuery = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -6803,6 +6769,17 @@ export type OnCreateProfilePictureSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -6818,17 +6795,6 @@ export type OnCreateProfilePictureSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -6848,7 +6814,6 @@ export type OnCreateProfilePictureSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -6870,6 +6835,17 @@ export type OnUpdateProfilePictureSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -6885,17 +6861,6 @@ export type OnUpdateProfilePictureSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -6915,7 +6880,6 @@ export type OnUpdateProfilePictureSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -6937,6 +6901,17 @@ export type OnDeleteProfilePictureSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -6952,17 +6927,6 @@ export type OnDeleteProfilePictureSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -6982,7 +6946,6 @@ export type OnDeleteProfilePictureSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -7000,6 +6963,51 @@ export type OnCreateProfileSubscription = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
+  Username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
@@ -7041,7 +7049,6 @@ export type OnCreateProfileSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -7052,52 +7059,6 @@ export type OnCreateProfileSubscription = {
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
-  } | null;
-  Username?: {
-    __typename: "Username";
-    id: string;
-    username?: string | null;
-    profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    usernameImagePostsId?: string | null;
-    usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
   first_name?: string | null;
@@ -7121,7 +7082,6 @@ export type OnCreateProfileSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -7135,7 +7095,6 @@ export type OnCreateProfileSubscription = {
   birthday?: string | null;
   createdAt: string;
   updatedAt: string;
-  profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
   owner?: string | null;
 };
@@ -7147,6 +7106,51 @@ export type OnUpdateProfileSubscription = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
+  Username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
@@ -7188,7 +7192,6 @@ export type OnUpdateProfileSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -7199,52 +7202,6 @@ export type OnUpdateProfileSubscription = {
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
-  } | null;
-  Username?: {
-    __typename: "Username";
-    id: string;
-    username?: string | null;
-    profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    usernameImagePostsId?: string | null;
-    usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
   first_name?: string | null;
@@ -7268,7 +7225,6 @@ export type OnUpdateProfileSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -7282,7 +7238,6 @@ export type OnUpdateProfileSubscription = {
   birthday?: string | null;
   createdAt: string;
   updatedAt: string;
-  profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
   owner?: string | null;
 };
@@ -7294,6 +7249,51 @@ export type OnDeleteProfileSubscription = {
   relation?: string | null;
   cognitoID?: string | null;
   usernameID?: string | null;
+  Username?: {
+    __typename: "Username";
+    id: string;
+    username?: string | null;
+    profileID?: string | null;
+    ImagePosts?: {
+      __typename: "ImagePost";
+      id: string;
+      sorterValue?: string | null;
+      description?: string | null;
+      time_posted?: string | null;
+      usernameID: string;
+      profileID: string;
+      s3_key?: string | null;
+      mediaSourceMobile?: string | null;
+      mediaSourceDesktop?: string | null;
+      downloadableVideo?: string | null;
+      posterImage?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null;
+    Profile?: {
+      __typename: "Profile";
+      id: string;
+      email?: string | null;
+      relation?: string | null;
+      cognitoID?: string | null;
+      usernameID?: string | null;
+      first_name?: string | null;
+      last_name?: string | null;
+      profilepictureID?: string | null;
+      bio?: string | null;
+      birthday?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      profileImagePostsId?: string | null;
+      owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    usernameImagePostsId?: string | null;
+    usernameProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   ImagePosts?: {
     __typename: "ImagePost";
     id: string;
@@ -7335,7 +7335,6 @@ export type OnDeleteProfileSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -7346,52 +7345,6 @@ export type OnDeleteProfileSubscription = {
     posterImage?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
-  } | null;
-  Username?: {
-    __typename: "Username";
-    id: string;
-    username?: string | null;
-    profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileUsernameId?: string | null;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    usernameImagePostsId?: string | null;
-    usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
   first_name?: string | null;
@@ -7415,7 +7368,6 @@ export type OnDeleteProfileSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -7429,7 +7381,6 @@ export type OnDeleteProfileSubscription = {
   birthday?: string | null;
   createdAt: string;
   updatedAt: string;
-  profileUsernameId?: string | null;
   profileImagePostsId?: string | null;
   owner?: string | null;
 };
@@ -7508,7 +7459,6 @@ export type OnCreateImagePostSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -7526,6 +7476,17 @@ export type OnCreateImagePostSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -7541,17 +7502,6 @@ export type OnCreateImagePostSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -7571,7 +7521,6 @@ export type OnCreateImagePostSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -7659,7 +7608,6 @@ export type OnUpdateImagePostSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -7677,6 +7625,17 @@ export type OnUpdateImagePostSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -7692,17 +7651,6 @@ export type OnUpdateImagePostSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -7722,7 +7670,6 @@ export type OnUpdateImagePostSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -7810,7 +7757,6 @@ export type OnDeleteImagePostSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -7828,6 +7774,17 @@ export type OnDeleteImagePostSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -7843,17 +7800,6 @@ export type OnDeleteImagePostSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -7873,7 +7819,6 @@ export type OnDeleteImagePostSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -7927,7 +7872,6 @@ export type OnCreateLikesSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -7945,6 +7889,17 @@ export type OnCreateLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -7960,17 +7915,6 @@ export type OnCreateLikesSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -7990,7 +7934,6 @@ export type OnCreateLikesSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -8040,7 +7983,6 @@ export type OnUpdateLikesSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -8058,6 +8000,17 @@ export type OnUpdateLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -8073,17 +8026,6 @@ export type OnUpdateLikesSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -8103,7 +8045,6 @@ export type OnUpdateLikesSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -8153,7 +8094,6 @@ export type OnDeleteLikesSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -8171,6 +8111,17 @@ export type OnDeleteLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -8186,17 +8137,6 @@ export type OnDeleteLikesSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -8216,7 +8156,6 @@ export type OnDeleteLikesSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -8266,7 +8205,6 @@ export type OnCreateCommentsSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -8284,6 +8222,17 @@ export type OnCreateCommentsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -8299,17 +8248,6 @@ export type OnCreateCommentsSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -8329,7 +8267,6 @@ export type OnCreateCommentsSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -8382,7 +8319,6 @@ export type OnUpdateCommentsSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -8400,6 +8336,17 @@ export type OnUpdateCommentsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -8415,17 +8362,6 @@ export type OnUpdateCommentsSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -8445,7 +8381,6 @@ export type OnUpdateCommentsSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -8498,7 +8433,6 @@ export type OnDeleteCommentsSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -8516,6 +8450,17 @@ export type OnDeleteCommentsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -8531,17 +8476,6 @@ export type OnDeleteCommentsSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -8561,7 +8495,6 @@ export type OnDeleteCommentsSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -8620,7 +8553,6 @@ export type OnCreateUsernameSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -8640,6 +8572,17 @@ export type OnCreateUsernameSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -8655,17 +8598,6 @@ export type OnCreateUsernameSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -8685,7 +8617,6 @@ export type OnCreateUsernameSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -8742,7 +8673,6 @@ export type OnUpdateUsernameSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -8762,6 +8692,17 @@ export type OnUpdateUsernameSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -8777,17 +8718,6 @@ export type OnUpdateUsernameSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -8807,7 +8737,6 @@ export type OnUpdateUsernameSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -8864,7 +8793,6 @@ export type OnDeleteUsernameSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -8884,6 +8812,17 @@ export type OnDeleteUsernameSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -8899,17 +8838,6 @@ export type OnDeleteUsernameSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -8929,7 +8857,6 @@ export type OnDeleteUsernameSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -9458,7 +9385,6 @@ export type OnCreateChatsSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -9476,6 +9402,17 @@ export type OnCreateChatsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -9491,17 +9428,6 @@ export type OnCreateChatsSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -9521,7 +9447,6 @@ export type OnCreateChatsSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -9623,7 +9548,6 @@ export type OnUpdateChatsSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -9641,6 +9565,17 @@ export type OnUpdateChatsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -9656,17 +9591,6 @@ export type OnUpdateChatsSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -9686,7 +9610,6 @@ export type OnUpdateChatsSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -9788,7 +9711,6 @@ export type OnDeleteChatsSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -9806,6 +9728,17 @@ export type OnDeleteChatsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -9821,17 +9754,6 @@ export type OnDeleteChatsSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -9851,7 +9773,6 @@ export type OnDeleteChatsSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -9952,7 +9873,6 @@ export type OnCreateChatLikesSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -9970,6 +9890,17 @@ export type OnCreateChatLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -9985,17 +9916,6 @@ export type OnCreateChatLikesSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -10015,7 +9935,6 @@ export type OnCreateChatLikesSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -10065,7 +9984,6 @@ export type OnUpdateChatLikesSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -10083,6 +10001,17 @@ export type OnUpdateChatLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -10098,17 +10027,6 @@ export type OnUpdateChatLikesSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -10128,7 +10046,6 @@ export type OnUpdateChatLikesSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -10178,7 +10095,6 @@ export type OnDeleteChatLikesSubscription = {
       birthday?: string | null;
       createdAt: string;
       updatedAt: string;
-      profileUsernameId?: string | null;
       profileImagePostsId?: string | null;
       owner?: string | null;
     } | null;
@@ -10196,6 +10112,17 @@ export type OnDeleteChatLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
+    Username?: {
+      __typename: "Username";
+      id: string;
+      username?: string | null;
+      profileID?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      usernameImagePostsId?: string | null;
+      usernameProfileId?: string | null;
+      owner?: string | null;
+    } | null;
     ImagePosts?: {
       __typename: "ImagePost";
       id: string;
@@ -10211,17 +10138,6 @@ export type OnDeleteChatLikesSubscription = {
       posterImage?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
       owner?: string | null;
     } | null;
     first_name?: string | null;
@@ -10241,7 +10157,6 @@ export type OnDeleteChatLikesSubscription = {
     birthday?: string | null;
     createdAt: string;
     updatedAt: string;
-    profileUsernameId?: string | null;
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
@@ -10250,7 +10165,6 @@ export type OnDeleteChatLikesSubscription = {
   chatsLikesId?: string | null;
   owner?: string | null;
 };
-
 // ZACH CREATED
 export type GetUsernameDataQuery = {
   __typename: "Username";
@@ -10675,7 +10589,6 @@ export class APIService {
     return <GetProfilePictureQuery>response.data.listProfilePictures.items[0];
   }
 
-  
   async CreateProfilePicture(
     input: CreateProfilePictureInput,
     condition?: ModelProfilePictureConditionInput
@@ -10692,6 +10605,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -10707,17 +10631,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -10737,7 +10650,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -10775,6 +10687,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -10790,17 +10713,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -10820,7 +10732,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -10858,6 +10769,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -10873,17 +10795,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -10903,7 +10814,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -10937,6 +10847,51 @@ export class APIService {
           relation
           cognitoID
           usernameID
+          Username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
           ImagePosts {
             __typename
             id
@@ -10978,7 +10933,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -10989,52 +10943,6 @@ export class APIService {
             posterImage
             createdAt
             updatedAt
-            owner
-          }
-          Username {
-            __typename
-            id
-            username
-            profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-              owner
-            }
-            createdAt
-            updatedAt
-            usernameImagePostsId
-            usernameProfileId
             owner
           }
           first_name
@@ -11058,7 +10966,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -11072,7 +10979,6 @@ export class APIService {
           birthday
           createdAt
           updatedAt
-          profileUsernameId
           profileImagePostsId
           owner
         }
@@ -11100,6 +11006,51 @@ export class APIService {
           relation
           cognitoID
           usernameID
+          Username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
           ImagePosts {
             __typename
             id
@@ -11141,7 +11092,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -11152,52 +11102,6 @@ export class APIService {
             posterImage
             createdAt
             updatedAt
-            owner
-          }
-          Username {
-            __typename
-            id
-            username
-            profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-              owner
-            }
-            createdAt
-            updatedAt
-            usernameImagePostsId
-            usernameProfileId
             owner
           }
           first_name
@@ -11221,7 +11125,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -11235,7 +11138,6 @@ export class APIService {
           birthday
           createdAt
           updatedAt
-          profileUsernameId
           profileImagePostsId
           owner
         }
@@ -11263,6 +11165,51 @@ export class APIService {
           relation
           cognitoID
           usernameID
+          Username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
           ImagePosts {
             __typename
             id
@@ -11304,7 +11251,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -11315,52 +11261,6 @@ export class APIService {
             posterImage
             createdAt
             updatedAt
-            owner
-          }
-          Username {
-            __typename
-            id
-            username
-            profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-              owner
-            }
-            createdAt
-            updatedAt
-            usernameImagePostsId
-            usernameProfileId
             owner
           }
           first_name
@@ -11384,7 +11284,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -11398,7 +11297,6 @@ export class APIService {
           birthday
           createdAt
           updatedAt
-          profileUsernameId
           profileImagePostsId
           owner
         }
@@ -11493,7 +11391,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -11511,6 +11408,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -11526,17 +11434,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -11556,7 +11453,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -11660,7 +11556,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -11678,6 +11573,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -11693,17 +11599,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -11723,7 +11618,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -11827,7 +11721,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -11845,6 +11738,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -11860,17 +11764,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -11890,7 +11783,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -11960,7 +11852,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -11978,6 +11869,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -11993,17 +11895,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -12023,7 +11914,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -12089,7 +11979,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -12107,6 +11996,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -12122,17 +12022,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -12152,7 +12041,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -12218,7 +12106,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -12236,6 +12123,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -12251,17 +12149,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -12281,7 +12168,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -12347,7 +12233,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -12365,6 +12250,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -12380,17 +12276,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -12410,7 +12295,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -12479,7 +12363,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -12497,6 +12380,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -12512,17 +12406,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -12542,7 +12425,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -12611,7 +12493,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -12629,6 +12510,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -12644,17 +12536,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -12674,7 +12555,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -12749,7 +12629,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -12769,6 +12648,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -12784,17 +12674,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -12814,7 +12693,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -12887,7 +12765,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -12907,6 +12784,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -12922,17 +12810,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -12952,7 +12829,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -13025,7 +12901,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -13045,6 +12920,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -13060,17 +12946,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -13090,7 +12965,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -13779,7 +13653,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -13797,6 +13670,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -13812,17 +13696,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -13842,7 +13715,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -13960,7 +13832,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -13978,6 +13849,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -13993,17 +13875,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -14023,7 +13894,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -14141,7 +14011,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -14159,6 +14028,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -14174,17 +14054,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -14204,7 +14073,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -14321,7 +14189,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -14339,6 +14206,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -14354,17 +14232,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -14384,7 +14251,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -14450,7 +14316,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -14468,6 +14333,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -14483,17 +14359,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -14513,7 +14378,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -14579,7 +14443,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -14597,6 +14460,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -14612,17 +14486,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -14642,7 +14505,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -14676,6 +14538,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -14691,17 +14564,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -14721,7 +14583,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -14766,7 +14627,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -14803,6 +14663,51 @@ export class APIService {
           relation
           cognitoID
           usernameID
+          Username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
           ImagePosts {
             __typename
             id
@@ -14844,7 +14749,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -14855,52 +14759,6 @@ export class APIService {
             posterImage
             createdAt
             updatedAt
-            owner
-          }
-          Username {
-            __typename
-            id
-            username
-            profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-              owner
-            }
-            createdAt
-            updatedAt
-            usernameImagePostsId
-            usernameProfileId
             owner
           }
           first_name
@@ -14924,7 +14782,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -14938,7 +14795,6 @@ export class APIService {
           birthday
           createdAt
           updatedAt
-          profileUsernameId
           profileImagePostsId
           owner
         }
@@ -14966,6 +14822,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -14981,17 +14848,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -15011,7 +14867,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -15033,15 +14888,15 @@ export class APIService {
     )) as any;
     return <ListProfilesQuery>response.data.listProfiles;
   }
-  async ProfilesByProfilepictureID(
-    profilepictureID: string,
+  async ProfilesByUsernameID(
+    usernameID: string,
     sortDirection?: ModelSortDirection,
     filter?: ModelProfileFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ProfilesByProfilepictureIDQuery> {
-    const statement = `query ProfilesByProfilepictureID($profilepictureID: ID!, $sortDirection: ModelSortDirection, $filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
-        profilesByProfilepictureID(profilepictureID: $profilepictureID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<ProfilesByUsernameIDQuery> {
+    const statement = `query ProfilesByUsernameID($usernameID: ID!, $sortDirection: ModelSortDirection, $filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
+        profilesByUsernameID(usernameID: $usernameID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
@@ -15050,6 +14905,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -15065,17 +14931,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -15095,7 +14950,94 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
+            profileImagePostsId
+            owner
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      usernameID
+    };
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ProfilesByUsernameIDQuery>response.data.profilesByUsernameID;
+  }
+  async ProfilesByProfilepictureID(
+    profilepictureID: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelProfileFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ProfilesByProfilepictureIDQuery> {
+    const statement = `query ProfilesByProfilepictureID($profilepictureID: ID!, $sortDirection: ModelSortDirection, $filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
+        profilesByProfilepictureID(profilepictureID: $profilepictureID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            email
+            relation
+            cognitoID
+            usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            first_name
+            last_name
+            profilepictureID
+            profilepicture {
+              __typename
+              id
+              imageurl
+              profileID
+              createdAt
+              updatedAt
+              profilePictureProfileId
+              owner
+            }
+            bio
+            birthday
+            createdAt
+            updatedAt
             profileImagePostsId
             owner
           }
@@ -15200,7 +15142,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -15218,6 +15159,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -15233,17 +15185,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -15263,7 +15204,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -15334,7 +15274,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -15384,16 +15323,10 @@ export class APIService {
             time_posted
             likes {
               __typename
-              items {
-                id
-              }
               nextToken
             }
             comments {
               __typename
-              items {
-                id
-              }
               nextToken
             }
             usernameID
@@ -15402,8 +15335,6 @@ export class APIService {
               id
               username
               profileID
-              createdAt
-              updatedAt
               usernameImagePostsId
               usernameProfileId
               owner
@@ -15426,7 +15357,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -15463,7 +15393,6 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    console.log(response.data.imagePostsBySorterValueAndTime_posted)
     return <ImagePostsBySorterValueAndTime_postedQuery>(
       response.data.imagePostsBySorterValueAndTime_posted
     );
@@ -15519,7 +15448,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -15606,7 +15534,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -15684,7 +15611,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -15702,6 +15628,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -15717,17 +15654,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -15747,7 +15673,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -15803,7 +15728,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -15870,7 +15794,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -15942,7 +15865,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -16016,7 +15938,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -16034,6 +15955,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -16049,17 +15981,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -16079,7 +16000,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -16138,7 +16058,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -16208,7 +16127,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -16291,7 +16209,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -16311,6 +16228,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -16326,17 +16254,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -16356,7 +16273,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -16419,7 +16335,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -17062,7 +16977,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -17080,6 +16994,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -17095,17 +17020,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -17125,7 +17039,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -17233,7 +17146,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -17318,7 +17230,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -17413,7 +17324,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -17508,7 +17418,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -17526,6 +17435,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -17541,17 +17461,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -17571,7 +17480,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -17627,7 +17535,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -17674,6 +17581,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -17689,17 +17607,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -17719,7 +17626,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -17766,6 +17672,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -17781,17 +17698,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -17811,7 +17717,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -17858,6 +17763,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -17873,17 +17789,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -17903,7 +17808,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -17944,6 +17848,51 @@ export class APIService {
           relation
           cognitoID
           usernameID
+          Username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
           ImagePosts {
             __typename
             id
@@ -17985,7 +17934,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -17996,52 +17944,6 @@ export class APIService {
             posterImage
             createdAt
             updatedAt
-            owner
-          }
-          Username {
-            __typename
-            id
-            username
-            profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-              owner
-            }
-            createdAt
-            updatedAt
-            usernameImagePostsId
-            usernameProfileId
             owner
           }
           first_name
@@ -18065,7 +17967,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -18079,7 +17980,6 @@ export class APIService {
           birthday
           createdAt
           updatedAt
-          profileUsernameId
           profileImagePostsId
           owner
         }
@@ -18112,6 +18012,51 @@ export class APIService {
           relation
           cognitoID
           usernameID
+          Username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
           ImagePosts {
             __typename
             id
@@ -18153,7 +18098,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -18164,52 +18108,6 @@ export class APIService {
             posterImage
             createdAt
             updatedAt
-            owner
-          }
-          Username {
-            __typename
-            id
-            username
-            profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-              owner
-            }
-            createdAt
-            updatedAt
-            usernameImagePostsId
-            usernameProfileId
             owner
           }
           first_name
@@ -18233,7 +18131,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -18247,7 +18144,6 @@ export class APIService {
           birthday
           createdAt
           updatedAt
-          profileUsernameId
           profileImagePostsId
           owner
         }
@@ -18280,6 +18176,51 @@ export class APIService {
           relation
           cognitoID
           usernameID
+          Username {
+            __typename
+            id
+            username
+            profileID
+            ImagePosts {
+              __typename
+              id
+              sorterValue
+              description
+              time_posted
+              usernameID
+              profileID
+              s3_key
+              mediaSourceMobile
+              mediaSourceDesktop
+              downloadableVideo
+              posterImage
+              createdAt
+              updatedAt
+              owner
+            }
+            Profile {
+              __typename
+              id
+              email
+              relation
+              cognitoID
+              usernameID
+              first_name
+              last_name
+              profilepictureID
+              bio
+              birthday
+              createdAt
+              updatedAt
+              profileImagePostsId
+              owner
+            }
+            createdAt
+            updatedAt
+            usernameImagePostsId
+            usernameProfileId
+            owner
+          }
           ImagePosts {
             __typename
             id
@@ -18321,7 +18262,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -18332,52 +18272,6 @@ export class APIService {
             posterImage
             createdAt
             updatedAt
-            owner
-          }
-          Username {
-            __typename
-            id
-            username
-            profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileUsernameId
-              profileImagePostsId
-              owner
-            }
-            createdAt
-            updatedAt
-            usernameImagePostsId
-            usernameProfileId
             owner
           }
           first_name
@@ -18401,7 +18295,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -18415,7 +18308,6 @@ export class APIService {
           birthday
           createdAt
           updatedAt
-          profileUsernameId
           profileImagePostsId
           owner
         }
@@ -18515,7 +18407,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -18533,6 +18424,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -18548,17 +18450,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -18578,7 +18469,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -18687,7 +18577,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -18705,6 +18594,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -18720,17 +18620,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -18750,7 +18639,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -18859,7 +18747,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -18877,6 +18764,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -18892,17 +18790,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -18922,7 +18809,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -18997,7 +18883,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -19015,6 +18900,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -19030,17 +18926,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -19060,7 +18945,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -19131,7 +19015,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -19149,6 +19032,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -19164,17 +19058,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -19194,7 +19077,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -19265,7 +19147,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -19283,6 +19164,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -19298,17 +19190,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -19328,7 +19209,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -19399,7 +19279,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -19417,6 +19296,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -19432,17 +19322,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -19462,7 +19341,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -19536,7 +19414,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -19554,6 +19431,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -19569,17 +19457,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -19599,7 +19476,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -19673,7 +19549,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -19691,6 +19566,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -19706,17 +19592,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -19736,7 +19611,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -19816,7 +19690,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -19836,6 +19709,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -19851,17 +19735,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -19881,7 +19754,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -19959,7 +19831,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -19979,6 +19850,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -19994,17 +19876,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -20024,7 +19895,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -20102,7 +19972,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -20122,6 +19991,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -20137,17 +20017,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -20167,7 +20036,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -20918,7 +20786,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -20936,6 +20803,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -20951,17 +20829,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -20981,7 +20848,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -21104,7 +20970,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -21122,6 +20987,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -21137,17 +21013,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -21167,7 +21032,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -21290,7 +21154,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -21308,6 +21171,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -21323,17 +21197,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -21353,7 +21216,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -21475,7 +21337,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -21493,6 +21354,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -21508,17 +21380,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -21538,7 +21399,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -21609,7 +21469,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -21627,6 +21486,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -21642,17 +21512,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -21672,7 +21531,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }
@@ -21743,7 +21601,6 @@ export class APIService {
               birthday
               createdAt
               updatedAt
-              profileUsernameId
               profileImagePostsId
               owner
             }
@@ -21761,6 +21618,17 @@ export class APIService {
             relation
             cognitoID
             usernameID
+            Username {
+              __typename
+              id
+              username
+              profileID
+              createdAt
+              updatedAt
+              usernameImagePostsId
+              usernameProfileId
+              owner
+            }
             ImagePosts {
               __typename
               id
@@ -21776,17 +21644,6 @@ export class APIService {
               posterImage
               createdAt
               updatedAt
-              owner
-            }
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
               owner
             }
             first_name
@@ -21806,7 +21663,6 @@ export class APIService {
             birthday
             createdAt
             updatedAt
-            profileUsernameId
             profileImagePostsId
             owner
           }

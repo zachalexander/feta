@@ -5,24 +5,89 @@
 10) Test updates to profile content
 11) Add note to home page - Feta rules and information
 12) Add settings modal
-13) Fix username capitalization
 
 
 Code Review
 1) Login page
-2) Create Account page
-3) Home page
-4) Timeline page
-4a) Timeline component
-4b) Add media component
-4c) Post settings 
-4d) Like button
-4e) Comment component
-5) Profile page
-5a) Edit profile component
-5b) Change profile photo
-5c) Change username
+    -Thursday, January 11th
+        -Too busy with Noah
 
+2) Create Account page and Login page
+    -Friday, January 12th
+        -Go through all aspects of creating an account, ensure that all data is saved correctly -- DONE
+        -fix any bugs -- DONE
+        -ensure that local storage is set properly, and deleted properly on logout -- DONE
+        -fix image height of main image and layout -- DONE
+        -add back in other parts of opening page for navigation -- DONE
+3) Home page
+    -Thursday, January 18th
+        -make sure data loads on tabs module once logged in -- DONE
+        -More edits to home page layout, make it accessible and easy to use -- DONE
+        -ensure that only the three tabs and tabs module working correctly -- DONE
+        -add notes for rules and information -- DONE
+        -fix error page layout and content -- DONE
+        -fill in terms of service, rules, and the why ***
+        -optimize for latest video post ***
+4) Timeline page
+4a) Timeline page and component
+    -Monday, January 22nd
+        -finish up (***)
+        -Make sure timeline data loads correctly, organize the api services
+        -streamline layout and coding a little
+        -Ensure subscriptions are working properly
+            -create, update, delete are set accordingly
+        -Make sure videos and images are loading correctly and are optimized
+4b) Add media component
+    -Tuesday, January 23rd
+        -Make sure photos are saved as ImageKit paths and loaded correctly
+        -Update video uploads to make it more UI-friendly
+        -Update the layout of the final page before hitting submit to make it more mobile-friendly
+4c) Post settings 
+    -Thursday, January 25th
+        -Add back in functionality to share, delete, and update posts
+        -ensure that the share function is working correctly and reduce load time if possible
+4d) Like button
+    -Friday, January 26th
+        -Make sure like button connects with backend Likes model correctly
+        -Ensure that data can be connected back to each post
+        -Make sure subscription is working correctly
+4e) Comment component
+    -Monday, January 29th
+        -Make sure comments connect with backend Comments model correctly
+        -Ensure data can be connected back to each post
+        -Make sure subscription is working correctly
+        -Enable edit and delete function of comment
+5) Profile page
+    -Tuesday, January 30th and Thursday, February 1st
+        -Ensure that data loads back correctly
+        -Optimize load time by adding scroll feature so that first 9 posts load
+        -Create profile page for non-content-creating users
+5a) Edit profile component
+    -Friday, February 2nd
+        -Ensure that all aspects are working correctly
+        -Make any updates to the modal for non-content-creating users
+5b) Change profile photo
+    -Monday, February 5th
+        -Ensure that profile changes are updating correctly
+        -Make sure there aren't any caching issues
+5c) Change username
+    -Monday, February 5th
+        -Ensure that profile changes are updating correctly
+        -Make sure there aren't any caching issues
+
+6) Final checks
+    -Tuesday, February 6th
+        -Do checks throughout application to make sure that full runs are working
+        -Start from user creation all the way through and do all steps to check for bugs
+
+7) Submit to app store
+    -Thursday, February 8th and Friday, February 9th
+        -First submission attempt to app store
+
+8) Add better UI functionality to non-mobile users
+    -Monday, February 12th
+        -Check all pages to see if updates to larger screens needed
+        -Send updates to prod version of application
 
 #E7E9EA
 

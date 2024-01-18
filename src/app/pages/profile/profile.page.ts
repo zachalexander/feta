@@ -85,7 +85,7 @@ export class ProfilePage {
       this.profilePhoto = false;
     }
 
-    if(this.profileData.relation === 'Feta Creator'){
+    if(this.profileData.relation === 'App Creator'){
       this.admin = true;
     } else {
       this.admin = false;

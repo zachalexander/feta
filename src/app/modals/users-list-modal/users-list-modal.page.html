@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title>Members List</ion-title>
+    <ion-note color="tertiary" slot="start" (click)="backToWall()" class="cancel">&nbsp;&nbsp;<ion-icon name="chevron-back-outline"></ion-icon>Back</ion-note>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-list>
+  <ion-item *ngFor="let user of userList">
+    <div class="list-items">
+      <div class="avatar-names-div">
+        <ion-avatar>
+          <img *ngIf="user.profilepicture.imageurl" id="avatar" src="https://ik.imagekit.io/bkf4g8lrl/profile-photos/{{user.profilepicture.imageurl}}">
+          <img *ngIf="!user.profilepicture.imageurl"id="avatar" src="../../../assets/avatar.svg">
+        </ion-avatar>
+        <div class="username-info">
+          <ion-label class="username-label-username">{{user.Username.username}}</ion-label>
+          <div class="username-full-name">
+            <ion-label class="username-label-full-name">{{user.first_name}}</ion-label>&nbsp;<ion-label class="username-label-full-name">{{user.last_name}}</ion-label>
+          </div>
+        </div>
+      </div>
+      <div class="chip-div">
+        <ion-chip position="end" (click)="viewProfile(user.Username.username)" color="tertiary">View Profile<ion-icon name="chevron-forward-outline" size="small"></ion-icon></ion-chip>
+      </div>
+    </div>
+  </ion-item>
+</ion-list>
+</ion-content>

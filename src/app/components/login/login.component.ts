@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticatorService } from '@aws-amplify/ui-angular';
 import { Amplify, Auth } from 'aws-amplify';
 import awsExports from './../../../aws-exports';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { bindCallback } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   clicked = false;
 
-  constructor(public authenticator: AuthenticatorService, private router: Router, public loadingController: LoadingController) { 
+  constructor(public authenticator: AuthenticatorService, private router: Router, public loadingController: LoadingController, private _location: Location, private activatedRoute: ActivatedRoute) { 
     Amplify.configure(awsExports);
   }
 
@@ -23,12 +24,16 @@ export class LoginComponent implements OnInit {
     this.authenticator.subscribe((status) => {
       const { route } = this.authenticator;
 
-      if(route == 'authenticated' && status.user.username){
+      if(route === 'authenticated' && status.user.username){
         this.loadingSpinner();
-        localStorage.setItem('cognitoID', status.user.username)
-        this.router.navigate(['/home'])
+        localStorage.setItem('cognitoID', status.user.username);
+        this.router.navigate(['/home']);
       }
     })
+  }
+
+  refreshTabData(url: string){
+    this._location.go(url)
   }
 
   async loadingSpinner(){

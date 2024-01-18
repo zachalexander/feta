@@ -29,7 +29,8 @@ export class CreateProfileModalPage implements OnInit{
   createProfileForm = {} as FormGroup;
   relationship: any;
   username: any;
-  family_name: any;
+  first_name: any;
+  last_name: any;
   relation: any;
   reviewClick = false;
   dateSelected;

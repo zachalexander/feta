@@ -9,6 +9,16 @@ query GetProfilePicture($id: ID!) {
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -23,16 +33,6 @@ query GetProfilePicture($id: ID!) {
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -51,7 +51,6 @@ query GetProfilePicture($id: ID!) {
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -84,7 +83,6 @@ query ListProfilePictures(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -104,6 +102,48 @@ query GetProfile($id: ID!) {
     relation
     cognitoID
     usernameID
+    Username {
+      id
+      username
+      profileID
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      Profile {
+        id
+        email
+        relation
+        cognitoID
+        usernameID
+        first_name
+        last_name
+        profilepictureID
+        bio
+        birthday
+        createdAt
+        updatedAt
+        profileImagePostsId
+        owner
+      }
+      createdAt
+      updatedAt
+      usernameImagePostsId
+      usernameProfileId
+      owner
+    }
     ImagePosts {
       id
       sorterValue
@@ -140,7 +180,6 @@ query GetProfile($id: ID!) {
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -151,49 +190,6 @@ query GetProfile($id: ID!) {
       posterImage
       createdAt
       updatedAt
-      owner
-    }
-    Username {
-      id
-      username
-      profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileUsernameId
-        profileImagePostsId
-        owner
-      }
-      createdAt
-      updatedAt
-      usernameImagePostsId
-      usernameProfileId
       owner
     }
     first_name
@@ -215,7 +211,6 @@ query GetProfile($id: ID!) {
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -229,7 +224,6 @@ query GetProfile($id: ID!) {
     birthday
     createdAt
     updatedAt
-    profileUsernameId
     profileImagePostsId
     owner
   }
@@ -246,6 +240,16 @@ query ListProfiles(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -260,16 +264,6 @@ query ListProfiles(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -288,7 +282,74 @@ query ListProfiles(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
+      profileImagePostsId
+      owner
+    }
+    nextToken
+  }
+}
+query ProfilesByUsernameID(
+  $usernameID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelProfileFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  profilesByUsernameID(
+    usernameID: $usernameID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      email
+      relation
+      cognitoID
+      usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
+      ImagePosts {
+        id
+        sorterValue
+        description
+        time_posted
+        usernameID
+        profileID
+        s3_key
+        mediaSourceMobile
+        mediaSourceDesktop
+        downloadableVideo
+        posterImage
+        createdAt
+        updatedAt
+        owner
+      }
+      first_name
+      last_name
+      profilepictureID
+      profilepicture {
+        id
+        imageurl
+        profileID
+        createdAt
+        updatedAt
+        profilePictureProfileId
+        owner
+      }
+      bio
+      birthday
+      createdAt
+      updatedAt
       profileImagePostsId
       owner
     }
@@ -315,6 +376,16 @@ query ProfilesByProfilepictureID(
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -329,16 +400,6 @@ query ProfilesByProfilepictureID(
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -357,7 +418,6 @@ query ProfilesByProfilepictureID(
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -431,7 +491,6 @@ query GetImagePost($id: ID!) {
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -448,6 +507,16 @@ query GetImagePost($id: ID!) {
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -462,16 +531,6 @@ query GetImagePost($id: ID!) {
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -490,7 +549,6 @@ query GetImagePost($id: ID!) {
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -546,7 +604,6 @@ query ListImagePosts(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -614,7 +671,6 @@ query ImagePostsBySorterValueAndTime_posted(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -680,7 +736,6 @@ query ImagePostsByUsernameID(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -746,7 +801,6 @@ query ImagePostsByProfileID(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -799,7 +853,6 @@ query GetLikes($id: ID!) {
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -816,6 +869,16 @@ query GetLikes($id: ID!) {
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -830,16 +893,6 @@ query GetLikes($id: ID!) {
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -858,7 +911,6 @@ query GetLikes($id: ID!) {
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -901,7 +953,6 @@ query ListLikes(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -954,7 +1005,6 @@ query LikesByUsernameID(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1007,7 +1057,6 @@ query LikesByProfileID(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1056,7 +1105,6 @@ query GetComments($id: ID!) {
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1073,6 +1121,16 @@ query GetComments($id: ID!) {
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1087,16 +1145,6 @@ query GetComments($id: ID!) {
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1115,7 +1163,6 @@ query GetComments($id: ID!) {
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1161,7 +1208,6 @@ query ListComments(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1217,7 +1263,6 @@ query CommentsByProfileID(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1273,7 +1318,6 @@ query GetUsername($id: ID!) {
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1292,6 +1336,16 @@ query GetUsername($id: ID!) {
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1306,16 +1360,6 @@ query GetUsername($id: ID!) {
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1334,7 +1378,6 @@ query GetUsername($id: ID!) {
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1384,7 +1427,6 @@ query ListUsernames(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1846,7 +1888,6 @@ query GetChats($id: ID!) {
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -1863,6 +1904,16 @@ query GetChats($id: ID!) {
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -1877,16 +1928,6 @@ query GetChats($id: ID!) {
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -1905,7 +1946,6 @@ query GetChats($id: ID!) {
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -1995,7 +2035,6 @@ query ListChats(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -2065,7 +2104,6 @@ query ChatsBySortKeyAndTimePosted(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -2135,7 +2173,6 @@ query ChatsByLiveGameChatRoomIDAndTimePosted(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -2198,7 +2235,6 @@ query GetChatLikes($id: ID!) {
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }
@@ -2215,6 +2251,16 @@ query GetChatLikes($id: ID!) {
       relation
       cognitoID
       usernameID
+      Username {
+        id
+        username
+        profileID
+        createdAt
+        updatedAt
+        usernameImagePostsId
+        usernameProfileId
+        owner
+      }
       ImagePosts {
         id
         sorterValue
@@ -2229,16 +2275,6 @@ query GetChatLikes($id: ID!) {
         posterImage
         createdAt
         updatedAt
-        owner
-      }
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
         owner
       }
       first_name
@@ -2257,7 +2293,6 @@ query GetChatLikes($id: ID!) {
       birthday
       createdAt
       updatedAt
-      profileUsernameId
       profileImagePostsId
       owner
     }
@@ -2300,7 +2335,6 @@ query ListChatLikes(
         birthday
         createdAt
         updatedAt
-        profileUsernameId
         profileImagePostsId
         owner
       }

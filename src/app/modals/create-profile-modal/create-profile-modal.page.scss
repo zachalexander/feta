@@ -221,7 +221,7 @@ ion-tab-button {
         background: var(--ion-color-step-300, #edeef0);
         color: var(--ion-text-color, #000);
         font-family: inherit;
-        font-size: inherit;
+        // font-size: inherit;
         cursor: pointer;
         appearance: none;
         overflow: hidden;
@@ -297,6 +297,7 @@ ion-tab-button {
         min-width: 70%;
         padding-right: 1.5em;
         --background-activated: none !important;
+        font-size: 0.85em;
     }
 
     .relation-picker, .relation-picker:focus, .relation-picker:active {
@@ -356,6 +357,10 @@ ion-tab-button {
     flex-direction: column;
     min-width: 90%;
 
+    .final-bar {
+        background: var(--ion-color-light);
+    }
+
     .submit-form {
         display: flex;
         flex-direction: column;
@@ -379,20 +384,21 @@ ion-tab-button {
     }
     
     #input {
+        font-size: 0.85em;
         padding: 0 1em 0 1em !important;
     }
 
     .alert-danger, .error-message-characters, .error-message-taken {
         color: indianred;
         font-weight: 600;
-        font-size: 12px;
+        font-size: 0.85em;
     }
 
 
     .success-message {
         color: mediumseagreen;
         font-weight: 600;
-        font-size: 12px;
+        font-size: 0.85em;
     }
 
     .username-wrapper {
@@ -418,7 +424,7 @@ ion-tab-button {
     .valid-entry {
         display: flex;
         color: mediumseagreen;
-        font-size: 1.25em;
+        font-size: 0.85em;
         --ionicon-stroke-width: 40px;
         // padding-left: 0.5em;
         min-height: 100%;
@@ -428,7 +434,7 @@ ion-tab-button {
 
     .invalid-entry {
         color: indianred;
-        font-size: 1.25em;
+        font-size: 0.85em;
         --ionicon-stroke-width: 40px;
         // padding-left: 0.5em;
         min-height: 100%;
@@ -514,10 +520,16 @@ ion-tab-button {
         --background-focus: none !important;
     }
 
-    ion-item, ion-input {
+    ion-item {
         --padding-start: 1em !important;
-        max-width: 300px;
+        max-width: 400px;
         font-size: 0.85em;
+        margin-top: 0.5em;
+    }
+
+    ion-input {
+        font-size: 1em !important;
+        --padding-start: 1em !important;
     }
 
     .username-input {

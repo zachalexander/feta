@@ -47,7 +47,7 @@ export class TimelineLikeButtonComponent implements OnInit {
     let likeResponse = await this.getLikesforPost(this.imageId).then(data => data)
     let likeArray = JSON.parse(JSON.stringify(likeResponse)).likes;
 
-  //   // this.cachingService.clearAllCachedData();
+  
 
     if(likeArray == null){
       let likeArray = []

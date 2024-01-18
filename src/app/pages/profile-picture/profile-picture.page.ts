@@ -47,7 +47,7 @@ export class ProfilePicturePage {
     await loading.present();
 
     this.profilePic = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'));
-    this.profilePic = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + this.profilePic.imageurl;
+
 
     console.log(this.profilePic)
 
@@ -56,6 +56,7 @@ export class ProfilePicturePage {
       this.noPicYet = true;
       loading.dismiss();
     } else {
+      this.profilePic = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + this.profilePic.imageurl;
       setTimeout(() => {
         loading.dismiss();
       }, 2000)

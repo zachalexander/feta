@@ -24,6 +24,10 @@ import { CreateMediaModalPage } from './modals/create-media-modal/create-media-m
 import { ProfilePicturePage } from './pages/profile-picture/profile-picture.page';
 import { LikeListModalPage } from './modals/like-list-modal/like-list-modal.page';
 import { BaseballChatroomPage } from './modals/baseball-chatroom/baseball-chatroom.page';
+import { UsersListModalPage } from './modals/users-list-modal/users-list-modal.page';
+import { TermsOfServiceModalPage } from './modals/terms-of-service-modal/terms-of-service-modal.page';
+import { AppRulesModalPage } from './modals/app-rules-modal/app-rules-modal.page';
+import { AppWhyModalPage } from './modals/app-why-modal/app-why-modal.page';
 
 import { SwiperModule } from 'swiper/angular';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -39,6 +43,7 @@ import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import {VgStreamingModule} from '@videogular/ngx-videogular/streaming';
 
+
 Amplify.configure(awsconfig);
 Amplify.configure(awsvideoconfig);
 
@@ -52,7 +57,11 @@ Amplify.configure(awsvideoconfig);
     ProfilePicturePage,
     CreateMediaModalPage,
     LikeListModalPage,
-    BaseballChatroomPage
+    BaseballChatroomPage,
+    TermsOfServiceModalPage,
+    UsersListModalPage,
+    AppRulesModalPage,
+    AppWhyModalPage
   ],
   imports: [
     BrowserModule, 

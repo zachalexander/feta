@@ -22,9 +22,9 @@ type Profile @model @auth(rules: [
   email: String
   relation: String
   cognitoID: String
-  usernameID: String
+  usernameID: ID @index(name: "byUsername")
+  Username: Username @hasOne(fields: ["usernameID"])
   ImagePosts: ImagePost @belongsTo
-  Username: Username @hasOne
   first_name: String
   last_name: String
   profilepictureID: ID @index(name: "byProfilePicture")

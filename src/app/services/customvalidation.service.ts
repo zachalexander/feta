@@ -46,9 +46,10 @@ export class CustomvalidationService {
   }
 
   async userNameValidator(userControl: AbstractControl) {
+    let usernameInput = userControl.value.toLowerCase();
     let test = new Promise(resolve => {
       setTimeout(async () => {
-        if(await this.validateUserName(userControl.value)) {
+        if(await this.validateUserName(usernameInput)) {
           resolve({ userNameValidator: true})
         } else {
           resolve(null);

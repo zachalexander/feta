@@ -1,16 +1,20 @@
 import { Component, Input } from '@angular/core';
 import { Auth } from 'aws-amplify'
 import { Router } from '@angular/router';
-import { APIService } from 'src/app/API.service';
+import { APIService, ModelSortDirection } from 'src/app/API.service';
 import { ModalController } from '@ionic/angular';
 import { CreateProfileModalPage } from '../../modals/create-profile-modal/create-profile-modal.page'
 import { LoadingController } from '@ionic/angular';
 import { ProfileMenuModalPage } from 'src/app/modals/profile-menu-modal/profile-menu-modal.page';
+import { UsersListModalPage } from 'src/app/modals/users-list-modal/users-list-modal.page';
+import { TermsOfServiceModalPage } from 'src/app/modals/terms-of-service-modal/terms-of-service-modal.page';
+import { AppWhyModalPage } from 'src/app/modals/app-why-modal/app-why-modal.page';
+import { AppRulesModalPage } from 'src/app/modals/app-rules-modal/app-rules-modal.page';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
 
@@ -22,6 +26,8 @@ export class HomeComponent {
   username;
   profilepicid;
   browserName = '';
+  lastTimelinePost;
+  mobilePlatform;
 
   constructor(
     private router: Router, 
@@ -58,6 +64,10 @@ export class HomeComponent {
     }
   }
 
+  async getLatestTimelinePost(){
+    return this.api.ImagePostsBySorterValueAndTime_posted("media", null, ModelSortDirection.DESC, null, 1)
+  }
+
   async ngOnInit(){
 
     this.browserName = this.detectBrowserName();
@@ -73,8 +83,10 @@ export class HomeComponent {
     loading.present().then(async () => {
       await this.loadUserData();
       await this.listProfiles();
+      this.lastTimelinePost = await this.getLatestTimelinePost() as any;
+      this.lastTimelinePost = this.lastTimelinePost.items[0]
     });
-
+    
     loading.dismiss();
   }
 
@@ -87,31 +99,37 @@ export class HomeComponent {
 
   async listProfiles() {
     let profiles = await this.api.ListProfiles();
-    this.fetaProfileCount = profiles.items.length
+    this.fetaProfileCount = profiles.items.length;
   }
 
   toTimeline(){
     this.router.navigate(['/timeline']).then(() => { window.location.reload() })
   }
 
+
+
   async loadUserData() {
+
+
 
     
     try {
       let cognitoid = await (await Auth.currentUserCredentials()).identityId
       let profile = await this.api.GetUserProfileFromCognitoId(cognitoid)
 
+
       if(profile && cognitoid){
         this.already_registered = true; 
         this.profilepicid = profile.profilepictureID;
         this.username = await this.api.GetUsernameFromProfileId(profile.id);
 
-        await localStorage.setItem('usernameID', profile.usernameID)
-        await localStorage.setItem('cognitoID', cognitoid)
-        await localStorage.setItem('username', this.username)
-        await localStorage.removeItem('amplify-signin-with-hostedUI')
-        await localStorage.removeItem('CognitoIdentityServiceProvider.4hiv9l2c4ir7n1e0j419o92qhf.c3f1ee96-6e6e-41cd-9e3d-ff1ce38ea8c9.clockDrift')
-        await localStorage.setItem('profileID', profile.id)
+        await localStorage.setItem('usernameID', profile.usernameID);
+        await localStorage.setItem('cognitoID', cognitoid);
+        await localStorage.setItem('username', this.username);
+        await localStorage.removeItem('amplify-signin-with-hostedUI');
+        await localStorage.removeItem('CognitoIdentityServiceProvider.4hiv9l2c4ir7n1e0j419o92qhf.c3f1ee96-6e6e-41cd-9e3d-ff1ce38ea8c9.clockDrift');
+        await localStorage.setItem('profileID', profile.id);
+        
       } else if(!cognitoid && !profile) {
         await this.router.navigate(['/login']).then(() => { window.location.reload()})
         await this.router.navigate(['/login']).then(() => { window.location.reload()})
@@ -139,8 +157,43 @@ async openMenu() {
   return await modal.present();
 }
 
+async openUsersList(){
+  const modal = await this.modalController.create({
+    component: UsersListModalPage
+  })
+  return await modal.present();
+}
+
+async openTerms() {
+  const modal = await this.modalController.create({
+    component: TermsOfServiceModalPage
+  })
+  return await modal.present();
+}
+
+async openRules() {
+  const modal = await this.modalController.create({
+    component: AppRulesModalPage
+  })
+  return await modal.present();
+}
+
+async openTheWhy() {
+  const modal = await this.modalController.create({
+    component: AppWhyModalPage
+  })
+  return await modal.present();
+}
+
 async uploadProfilePic(){
   await this.router.navigate(['/profile-picture']).then(() => { window.location.reload()})
+}
+
+async attemptReLogin() {
+  const currentUser = await Auth.currentUserPoolUser();
+  await currentUser.signOut()
+  await localStorage.clear()
+  await this.router.navigate(['/login']).then(() => { window.location.reload() })
 }
 
 }

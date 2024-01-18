@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { finalize } from 'rxjs/internal/operators/finalize';
 import { MediaService } from 'src/app/services/media.service';
 import { Platform } from '@ionic/angular';
-import { APIService } from 'src/app/API.service';
+import { APIService, ModelSortDirection } from 'src/app/API.service';
 import { CachingService } from 'src/app/services/caching.service';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import write_blob from 'capacitor-blob-writer';
@@ -49,7 +49,7 @@ export class TimelinePage implements OnInit {
 
     this.profile = await this.api.GetProfile(localStorage.getItem('profileID'))
 
-    await this.api.ImagePostsBySorterValueAndTime_posted("media").then(data => {
+    await this.api.ImagePostsBySorterValueAndTime_posted("media", null, ModelSortDirection.DESC).then(data => {
       this.timelineData = data.items;
       console.log(this.timelineData)
       this.nextToken = data[2];
