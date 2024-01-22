@@ -26,8 +26,8 @@ Code Review
         -ensure that only the three tabs and tabs module working correctly -- DONE
         -add notes for rules and information -- DONE
         -fix error page layout and content -- DONE
-        -fill in terms of service, rules, and the why ***
-        -optimize for latest video post ***
+        -fill in terms of service, rules, and the why *** (NEED TO DO)
+        -optimize for latest video post -- DONE
 4) Timeline page
 4a) Timeline page and component
     -Monday, January 22nd
