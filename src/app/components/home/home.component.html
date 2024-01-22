@@ -5,7 +5,7 @@
         <ion-icon (click)="openMenu()" class="menu-button" slot="end" name="menu"></ion-icon>
     </ion-toolbar>
   </ion-header>
-  <ion-content>
+  <ion-content [scrollEvents]="true" (ionScroll)="didScroll()">
 
     <div class="top" *ngIf="already_registered">
       <ion-card>
@@ -48,21 +48,40 @@
       </ion-card>
       <ion-card *ngIf="already_registered">
         <div class="card-headline">
-          <ion-note class="last-post" color="dark" *ngIf="lastTimelinePost"><strong>{{lastTimelinePost.username.username}}'s</strong> latest post on {{lastTimelinePost.createdAt | date: 'MMM d, YYYY' }}</ion-note>
+          <ion-note class="last-post" color="dark" *ngIf="lastTimelinePost"><strong>{{lastTimelinePost.username.username}}'s</strong> latest post on {{lastTimelinePost.createdAt | date: 'MMM d' }}{{lastTimelinePost.createdAt | dateSuffixPipe}}{{lastTimelinePost.createdAt | date: ', YYYY'}}</ion-note>
           <ion-chip (click)="toTimeline()" class="timeline-button" mode="ios" color="tertiary" shape="round">
             <ion-label>View full timeline</ion-label>
             <ion-icon color="tertiary" name="chevron-forward"></ion-icon>
             <ion-icon color="tertiary" class="icon-last" name="chevron-forward"></ion-icon>
           </ion-chip>
         </div>
-        <div class="image-wrapper">
-          <div class="swiper-zoom-container">
-            <img *ngIf="!lastTimelinePost.isVideo && mobilePlatform" id="photo_{{lastTimelinePost.imagesID}}" class="swiper-lazy"
-              [src]="lastTimelinePost.mediaSourceMobile" loading="lazy" style="background: var(--ion-color-light)" />
-            <img *ngIf="!lastTimelinePost.isVideo && !mobilePlatform" id="photo_{{lastTimelinePost.imagesID}}" class="swiper-lazy"
-              [src]="lastTimelinePost.mediaSourceDesktop" loading="lazy" style="background: var(--ion-color-light)" />
+          <div id="video-container" *ngIf="lastTimelinePost && !lastTimelinePost.mediaSourceDesktop && !lastTimelinePost.mediaSourceMobile">
+            <vg-player>
+              <video (ended)="videoEnd()" #latestVideo class="video_{{lastTimelinePost.id}}" [vgMedia]="$any(media)"
+                poster="https://ik.imagekit.io/bkf4g8lrl/poster-images/{{lastTimelinePost.posterImage}}"
+                vgHls="https://d2glij88atjbas.cloudfront.net/public/{{lastTimelinePost.s3_key}}" #media preload="metadata" playsinline
+                webkit-playsinline="webkit-playsinline" muted="true">
+                <source vgHls="https://d2glij88atjbas.cloudfront.net/public/{{lastTimelinePost.s3_key}}" type="application/x-mpegURL">
+              </video>
+            </vg-player>
+            <div id="volume-controls">
+              <ion-icon *ngIf="muted" name="volume-mute" large (click)="unmuteClicked()"></ion-icon>
+              <ion-icon *ngIf="!muted" name="volume-high" large (click)="muteClicked()"></ion-icon>
+            </div>
+            <div *ngIf="replay" id="replay-controls">
+              <p *ngIf="replay" (click)="replayVideo()">Replay video <ion-icon name="refresh-outline" large></ion-icon></p>
+            </div>
+            <div id="play-controls">
+              <ion-icon *ngIf="!pause" name="pause" large (click)="pauseVideo()"></ion-icon>
+              <ion-icon *ngIf="pause" name="play" large (click)="playVideo()"></ion-icon>
+            </div>
           </div>
-        </div>
+
+          <div class="swiper-zoom-container" *ngIf="lastTimelinePost && lastTimelinePost.mediaSourceMobile && lastTimelinePost.mediaSourceDesktop">
+            <img
+              id="photo_{{lastTimelinePost.imagesID}}" class="swiper-lazy" [src]="lastTimelinePost.mediaSourceMobile" loading="lazy"
+              style="background: var(--ion-color-light)" />
+          </div>
       </ion-card>
 
       <div class="row-2">

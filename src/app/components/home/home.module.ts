@@ -8,7 +8,7 @@ import { HomeComponent } from './home.component';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, IonicModule],
-  declarations: [HomeComponent],
-  exports: [HomeComponent]
+  // declarations: [HomeComponent, IonicModule],
+  // exports: [ IonicModule]
 })
 export class HomeComponentModule {}

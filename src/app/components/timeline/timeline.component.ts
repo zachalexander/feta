@@ -30,7 +30,7 @@ import { finalize } from 'rxjs/operators';
 
 import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
 import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
-import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
+import { DateSuffixPipe } from 'src/app/pipes/date-suffix.pipe';
 
 import SwiperCore, { Zoom, EffectFade } from 'swiper';
 import { timeline } from 'console';
@@ -45,7 +45,7 @@ declare var Hls;
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
-  providers: [DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix]
+  providers: [DateAsAgoPipe, DateAsAgoShortPipe, DateSuffixPipe]
 })
 
 export class TimelineComponent implements OnInit {

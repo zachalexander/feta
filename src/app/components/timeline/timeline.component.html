@@ -51,10 +51,10 @@
                 </div>
               </ng-template>
             </swiper>
-            <div id="video-container" *ngIf="image.isVideo">
+            <div id="video-container" *ngIf="!image.mediaSourceDesktop && !image.mediaSourceMobile">
               <vg-player>
-                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [vgHls]="image.mediaSourceMobile" #media preload="metadata" playsinline webkit-playsinline="webkit-playsinline" muted="true">
-                  <source [vgHls]="image.mediaSourceMobile" type="application/x-mpegURL">
+                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" poster="https://ik.imagekit.io/bkf4g8lrl/poster-images/{{image.posterImage}}" vgHls="https://d2glij88atjbas.cloudfront.net/public/{{image.s3_key}}" #media preload="metadata" playsinline webkit-playsinline="webkit-playsinline" muted="true">
+                  <source vgHls="https://d2glij88atjbas.cloudfront.net/public/{{image.s3_key}}" type="application/x-mpegURL">
                 </video>
               </vg-player>
               <div id="volume-controls">

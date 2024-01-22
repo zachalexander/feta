@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, OnChanges, ElementRef, OnInit } from '@angular/core';
 import { Auth } from 'aws-amplify'
 import { Router } from '@angular/router';
 import { APIService, ModelSortDirection } from 'src/app/API.service';
@@ -10,15 +10,18 @@ import { UsersListModalPage } from 'src/app/modals/users-list-modal/users-list-m
 import { TermsOfServiceModalPage } from 'src/app/modals/terms-of-service-modal/terms-of-service-modal.page';
 import { AppWhyModalPage } from 'src/app/modals/app-why-modal/app-why-modal.page';
 import { AppRulesModalPage } from 'src/app/modals/app-rules-modal/app-rules-modal.page';
+import { IonInfiniteScroll, IonRefresher, IonRefresherContent } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   @Input() name?: string;
+  @ViewChild('latestVideo') private video: any;
+  // @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   fetaProfileCount: number;
   already_registered;
   createProfile = false;
@@ -28,6 +31,11 @@ export class HomeComponent {
   browserName = '';
   lastTimelinePost;
   mobilePlatform;
+  nowPlaying = null;
+  videoOver = false;
+  muted = true;
+  replay = false;
+  pause;
 
   constructor(
     private router: Router, 
@@ -68,7 +76,7 @@ export class HomeComponent {
     return this.api.ImagePostsBySorterValueAndTime_posted("media", null, ModelSortDirection.DESC, null, 1)
   }
 
-  async ngOnInit(){
+  async ngOnInit() {
 
     this.browserName = this.detectBrowserName();
 
@@ -84,10 +92,15 @@ export class HomeComponent {
       await this.loadUserData();
       await this.listProfiles();
       this.lastTimelinePost = await this.getLatestTimelinePost() as any;
-      this.lastTimelinePost = this.lastTimelinePost.items[0]
+      this.lastTimelinePost = this.lastTimelinePost.items[0];
+      console.log(this.lastTimelinePost)
     });
     
     loading.dismiss();
+
+    setTimeout(() => {
+      this.didScroll();
+    }, 2000)
   }
 
   async signOut(){
@@ -106,13 +119,7 @@ export class HomeComponent {
     this.router.navigate(['/timeline']).then(() => { window.location.reload() })
   }
 
-
-
-  async loadUserData() {
-
-
-
-    
+  async loadUserData() {    
     try {
       let cognitoid = await (await Auth.currentUserCredentials()).identityId
       let profile = await this.api.GetUserProfileFromCognitoId(cognitoid)
@@ -195,5 +202,100 @@ async attemptReLogin() {
   await localStorage.clear()
   await this.router.navigate(['/login']).then(() => { window.location.reload() })
 }
+
+
+  isElementInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    )
+  }
+
+  didScroll() {
+    if (this.nowPlaying && this.isElementInViewport(this.nowPlaying)) return;
+    else if (this.nowPlaying && !this.isElementInViewport(this.nowPlaying)) {
+      this.nowPlaying.pause();
+      this.nowPlaying = null;
+      this.pause = true;
+      this.replay = false;
+    }
+
+    if (this.nowPlaying) return;
+    const nativeElement = this.video.nativeElement;
+    const inView = this.isElementInViewport(nativeElement);
+
+    if (inView) {
+      this.nowPlaying = nativeElement;
+      this.nowPlaying.muted = true;
+      let playPromise = this.nowPlaying.play();
+
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          this.nowPlaying.play();
+        })
+          .catch(error => {
+            this.nowPlaying.play();
+            console.log(error)
+          })
+      }
+      this.pause = false;
+      this.muted = true;
+      this.replay = false;
+      this.videoOver = false;
+    }
+  }
+
+
+  videoEnd() {
+    this.replay = true;
+    this.pause = true;
+  }
+
+  replayVideo() {
+    if (this.nowPlaying) {
+      this.nowPlaying.play();
+      this.nowPlaying.muted = false;
+      this.muted = false;
+      this.replay = false;
+      this.pause = false;
+    }
+  }
+
+  pauseVideo() {
+    if (this.nowPlaying) {
+      this.nowPlaying.pause();
+      this.nowPlaying.muted = true;
+      this.replay = false;
+      this.muted = true;
+      this.pause = true;
+    }
+  }
+
+  playVideo() {
+    if (this.nowPlaying) {
+      this.nowPlaying.muted = false;
+      this.nowPlaying.play();
+      this.replay = false;
+      this.muted = false;
+      this.pause = false;
+    }
+  }
+
+  unmuteClicked() {
+    if (this.nowPlaying) {
+      this.nowPlaying.muted = false;
+      this.muted = false;
+    }
+  }
+
+  muteClicked() {
+    if (this.nowPlaying) {
+      this.nowPlaying.muted = true;
+      this.muted = true;
+    }
+  }
 
 }

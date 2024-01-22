@@ -11,7 +11,7 @@ import { SharedmodulePageRoutingModule } from './sharedmodule-routing.module';
 import { SharedmodulePage } from './sharedmodule.page';
 import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
 import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
-import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
+import { DateSuffixPipe } from 'src/app/pipes/date-suffix.pipe';
 
 import { SwiperModule } from 'swiper/angular';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
@@ -29,6 +29,7 @@ import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
 import { InViewportDirective } from 'ng-in-viewport';
 import { CommentModalPage } from 'src/app/modals/comment-modal/comment-modal.page';
 import { HttpClient } from '@angular/common/http';
+import { HomeComponent } from 'src/app/components/home/home.component';
 
 @NgModule({
   imports: [
@@ -44,10 +45,10 @@ import { HttpClient } from '@angular/common/http';
     VgOverlayPlayModule,
     VgBufferingModule,
     VgStreamingModule,
-    InViewportDirective,
+    InViewportDirective
   ],
-  declarations: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent, CommentModalPage],
-  exports: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffix, TimelineComponent, TimelineLikeButtonComponent, InViewportDirective, CommentModalPage]
+  declarations: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffixPipe, HomeComponent, TimelineComponent, TimelineLikeButtonComponent, CommentModalPage],
+  exports: [SharedmodulePage, DateAsAgoPipe, DateAsAgoShortPipe, DateSuffixPipe, HomeComponent, TimelineComponent, TimelineLikeButtonComponent, InViewportDirective, CommentModalPage]
 })
 export class SharedmodulePageModule {
   static forRoot() {

@@ -1,4 +1,4 @@
-import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
+import { DateSuffixPipe } from 'src/app/pipes/date-suffix.pipe';
 import { Component, OnInit } from '@angular/core';
 import { ModalController, Platform, LoadingController, PickerController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

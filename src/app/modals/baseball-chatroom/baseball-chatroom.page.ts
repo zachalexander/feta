@@ -6,7 +6,7 @@ import { SportsService } from 'src/app/services/sports.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonContent } from '@ionic/angular';
 import { Storage } from '@aws-amplify/storage';
-import { DateSuffix } from 'src/app/pipes/date-suffix.pipe';
+import { DateSuffixPipe } from 'src/app/pipes/date-suffix.pipe';
 import { Amplify, Hub } from 'aws-amplify';
 import { CONNECTION_STATE_CHANGE, ConnectionState } from '@aws-amplify/pubsub';
 
