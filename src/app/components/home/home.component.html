@@ -5,8 +5,9 @@
         <ion-icon (click)="openMenu()" class="menu-button" slot="end" name="menu"></ion-icon>
     </ion-toolbar>
   </ion-header>
-  <ion-content [scrollEvents]="true" (ionScroll)="didScroll()">
 
+  <!-- content if latest timeline media is a video -->
+  <ion-content *ngIf="lastTimelinePost && !lastTimelinePost.mediaSourceDesktop && !lastTimelinePost.mediaSourceMobile" [scrollEvents]="true" (ionScroll)="didScroll()">
     <div class="top" *ngIf="already_registered">
       <ion-card>
         <div class="hello-div">
@@ -55,10 +56,10 @@
             <ion-icon color="tertiary" class="icon-last" name="chevron-forward"></ion-icon>
           </ion-chip>
         </div>
-          <div id="video-container" *ngIf="lastTimelinePost && !lastTimelinePost.mediaSourceDesktop && !lastTimelinePost.mediaSourceMobile">
+          <div id="video-container" >
             <vg-player>
               <video (ended)="videoEnd()" #latestVideo class="video_{{lastTimelinePost.id}}" [vgMedia]="$any(media)"
-                poster="https://ik.imagekit.io/bkf4g8lrl/poster-images/{{lastTimelinePost.posterImage}}"
+                poster="{{lastTimelinePost.posterImage}}"
                 vgHls="https://d2glij88atjbas.cloudfront.net/public/{{lastTimelinePost.s3_key}}" #media preload="metadata" playsinline
                 webkit-playsinline="webkit-playsinline" muted="true">
                 <source vgHls="https://d2glij88atjbas.cloudfront.net/public/{{lastTimelinePost.s3_key}}" type="application/x-mpegURL">
@@ -75,12 +76,6 @@
               <ion-icon *ngIf="!pause" name="pause" large (click)="pauseVideo()"></ion-icon>
               <ion-icon *ngIf="pause" name="play" large (click)="playVideo()"></ion-icon>
             </div>
-          </div>
-
-          <div class="swiper-zoom-container" *ngIf="lastTimelinePost && lastTimelinePost.mediaSourceMobile && lastTimelinePost.mediaSourceDesktop">
-            <img
-              id="photo_{{lastTimelinePost.imagesID}}" class="swiper-lazy" [src]="lastTimelinePost.mediaSourceMobile" loading="lazy"
-              style="background: var(--ion-color-light)" />
           </div>
       </ion-card>
 
@@ -140,4 +135,127 @@
         </ion-row>
       </ion-grid>
 
+  </ion-content>
+
+
+  <!-- content if the latest timeline media is a photo -->
+  <ion-content *ngIf="lastTimelinePost && lastTimelinePost.mediaSourceDesktop && lastTimelinePost.mediaSourceMobile">
+    <div class="top" *ngIf="already_registered">
+      <ion-card>
+        <div class="hello-div">
+          <ion-card-title color="tertiary">Hi, {{username}}! &nbsp;<span class="wave">👋</span></ion-card-title>
+          <small>We are excited to share our story with you -- welcome to our family space.</small>
+        </div>
+      </ion-card>
+    </div>
+  
+    <!-- if user is registered -->
+    <div class="row-1">
+      <ion-card *ngIf="already_registered" class="members_card" (click)="openUsersList()">
+        <div class="members_div">
+          <img class="members" src="../../../assets/undraw_community.svg" />
+          <div class="card-footer">
+            <ion-note color="dark">View all <strong
+                class="strong-class">{{fetaProfileCount}}&nbsp;</strong>members</ion-note>
+          </div>
+        </div>
+      </ion-card>
+      <ion-card *ngIf="already_registered" class="rules_card" (click)="openRules()">
+        <div class="terms_div">
+          <img class="terms" src="../../../assets/undraw_terms.svg" />
+          <div class="card-footer">
+            <ion-note mode="ios" shape="round" color="dark">App Rules & Guidelines</ion-note>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+  
+    <ion-card *ngIf="!profilepicid && already_registered" color="danger">
+      <ion-card-content (click)="uploadProfilePic()">
+        <div class="upload-msg-div">
+          <small>It looks like you haven't uploaded a profile picture yet.</small>
+          <div class="upload-div">
+            <strong>Upload Now</strong>&nbsp;<ion-icon class="upload-arrow" color="light"
+              name="arrow-forward-circle-outline"></ion-icon>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="already_registered">
+      <div class="card-headline">
+        <ion-note class="last-post" color="dark"
+          *ngIf="lastTimelinePost"><strong>{{lastTimelinePost.username.username}}'s</strong> latest post on
+          {{lastTimelinePost.createdAt | date: 'MMM d' }}{{lastTimelinePost.createdAt |
+          dateSuffixPipe}}{{lastTimelinePost.createdAt | date: ', YYYY'}}</ion-note>
+        <ion-chip (click)="toTimeline()" class="timeline-button" mode="ios" color="tertiary" shape="round">
+          <ion-label>View full timeline</ion-label>
+          <ion-icon color="tertiary" name="chevron-forward"></ion-icon>
+          <ion-icon color="tertiary" class="icon-last" name="chevron-forward"></ion-icon>
+        </ion-chip>
+      </div>
+  
+      <div class="swiper-zoom-container"
+        *ngIf="lastTimelinePost && lastTimelinePost.mediaSourceMobile && lastTimelinePost.mediaSourceDesktop">
+        <img id="photo_{{lastTimelinePost.imagesID}}" class="swiper-lazy" [src]="lastTimelinePost.mediaSourceMobile"
+          loading="lazy" style="background: var(--ion-color-light)" />
+      </div>
+    </ion-card>
+  
+    <div class="row-2">
+      <ion-card *ngIf="already_registered" class="terms_card" (click)="openTerms()">
+        <div class="terms_div">
+          <img class="terms" src="../../../assets/undraw_contract.svg" />
+          <div class="card-footer">
+            <ion-note mode="ios" shape="round" color="dark">Read our terms</ion-note>
+          </div>
+        </div>
+      </ion-card>
+      <ion-card *ngIf="already_registered" class="why_card" (click)="openTheWhy()">
+        <div class="members_div">
+          <img class="members" src="../../../assets/undraw_product_explainer.svg" />
+          <div class="card-footer">
+            <ion-note color="dark">Why make this app?</ion-note>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+  
+  
+    <!-- if user is not registered -->
+    <ion-grid *ngIf="createProfile && !already_registered">
+      <ion-row *ngIf="createProfile">
+        <ion-card *ngIf="createProfile" class="create-profile">
+          <div class="card-wrapper">
+            <img src="../../../assets/undraw_family.svg" />
+            <ion-card-header>
+              <ion-card-title>Welcome to our family app!</ion-card-title>
+              <ion-card-subtitle>Let's get started by creating a profile</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="ion-padding">
+              <ion-button color="light" class="lets-go-button" (click)="openModal()">Let's Go&nbsp;<ion-icon
+                  name="arrow-forward-circle-outline"></ion-icon> </ion-button>
+            </ion-card-content>
+          </div>
+        </ion-card>
+      </ion-row>
+    </ion-grid>
+  
+    <!-- if there was an error -->
+    <ion-grid *ngIf="errorPage">
+      <ion-row *ngIf="errorPage">
+        <ion-card *ngIf="errorPage" color="danger" class="error-card">
+          <ion-card-header>
+            <ion-card-subtitle>Login Error</ion-card-subtitle>
+            <ion-card-title>Oh no! It looks like there was an error while trying to log in. </ion-card-title>
+          </ion-card-header>
+  
+          <div class="error-content">
+            <a href="mailto: alexander.d.zachary@gmail.com"><ion-chip color="light">Email Support</ion-chip></a>
+            <ion-chip color="light" (click)="attemptReLogin()">Try logging in again</ion-chip>
+          </div>
+  
+        </ion-card>
+      </ion-row>
+    </ion-grid>
+  
   </ion-content>

@@ -28,6 +28,7 @@ import { UsersListModalPage } from './modals/users-list-modal/users-list-modal.p
 import { TermsOfServiceModalPage } from './modals/terms-of-service-modal/terms-of-service-modal.page';
 import { AppRulesModalPage } from './modals/app-rules-modal/app-rules-modal.page';
 import { AppWhyModalPage } from './modals/app-why-modal/app-why-modal.page';
+import { EditMediaModalPage } from './modals/edit-media-modal/edit-media-modal.page';
 
 import { SwiperModule } from 'swiper/angular';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -61,7 +62,8 @@ Amplify.configure(awsvideoconfig);
     TermsOfServiceModalPage,
     UsersListModalPage,
     AppRulesModalPage,
-    AppWhyModalPage
+    AppWhyModalPage,
+    EditMediaModalPage
   ],
   imports: [
     BrowserModule, 

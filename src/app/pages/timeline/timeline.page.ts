@@ -1,15 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { finalize } from 'rxjs/internal/operators/finalize';
-import { MediaService } from 'src/app/services/media.service';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
-import { APIService, ModelSortDirection } from 'src/app/API.service';
-import { CachingService } from 'src/app/services/caching.service';
-import { Filesystem, Directory } from '@capacitor/filesystem';
+import { FA, ModelSortDirection } from 'src/app/FA.service';
+import { Directory } from '@capacitor/filesystem';
 import write_blob from 'capacitor-blob-writer';
 import { CreateMediaModalPage } from 'src/app/modals/create-media-modal/create-media-modal.page';
+import { Storage } from 'aws-amplify';
 
-const APP_DIRECTORY = Directory.Documents
+const APP_DIRECTORY = Directory.Documents;
 
 @Component({
   selector: 'app-timeline-page',
@@ -18,25 +16,23 @@ const APP_DIRECTORY = Directory.Documents
 })
 export class TimelinePage implements OnInit {
   
+  @ViewChild('filepicker') picker: ElementRef;
+  currentFolder = 'feta';
   timelineData: any;
   timelineDataLength: any;
   nextToken: any;
   loaded: any;
-  cachedDataAvailable: any;
-  addMediaClick: boolean;
-  @ViewChild('filepicker') picker: ElementRef;
-  currentFolder = 'feta';
   mediaSubmitted: any;
   selected: any;
   dataReturned: any;
   profile: any;
+  addMediaClick: boolean;
 
   constructor(
     private modalController: ModalController,
-    private mediaService: MediaService,
     public platform: Platform,
-    private api: APIService,
-    private cachingService: CachingService
+    private fa: FA,
+    private loadingController: LoadingController
   ) {
     this.timelineData;
     this.timelineDataLength;
@@ -44,22 +40,35 @@ export class TimelinePage implements OnInit {
 
   async ngOnInit(){
 
+    // ensures that the option to add media is not active on load
     this.addMediaClick = false;
     this.mediaSubmitted = false;
 
-    this.profile = await this.api.GetProfile(localStorage.getItem('profileID'))
+    // getting profile data of user
+    this.profile = await this.fa.GetProfile(localStorage.getItem('profileID'))
 
-    await this.api.ImagePostsBySorterValueAndTime_posted("media", null, ModelSortDirection.DESC).then(data => {
+    // pulling most recent media for timeline
+    await this.fa.ImagePostsBySorterValueAndTime_posted("media", null, ModelSortDirection.DESC).then(data => {
       this.timelineData = data.items;
-      console.log(this.timelineData)
       this.nextToken = data[2];
       this.loaded = true;
+      console.log(this.timelineData)
     })
   }
 
+
+  // functions to add media to timeline
   async fileSelected(event){
 
     this.selected = event.target.files[0];
+
+    const loading = await this.loadingController.create({
+      spinner: 'lines-sharp-small',
+      translucent: false,
+      cssClass: 'spinner-loading'
+    });
+
+    loading.present();
 
     await write_blob({
       directory: APP_DIRECTORY,
@@ -71,6 +80,7 @@ export class TimelinePage implements OnInit {
       }
     })
 
+    loading.dismiss();
     this.mediaReadyToSubmit();
   }
 
@@ -80,6 +90,7 @@ export class TimelinePage implements OnInit {
 
   mediaReadyToSubmit(){
     const status = { status: true }
+    console.log(status)
     if (!status['status']) {
       this.mediaSubmitted = false;
     } else {
@@ -88,13 +99,43 @@ export class TimelinePage implements OnInit {
     }
   }
 
+
+  async submitToS3(filename, blob, isVideo, extension) {
+    if (isVideo) {
+      await Storage.put(filename, blob, {
+        contentType: "video/" + extension,
+        bucket: "fetadevvodservice-dev-input-nk0sepbg"
+      })
+    } else {
+      await Storage.put(filename, blob, { contentType: "image/jpeg" })
+    }
+  }
+
   async openCreateMediaModal() {
+
+    let extension = this.selected.name.split('.').pop();
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let hour = date.getHours();
+    let mins = date.getMinutes();
+    let secs = date.getSeconds();
+
+    let filename_ext = `video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}` + `.${extension}`
+    let filename = filename_ext.split('.').slice(0, -1).join('.')
+
+    let response = await this.submitToS3(filename_ext, this.selected, true, extension).then((response) => response)
+
     const modal = await this.modalController.create({
       component: CreateMediaModalPage,
       componentProps: {
         "path": `${this.currentFolder}/${this.selected.name}`,
-        "file_name": `${this.selected.name}`,
-        "profile": this.profile
+        "file_name_ext": filename_ext,
+        "file_name": filename,
+        "profile": this.profile,
+        "isVideo": true,
+        "response": response
       }
     });
 
@@ -107,8 +148,4 @@ export class TimelinePage implements OnInit {
     return await modal.present();
   }
 
-
-  async getMedia(){
-    return await this.mediaService.getTimelineData();
-  }
 }

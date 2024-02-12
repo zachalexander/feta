@@ -1,31 +1,24 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList, ViewChildren, OnChanges, AfterViewInit} from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { TimelinePageModule } from 'src/app/pages/timeline/timeline.module';
+import { Component, OnInit, ViewChild, Input, QueryList, ViewChildren, ElementRef, Renderer2} from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
-// import { PhotoService } from '../../services/photo.service';
 import { MediaService } from 'src/app/services/media.service';
-import { APIService } from "../../API.service";
+import { FA } from "../../FA.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
-// import { EditPhotoModalPage } from '../../modals/edit-photo-modal/edit-photo-modal.page';
 import { LikeListModalPage } from '../../modals/like-list-modal/like-list-modal.page';
+import { EditMediaModalPage } from 'src/app/modals/edit-media-modal/edit-media-modal.page';
 import { Storage } from '@aws-amplify/storage';
-import { BehaviorSubject, Subscription, map } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { IonInfiniteScroll, IonRefresher, IonRefresherContent} from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { IonItemSliding} from '@ionic/angular';
-import { FormGroup} from '@angular/forms';
 import { ActionSheetController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { IonContent } from '@ionic/angular';
-import { Haptics, ImpactStyle } from '@capacitor/haptics'
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Filesystem, Directory } from '@capacitor/filesystem';
-import { Auth } from '@aws-amplify/auth';
 import { Share } from '@capacitor/share';
-// import { Network } from '@capacitor/network';
-
 import { finalize } from 'rxjs/operators';
 
 import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
@@ -33,13 +26,7 @@ import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
 import { DateSuffixPipe } from 'src/app/pipes/date-suffix.pipe';
 
 import SwiperCore, { Zoom, EffectFade } from 'swiper';
-import { timeline } from 'console';
-import { ConsoleLogger } from '@aws-amplify/core';
-// import { toast } from 'aws-amplify';
-// import { async } from '@angular/core/testing';
-// import { Timestamp } from 'rxjs/internal/operators/timestamp';
 SwiperCore.use([Zoom, EffectFade]);
-declare var Hls;
 
 @Component({
   selector: 'app-timeline',
@@ -53,21 +40,17 @@ export class TimelineComponent implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRefresher) ionRefresher: IonRefresher;
   @ViewChild(IonContent) ionContent: IonContent;
-  @ViewChild('slides') slides: IonItemSliding;
   @Input('data') data = [];
   @Input('token') token: String;
   @ViewChildren('timelineVideo') videos: QueryList<any>
-
+  @ViewChildren('timelineVideo', { read: ElementRef})
+  timelineVideo!: QueryList<ElementRef<any>>
 
   nowPlaying = null;
   videoOver = false;
   muted = true;
   replay = false;
-  pause;
-  videoStyle;
-  platformView;
-  mobilePlatform;
-  
+
   onCreateImageSubscription: Subscription | null = null;
   onUpdateImageSubscription: Subscription | null = null;
   onDeleteImageSubscription: Subscription | null = null;
@@ -78,13 +61,17 @@ export class TimelineComponent implements OnInit {
   loaded: boolean;
   profileSearch: boolean;
   refresh: boolean;
+  
   browser: any;
-
   dataReturned: any;
   wallListLength: any;
   currentUserUsername: any;
   currentUserUsernameID: any;
-  commentArray;
+  pause: any;
+  videoStyle: any;
+  platformView: any;
+  mobilePlatform: any;
+  commentArray: any;
   version: any;
   counter_init: any;
   counter_end: any;
@@ -96,67 +83,43 @@ export class TimelineComponent implements OnInit {
   disableButtons = false;
   
   constructor(
-    public api: APIService,
-    public modalController: ModalController,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
-    public toastController: ToastController,
+    public fa: FA,
+    private loadingController: LoadingController,
+    public modalController: ModalController,
+    private mediaService: MediaService,
     public navController: NavController,
     private platform: Platform,
-    private loadingController: LoadingController,
-    private mediaService: MediaService,
-    private route: ActivatedRoute,
-    private router: Router
+    public toastController: ToastController,
+    private router: Router,
+    private renderer: Renderer2
   ) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.mobilePlatform = this.platform.is("mobile");
   }
 
-  functionGetCognitoUserId(){
-    return Auth.currentUserInfo().then(user => user.id);
+  async ngOnInit() {
+    this.currentUserUsernameID = localStorage.getItem('usernameID');
+    this.currentUserUsername = localStorage.getItem('username');
+    this.browser = localStorage.getItem('User-browser');
+    this.platformView = this.platform.platforms();
   }
-
 
   async ngAfterViewInit() {
     this.didScroll();
     this.startSubscriptions();
+
+    this.timelineVideo.forEach(video => {
+      console.log(video.nativeElement)
+      this.renderer.setStyle(video.nativeElement.poster, 'background', 'green');
+    })
   }
 
+// Video player functions
 
-  async ngOnDestroy() {
-    if (this.onCreateImageSubscription) {
-      await this.onCreateImageSubscription.unsubscribe();
-    }
-    if (this.onUpdateImageSubscription) {
-      await this.onUpdateImageSubscription.unsubscribe();
-    }
-    if (this.onDeleteImageSubscription) {
-      await this.onDeleteImageSubscription.unsubscribe();
-    }
-    if (this.onCreateCommentsSubscription) {
-      await this.onCreateCommentsSubscription.unsubscribe();
-    }
-    if (this.onDeleteCommentsSubscription) {
-      await this.onDeleteCommentsSubscription.unsubscribe();
-    }
-    this.platform.pause.subscribe(async () => {
-      console.log('pausing subscription')
-    });
-  }
-
-  isElementInViewport(element){
-    const rect = element.getBoundingClientRect();
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    )
-  }
-
-  didScroll(){
-    if(this.nowPlaying && this.isElementInViewport(this.nowPlaying)) return;
-    else if(this.nowPlaying && !this.isElementInViewport(this.nowPlaying)){
+  didScroll() {
+    if (this.nowPlaying && this.isElementInViewport(this.nowPlaying)) return;
+    else if (this.nowPlaying && !this.isElementInViewport(this.nowPlaying)) {
       this.nowPlaying.pause();
       this.nowPlaying = null;
       this.pause = true;
@@ -164,11 +127,11 @@ export class TimelineComponent implements OnInit {
     }
 
     this.videos.forEach(player => {
-      if(this.nowPlaying) return;
+      if (this.nowPlaying) return;
       const nativeElement = player.nativeElement;
       const inView = this.isElementInViewport(nativeElement);
 
-      if(inView) {
+      if (inView) {
         this.nowPlaying = nativeElement;
         this.nowPlaying.muted = true;
         let playPromise = this.nowPlaying.play();
@@ -177,10 +140,10 @@ export class TimelineComponent implements OnInit {
           playPromise.then(_ => {
             this.nowPlaying.play();
           })
-          .catch(error => {
-            this.nowPlaying.play();
-            console.log(error)
-          })
+            .catch(error => {
+              this.nowPlaying.play();
+              console.log(error)
+            })
         }
         this.pause = false;
         this.muted = true;
@@ -190,6 +153,15 @@ export class TimelineComponent implements OnInit {
     })
   }
 
+  isElementInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    )
+  }
 
   videoEnd(){
     this.replay = true;
@@ -240,66 +212,75 @@ export class TimelineComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+
+  // // DO WE NEED??
+  // async ngOnChanges() {
+
+  //   this.startSubscriptions();
+
+  //   // if (this.platform.is('hybrid')) {
+  //   //   this.platform.resume.subscribe(async (event) => {
+  //   //     document.location.reload();
+  //   //     this.startSubscriptions();
+  //   //   })
+  //   // }
+
+  //   this.currentUserUsername = await localStorage.getItem('username');
+  //   this.currentUserUsernameID = await localStorage.getItem('usernameID');
+
+  //   // await Network.addListener('networkStatusChange', async status => {
+  //   //   console.log(status.connected)
+  //   //   this.networkStatus = 'online';
+  //   //   if(!status.connected){
+  //   //     this.networkStatus = 'offline';
+  //   //     const toast = await this.toastController.create({
+  //   //       message: '<strong>You are currently offline</strong>. We cannot load new content and you can only view content until you find a stable connection.',
+  //   //       position: "top",
+  //   //       color: "danger"
+  //   //     });
+  //   //     toast.present().then(() => {
+  //   //       console.log(this.networkStatus)
+  //   //       this.disableButtons = true;
+  //   //       console.log(this.disableButtons)
+  //   //     });
+
+  //   //   }
+  //   // });
+  // }
+
+  // TOASTS
+
+
+  // toast messages
   
+  async seeNewPostsButton() {
+    document.location.reload();
+    this.showFabButton = false;
   }
 
-  async ngOnChanges() {
-
-    this.currentUserUsernameID = localStorage.getItem('usernameID')
-    this.browser = localStorage.getItem('User-browser')
-    this.platformView = await this.platform.platforms();
-
-    this.didScroll();
-    this.startSubscriptions();
-
-    // if (this.platform.is('hybrid')) {
-
-    //   this.platform.resume.subscribe(async (event) => {
-    //     document.location.reload();
-    //     // await this.refreshData(event);
-    //     this.startSubscriptions();
-    //   })
-    // }
-
-    this.currentUserUsername = await localStorage.getItem('username');
-    this.currentUserUsernameID = await localStorage.getItem('usernameID');
-
-
-    // await Network.addListener('networkStatusChange', async status => {
-    //   console.log(status.connected)
-    //   this.networkStatus = 'online';
-    //   if(!status.connected){
-    //     this.networkStatus = 'offline';
-    //     const toast = await this.toastController.create({
-    //       message: '<strong>You are currently offline</strong>. We cannot load new content and you can only view content until you find a stable connection.',
-    //       position: "top",
-    //       color: "danger"
-    //     });
-    //     toast.present().then(() => {
-    //       console.log(this.networkStatus)
-    //       this.disableButtons = true;
-    //       console.log(this.disableButtons)
-    //     });
-
-    //   }
-    // });
-
-    // setTimeout(() => {
-    //   if (this.data.length < 2) {
-    //     this.profileSearch = true;
-    //   } else  {
-    //     this.profileSearch = false;
-    //   }
-    // }, 1000)
-
-
-  }
-
-  async presentToastNewPost(){
+  async presentToastNewPost() {
     this.showFabButton = true;
   }
 
+  async presentToastDeletePost() {
+    const toast = await this.toastController.create({
+      message: 'Your post has been successfully deleted.',
+      duration: 2000,
+      position: "top",
+      color: "success"
+    });
+    toast.present();
+  }
+
+  async presentToastDeleteComment() {
+    const toast = await this.toastController.create({
+      message: 'Your comment has been successfully deleted.',
+      duration: 2000,
+      position: "top",
+      color: "success"
+    });
+    toast.present();
+  }
 
   openPostSettings(username){
     if(this.currentUserUsername === username){
@@ -307,41 +288,49 @@ export class TimelineComponent implements OnInit {
     }
   }
 
-
   // This is for editing and sharing posts on wall
 
   async clickEditPost(mediaUrl, mediaId) {
-    // const modal = await this.modalController.create({
-    //   component: EditPhotoModalPage
-    // })
 
-    let imageData = [mediaUrl, mediaId]
-    // await this.photoService.getImagesID(imageData);
-    // await this.photoService.getImagePostDescription();
 
-    // modal.onDidDismiss().then((dataReturned) => {
-    //   if (dataReturned !== null) {
-    //     this.dataReturned = dataReturned.data;
-    //   }
-    // });
+    let mediaData: any;
 
-    // return await modal.present();
+    await this.fa.GetImagePost(mediaId).then((data) => {
+      if(data.mediaSourceDesktop && data.mediaSourceMobile){
+        mediaData = [data];
+      } else if (!data.mediaSourceDesktop && !data.mediaSourceMobile){
+        mediaData = [data, {
+          videoContent: "https://d2glij88atjbas.cloudfront.net/public/" + data.s3_key
+        }]
+      }
+    })
+
+    const modal = await this.modalController.create({
+      component: EditMediaModalPage,
+      componentProps: {
+        mediaData: mediaData
+      }
+    })
+
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        this.dataReturned = dataReturned.data;
+      }
+    });
+
+    return await modal.present();
   }
 
   async presentActionSheet(username, mediaId, mediaKey, downloadableVideo, isVideo) {
-
-    if(this.currentUserUsername === username){
+    if(this.currentUserUsername === username.username){
       this.currentUserEditPost = true;
       const actionSheet = await this.actionSheetController.create({
         header: 'Post Settings',
-        cssClass: 'my-custom-class',
         buttons: [{
           text: 'Edit Post',
           icon: 'pencil-outline',
           handler: () => {
-
               this.clickEditPost(mediaKey, mediaId);
-              
             }
         },
         {
@@ -350,7 +339,6 @@ export class TimelineComponent implements OnInit {
           icon: 'trash-outline',
           handler: async () => {
             const alert = await this.alertController.create({
-              cssClass: 'my-custom-class',
               header: 'Delete Post',
               message: 'Are you sure you want to delete this post?',
               buttons: [
@@ -361,14 +349,14 @@ export class TimelineComponent implements OnInit {
                   text: 'Delete',
                   handler: async () => {
 
-                    await this.api.DeleteImagePost({id: mediaId})
+                    await this.fa.DeleteImagePost({id: mediaId})
 
                     if(isVideo){
-                      await Storage.remove(downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
+                      await Storage.remove(downloadableVideo, { bucket: "fetadevvodservice-dev-input-nk0sepbg" })
                     } else {
                       await Storage.remove(mediaKey)
                     }
-                    await this.presentToast();
+                    await this.presentToastDeletePost();
                   }
               }
               ]
@@ -380,7 +368,6 @@ export class TimelineComponent implements OnInit {
           text: 'Share',
           icon: 'share-outline',
           handler: async () => {
-
             const loading = await this.loadingController.create({
               spinner: 'lines-sharp-small',
               translucent: false,
@@ -389,7 +376,7 @@ export class TimelineComponent implements OnInit {
 
             loading.present();
 
-            let media = await this.api.GetImagePost(mediaId)
+            let media = await this.fa.GetImagePost(mediaId)
             if(isVideo){
               let video = await Storage.get(media.downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
 
@@ -507,7 +494,7 @@ export class TimelineComponent implements OnInit {
 
     loading.present();
 
-    let media = await this.api.GetImagePost(id)
+    let media = await this.fa.GetImagePost(id)
     if(isVideo){
       let video = await Storage.get(media.downloadableVideo, {bucket: "fetadevvodservice-dev-input-nk0sepbg"})
 
@@ -595,7 +582,6 @@ export class TimelineComponent implements OnInit {
     return a;
   }
 
-
   async readAsBase64(photo) { 
     return await this.convertBlobToBase64(photo) as string;
   }
@@ -609,46 +595,10 @@ export class TimelineComponent implements OnInit {
     reader.readAsDataURL(blob)
   })
 
-  // toast messages
-
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Your post has been successfully deleted.',
-      duration: 2000,
-      position: "top",
-      color: "success"
-    });
-    toast.present();
-  }
-
-  async presentToastDelete() {
-    const toast = await this.toastController.create({
-      message: 'Your comment has been successfully deleted.',
-      duration: 2000,
-      position: "top",
-      color: "success"
-    });
-    toast.present();
-  }
-
-  async presentToastDeleteReply() {
-    const toast = await this.toastController.create({
-      message: 'Your reply has been successfully deleted.',
-      duration: 2000,
-      position: "top",
-      color: "success"
-    });
-    toast.present();
-  }
-
-  async seeNewPosts(){
-    document.location.reload();
-    this.showFabButton = false;
-  }
 
   // modal functions
 
-  async openModal(id) {
+  async openCommentModal(id) {
     const modal = await this.modalController.create({
       component: CommentModalPage,
       componentProps: {
@@ -685,24 +635,24 @@ export class TimelineComponent implements OnInit {
 
   // when user scrolls to bottom, invoke this function
 
-  loadData(event) {
-      try {
-        this.mediaService.getTimelineDataPaginated(this.token).subscribe((data) => {
-          let dataPull = data[0]
-          this.token = data[2]
+  // loadData(event) {
+  //     try {
+  //       this.mediaService.getTimelineDataPaginated(this.token).subscribe((data) => {
+  //         let dataPull = data[0]
+  //         this.token = data[2]
 
-          if (this.token === null) {
-            // event.target.disabled = true;
-            this.scrollFinished = true;
-          } 
-          Object.entries(dataPull).forEach(([key, value]) => { this.data[this.data.length] = value })
-          event.target.complete();
-        });
-      } catch (error) {
-        console.log(error)
-      }
+  //         if (this.token === null) {
+  //           // event.target.disabled = true;
+  //           this.scrollFinished = true;
+  //         } 
+  //         Object.entries(dataPull).forEach(([key, value]) => { this.data[this.data.length] = value })
+  //         event.target.complete();
+  //       });
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
 
-  }
+  // }
 
   async changeLocation(){
     // save current route first
@@ -746,32 +696,38 @@ export class TimelineComponent implements OnInit {
 
   startSubscriptions(){
     this.onCreateImageSubscription = <Subscription>(
-      this.api.OnCreateImagePostListener().subscribe(async (event: any) => {
+      this.fa.OnCreateImagePostListener().subscribe(async (event: any) => {
         this.presentToastNewPost();
       })
     );
 
     this.onUpdateImageSubscription = <Subscription>(
-      this.api.OnUpdateImagePostListener().subscribe({
+      this.fa.OnUpdateImagePostListener().subscribe({
         next: async (event: any) => {
           const imageId = event.value.data.onUpdateImagePost.id;
+  
+          this.data.filter((media) => {
+            if(media.id === imageId){
+              media.description = event.value.data.onUpdateImagePost.description;
+            }
+          })
 
-          if((JSON.parse(event.value.data.onUpdateImagePost.likes))){
-            let post = await this.api.GetPostLikes(imageId)
-            this.data.filter((media) => {
-              if(media.id == imageId){
-                media.likes = post.likes
-                // media.like_count = JSON.parse(post.likes)['usernames'].length
-              }
-              return media;
-            })
-          }
+          // if((JSON.parse(event.value.data.onUpdateImagePost.likes))){
+          //   let post = await this.fa.GetPostLikes(imageId)
+          //   this.data.filter((media) => {
+          //     if(media.id == imageId){
+          //       media.likes = post.likes
+          //       // media.like_count = JSON.parse(post.likes)['usernames'].length
+          //     }
+          //     return media;
+          //   })
+          // }
         }
       })
     )
   
     this.onDeleteImageSubscription = <Subscription>(
-      this.api.OnDeleteImagePostListener().subscribe((event: any) => {
+      this.fa.OnDeleteImagePostListener().subscribe((event: any) => {
         setTimeout(() => {
           window.location.reload();
         }, 1000);
@@ -779,16 +735,16 @@ export class TimelineComponent implements OnInit {
     )
 
     this.onCreateCommentsSubscription = <Subscription>(
-      this.api.OnCreateCommentsListener().subscribe({
+      this.fa.OnCreateCommentsListener().subscribe({
         next: async (event: any) => {
           const imageId = event.value.data.onCreateComments.imagePostsID;
 
-          let commentsArray: [] = await this.api.getImageComments(imageId)
+          let commentsArray: [] = await this.fa.getImageComments(imageId)
           let commentLength: string = commentsArray.length.toString()
 
-          // await this.api.UpdateImagePost({ id: imageId, comments: commentLength })
+          // await this.fa.UpdateImagePost({ id: imageId, comments: commentLength })
 
-          let timelineData = await this.api.ListImagePosts();
+          let timelineData = await this.fa.ListImagePosts();
 
           timelineData.items.map(values => {
             if (values.id === imageId) {
@@ -806,15 +762,15 @@ export class TimelineComponent implements OnInit {
     )
 
     this.onDeleteCommentsSubscription = <Subscription>(
-      this.api.OnDeleteCommentsListener().subscribe({
+      this.fa.OnDeleteCommentsListener().subscribe({
         next: async (event: any) => {
           const imageId = event.value.data.onDeleteComments.imagePostsID;
-          let commentsArray: [] = await this.api.getImageComments(imageId)
+          let commentsArray: [] = await this.fa.getImageComments(imageId)
           let commentLength: string = commentsArray.length.toString()
 
-          // await this.api.UpdateImagePost({id: imageId, comments: commentLength})
+          // await this.fa.UpdateImagePost({id: imageId, comments: commentLength})
 
-          let timelineData = await this.api.ListImagePosts();
+          let timelineData = await this.fa.ListImagePosts();
 
           timelineData.items.map(values => {
             if(values.id === imageId){
@@ -832,9 +788,25 @@ export class TimelineComponent implements OnInit {
     )
   }
 
-  async commentLength(imageID) {
-    let commentArray: [] = await this.api.getImageComments(imageID)
-    return commentArray.length
+  async ngOnDestroy() {
+    if (this.onCreateImageSubscription) {
+      await this.onCreateImageSubscription.unsubscribe();
+    }
+    if (this.onUpdateImageSubscription) {
+      await this.onUpdateImageSubscription.unsubscribe();
+    }
+    if (this.onDeleteImageSubscription) {
+      await this.onDeleteImageSubscription.unsubscribe();
+    }
+    if (this.onCreateCommentsSubscription) {
+      await this.onCreateCommentsSubscription.unsubscribe();
+    }
+    if (this.onDeleteCommentsSubscription) {
+      await this.onDeleteCommentsSubscription.unsubscribe();
+    }
+    this.platform.pause.subscribe(async () => {
+      console.log('pausing subscription')
+    });
   }
 
 }

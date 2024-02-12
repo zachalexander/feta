@@ -4,7 +4,6 @@ import { Amplify, Auth } from 'aws-amplify';
 import awsExports from './../../../aws-exports';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { bindCallback } from 'rxjs';
 import { Location } from '@angular/common';
 
 @Component({

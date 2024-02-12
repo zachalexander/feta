@@ -1,26 +1,49 @@
 
+  <ion-header>
+    <ion-toolbar>
+      <ion-icon slot="start" (click)="backToTimeline()" class="close-comment-icon" name="close-outline"></ion-icon>
+      <ion-title>Finish your post</ion-title>
+      <ion-note slot="end" color="dark" (click)="closeModal(postImageForm.value)">Post&nbsp;&nbsp;</ion-note>
+    </ion-toolbar>
+  </ion-header>
+  
   <ion-content>
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start" (click)="backToTimeline()" class="cancel">&nbsp;&nbsp;Cancel</ion-buttons>
-        <ion-title>Finish your post</ion-title>
-        <ion-buttons slot="end" (click)="closeModal(postImageForm.value)" class="update">Post&nbsp;&nbsp;</ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <img *ngIf="isImage" class="photo-taken" [src]="src">
-    <!-- <video *ngIf="browser === 'chrome' && !isImage" [src]="src" class="video-div" width="100%" height="100%" autoplay="autoplay" controls="true" preload="metadata" muted playsinline></video>
-    <video *ngIf="browser === 'safari' || browser === 'other' && !isImage" class="video-div" width="100%" height="100%" autoplay="autoplay" controls="true" preload="metadata" muted playsinline>
-      <source [src]="src" type="video/mp4">
-    </video> -->
-    <form [formGroup]="postImageForm" (ngSubmit)="closeModal(postImageForm.value)">
-      <ion-grid>
-        <ion-row>
-          <ion-col size-lg="12" size-md="12" size-sm="12" size="12">
-            <ion-item lines="none">
-              <ion-textarea class="comment-textarea" lines="none" placeholder="Add a description..." formControlName="description" autoGrow="true"></ion-textarea>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </form>
+    <div class="input-container" *ngIf="src">
+      <div id="image-container" *ngIf="isImage">
+        <swiper class="mySwiper" effect="fade" [zoom]="true">
+          <ng-template swiperSlide>
+            <div class="swiper-zoom-container">
+              <img class="swiper-lazy" [src]="src" loading="lazy"
+                style="background: var(--ion-color-light)" />
+            </div>
+          </ng-template>
+        </swiper>
+      </div>
+      <div id="video-container" *ngIf="!isImage">
+        <vg-player>
+          <video (ended)="videoEnd()" #editableVideo [vgMedia]="$any(media)" [vgHls]="src" [poster]="posterImage"
+             #media preload="metadata" playsinline webkit-playsinline="webkit-playsinline" muted="true">
+            <source [vgHls]="src" type="application/x-mpegURL">
+          </video>
+        </vg-player>
+        <div id="volume-controls">
+          <ion-icon *ngIf="muted" name="volume-mute" large (click)="unmuteClicked()"></ion-icon>
+          <ion-icon *ngIf="!muted" name="volume-high" large (click)="muteClicked()"></ion-icon>
+        </div>
+        <div *ngIf="replay" id="replay-controls">
+          <p *ngIf="replay" (click)="replayVideo()">Replay video <ion-icon name="refresh-outline" large></ion-icon></p>
+        </div>
+        <div id="play-controls">
+          <ion-icon *ngIf="!pause" name="pause" large (click)="pauseVideo()"></ion-icon>
+          <ion-icon *ngIf="pause" name="play" large (click)="playVideo()"></ion-icon>
+        </div>
+      </div>
+      <div class="media-description">
+        <form [formGroup]="postImageForm" class="form-wrapper">
+          <ion-textarea autoGrow="true" placeholder="Add a description..." class="form-text-area" lines="none"
+            #updateMediaInput formControlName="description" maxLength="350" rows="7">
+          </ion-textarea>
+        </form>
+      </div>
+    </div>
   </ion-content>

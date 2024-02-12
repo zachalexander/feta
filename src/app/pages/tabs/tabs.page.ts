@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { APIService } from 'src/app/API.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
@@ -20,9 +21,23 @@ export class TabsPage {
 
   constructor(
     private api: APIService,
+    private activatedRoute: ActivatedRoute
   ) {}
   
   async ngOnInit(){
+
+    // grab the url to update tab highlighting
+    let url = this.activatedRoute.snapshot['_routerState'].url;
+
+    if(url === '/home'){
+      this.homeClick();
+    } else if(url === '/timeline'){
+      this.timelineClick();
+    } else if(url === '/message-board'){
+      this.messageClick();
+    } else if (url.includes('profile')) {
+      this.profileClick();
+    }
 
     setTimeout(async () => {
       this.username = localStorage.getItem('username')

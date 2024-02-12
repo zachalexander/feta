@@ -4,7 +4,7 @@ import { ModalController, Platform, LoadingController, PickerController } from '
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomvalidationService } from '../../services/customvalidation.service';
 import { MediaService } from 'src/app/services/media.service';
-import { APIService } from 'src/app/API.service';
+import { FA } from 'src/app/FA.service';
 import { Router } from '@angular/router';
 import { Storage } from 'aws-amplify';
 
@@ -42,7 +42,7 @@ export class UpdateProfileModalPage implements OnInit {
   constructor(private modalController: ModalController, 
     private customValidator: CustomvalidationService, 
     private fb: FormBuilder, 
-    private api: APIService,
+    private fa: FA,
     private router: Router,
     private mediaService: MediaService,
     public loadingController: LoadingController,
@@ -215,7 +215,7 @@ export class UpdateProfileModalPage implements OnInit {
     this.updateProfileForm.controls['relation'].setValue(this.relation)
     this.updateProfileForm.controls['bio'].setValue(this.bio)
 
-    this.profilePictureUrl = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'))
+    this.profilePictureUrl = await this.fa.GetProfilePictureProfileID(localStorage.getItem('profileID'))
 
     if(this.currentUserProfile.profilepicture){
       let imageurl = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + this.profilePictureUrl.imageurl;
@@ -246,7 +246,7 @@ export class UpdateProfileModalPage implements OnInit {
     loading.present();
 
     let updateUsername = new Promise(resolve => {
-      resolve(this.api.UpdateUsername({id: this.profile.usernameID, username: profile.username.toLowerCase()}))
+      resolve(this.fa.UpdateUsername({id: this.profile.usernameID, username: profile.username.toLowerCase()}))
     })
 
     if(this.dateAdjust){
@@ -260,7 +260,7 @@ export class UpdateProfileModalPage implements OnInit {
     profile.birthday_actual = new Date(2000, (this.monthShown.date.value), this.dateShown.date.value)
     
     await new Promise(resolve => {
-      resolve(updateUsername.then(async () => {await this.api.UpdateProfile({id: this.profile.id, first_name: profile.first_name, last_name: profile.last_name, birthday: profile.birthday_actual, relation: profile.relation, bio: profile.bio})}))
+      resolve(updateUsername.then(async () => {await this.fa.UpdateProfile({id: this.profile.id, first_name: profile.first_name, last_name: profile.last_name, birthday: profile.birthday_actual, relation: profile.relation, bio: profile.bio})}))
     }).then(() => {
       this.router.navigate(['/profile', profile.username.toLowerCase()]).then(() => { window.location.reload()});
       loading.dismiss();
@@ -283,7 +283,7 @@ export class UpdateProfileModalPage implements OnInit {
   }
 
   async getProfilePicture(profileID) {
-    return await (await this.api.GetProfilePictureProfileID(profileID))?.imageurl;
+    return await (await this.fa.GetProfilePictureProfileID(profileID))?.imageurl;
   }
 
 }

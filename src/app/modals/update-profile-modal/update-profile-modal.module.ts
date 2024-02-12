@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UpdateProfileModalPageRoutingModule } from './update-profile-modal-routing.module';
 
 import { UpdateProfileModalPage } from './update-profile-modal.page';
+import { FA } from 'src/app/FA.service';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { UpdateProfileModalPage } from './update-profile-modal.page';
     ReactiveFormsModule,
     UpdateProfileModalPageRoutingModule
   ],
-  declarations: [UpdateProfileModalPage]
+  declarations: [UpdateProfileModalPage],
+  providers: [FA]
 })
 export class UpdateProfileModalPageModule {}

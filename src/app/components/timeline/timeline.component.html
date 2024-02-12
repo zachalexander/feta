@@ -11,7 +11,7 @@
   <!-- subscription to listen for new posts, will show pop-up when new posts added to wall -->
   <div class="new-post-button-div">
     <ion-fab *ngIf="showFabButton" vertical="top" slot="fixed">
-      <ion-fab-button (click)="seeNewPosts()" color="light">See new posts&nbsp;<ion-icon size="small" name="arrow-up-outline"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="seeNewPostsButton()" color="light">See new posts&nbsp;<ion-icon size="small" name="arrow-up-outline"></ion-icon></ion-fab-button>
     </ion-fab>
   </div>
 
@@ -53,7 +53,7 @@
             </swiper>
             <div id="video-container" *ngIf="!image.mediaSourceDesktop && !image.mediaSourceMobile">
               <vg-player>
-                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" poster="https://ik.imagekit.io/bkf4g8lrl/poster-images/{{image.posterImage}}" vgHls="https://d2glij88atjbas.cloudfront.net/public/{{image.s3_key}}" #media preload="metadata" playsinline webkit-playsinline="webkit-playsinline" muted="true">
+                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [poster]="image.posterImage" posterelement="#test" vgHls="https://d2glij88atjbas.cloudfront.net/public/{{image.s3_key}}" #media preload="none" playsinline webkit-playsinline="webkit-playsinline" muted="true">
                   <source vgHls="https://d2glij88atjbas.cloudfront.net/public/{{image.s3_key}}" type="application/x-mpegURL">
                 </video>
               </vg-player>
@@ -76,7 +76,7 @@
                 <app-timeline-like-button [version]="image.version" [user]="this.currentUserUsername" [alreadyLiked]="image.userLiked" [imageId] = "image.id" [usernameID]="this.currentUserUsernameID"></app-timeline-like-button>
 
                 <!-- comment chat-bubble button below image -->
-                <ion-tab-button (click)="openModal(image.id)">
+                <ion-tab-button (click)="openCommentModal(image.id)">
                   <p class="comment-icon">Comment</p><ion-icon name="chatbubble-outline"></ion-icon>
                 </ion-tab-button>
 
@@ -104,7 +104,7 @@
           <ion-item-group lines="none" class="comments" *ngIf="image.comments > 0">
             <!-- if greater than 0 comments, show below -->
             <ion-item-divider lines="none" class="comment-divider">
-              <ion-label class="view-all-comments" color="medium" (click)="openModal(image.id)">View all {{image.comments}} comments </ion-label>
+              <ion-label class="view-all-comments" color="medium" (click)="openCommentModal(image.id)">View all {{image.comments}} comments </ion-label>
             </ion-item-divider>
           </ion-item-group>
         </ion-card>
@@ -116,13 +116,13 @@
     </div>
   </ion-grid>
 
-  <ion-fab color="dark" (click)="scrollToTop()" (ionInfinite)="loadData($event)" class="arrow-up-outline" slot="fixed" horizontal="end" vertical="bottom">
+  <!-- <ion-fab color="dark" (click)="scrollToTop()" (ionInfinite)="loadData($event)" class="arrow-up-outline" slot="fixed" horizontal="end" vertical="bottom">
     <ion-fab-button color="light" class="cycle-up-button">
       <ion-icon name="arrow-up-outline"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 
-  <ion-infinite-scroll *ngIf="mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
+  <!-- <ion-infinite-scroll *ngIf="mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
     <ion-infinite-scroll-content loadingSpinner="lines-sharp-small">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
@@ -130,7 +130,7 @@
   <ion-infinite-scroll *ngIf="!mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
     <ion-infinite-scroll-content loadingSpinner="lines-sharp-small">
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
 
 </ion-content>
 

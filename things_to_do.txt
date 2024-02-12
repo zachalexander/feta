@@ -20,39 +20,37 @@ Code Review
         -fix image height of main image and layout -- DONE
         -add back in other parts of opening page for navigation -- DONE
 3) Home page
-    -Thursday, January 18th
+    -Thursday, January 18th and Monday, January 22nd
         -make sure data loads on tabs module once logged in -- DONE
         -More edits to home page layout, make it accessible and easy to use -- DONE
         -ensure that only the three tabs and tabs module working correctly -- DONE
         -add notes for rules and information -- DONE
         -fix error page layout and content -- DONE
-        -fill in terms of service, rules, and the why *** (NEED TO DO)
         -optimize for latest video post -- DONE
 4) Timeline page
 4a) Timeline page and component
-    -Monday, January 22nd
-        -finish up (***)
-        -Make sure timeline data loads correctly, organize the api services
-        -streamline layout and coding a little
+    -Tuesday, January 23rd and Thursday, January 25th
+        -Make sure timeline data loads correctly, organize the api services -- DONE
+        -streamline layout and coding a little -- DONE
         -Ensure subscriptions are working properly
-            -create, update, delete are set accordingly
-        -Make sure videos and images are loading correctly and are optimized
+            -create, update, delete are set accordingly -- DONE
+        -Make sure videos and images are loading correctly and are optimized -- DONE
 4b) Add media component
-    -Tuesday, January 23rd
-        -Make sure photos are saved as ImageKit paths and loaded correctly
+    -Tuesday, January 23rd and Thursday, January 25th and Friday, January 26th
+        -Make sure photos are saved as ImageKit paths and loaded correctly -- DONE
         -Update video uploads to make it more UI-friendly
         -Update the layout of the final page before hitting submit to make it more mobile-friendly
 4c) Post settings 
-    -Thursday, January 25th
-        -Add back in functionality to share, delete, and update posts
+    -Monday, January 29th
+        -Add back in functionality to share, delete, and update posts (make sure video sharing is working)
         -ensure that the share function is working correctly and reduce load time if possible
 4d) Like button
-    -Friday, January 26th
+    -Monday, January 29th
         -Make sure like button connects with backend Likes model correctly
         -Ensure that data can be connected back to each post
         -Make sure subscription is working correctly
 4e) Comment component
-    -Monday, January 29th
+    -Tuesday, January 30th
         -Make sure comments connect with backend Comments model correctly
         -Ensure data can be connected back to each post
         -Make sure subscription is working correctly
@@ -79,6 +77,7 @@ Code Review
     -Tuesday, February 6th
         -Do checks throughout application to make sure that full runs are working
         -Start from user creation all the way through and do all steps to check for bugs
+        -fill in terms of service, rules, and the why
 
 7) Submit to app store
     -Thursday, February 8th and Friday, February 9th

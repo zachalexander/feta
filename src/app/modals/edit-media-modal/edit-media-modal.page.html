@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon slot="start" (click)="backToTimeline()" class="close-comment-icon" name="close-outline"></ion-icon>
+    <ion-title>Edit</ion-title>
+    <ion-note slot="end" color="dark" (click)="postDescription(updateMediaForm.value)">Post&nbsp;&nbsp;</ion-note>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<div class="input-container" *ngIf="mediaData">
+  <div id="image-container" *ngIf="!videoContent">
+    <swiper class="mySwiper" effect="fade" [zoom]="true">
+      <ng-template swiperSlide>
+        <div class="swiper-zoom-container">
+          <img class="swiper-lazy" [src]="mediaData[0].mediaSourceMobile" loading="lazy" style="background: var(--ion-color-light)" />
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+  <div id="video-container" *ngIf="videoContent">
+    <vg-player>
+      <video (ended)="videoEnd()" #editableVideo [vgMedia]="$any(media)"
+        [poster]="posterImage"
+        [vgHls]="videoLink" #media preload="metadata"
+        playsinline webkit-playsinline="webkit-playsinline" muted="true">
+        <source [vgHls]="videoLink"
+          type="application/x-mpegURL">
+      </video>
+    </vg-player>
+    <div id="volume-controls">
+      <ion-icon *ngIf="muted" name="volume-mute" large (click)="unmuteClicked()"></ion-icon>
+      <ion-icon *ngIf="!muted" name="volume-high" large (click)="muteClicked()"></ion-icon>
+    </div>
+    <div *ngIf="replay" id="replay-controls">
+      <p *ngIf="replay" (click)="replayVideo()">Replay video <ion-icon name="refresh-outline" large></ion-icon></p>
+    </div>
+    <div id="play-controls">
+      <ion-icon *ngIf="!pause" name="pause" large (click)="pauseVideo()"></ion-icon>
+      <ion-icon *ngIf="pause" name="play" large (click)="playVideo()"></ion-icon>
+    </div>
+  </div>
+  <div class="media-description">
+      <form [formGroup]="updateMediaForm" class="form-wrapper">
+        <ion-textarea autoGrow="true" placeholder="Write a description..." class="form-text-area" lines="none" #updateMediaInput formControlName="description" maxLength="350" rows="7">
+        </ion-textarea>
+      </form>
+  </div>
+</div>
+
+</ion-content>

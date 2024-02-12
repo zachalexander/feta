@@ -21,6 +21,7 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { VgStreamingModule } from '@videogular/ngx-videogular/streaming';
 import { ImageResizer } from '@awesome-cordova-plugins/image-resizer/ngx';
 import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
+import { FA } from 'src/app/FA.service';
 
 
 
@@ -41,7 +42,7 @@ import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
     SharedmodulePageModule
   ],
   declarations: [TimelinePage],
-  providers: [PreviewAnyFile, Storage, ImageResizer, VideoEditor],
+  providers: [PreviewAnyFile, Storage, ImageResizer, VideoEditor, FA],
   exports: []
 })
 export class TimelinePageModule {}

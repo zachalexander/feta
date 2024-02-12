@@ -15,7 +15,7 @@ import { Capacitor } from '@capacitor/core';
 import { ImageResizer, ImageResizerOptions } from '@awesome-cordova-plugins/image-resizer/ngx';
 import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
 
-const APP_DIRECTORY = Directory.Documents
+const APP_DIRECTORY = Directory.Documents;
 
 @Component({
   selector: 'app-create-media-modal',
@@ -35,13 +35,23 @@ export class CreateMediaModalPage {
   folderContent = [];
   currentFolder = '';
   path;
+  file_name_ext;
   file_name;
+  posterImage;
   blob;
+  isVideo;
+  response;
   isImage = false;
   encoder: any;
   profile: any;
   
   browser: any;
+
+  nowPlaying = null;
+  videoOver = false;
+  muted = true;
+  replay = false;
+  pause;
 
   constructor(
     private modalController: ModalController,
@@ -71,12 +81,17 @@ export class CreateMediaModalPage {
 
     this.browser = localStorage.getItem('User-browser')
     let profile = this.profile;
-    console.log(profile);
 
     this.profileID = profile.id;
     this.usernameID = profile.usernameID;
 
-    await this.loadMediaFromStorage().then(() => loading.dismiss())
+
+    await this.loadMediaFromStorage().then(() => loading.dismiss()).finally(() => 
+      console.log(this.file_name, this.file_name_ext, this.isVideo, this.response)
+    )
+
+
+
     
   }
 
@@ -96,54 +111,46 @@ export class CreateMediaModalPage {
 
     this.blob = this.b64toBlob(file.data)
 
-    if(this.path.substring(this.path.length - 3) === 'mp4' ||
-      this.path.substring(this.path.length - 3) === 'mov' ||
-      this.path.substring(this.path.length - 3) === 'ogg' ||
-      this.path.substring(this.path.length - 3) === 'ebM'){
-        
-        this.isImage = false;
+    if(this.isVideo){
+      this.isImage = false;
 
-        if (Capacitor.getPlatform() === "web"){
-    
-          let blobUrl = URL.createObjectURL(this.blob) as any;
-          blobUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl)
-          this.src = blobUrl;
-          loading.dismiss();
-    
-        } else {
-    
-          const file_uri = await Filesystem.getUri({
-            path: this.path,
-            directory: APP_DIRECTORY
-          })
-    
-          this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
-          loading.dismiss();
-        }
+      let extension = `${this.file_name}/${this.file_name}.m3u8`
+      let posterExtension = `poster-images/${this.file_name}Poster-Images.0000000.jpg`;
+
+      console.log(Capacitor.getPlatform())
+
+      if (Capacitor.getPlatform() === "web"){
+        this.src =`https://d2glij88atjbas.cloudfront.net/public/${extension}`;
+        this.posterImage = `https://ik.imagekit.io/bkf4g8lrl/${posterExtension}`
+        console.log(this.src, this.posterImage)
+        loading.dismiss();
       } else {
-        this.isImage = true;
-
-        if (Capacitor.getPlatform() === "web") {
-
-          let blobUrl = URL.createObjectURL(this.blob) as any;
-          blobUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl)
-          this.src = blobUrl;
-          loading.dismiss();
-
-        } else {
-
-          const file_uri = await Filesystem.getUri({
-            path: this.path,
-            directory: APP_DIRECTORY
-          })
-          console.log(file_uri)
-
-          this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
-          loading.dismiss();
-        }
-
+        const file_uri = await Filesystem.getUri({
+          path: this.path,
+          directory: APP_DIRECTORY
+        })
+        this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
+        this.posterImage = `https://ik.imagekit.io/bkf4g8lrl/${posterExtension}`
+        console.log(this.src, this.posterImage)
+        loading.dismiss();
       }
+    } else {
+      this.isImage = true;
 
+      if (Capacitor.getPlatform() === "web") {
+        let blobUrl = URL.createObjectURL(this.blob) as any;
+        blobUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl)
+        this.src = blobUrl;
+        loading.dismiss();
+      } else {
+        const file_uri = await Filesystem.getUri({
+          path: this.path,
+          directory: APP_DIRECTORY
+        })
+        this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
+        loading.dismiss();
+      }
+    }
   }
 
   b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
@@ -168,8 +175,7 @@ export class CreateMediaModalPage {
 
   async closeModal(imagepost) {
 
-    let extension = this.file_name.split('.').pop()
-
+    let extension = this.file_name_ext.split('.').pop()
     let date = new Date();
     let day = date.getDate();
     let month = date.getMonth() + 1;
@@ -198,7 +204,7 @@ export class CreateMediaModalPage {
       const video = true;
       imagepost.s3_key = `video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.m3u8`
       imagepost.downloadableVideo = `video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`
-      imagepost.posterImage = `poster-images/video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}Poster-Images.0000000.jpg`
+      imagepost.posterImage = this.posterImage
       await this.submitToS3(`video_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`, this.blob, video, extension)
     } else {
       const video = false;
@@ -208,7 +214,6 @@ export class CreateMediaModalPage {
       await this.submitToS3(`timeline-uploads/photos/photo_upload_${month}_${day}_${year}_${hour}_${mins}_${secs}.${extension.toLowerCase()}`, this.blob, video, extension)
     }
     
-
     loading.dismiss();
 
     await this.api.CreateImagePost(imagepost).then(() => {
@@ -225,7 +230,6 @@ export class CreateMediaModalPage {
   }
 
   async submitToS3(filename, blob, isVideo, extension){
-
     if(isVideo){
       await Storage.put(filename, blob, {
         contentType: "video/" + extension,
@@ -233,6 +237,55 @@ export class CreateMediaModalPage {
       })
     } else {
       await Storage.put(filename, blob, {contentType: "image/jpeg"})
+    }
+  }
+
+  videoEnd() {
+    this.replay = true;
+    this.pause = true;
+  }
+
+  replayVideo() {
+    if (this.nowPlaying) {
+      this.nowPlaying.play();
+      this.nowPlaying.muted = false;
+      this.muted = false;
+      this.replay = false;
+      this.pause = false;
+    }
+  }
+
+  pauseVideo() {
+    if (this.nowPlaying) {
+      this.nowPlaying.pause();
+      this.nowPlaying.muted = true;
+      this.replay = false;
+      this.muted = true;
+      this.pause = true;
+    }
+  }
+
+  playVideo() {
+    if (this.nowPlaying) {
+      this.nowPlaying.muted = false;
+      this.nowPlaying.play();
+      this.replay = false;
+      this.muted = false;
+      this.pause = false;
+    }
+  }
+
+  unmuteClicked() {
+    if (this.nowPlaying) {
+      this.nowPlaying.muted = false;
+      this.muted = false;
+    }
+  }
+
+  muteClicked() {
+    if (this.nowPlaying) {
+      this.nowPlaying.muted = true;
+      this.muted = true;
     }
   }
 

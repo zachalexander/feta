@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, AfterViewInit, OnChanges, ElementRef, OnInit } from '@angular/core';
 import { Auth } from 'aws-amplify'
 import { Router } from '@angular/router';
-import { APIService, ModelSortDirection } from 'src/app/API.service';
+import { FA, ModelSortDirection } from 'src/app/FA.service';
 import { ModalController } from '@ionic/angular';
 import { CreateProfileModalPage } from '../../modals/create-profile-modal/create-profile-modal.page'
 import { LoadingController } from '@ionic/angular';
@@ -10,7 +10,6 @@ import { UsersListModalPage } from 'src/app/modals/users-list-modal/users-list-m
 import { TermsOfServiceModalPage } from 'src/app/modals/terms-of-service-modal/terms-of-service-modal.page';
 import { AppWhyModalPage } from 'src/app/modals/app-why-modal/app-why-modal.page';
 import { AppRulesModalPage } from 'src/app/modals/app-rules-modal/app-rules-modal.page';
-import { IonInfiniteScroll, IonRefresher, IonRefresherContent } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +20,6 @@ export class HomeComponent implements OnInit {
 
   @Input() name?: string;
   @ViewChild('latestVideo') private video: any;
-  // @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   fetaProfileCount: number;
   already_registered;
   createProfile = false;
@@ -39,7 +37,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    private api: APIService,
+    private fa: FA,
     public modalController: ModalController,
     public loadingController: LoadingController
   ){}
@@ -73,7 +71,7 @@ export class HomeComponent implements OnInit {
   }
 
   async getLatestTimelinePost(){
-    return this.api.ImagePostsBySorterValueAndTime_posted("media", null, ModelSortDirection.DESC, null, 1)
+    return this.fa.ImagePostsBySorterValueAndTime_posted("media", null, ModelSortDirection.DESC, null, 1)
   }
 
   async ngOnInit() {
@@ -98,9 +96,12 @@ export class HomeComponent implements OnInit {
     
     loading.dismiss();
 
-    setTimeout(() => {
-      this.didScroll();
-    }, 2000)
+    if (this.lastTimelinePost && !this.lastTimelinePost.mediaSourceDesktop && !this.lastTimelinePost.mediaSourceMobile){
+      setTimeout(() => {
+        this.didScroll();
+      }, 2000)
+    }
+
   }
 
   async signOut(){
@@ -111,7 +112,7 @@ export class HomeComponent implements OnInit {
   }
 
   async listProfiles() {
-    let profiles = await this.api.ListProfiles();
+    let profiles = await this.fa.ListProfiles();
     this.fetaProfileCount = profiles.items.length;
   }
 
@@ -122,13 +123,13 @@ export class HomeComponent implements OnInit {
   async loadUserData() {    
     try {
       let cognitoid = await (await Auth.currentUserCredentials()).identityId
-      let profile = await this.api.GetUserProfileFromCognitoId(cognitoid)
+      let profile = await this.fa.GetUserProfileFromCognitoId(cognitoid)
 
 
       if(profile && cognitoid){
         this.already_registered = true; 
         this.profilepicid = profile.profilepictureID;
-        this.username = await this.api.GetUsernameFromProfileId(profile.id);
+        this.username = await this.fa.GetUsernameFromProfileId(profile.id);
 
         await localStorage.setItem('usernameID', profile.usernameID);
         await localStorage.setItem('cognitoID', cognitoid);
