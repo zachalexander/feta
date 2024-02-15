@@ -1445,16 +1445,9 @@ query GetSportsGame($id: ID!) {
     sport
     homeTeam
     awayTeam
-    gameStatus
-    homeTeamWins
-    homeTeamLosses
-    awayTeamWins
-    awayTeamLosses
-    basicGameInfo
+    gameInfo
     startTime
     lastUpdate
-    gameStarted
-    gameEnded
     liveGameChatRoomID
     livegamechatroom {
       id
@@ -1465,16 +1458,9 @@ query GetSportsGame($id: ID!) {
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -1504,16 +1490,9 @@ query ListSportsGames(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -1552,16 +1531,9 @@ query SportsGamesBySportAndStartTime(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -1598,16 +1570,9 @@ query SportsGamesByLiveGameChatRoomID(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -1635,16 +1600,9 @@ query GetLiveGameChatRoom($id: ID!) {
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -1695,16 +1653,9 @@ query ListLiveGameChatRooms(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -1733,16 +1684,9 @@ query GetHubPosts($id: ID!) {
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -1779,16 +1723,9 @@ query ListHubPosts(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -1828,16 +1765,9 @@ query HubPostsBySortKeyAndTimePosted(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -1973,16 +1903,9 @@ query GetChats($id: ID!) {
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt

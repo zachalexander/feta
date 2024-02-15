@@ -6,6 +6,7 @@ import { Directory } from '@capacitor/filesystem';
 import write_blob from 'capacitor-blob-writer';
 import { CreateMediaModalPage } from 'src/app/modals/create-media-modal/create-media-modal.page';
 import { Storage } from 'aws-amplify';
+import { catchError } from 'rxjs';
 
 const APP_DIRECTORY = Directory.Documents;
 
@@ -102,13 +103,25 @@ export class TimelinePage implements OnInit {
 
   async submitToS3(filename, blob, isVideo, extension) {
     if (isVideo) {
-      await Storage.put(filename, blob, {
+      let response = await Storage.put(filename, blob, {
         contentType: "video/" + extension,
         bucket: "fetadevvodservice-dev-input-nk0sepbg"
+      }).then(() => {
+        return 'success'
+      }, catchError => {
+        return catchError;
       })
+      return response;
     } else {
-      await Storage.put(filename, blob, { contentType: "image/jpeg" })
+      let response = await Storage.put(filename, blob, { contentType: "image/jpeg" }).then(() => {
+        return 'success'
+      }, catchError => {
+        return catchError;
+      })
+      return response;
     }
+
+
   }
 
   async openCreateMediaModal() {

@@ -428,6 +428,18 @@ ion-title {
     margin-right: 0.5em;
 }
 
+.tbd-avatar-right, .tbd-avatar-left {
+    max-width: 36px;
+    max-height: 36px;
+}
+
+.tbd-avatar-left {
+    margin-right: 0.5em;
+}
+
+.tbd-avatar-right {
+    margin-left: 0.5em;
+}
 .final-stats {
     font-size: 0.90em;
 }

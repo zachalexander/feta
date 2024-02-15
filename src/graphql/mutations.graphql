@@ -2027,16 +2027,9 @@ mutation CreateSportsGame(
     sport
     homeTeam
     awayTeam
-    gameStatus
-    homeTeamWins
-    homeTeamLosses
-    awayTeamWins
-    awayTeamLosses
-    basicGameInfo
+    gameInfo
     startTime
     lastUpdate
-    gameStarted
-    gameEnded
     liveGameChatRoomID
     livegamechatroom {
       id
@@ -2047,16 +2040,9 @@ mutation CreateSportsGame(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -2084,16 +2070,9 @@ mutation UpdateSportsGame(
     sport
     homeTeam
     awayTeam
-    gameStatus
-    homeTeamWins
-    homeTeamLosses
-    awayTeamWins
-    awayTeamLosses
-    basicGameInfo
+    gameInfo
     startTime
     lastUpdate
-    gameStarted
-    gameEnded
     liveGameChatRoomID
     livegamechatroom {
       id
@@ -2104,16 +2083,9 @@ mutation UpdateSportsGame(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -2141,16 +2113,9 @@ mutation DeleteSportsGame(
     sport
     homeTeam
     awayTeam
-    gameStatus
-    homeTeamWins
-    homeTeamLosses
-    awayTeamWins
-    awayTeamLosses
-    basicGameInfo
+    gameInfo
     startTime
     lastUpdate
-    gameStarted
-    gameEnded
     liveGameChatRoomID
     livegamechatroom {
       id
@@ -2161,16 +2126,9 @@ mutation DeleteSportsGame(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -2202,16 +2160,9 @@ mutation CreateLiveGameChatRoom(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2260,16 +2211,9 @@ mutation UpdateLiveGameChatRoom(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2318,16 +2262,9 @@ mutation DeleteLiveGameChatRoom(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2378,16 +2315,9 @@ mutation CreateHubPosts(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2422,16 +2352,9 @@ mutation UpdateHubPosts(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2466,16 +2389,9 @@ mutation DeleteHubPosts(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2621,16 +2537,9 @@ mutation CreateChats(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -2775,16 +2684,9 @@ mutation UpdateChats(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -2929,16 +2831,9 @@ mutation DeleteChats(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt

@@ -56,7 +56,7 @@ export class EditMediaModalPage  {
       const nativeElement = this.video.nativeElement;
       this.nowPlaying = nativeElement;
       this.nowPlaying.muted = true;
-      let playPromise = this.nowPlaying.play();
+      let playPromise = this.nowPlaying.pause();
   
         if (playPromise !== undefined) {
           playPromise.then(_ => {
@@ -67,7 +67,7 @@ export class EditMediaModalPage  {
               console.log(error)
             })
         }
-      this.pause = false;
+      this.pause = true;
       this.muted = true;
       this.replay = false;
       this.videoOver = false;

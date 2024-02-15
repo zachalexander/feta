@@ -29,6 +29,8 @@ export class MessageBoardPage implements OnInit {
   opponentName;
   currentHalfInning;
   mobilePlatform;
+  pitcherInfo;
+  weatherInfo;
 
   testData: any = [];
 
@@ -48,9 +50,8 @@ export class MessageBoardPage implements OnInit {
   async ngOnInit() {
     this.startSubscriptions();
     await this.getHubData();
-    // await this.openBaseballChatroom(this.hubData[1].sportsgame, "716402")
 
-    console.log(this.hubData)
+    console.log(this.hubData);
 
     Hub.listen('api', (data: any) => {
       const { payload } = data;
@@ -148,13 +149,22 @@ export class MessageBoardPage implements OnInit {
       this.hubData = data.items;
       this.hubData.map(async hubs => {
         if(hubs.postType === 'sport' && hubs.sportsgame.sport === 'baseball'){
-          hubs.sportsgame.basicGameInfo = await JSON.parse(hubs.sportsgame.basicGameInfo)
-          hubs.sportsgame.losingPitcherStats = [];
-          hubs.sportsgame.winningPitcherStats = [];
-          hubs.sportsgame.oriolesOutcome = [];
-          hubs.sportsgame.currentHalfInning = null;
-          hubs.sportsgame.currentBatterStats = [];
-          hubs.sportsgame.currentPitcherStats = [];
+          hubs.sportsgame.gameInfo = await JSON.parse(hubs.sportsgame.gameInfo)
+          this.pitcherInfo = Object.keys(hubs.sportsgame.gameInfo.probablePitchers);
+          this.weatherInfo = Object.keys(hubs.sportsgame.gameInfo.weather)
+
+          if(Date.parse(hubs.sportsgame.startTime) > Date.now()){
+            hubs.sportsgame.gameStarted = false;
+          } else {
+            hubs.sportsgame.gameStarted = true;
+          }
+
+          // hubs.sportsgame.losingPitcherStats = [];
+          // hubs.sportsgame.winningPitcherStats = [];
+          // hubs.sportsgame.oriolesOutcome = [];
+          // hubs.sportsgame.currentHalfInning = null;
+          // hubs.sportsgame.currentBatterStats = [];
+          // hubs.sportsgame.currentPitcherStats = [];
 
           if (hubs.sportsgame.gameStatus === 'Final') {
             hubs.sportsgame.oriolesOutcome = (hubs.sportsgame.gameStatus === 'Final' && (hubs.sportsgame.awayTeam === 'Baltimore Orioles' && hubs.sportsgame.basicGameInfo[0].currentPlay.result.awayScore > hubs.sportsgame.basicGameInfo[0].currentPlay.result.homeScore) || (hubs.sportsgame.homeTeam === 'Baltimore Orioles' && hubs.sportsgame.basicGameInfo[0].currentPlay.result.homeScore > hubs.sportsgame.basicGameInfo[0].currentPlay.result.awayScore)) ? "O's WON" : (hubs.sportsgame.gameStatus === 'Final' && (hubs.sportsgame.awayTeam === 'Baltimore Orioles' && hubs.sportsgame.basicGameInfo[0].currentPlay.result.awayScore < hubs.sportsgame.basicGameInfo[0].currentPlay.result.homeScore) || (hubs.sportsgame.homeTeam === 'Baltimore Orioles' && hubs.sportsgame.basicGameInfo[0].currentPlay.result.homeScore < hubs.sportsgame.basicGameInfo[0].currentPlay.result.awayScore)) ? "O's LOST" : null;
@@ -163,8 +173,8 @@ export class MessageBoardPage implements OnInit {
           }
 
           if (hubs.sportsgame.gameStatus === 'Scheduled' || hubs.sportsgame.gameStatus === 'Pre-Game' || hubs.sportsgame.gameStatus === 'Warmup') {
-            hubs.sportsgame.startingAwayPitcherStats = ((hubs.sportsgame.gameStatus !== 'In Progress' && hubs.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(hubs.sportsgame.basicGameInfo[0].initialGameData.probablePitchers.away.id) as any : [];
-            hubs.sportsgame.startingHomePitcherStats = ((hubs.sportsgame.gameStatus !== 'In Progress' && hubs.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(hubs.sportsgame.basicGameInfo[0].initialGameData.probablePitchers.home.id) as any : [];
+            // hubs.sportsgame.startingAwayPitcherStats = ((hubs.sportsgame.gameStatus !== 'In Progress' && hubs.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(hubs.sportsgame.basicGameInfo[0].initialGameData.probablePitchers.away.id) as any : [];
+            // hubs.sportsgame.startingHomePitcherStats = ((hubs.sportsgame.gameStatus !== 'In Progress' && hubs.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(hubs.sportsgame.basicGameInfo[0].initialGameData.probablePitchers.home.id) as any : [];
           }
 
           if (hubs.sportsgame.gameStatus === 'In Progress') {

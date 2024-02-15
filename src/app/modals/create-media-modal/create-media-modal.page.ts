@@ -1,5 +1,5 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { Component, ComponentFactoryResolver, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { AlertController, ModalController, NavParams } from '@ionic/angular';
 import { APIService } from "../../API.service";
 import { CachingService } from 'src/app/services/caching.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -23,7 +23,7 @@ const APP_DIRECTORY = Directory.Documents;
   styleUrls: ['./create-media-modal.page.scss'],
 })
 export class CreateMediaModalPage {
-
+  @ViewChild('createdVideo', { static: false }) private video: any;
   src: any;
   email: any;
   fullName: any;
@@ -44,6 +44,7 @@ export class CreateMediaModalPage {
   isImage = false;
   encoder: any;
   profile: any;
+  show: boolean;
   
   browser: any;
 
@@ -59,6 +60,8 @@ export class CreateMediaModalPage {
     private router: Router,
     private sanitizer: DomSanitizer,
     private loadingController: LoadingController,
+    private alertController: AlertController,
+    private cdref: ChangeDetectorRef
   ) {    
     this.postImageForm = new FormGroup({
     description: new FormControl('')
@@ -71,39 +74,78 @@ export class CreateMediaModalPage {
   }
 
   async ngOnInit() {
-    const loading = await this.loadingController.create({
-      spinner: 'lines-sharp-small',
-      translucent: false,
-      cssClass: 'spinner-loading'
-    });
-
-    loading.present();
-
+    this.show = false;
     this.browser = localStorage.getItem('User-browser')
     let profile = this.profile;
 
     this.profileID = profile.id;
     this.usernameID = profile.usernameID;
 
+    if (this.response === 'success') {
+      const alert = await this.alertController.create({
+        message: 'Almost there...',
+        htmlAttributes: {
+          'aria-label': 'alert dialog',
+        },
+      })
 
-    await this.loadMediaFromStorage().then(() => loading.dismiss()).finally(() => 
-      console.log(this.file_name, this.file_name_ext, this.isVideo, this.response)
-    )
+      alert.present();
 
+      setTimeout(() => {
+        alert.dismiss()
+      }, 10000)
 
+      let response = setTimeout(async () => {
+        await this.loadMediaFromStorage().then((data) => {
+          this.show = true;
+          this.src = data[0];
+          this.posterImage = data[1];
+        });
+      }, 10000)
 
-    
+      // if (response) {
+      //   this.show = true;
+      //   this.src = response[0]
+      //   this.posterImage = response[1]
+      // }
+    } else {
+      this.alertController.create({
+        message: 'This is an alert with custom aria attributes.',
+        htmlAttributes: {
+          'aria-label': 'alert dialog',
+        },
+      })
+    }
+  }
+
+  async ngAfterViewInit(){
+    setTimeout(() => {
+      if (this.video) {
+        console.log(this.video)
+        const nativeElement = this.video.nativeElement;
+        this.nowPlaying = nativeElement;
+        this.nowPlaying.muted = true;
+        let playPromise = this.nowPlaying.pause();
+  
+        if (playPromise !== undefined) {
+          playPromise.then(_ => {
+            this.nowPlaying.play();
+          })
+            .catch(error => {
+              this.nowPlaying.play();
+              console.log(error)
+            })
+        }
+        this.pause = true;
+        this.muted = true;
+        this.replay = false;
+        this.videoOver = false;
+        this.cdref.detectChanges();
+      }
+    }, 10000)
   }
 
   async loadMediaFromStorage() {
-    const loading = await this.loadingController.create({
-      spinner: 'lines-sharp-small',
-      translucent: false,
-      cssClass: 'spinner-loading'
-    });
-
-    loading.present();
-
     const file = await Filesystem.readFile({
       directory: APP_DIRECTORY,
       path: this.path
@@ -113,17 +155,13 @@ export class CreateMediaModalPage {
 
     if(this.isVideo){
       this.isImage = false;
-
       let extension = `${this.file_name}/${this.file_name}.m3u8`
       let posterExtension = `poster-images/${this.file_name}Poster-Images.0000000.jpg`;
 
-      console.log(Capacitor.getPlatform())
-
       if (Capacitor.getPlatform() === "web"){
-        this.src =`https://d2glij88atjbas.cloudfront.net/public/${extension}`;
-        this.posterImage = `https://ik.imagekit.io/bkf4g8lrl/${posterExtension}`
-        console.log(this.src, this.posterImage)
-        loading.dismiss();
+          this.src = "https://d2glij88atjbas.cloudfront.net/public/" + extension;
+          this.posterImage = `https://ik.imagekit.io/bkf4g8lrl/${posterExtension}`
+          return [this.src, this.posterImage];
       } else {
         const file_uri = await Filesystem.getUri({
           path: this.path,
@@ -132,7 +170,7 @@ export class CreateMediaModalPage {
         this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
         this.posterImage = `https://ik.imagekit.io/bkf4g8lrl/${posterExtension}`
         console.log(this.src, this.posterImage)
-        loading.dismiss();
+        return [this.src, this.posterImage];
       }
     } else {
       this.isImage = true;
@@ -141,14 +179,14 @@ export class CreateMediaModalPage {
         let blobUrl = URL.createObjectURL(this.blob) as any;
         blobUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl)
         this.src = blobUrl;
-        loading.dismiss();
+        return this.src;
       } else {
         const file_uri = await Filesystem.getUri({
           path: this.path,
           directory: APP_DIRECTORY
         })
         this.src = this.sanitizer.bypassSecurityTrustUrl(Capacitor.convertFileSrc(file_uri.uri));
-        loading.dismiss();
+        return this.src;
       }
     }
   }

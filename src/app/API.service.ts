@@ -432,16 +432,9 @@ export type CreateSportsGameInput = {
   sport?: string | null;
   homeTeam?: string | null;
   awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
 };
 
@@ -449,16 +442,9 @@ export type ModelSportsGameConditionInput = {
   sport?: ModelStringInput | null;
   homeTeam?: ModelStringInput | null;
   awayTeam?: ModelStringInput | null;
-  gameStatus?: ModelStringInput | null;
-  homeTeamWins?: ModelStringInput | null;
-  homeTeamLosses?: ModelStringInput | null;
-  awayTeamWins?: ModelStringInput | null;
-  awayTeamLosses?: ModelStringInput | null;
-  basicGameInfo?: ModelStringInput | null;
+  gameInfo?: ModelStringInput | null;
   startTime?: ModelStringInput | null;
   lastUpdate?: ModelStringInput | null;
-  gameStarted?: ModelStringInput | null;
-  gameEnded?: ModelStringInput | null;
   liveGameChatRoomID?: ModelIDInput | null;
   and?: Array<ModelSportsGameConditionInput | null> | null;
   or?: Array<ModelSportsGameConditionInput | null> | null;
@@ -471,16 +457,9 @@ export type SportsGame = {
   sport?: string | null;
   homeTeam?: string | null;
   awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
   livegamechatroom?: LiveGameChatRoom | null;
   createdAt: string;
@@ -549,16 +528,9 @@ export type UpdateSportsGameInput = {
   sport?: string | null;
   homeTeam?: string | null;
   awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
 };
 
@@ -821,16 +793,9 @@ export type ModelSportsGameFilterInput = {
   sport?: ModelStringInput | null;
   homeTeam?: ModelStringInput | null;
   awayTeam?: ModelStringInput | null;
-  gameStatus?: ModelStringInput | null;
-  homeTeamWins?: ModelStringInput | null;
-  homeTeamLosses?: ModelStringInput | null;
-  awayTeamWins?: ModelStringInput | null;
-  awayTeamLosses?: ModelStringInput | null;
-  basicGameInfo?: ModelStringInput | null;
+  gameInfo?: ModelStringInput | null;
   startTime?: ModelStringInput | null;
   lastUpdate?: ModelStringInput | null;
-  gameStarted?: ModelStringInput | null;
-  gameEnded?: ModelStringInput | null;
   liveGameChatRoomID?: ModelIDInput | null;
   and?: Array<ModelSportsGameFilterInput | null> | null;
   or?: Array<ModelSportsGameFilterInput | null> | null;
@@ -1000,16 +965,9 @@ export type ModelSubscriptionSportsGameFilterInput = {
   sport?: ModelSubscriptionStringInput | null;
   homeTeam?: ModelSubscriptionStringInput | null;
   awayTeam?: ModelSubscriptionStringInput | null;
-  gameStatus?: ModelSubscriptionStringInput | null;
-  homeTeamWins?: ModelSubscriptionStringInput | null;
-  homeTeamLosses?: ModelSubscriptionStringInput | null;
-  awayTeamWins?: ModelSubscriptionStringInput | null;
-  awayTeamLosses?: ModelSubscriptionStringInput | null;
-  basicGameInfo?: ModelSubscriptionStringInput | null;
+  gameInfo?: ModelSubscriptionStringInput | null;
   startTime?: ModelSubscriptionStringInput | null;
   lastUpdate?: ModelSubscriptionStringInput | null;
-  gameStarted?: ModelSubscriptionStringInput | null;
-  gameEnded?: ModelSubscriptionStringInput | null;
   liveGameChatRoomID?: ModelSubscriptionIDInput | null;
   and?: Array<ModelSubscriptionSportsGameFilterInput | null> | null;
   or?: Array<ModelSubscriptionSportsGameFilterInput | null> | null;
@@ -3169,16 +3127,9 @@ export type CreateSportsGameMutation = {
   sport?: string | null;
   homeTeam?: string | null;
   awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
   livegamechatroom?: {
     __typename: "LiveGameChatRoom";
@@ -3191,16 +3142,9 @@ export type CreateSportsGameMutation = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3226,16 +3170,9 @@ export type UpdateSportsGameMutation = {
   sport?: string | null;
   homeTeam?: string | null;
   awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
   livegamechatroom?: {
     __typename: "LiveGameChatRoom";
@@ -3248,16 +3185,9 @@ export type UpdateSportsGameMutation = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3283,16 +3213,9 @@ export type DeleteSportsGameMutation = {
   sport?: string | null;
   homeTeam?: string | null;
   awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
   livegamechatroom?: {
     __typename: "LiveGameChatRoom";
@@ -3305,16 +3228,9 @@ export type DeleteSportsGameMutation = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3345,16 +3261,9 @@ export type CreateLiveGameChatRoomMutation = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -3404,16 +3313,9 @@ export type UpdateLiveGameChatRoomMutation = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -3463,16 +3365,9 @@ export type DeleteLiveGameChatRoomMutation = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -3524,16 +3419,9 @@ export type CreateHubPostsMutation = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -3567,16 +3455,9 @@ export type UpdateHubPostsMutation = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -3610,16 +3491,9 @@ export type DeleteHubPostsMutation = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -3774,16 +3648,9 @@ export type CreateChatsMutation = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3937,16 +3804,9 @@ export type UpdateChatsMutation = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -4100,16 +3960,9 @@ export type DeleteChatsMutation = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -5886,16 +5739,9 @@ export type GetSportsGameQuery = {
   sport?: string | null;
   homeTeam?: string | null;
   awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
   livegamechatroom?: {
     __typename: "LiveGameChatRoom";
@@ -5908,16 +5754,9 @@ export type GetSportsGameQuery = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -5945,16 +5784,9 @@ export type ListSportsGamesQuery = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -5981,16 +5813,9 @@ export type SportsGamesBySportAndStartTimeQuery = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -6017,16 +5842,9 @@ export type SportsGamesByLiveGameChatRoomIDQuery = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -6056,16 +5874,9 @@ export type GetLiveGameChatRoomQuery = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -6117,16 +5928,9 @@ export type ListLiveGameChatRoomsQuery = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -6157,16 +5961,9 @@ export type GetHubPostsQuery = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -6202,16 +5999,9 @@ export type ListHubPostsQuery = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -6239,16 +6029,9 @@ export type HubPostsBySortKeyAndTimePostedQuery = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -6395,16 +6178,9 @@ export type GetChatsQuery = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -8873,16 +8649,9 @@ export type OnCreateSportsGameSubscription = {
   sport?: string | null;
   homeTeam?: string | null;
   awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
   livegamechatroom?: {
     __typename: "LiveGameChatRoom";
@@ -8895,16 +8664,9 @@ export type OnCreateSportsGameSubscription = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -8930,16 +8692,9 @@ export type OnUpdateSportsGameSubscription = {
   sport?: string | null;
   homeTeam?: string | null;
   awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
   livegamechatroom?: {
     __typename: "LiveGameChatRoom";
@@ -8952,16 +8707,9 @@ export type OnUpdateSportsGameSubscription = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -8987,16 +8735,9 @@ export type OnDeleteSportsGameSubscription = {
   sport?: string | null;
   homeTeam?: string | null;
   awayTeam?: string | null;
-  gameStatus?: string | null;
-  homeTeamWins?: string | null;
-  homeTeamLosses?: string | null;
-  awayTeamWins?: string | null;
-  awayTeamLosses?: string | null;
-  basicGameInfo?: string | null;
+  gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  gameStarted?: string | null;
-  gameEnded?: string | null;
   liveGameChatRoomID?: string | null;
   livegamechatroom?: {
     __typename: "LiveGameChatRoom";
@@ -9009,16 +8750,9 @@ export type OnDeleteSportsGameSubscription = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -9049,16 +8783,9 @@ export type OnCreateLiveGameChatRoomSubscription = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -9108,16 +8835,9 @@ export type OnUpdateLiveGameChatRoomSubscription = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -9167,16 +8887,9 @@ export type OnDeleteLiveGameChatRoomSubscription = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -9228,16 +8941,9 @@ export type OnCreateHubPostsSubscription = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -9271,16 +8977,9 @@ export type OnUpdateHubPostsSubscription = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -9314,16 +9013,9 @@ export type OnDeleteHubPostsSubscription = {
     sport?: string | null;
     homeTeam?: string | null;
     awayTeam?: string | null;
-    gameStatus?: string | null;
-    homeTeamWins?: string | null;
-    homeTeamLosses?: string | null;
-    awayTeamWins?: string | null;
-    awayTeamLosses?: string | null;
-    basicGameInfo?: string | null;
+    gameInfo?: string | null;
     startTime?: string | null;
     lastUpdate?: string | null;
-    gameStarted?: string | null;
-    gameEnded?: string | null;
     liveGameChatRoomID?: string | null;
     livegamechatroom?: {
       __typename: "LiveGameChatRoom";
@@ -9478,16 +9170,9 @@ export type OnCreateChatsSubscription = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -9641,16 +9326,9 @@ export type OnUpdateChatsSubscription = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -9804,16 +9482,9 @@ export type OnDeleteChatsSubscription = {
       sport?: string | null;
       homeTeam?: string | null;
       awayTeam?: string | null;
-      gameStatus?: string | null;
-      homeTeamWins?: string | null;
-      homeTeamLosses?: string | null;
-      awayTeamWins?: string | null;
-      awayTeamLosses?: string | null;
-      basicGameInfo?: string | null;
+      gameInfo?: string | null;
       startTime?: string | null;
       lastUpdate?: string | null;
-      gameStarted?: string | null;
-      gameEnded?: string | null;
       liveGameChatRoomID?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -10165,6 +9836,7 @@ export type OnDeleteChatLikesSubscription = {
   chatsLikesId?: string | null;
   owner?: string | null;
 };
+
 // ZACH CREATED
 export type GetUsernameDataQuery = {
   __typename: "Username";
@@ -10588,7 +10260,7 @@ export class APIService {
     )) as any;
     return <GetProfilePictureQuery>response.data.listProfilePictures.items[0];
   }
-
+  
   async CreateProfilePicture(
     input: CreateProfilePictureInput,
     condition?: ModelProfilePictureConditionInput
@@ -12997,16 +12669,9 @@ export class APIService {
           sport
           homeTeam
           awayTeam
-          gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
-          basicGameInfo
+          gameInfo
           startTime
           lastUpdate
-          gameStarted
-          gameEnded
           liveGameChatRoomID
           livegamechatroom {
             __typename
@@ -13019,16 +12684,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -13070,16 +12728,9 @@ export class APIService {
           sport
           homeTeam
           awayTeam
-          gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
-          basicGameInfo
+          gameInfo
           startTime
           lastUpdate
-          gameStarted
-          gameEnded
           liveGameChatRoomID
           livegamechatroom {
             __typename
@@ -13092,16 +12743,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -13143,16 +12787,9 @@ export class APIService {
           sport
           homeTeam
           awayTeam
-          gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
-          basicGameInfo
+          gameInfo
           startTime
           lastUpdate
-          gameStarted
-          gameEnded
           liveGameChatRoomID
           livegamechatroom {
             __typename
@@ -13165,16 +12802,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -13221,16 +12851,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -13296,16 +12919,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -13371,16 +12987,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -13448,16 +13057,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -13507,16 +13109,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -13566,16 +13161,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -13746,16 +13334,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -13925,16 +13506,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -14104,16 +13678,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -15335,6 +14902,8 @@ export class APIService {
               id
               username
               profileID
+              createdAt
+              updatedAt
               usernameImagePostsId
               usernameProfileId
               owner
@@ -15350,9 +14919,6 @@ export class APIService {
               first_name
               last_name
               profilepictureID
-              profilepicture {
-                imageurl
-              }
               bio
               birthday
               createdAt
@@ -16370,16 +15936,9 @@ export class APIService {
           sport
           homeTeam
           awayTeam
-          gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
-          basicGameInfo
+          gameInfo
           startTime
           lastUpdate
-          gameStarted
-          gameEnded
           liveGameChatRoomID
           livegamechatroom {
             __typename
@@ -16392,16 +15951,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -16443,16 +15995,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -16503,16 +16048,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -16572,16 +16110,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -16635,16 +16166,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -16710,16 +16234,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -16767,16 +16284,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -16826,16 +16336,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -16887,16 +16390,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -17070,16 +16566,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -20073,16 +19562,9 @@ export class APIService {
           sport
           homeTeam
           awayTeam
-          gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
-          basicGameInfo
+          gameInfo
           startTime
           lastUpdate
-          gameStarted
-          gameEnded
           liveGameChatRoomID
           livegamechatroom {
             __typename
@@ -20095,16 +19577,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -20151,16 +19626,9 @@ export class APIService {
           sport
           homeTeam
           awayTeam
-          gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
-          basicGameInfo
+          gameInfo
           startTime
           lastUpdate
-          gameStarted
-          gameEnded
           liveGameChatRoomID
           livegamechatroom {
             __typename
@@ -20173,16 +19641,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -20229,16 +19690,9 @@ export class APIService {
           sport
           homeTeam
           awayTeam
-          gameStatus
-          homeTeamWins
-          homeTeamLosses
-          awayTeamWins
-          awayTeamLosses
-          basicGameInfo
+          gameInfo
           startTime
           lastUpdate
-          gameStarted
-          gameEnded
           liveGameChatRoomID
           livegamechatroom {
             __typename
@@ -20251,16 +19705,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -20314,16 +19761,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -20398,16 +19838,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -20482,16 +19915,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -20566,16 +19992,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -20630,16 +20049,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -20694,16 +20106,9 @@ export class APIService {
             sport
             homeTeam
             awayTeam
-            gameStatus
-            homeTeamWins
-            homeTeamLosses
-            awayTeamWins
-            awayTeamLosses
-            basicGameInfo
+            gameInfo
             startTime
             lastUpdate
-            gameStarted
-            gameEnded
             liveGameChatRoomID
             livegamechatroom {
               __typename
@@ -20879,16 +20284,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -21063,16 +20461,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt
@@ -21247,16 +20638,9 @@ export class APIService {
               sport
               homeTeam
               awayTeam
-              gameStatus
-              homeTeamWins
-              homeTeamLosses
-              awayTeamWins
-              awayTeamLosses
-              basicGameInfo
+              gameInfo
               startTime
               lastUpdate
-              gameStarted
-              gameEnded
               liveGameChatRoomID
               createdAt
               updatedAt

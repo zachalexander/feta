@@ -7,7 +7,7 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-content>
+  <ion-content *ngIf="show">
     <div class="input-container" *ngIf="src">
       <div id="image-container" *ngIf="isImage">
         <swiper class="mySwiper" effect="fade" [zoom]="true">
@@ -21,7 +21,7 @@
       </div>
       <div id="video-container" *ngIf="!isImage">
         <vg-player>
-          <video (ended)="videoEnd()" #editableVideo [vgMedia]="$any(media)" [vgHls]="src" [poster]="posterImage"
+          <video (ended)="videoEnd()" #createdVideo [vgMedia]="$any(media)" [vgHls]="src" [poster]="posterImage"
              #media preload="metadata" playsinline webkit-playsinline="webkit-playsinline" muted="true">
             <source [vgHls]="src" type="application/x-mpegURL">
           </video>

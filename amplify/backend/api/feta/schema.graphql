@@ -103,16 +103,9 @@ type SportsGame @model @auth(rules: [
   sport: String @index(name: "byStartTime", sortKeyFields: ["startTime"])
   homeTeam: String
   awayTeam: String
-  gameStatus: String
-  homeTeamWins: String
-  homeTeamLosses: String
-  awayTeamWins: String
-  awayTeamLosses: String
-  basicGameInfo: AWSJSON
+  gameInfo: AWSJSON
   startTime: String
   lastUpdate: String
-  gameStarted: String
-  gameEnded: String
   liveGameChatRoomID: ID @index(name: "byLiveGameChatRoomData")
   livegamechatroom: LiveGameChatRoom @hasOne(fields: ["liveGameChatRoomID"])
 }

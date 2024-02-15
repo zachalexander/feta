@@ -53,10 +53,10 @@ ion-textarea {
     }
 
     vg-player video {
-        object-fit: contain;
+        object-fit: cover;
         margin: 0;
         padding: 0;
-        width: 100%;
+        width: 200px;
         height: 250px;
         background-color: var(--ion-color-light);
     }

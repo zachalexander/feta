@@ -2027,16 +2027,9 @@ subscription OnCreateSportsGame(
     sport
     homeTeam
     awayTeam
-    gameStatus
-    homeTeamWins
-    homeTeamLosses
-    awayTeamWins
-    awayTeamLosses
-    basicGameInfo
+    gameInfo
     startTime
     lastUpdate
-    gameStarted
-    gameEnded
     liveGameChatRoomID
     livegamechatroom {
       id
@@ -2047,16 +2040,9 @@ subscription OnCreateSportsGame(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -2084,16 +2070,9 @@ subscription OnUpdateSportsGame(
     sport
     homeTeam
     awayTeam
-    gameStatus
-    homeTeamWins
-    homeTeamLosses
-    awayTeamWins
-    awayTeamLosses
-    basicGameInfo
+    gameInfo
     startTime
     lastUpdate
-    gameStarted
-    gameEnded
     liveGameChatRoomID
     livegamechatroom {
       id
@@ -2104,16 +2083,9 @@ subscription OnUpdateSportsGame(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -2141,16 +2113,9 @@ subscription OnDeleteSportsGame(
     sport
     homeTeam
     awayTeam
-    gameStatus
-    homeTeamWins
-    homeTeamLosses
-    awayTeamWins
-    awayTeamLosses
-    basicGameInfo
+    gameInfo
     startTime
     lastUpdate
-    gameStarted
-    gameEnded
     liveGameChatRoomID
     livegamechatroom {
       id
@@ -2161,16 +2126,9 @@ subscription OnDeleteSportsGame(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -2202,16 +2160,9 @@ subscription OnCreateLiveGameChatRoom(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2260,16 +2211,9 @@ subscription OnUpdateLiveGameChatRoom(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2318,16 +2262,9 @@ subscription OnDeleteLiveGameChatRoom(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2378,16 +2315,9 @@ subscription OnCreateHubPosts(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2422,16 +2352,9 @@ subscription OnUpdateHubPosts(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2466,16 +2389,9 @@ subscription OnDeleteHubPosts(
       sport
       homeTeam
       awayTeam
-      gameStatus
-      homeTeamWins
-      homeTeamLosses
-      awayTeamWins
-      awayTeamLosses
-      basicGameInfo
+      gameInfo
       startTime
       lastUpdate
-      gameStarted
-      gameEnded
       liveGameChatRoomID
       livegamechatroom {
         id
@@ -2621,16 +2537,9 @@ subscription OnCreateChats(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -2775,16 +2684,9 @@ subscription OnUpdateChats(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
@@ -2929,16 +2831,9 @@ subscription OnDeleteChats(
         sport
         homeTeam
         awayTeam
-        gameStatus
-        homeTeamWins
-        homeTeamLosses
-        awayTeamWins
-        awayTeamLosses
-        basicGameInfo
+        gameInfo
         startTime
         lastUpdate
-        gameStarted
-        gameEnded
         liveGameChatRoomID
         createdAt
         updatedAt
