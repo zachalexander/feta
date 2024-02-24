@@ -19658,8 +19658,6 @@ export class APIService {
             updatedAt
             owner
           }
-          createdAt
-          updatedAt
           owner
         }
       }`;
