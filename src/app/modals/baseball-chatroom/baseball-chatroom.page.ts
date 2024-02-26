@@ -25,7 +25,7 @@ export class BaseballChatroomPage implements OnInit {
   @ViewChild(IonContent) ionContent: IonContent;
   priorConnectionState: ConnectionState;
   
-  baseballData;
+  baseballData: any;
   sportsGameID;
   liveGameChatRoomID;
   accordionOpen;
@@ -76,17 +76,17 @@ export class BaseballChatroomPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.accordionOpen = false;
-    this.userTyped = false;
-    this.startSubscriptions();
+    console.log(this.baseballData)
+    // this.accordionOpen = false;
+    // this.userTyped = false;
+    // this.startSubscriptions();
     this.liveGameChatRoomID = this.sportsGameID + "-chatroom"
     this.userProfileID = localStorage.getItem('profileID');
     this.userUsernameID = localStorage.getItem('usernameID')
-    this.chats = await this.getChats(this.liveGameChatRoomID) as any;
-    console.log(this.chats)
-    this.ionViewDidLoad();
-    this.userTyped = false;
-    document.querySelector<HTMLElement>(".textarea-wrapper").style.minWidth = "100%";
+    // this.chats = await this.getChats(this.liveGameChatRoomID) as any;
+    // this.ionViewDidLoad();
+    // this.userTyped = false;
+    // document.querySelector<HTMLElement>(".textarea-wrapper").style.minWidth = "100%";
 
 
     Hub.listen('api', (data: any) => {
@@ -116,18 +116,18 @@ export class BaseballChatroomPage implements OnInit {
 
   startSubscriptions() {
 
-    this.onUpdateChats = <Subscription>(
-      this.api.OnCreateChatsListener().subscribe({
-        next: async (event: any) => {
-          const data = event;
-          data.value.data.onCreateChats.profile.profilePictureUrl = await Storage.get('profile-pictures/' + await (await this.api.GetProfilePictureProfileID(data.value.data.onCreateChats.profile.id)).imageurl)
-          this.chats.push(data.value.data.onCreateChats);
-          setTimeout(() => {
-            this.ionContent.scrollToBottom(400);
-          }, 500)
-        }
-      })
-    )
+    // this.onUpdateChats = <Subscription>(
+    //   this.api.OnCreateChatsListener().subscribe({
+    //     next: async (event: any) => {
+    //       const data = event;
+    //       data.value.data.onCreateChats.profile.profilePictureUrl = await Storage.get('profile-pictures/' + await (await this.api.GetProfilePictureProfileID(data.value.data.onCreateChats.profile.id)).imageurl)
+    //       this.chats.push(data.value.data.onCreateChats);
+    //       setTimeout(() => {
+    //         this.ionContent.scrollToBottom(400);
+    //       }, 500)
+    //     }
+    //   })
+    // )
     this.onUpdateHubPost = <Subscription>(
       this.api.OnUpdateHubPostsListener().subscribe({
         next: async (event: any) => {
@@ -145,28 +145,23 @@ export class BaseballChatroomPage implements OnInit {
             this.baseballData.winningPitcherStats = [];
             this.baseballData.oriolesOutcome = [];
             this.baseballData.currentHalfInning = null;
-            this.baseballData.currentBatterStats = [];
-            this.baseballData.currentPitcherStats = [];
             this.baseballData = data.value.data.onUpdateSportsGame;
             this.baseballData.basicGameInfo = JSON.parse(data.value.data.onUpdateSportsGame.basicGameInfo)
-            this.baseballData.currentHalfInning = this.baseballData.gameStatus === 'In Progress' ? this.baseballData.basicGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.baseballData.basicGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", this.baseballData.basicGameInfo[0].currentPlay.about.inning.toString()) : null;
+            this.baseballData.currentHalfInning = this.baseballData.gameStatus === 'In Progress' ? this.baseballData.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.baseballData.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", this.baseballData.gameInfo.currentPlay.about.inning.toString()) : null;
 
-            if (this.baseballData.gameStatus === 'Final') {
-              this.baseballData.oriolesOutcome = (this.baseballData.gameStatus === 'Final' && (this.baseballData.awayTeam === 'Baltimore Orioles' && this.baseballData.basicGameInfo[0].currentPlay.result.awayScore > this.baseballData.basicGameInfo[0].currentPlay.result.homeScore) || (this.baseballData.homeTeam === 'Baltimore Orioles' && this.baseballData.basicGameInfo[0].currentPlay.result.homeScore > this.baseballData.basicGameInfo[0].currentPlay.result.awayScore)) ? "O's WON" : (this.baseballData.gameStatus === 'Final' && (this.baseballData.awayTeam === 'Baltimore Orioles' && this.baseballData.basicGameInfo[0].currentPlay.result.awayScore < this.baseballData.basicGameInfo[0].currentPlay.result.homeScore) || (this.baseballData.homeTeam === 'Baltimore Orioles' && this.baseballData.basicGameInfo[0].currentPlay.result.homeScore < this.baseballData.basicGameInfo[0].currentPlay.result.awayScore)) ? "O's LOST" : null;
-              this.baseballData.losingPitcherStats = (this.baseballData.basicGameInfo[0].finalData && this.baseballData.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(this.baseballData.basicGameInfo[0].finalData.loser.id, +this.baseballData.id) as any : null;
-              this.baseballData.winningPitcherStats = (this.baseballData.gameStatus === 'Final' && this.baseballData.basicGameInfo[0].finalData) ? await this.getFinalPitcherGameStats(this.baseballData.basicGameInfo[0].finalData.winner.id, +this.baseballData.id) as any : null;
+            if (this.baseballData.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final') {
+              this.baseballData.oriolesOutcome = (this.baseballData.gameStatus === 'Final' && (this.baseballData.awayTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.awayScore > this.baseballData.gameInfo.currentPlay.result.homeScore) || (this.baseballData.homeTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.homeScore > this.baseballData.gameInfo.currentPlay.result.awayScore)) ? "O's WON" : (this.baseballData.gameStatus === 'Final' && (this.baseballData.awayTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.awayScore < this.baseballData.gameInfo.currentPlay.result.homeScore) || (this.baseballData.homeTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.homeScore < this.baseballData.gameInfo.currentPlay.result.awayScore)) ? "O's LOST" : null;
+              this.baseballData.losingPitcherStats = (this.baseballData.gameInfo.finalData && this.baseballData.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(this.baseballData.gameInfo.finalData.loser.id, +this.baseballData.id) as any : null;
+              this.baseballData.winningPitcherStats = (this.baseballData.gameStatus === 'Final' && this.baseballData.gameInfo.finalData) ? await this.getFinalPitcherGameStats(this.baseballData.gameInfo.finalData.winner.id, +this.baseballData.id) as any : null;
             }
 
-            if (this.baseballData.gameStatus === 'Scheduled' || this.baseballData.gameStatus === 'Pre-Game' || this.baseballData.gameStatus === 'Warmup') {
-              this.baseballData.startingAwayPitcherStats = ((this.baseballData.gameStatus !== 'In Progress' && this.baseballData.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(this.baseballData.basicGameInfo[0].initialGameData.probablePitchers.away.id) as any : null;
-              this.baseballData.startingHomePitcherStats = ((this.baseballData.gameStatus !== 'In Progress' && this.baseballData.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(this.baseballData.basicGameInfo[0].initialGameData.probablePitchers.home.id) as any : null;
+            if (this.baseballData.sportsgame.gameInfo.initialGameData.status.detailedState === 'Scheduled' || this.baseballData.gameStatus === 'Pre-Game' || this.baseballData.gameStatus === 'Warmup') {
+              this.baseballData.startingAwayPitcherStats = ((this.baseballData.gameStatus !== 'In Progress' && this.baseballData.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(this.baseballData.gameInfo.initialGameData.probablePitchers.away.id) as any : null;
+              this.baseballData.startingHomePitcherStats = ((this.baseballData.gameStatus !== 'In Progress' && this.baseballData.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(this.baseballData.gameInfo.initialGameData.probablePitchers.home.id) as any : null;
             }
 
-            if (this.baseballData.gameStatus === 'In Progress') {
-              this.baseballData.currentHalfInning = this.baseballData.gameStatus === 'In Progress' ? this.baseballData.basicGameInfo[0].currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.baseballData.basicGameInfo[0].currentPlay.about.halfInning.slice(1, 3), " ", this.baseballData.basicGameInfo[0].currentPlay.about.inning.toString()) : null;
-              this.baseballData.currentBatterStats = (this.baseballData.gameStatus !== 'Final' && this.baseballData.basicGameInfo[0].currentPlay) ? await this.getCurrentBatterGameStats(this.baseballData.basicGameInfo[0].currentPlay.matchup.batter.id, +this.baseballData.id) as any : null;
-              this.baseballData.currentPitcherStats = (this.baseballData.gameStatus !== 'Final' && this.baseballData.basicGameInfo[0].currentPlay) ? await this.getCurrentPitcherGameStats(this.baseballData.basicGameInfo[0].currentPlay.matchup.pitcher.id, +this.baseballData.id) as any : null;
-            }
+            if (this.baseballData.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress') {
+              this.baseballData.currentHalfInning = this.baseballData.gameStatus === 'In Progress' ? this.baseballData.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.baseballData.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", this.baseballData.gameInfo.currentPlay.about.inning.toString()) : null;            }
           }
         }
       })
@@ -181,13 +176,6 @@ export class BaseballChatroomPage implements OnInit {
     return await this.sportsService.getPitcherSeasonData(playerId).then(data => data);
   }
 
-  async getCurrentBatterGameStats(playerId, gamePk) {
-    return await this.sportsService.getBatterData(playerId, gamePk).then(data => data);
-  }
-
-  async getCurrentPitcherGameStats(playerId, gamePk) {
-    return await this.sportsService.getPitcherData(playerId, gamePk).then(data => data);
-  }
 
   async createChat(chatMessage) {
     let time = new Date().toISOString()

@@ -105,6 +105,7 @@ export class SportsService {
   async getPitcherSeasonData(personId): Promise<any> {
     if (personId) {
       let response = await fetch(`https://statsapi.mlb.com/api/v1/people/${personId}/stats?stats=season&group=pitching`).then(data => data.json());
+      console.log(response)
       return response.stats[0].splits as any;
     }
   }

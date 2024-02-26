@@ -21,7 +21,7 @@
         <div class="last-updated">
           <ion-chip color="warning">Sports</ion-chip>
           <ion-note class="live-updates" *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState !== 'Final'" color="medium">Last updated at {{post.sportsgame.lastUpdate | date: 'h:mma'}} ET</ion-note>
-          <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final' && post.sportsgame.oriolesOutcome" color="medium" class="orioles-outcome">{{post.sportsgame.oriolesOutcome}}</ion-note>
+          <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final' || post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Game Over' && post.sportsgame.oriolesOutcome" color="medium" class="orioles-outcome">{{post.sportsgame.oriolesOutcome}}</ion-note>
         </div>
         <div class="sports-banner">
           <div class="sports-teams">
@@ -36,7 +36,7 @@
             </div>
             <div class="bases-outs">
               <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress'">{{post.sportsgame.gameInfo.currentHalfInning}}</ion-note>
-              <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final'" class="final" color="dark">{{post.sportsgame.startTime | date: 'E M/d' }} <br> Final</ion-note>
+              <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final' || post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Game Over'" class="final" color="dark">{{post.sportsgame.startTime | date: 'E M/d' }} <br> Final</ion-note>
               <ion-note *ngIf="!post.sportsgame.gameInfo.gameStarted" class="final" color="dark">{{post.sportsgame.startTime | date: 'E M/d' }} <br> {{post.sportsgame.startTime | date: 'h:mm a'}} ET</ion-note>
               <ion-avatar *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress'">
                 <img *ngIf="!post.sportsgame.gameInfo.currentPlay.matchup.postOnFirst && !post.sportsgame.gameInfo.currentPlay.matchup.postOnSecond && !post.sportsgame.gameInfo.currentPlay.matchup.postOnThird" src="../../../assets/baseball-data/bases-clear.svg" />
@@ -74,14 +74,14 @@
           <ion-card-subtitle>Current Pitcher</ion-card-subtitle>
           <div class="current-pitcher-data">
             <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{post.sportsgame.gameInfo.currentPlay.matchup.pitcher.id}}/spots/120" /></ion-avatar>
-            <ion-note class="current-pitcher-stats">{{post.sportsgame.gameInfo.currentPlay.matchup.pitcher.fullName}}<br>{{post.sportsgame.currentPitcherStats}}</ion-note>
+            <ion-note class="current-pitcher-stats">{{post.sportsgame.gameInfo.currentPlay.matchup.pitcher.fullName}}<br>{{post.sportsgame.gameInfo.currentPitcherStats}}</ion-note>
           </div>
         </div>
         <div class="current-batter-wrapper" *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress' && post.sportsgame.gameInfo.initialGameData.status.detailedState!== 'Final'">
           <ion-card-subtitle>Current Batter</ion-card-subtitle>
           <div class="current-batter-data">
             <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{post.sportsgame.gameInfo.currentPlay.matchup.batter.id}}/spots/120" /></ion-avatar>
-            <ion-note class="current-batter-stats" *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress'">{{post.sportsgame.gameInfo.currentPlay.matchup.batter.fullName}}<br>{{post.sportsgame.currentBatterStats}}</ion-note>
+            <ion-note class="current-batter-stats" *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress'">{{post.sportsgame.gameInfo.currentPlay.matchup.batter.fullName}}<br>{{post.sportsgame.gameInfo.currentBatterStats}}</ion-note>
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@
           </div>
         </div>
       </div>
-      <div class="final-pitchers" *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final' && post.sportsgame.gameInfo.finalData">
+      <div class="final-pitchers" *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final' || post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Game Over' && post.sportsgame.gameInfo.finalData">
         <div class="duel">
           <div class="left-side">
             <div class="name-pic-wrapper">
