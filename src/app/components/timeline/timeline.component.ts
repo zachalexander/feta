@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input, QueryList, ViewChildren, ElementRe
 import { ModalController, Platform } from '@ionic/angular';
 import { MediaService } from 'src/app/services/media.service';
 import { FA, ModelSortDirection } from "../../FA.service";
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
 import { LikeListModalPage } from '../../modals/like-list-modal/like-list-modal.page';
 import { EditMediaModalPage } from 'src/app/modals/edit-media-modal/edit-media-modal.page';
@@ -28,6 +28,8 @@ import { DateSuffixPipe } from 'src/app/pipes/date-suffix.pipe';
 import SwiperCore, { Zoom, EffectFade } from 'swiper';
 SwiperCore.use([Zoom, EffectFade]);
 
+import { APIService } from 'src/app/API.service';
+
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
@@ -50,6 +52,7 @@ export class TimelineComponent implements OnInit {
   videoOver = false;
   muted = true;
   replay = false;
+  routeSub;
 
   onCreateImageSubscription: Subscription | null = null;
   onUpdateImageSubscription: Subscription | null = null;
@@ -93,7 +96,8 @@ export class TimelineComponent implements OnInit {
     private platform: Platform,
     public toastController: ToastController,
     private router: Router,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private api: APIService
   ) {
     this.mobilePlatform = this.platform.is("mobile");
   }
@@ -103,6 +107,16 @@ export class TimelineComponent implements OnInit {
     this.currentUserUsername = localStorage.getItem('username');
     this.browser = localStorage.getItem('User-browser');
     this.platformView = this.platform.platforms();
+
+
+    // if navigate to new page, stop playing current video
+    this.routeSub = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.nowPlaying.pause();
+      }
+    })
+
+    console.log(this.routeSub)
   }
 
   async ngAfterViewInit() {
@@ -655,7 +669,6 @@ export class TimelineComponent implements OnInit {
         this.refresh = false;
         this.scrollFinished = false;
         await this.changeLocation();
-        await this.didScroll();
         this.showFabButton = false;
       })
     })
@@ -714,14 +727,12 @@ export class TimelineComponent implements OnInit {
     this.onCreateCommentsSubscription = <Subscription>(
       this.fa.OnCreateCommentsListener().subscribe({
         next: async (event: any) => {
-
           const imageId = event.value.data.onCreateComments.imagePostsID;
-          let commentsArray: [] = await this.fa.getImageComments(imageId)
-          let commentLength: string = commentsArray.length.toString()
+          let commentsArray: any = await this.api.CommentsBySorterValueAndTime_posted(imageId + "-comment", null, ModelSortDirection.DESC).then((data) => data)
 
           this.data.filter(values => {
             if (values.id === imageId) {
-              values.comments = commentLength
+              values.comments = commentsArray;
             }
           })
         }
@@ -732,13 +743,11 @@ export class TimelineComponent implements OnInit {
       this.fa.OnDeleteCommentsListener().subscribe({
         next: async (event: any) => {
           const imageId = event.value.data.onDeleteComments.imagePostsID;
-          let commentsArray: [] = await this.fa.getImageComments(imageId)
-          let commentLength: string = commentsArray.length.toString()
+          let commentsArray: any = await this.api.CommentsBySorterValueAndTime_posted(imageId + "-comment", null, ModelSortDirection.DESC).then((data) => data)
 
           this.data.filter(values => {
-            if(values.id === imageId){
-              console.log(values)
-              values.comments = commentLength
+            if (values.id === imageId) {
+              values.comments = commentsArray;
             }
           })
         }

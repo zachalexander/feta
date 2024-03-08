@@ -18,7 +18,7 @@
   </ion-list>
 
   <div class="loading-centered" *ngIf="spinner">
-    <ion-spinner name="lines-small"></ion-spinner>
+    <ion-spinner name="lines-sharp-small"></ion-spinner>
   </div>
 
   <ion-list lines="none" *ngIf="comments" class="full-list">
@@ -69,6 +69,12 @@
 
   </ion-list>
 
+
+  <ion-infinite-scroll threshold="0%" (ionInfinite)="loadData($event)" position="bottom">
+    <ion-infinite-scroll-content loadingSpinner="lines-sharp-small">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>
 
 <ion-footer lines="none" *ngIf="!noInput && !editComment" class="comment-footer">
@@ -80,7 +86,7 @@
       <ion-textarea #commentInput class="form-text-area" lines="none" #userEditComment placeholder="Add a comment..."
         formControlName="comment" rows="1" minLength="300" autoGrow="true">
         <ion-button color="clear" class="comment-submit" [disabled]="!writeCommentForm.valid"
-          (click)="postWrittenComment(writeCommentForm.value)"><ion-icon color="dark" size="large" name="arrow-up-circle"></ion-icon></ion-button>
+          (click)="postWrittenComment(writeCommentForm.value)"><ion-icon color="tertiary" size="large" name="arrow-up-circle"></ion-icon></ion-button>
       </ion-textarea>
     </p>
   </form>
@@ -96,7 +102,7 @@
         rows="1" minLength="300" autoGrow="true">
         <ion-icon (click)="postUpdatedComment(updateCommentForm.value)" class="comment-submit" color="dark" size="large" name="arrow-up-circle"></ion-icon>
         <ion-button  color="clear" class="comment-submit"
-          (click)="postUpdatedComment(updateCommentForm.value)"><ion-icon color="dark" size="large" name="arrow-up-circle"></ion-icon></ion-button>
+          (click)="postUpdatedComment(updateCommentForm.value)"><ion-icon color="tertiary" size="large" name="arrow-up-circle"></ion-icon></ion-button>
       </ion-textarea>
     </p>
   </form>

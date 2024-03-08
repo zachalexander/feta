@@ -43,6 +43,7 @@ import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import {VgStreamingModule} from '@videogular/ngx-videogular/streaming';
+import { SharedmodulePageModule } from './pages/sharedmodule/sharedmodule.module';
 
 
 Amplify.configure(awsconfig);
@@ -82,7 +83,8 @@ Amplify.configure(awsvideoconfig);
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    VgStreamingModule
+    VgStreamingModule,
+    SharedmodulePageModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

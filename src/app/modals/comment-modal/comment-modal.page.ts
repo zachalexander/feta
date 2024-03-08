@@ -26,6 +26,9 @@ export class CommentModalPage implements OnInit {
   public postDetails: any = [];
   userNameID: any;
   spinner: boolean;
+  nextToken;
+  scrollFinished;
+  refresh;
 
   postCommentForm = {} as FormGroup;
   writeCommentForm = {} as FormGroup;
@@ -81,9 +84,10 @@ export class CommentModalPage implements OnInit {
       profilePicture: this.profilePictureUrl
     }
 
-    let comments = await this.api.CommentsBySorterValueAndTime_posted(this.imageID + "-comment", null, ModelSortDirection.DESC).then((data) => data)
+    let comments = await this.api.CommentsBySorterValueAndTime_posted(this.imageID + "-comment", null, ModelSortDirection.DESC, null, 20).then((data) => data)
     this.comments = comments.items;
-    console.log(this.comments)
+    this.nextToken = comments.nextToken.toString();
+    console.log(this.comments, this.nextToken)
 
     this.spinner = false;
 
@@ -202,6 +206,29 @@ export class CommentModalPage implements OnInit {
     this.platform.pause.subscribe(async () => {
       console.log('pausing subscription')
     });
+  }
+
+
+  async loadData(event) {
+    try {
+      if (this.nextToken !== null) {
+        this.api.CommentsBySorterValueAndTime_posted(this.imageID + "-comment", null, ModelSortDirection.DESC, null, 20, this.nextToken).then((data) => {
+          console.log(data)
+          let dataPull = data.items;
+          this.nextToken = data.nextToken;
+
+          Object.entries(dataPull).forEach(([key, value]) => { this.comments[this.comments.length] = value })
+          event.target.complete();
+        })
+      } else {
+        this.refresh = false;
+        this.scrollFinished = true;
+        event.target.complete();
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
 }

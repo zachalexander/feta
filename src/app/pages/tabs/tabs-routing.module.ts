@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from '../../components/home/home.component';
 import { ProfilePicturePage } from '../profile-picture/profile-picture.page';
 import { AuthguardGuard } from '../../shared/authguard.guard';
 import { TabsPage } from './tabs.page';
@@ -9,11 +8,10 @@ const routes: Routes = [
   {
     path: '',
     component: TabsPage,
-    canActivate: [AuthguardGuard],
     children: [
       {
         path: 'home',
-        component: HomeComponent, 
+        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule),
         canActivate: [AuthguardGuard]
       },
       {
@@ -35,9 +33,14 @@ const routes: Routes = [
         path: 'profile-picture',
         component: ProfilePicturePage,
         canActivate: [AuthguardGuard]
+      },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
       }
     ]
-  }
+  },
 ];
 
 @NgModule({

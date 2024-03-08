@@ -1,21 +1,21 @@
-<ion-tabs mode="md" *ngIf="!needRegister">
+<ion-tabs mode="md" *ngIf="!needRegister" tabsHightlight="true">
   <ion-tab-bar class="footer-scroll" slot="bottom">
-    <ion-tab-button (click)="homeClick()" tab="home">
+    <ion-tab-button (click)="homeClick()" tab="home" [routerLinkActive]="['home']">
       <ion-icon *ngIf="!homeclick" name="home-outline"></ion-icon><small>Home</small>
       <ion-icon *ngIf="homeclick" name="home"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button (click)="timelineClick()" tab="timeline">
+    <ion-tab-button (click)="timelineClick()" tab="timeline" [routerLinkActive]="['timeline']">
       <ion-icon *ngIf="!timelineclick" name="images-outline"></ion-icon><small>Timeline</small>
       <ion-icon *ngIf="timelineclick" name="images"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button (click)="messageClick()" tab="message-board">
+    <ion-tab-button (click)="messageClick()" tab="message-board" [routerLinkActive]="['message-board']">
       <ion-icon *ngIf="!messageclick" name="people-circle-outline"></ion-icon><small>Hub</small>
       <ion-icon *ngIf="messageclick" name="people-circle"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button class="profile-button" (click)="profileClick()" tab="profile/{{username}}">
+    <ion-tab-button class="profile-button" (click)="profileClick()" tab="profile/{{username}}" [routerLinkActive]="['profile', username]">
       <ion-avatar class="profile-pic-avatar">
         <img *ngIf="hasProfilePic" [src]="profilePicture" />
         <img *ngIf="!hasProfilePic" src="../../../assets/profile_placeholder_avatar.png" />

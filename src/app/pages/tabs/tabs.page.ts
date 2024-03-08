@@ -1,6 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, OnChanges, ElementRef, OnInit } from '@angular/core';
 import { APIService } from 'src/app/API.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ActivationStart, NavigationStart } from '@angular/router';
+import { Auth } from 'aws-amplify'
+import { Router } from '@angular/router';
+import { FA, ModelSortDirection } from 'src/app/FA.service';
+import { ModalController } from '@ionic/angular';
+import { CreateProfileModalPage } from '../../modals/create-profile-modal/create-profile-modal.page'
+import { LoadingController } from '@ionic/angular';
+import { ProfileMenuModalPage } from 'src/app/modals/profile-menu-modal/profile-menu-modal.page';
+import { UsersListModalPage } from 'src/app/modals/users-list-modal/users-list-modal.page';
+import { TermsOfServiceModalPage } from 'src/app/modals/terms-of-service-modal/terms-of-service-modal.page';
+import { AppWhyModalPage } from 'src/app/modals/app-why-modal/app-why-modal.page';
+import { AppRulesModalPage } from 'src/app/modals/app-rules-modal/app-rules-modal.page';
 
 @Component({
   selector: 'app-tabs',
@@ -9,7 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TabsPage {
 
-  username;
+  username_tab;
   urlUser;
   homeclick;
   timelineclick;
@@ -19,12 +30,42 @@ export class TabsPage {
   profilePicture;
   hasProfilePic: boolean;
 
+  @Input() name?: string;
+  @ViewChild('latestVideo') private video: any;
+  fetaProfileCount: number;
+  already_registered;
+  createProfile = false;
+  errorPage = false;
+  username;
+  profilepicid;
+  browserName = '';
+  lastTimelinePost;
+  mobilePlatform;
+  nowPlaying = null;
+  videoOver = false;
+  muted = true;
+  replay = false;
+  pause;
+
   constructor(
     private api: APIService,
-    private activatedRoute: ActivatedRoute
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private fa: FA,
+    public modalController: ModalController,
+    public loadingController: LoadingController
+  ) {
+    router.events.forEach((event) => {
+      if(event instanceof NavigationStart){
+        console.log(event)
+      }
+    })
+  }
   
   async ngOnInit(){
+
+
+    localStorage.setItem('User-browser', this.browserName)
 
     // grab the url to update tab highlighting
     let url = this.activatedRoute.snapshot['_routerState'].url;
@@ -39,14 +80,14 @@ export class TabsPage {
       this.profileClick();
     }
 
-    setTimeout(async () => {
-      this.username = localStorage.getItem('username')
-      if(!this.username){
+    // setTimeout(async () => {
+      this.username_tab = localStorage.getItem('username')
+      if(!this.username_tab){
         this.needRegister = true;
       } else {
   
         this.needRegister = false;
-        this.username = localStorage.getItem('username');
+        this.username_tab = localStorage.getItem('username');
   
         this.profilePicture = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'));
     
@@ -60,7 +101,7 @@ export class TabsPage {
             }
         }
       }
-    }, 2000)
+    // }, 500)
   }
 
   homeClick(){
@@ -93,4 +134,6 @@ export class TabsPage {
     this.profileclick = true;
   }
 
+
 }
+
