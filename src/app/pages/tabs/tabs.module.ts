@@ -15,7 +15,6 @@ import { FA } from 'src/app/FA.service';
     FormsModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage],
   providers: [FA]
 })
 export class TabsPageModule {}
