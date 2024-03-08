@@ -32,6 +32,9 @@ export type __SubscriptionContainer = {
   onCreateSportsGame: OnCreateSportsGameSubscription;
   onUpdateSportsGame: OnUpdateSportsGameSubscription;
   onDeleteSportsGame: OnDeleteSportsGameSubscription;
+  onCreateBaseballAtBatIndex: OnCreateBaseballAtBatIndexSubscription;
+  onUpdateBaseballAtBatIndex: OnUpdateBaseballAtBatIndexSubscription;
+  onDeleteBaseballAtBatIndex: OnDeleteBaseballAtBatIndexSubscription;
   onCreateLiveGameChatRoom: OnCreateLiveGameChatRoomSubscription;
   onUpdateLiveGameChatRoom: OnUpdateLiveGameChatRoomSubscription;
   onDeleteLiveGameChatRoom: OnDeleteLiveGameChatRoomSubscription;
@@ -216,6 +219,7 @@ export type Comments = {
   id: string;
   usernameID: string;
   username?: Username | null;
+  sorterValue?: string | null;
   profileID: string;
   profile?: Profile | null;
   comment?: string | null;
@@ -223,7 +227,6 @@ export type Comments = {
   imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
-  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -364,6 +367,7 @@ export type DeleteLikesInput = {
 export type CreateCommentsInput = {
   id?: string | null;
   usernameID: string;
+  sorterValue?: string | null;
   profileID: string;
   comment?: string | null;
   time_posted?: string | null;
@@ -373,6 +377,7 @@ export type CreateCommentsInput = {
 
 export type ModelCommentsConditionInput = {
   usernameID?: ModelIDInput | null;
+  sorterValue?: ModelStringInput | null;
   profileID?: ModelIDInput | null;
   comment?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
@@ -386,6 +391,7 @@ export type ModelCommentsConditionInput = {
 export type UpdateCommentsInput = {
   id: string;
   usernameID?: string | null;
+  sorterValue?: string | null;
   profileID?: string | null;
   comment?: string | null;
   time_posted?: string | null;
@@ -462,6 +468,7 @@ export type SportsGame = {
   lastUpdate?: string | null;
   liveGameChatRoomID?: string | null;
   livegamechatroom?: LiveGameChatRoom | null;
+  pitchIndex?: ModelBaseballAtBatIndexConnection | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -494,6 +501,7 @@ export type Chats = {
   username?: Username | null;
   profileID?: string | null;
   profile?: Profile | null;
+  profilePicture?: ProfilePicture | null;
   chat?: string | null;
   timePosted?: string | null;
   likes?: ModelChatLikesConnection | null;
@@ -523,6 +531,31 @@ export type ChatLikes = {
   owner?: string | null;
 };
 
+export type ModelBaseballAtBatIndexConnection = {
+  __typename: "ModelBaseballAtBatIndexConnection";
+  items: Array<BaseballAtBatIndex | null>;
+  nextToken?: string | null;
+};
+
+export type BaseballAtBatIndex = {
+  __typename: "BaseballAtBatIndex";
+  id: string;
+  sortKey?: string | null;
+  sportsGameID: string;
+  sportsgame?: SportsGame | null;
+  pitchCount?: number | null;
+  isOut?: string | null;
+  count?: string | null;
+  call?: string | null;
+  hasResult?: string | null;
+  batIndex?: number | null;
+  resultDescription?: string | null;
+  pitchData?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
 export type UpdateSportsGameInput = {
   id: string;
   sport?: string | null;
@@ -535,6 +568,66 @@ export type UpdateSportsGameInput = {
 };
 
 export type DeleteSportsGameInput = {
+  id: string;
+};
+
+export type CreateBaseballAtBatIndexInput = {
+  id?: string | null;
+  sortKey?: string | null;
+  sportsGameID: string;
+  pitchCount?: number | null;
+  isOut?: string | null;
+  count?: string | null;
+  call?: string | null;
+  hasResult?: string | null;
+  batIndex?: number | null;
+  resultDescription?: string | null;
+  pitchData?: string | null;
+};
+
+export type ModelBaseballAtBatIndexConditionInput = {
+  sortKey?: ModelStringInput | null;
+  sportsGameID?: ModelIDInput | null;
+  pitchCount?: ModelIntInput | null;
+  isOut?: ModelStringInput | null;
+  count?: ModelStringInput | null;
+  call?: ModelStringInput | null;
+  hasResult?: ModelStringInput | null;
+  batIndex?: ModelIntInput | null;
+  resultDescription?: ModelStringInput | null;
+  pitchData?: ModelStringInput | null;
+  and?: Array<ModelBaseballAtBatIndexConditionInput | null> | null;
+  or?: Array<ModelBaseballAtBatIndexConditionInput | null> | null;
+  not?: ModelBaseballAtBatIndexConditionInput | null;
+};
+
+export type ModelIntInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
+export type UpdateBaseballAtBatIndexInput = {
+  id: string;
+  sortKey?: string | null;
+  sportsGameID?: string | null;
+  pitchCount?: number | null;
+  isOut?: string | null;
+  count?: string | null;
+  call?: string | null;
+  hasResult?: string | null;
+  batIndex?: number | null;
+  resultDescription?: string | null;
+  pitchData?: string | null;
+};
+
+export type DeleteBaseballAtBatIndexInput = {
   id: string;
 };
 
@@ -761,6 +854,7 @@ export type ModelLikesFilterInput = {
 export type ModelCommentsFilterInput = {
   id?: ModelIDInput | null;
   usernameID?: ModelIDInput | null;
+  sorterValue?: ModelStringInput | null;
   profileID?: ModelIDInput | null;
   comment?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
@@ -806,6 +900,32 @@ export type ModelSportsGameConnection = {
   __typename: "ModelSportsGameConnection";
   items: Array<SportsGame | null>;
   nextToken?: string | null;
+};
+
+export type ModelBaseballAtBatIndexFilterInput = {
+  id?: ModelIDInput | null;
+  sortKey?: ModelStringInput | null;
+  sportsGameID?: ModelIDInput | null;
+  pitchCount?: ModelIntInput | null;
+  isOut?: ModelStringInput | null;
+  count?: ModelStringInput | null;
+  call?: ModelStringInput | null;
+  hasResult?: ModelStringInput | null;
+  batIndex?: ModelIntInput | null;
+  resultDescription?: ModelStringInput | null;
+  pitchData?: ModelStringInput | null;
+  and?: Array<ModelBaseballAtBatIndexFilterInput | null> | null;
+  or?: Array<ModelBaseballAtBatIndexFilterInput | null> | null;
+  not?: ModelBaseballAtBatIndexFilterInput | null;
+};
+
+export type ModelIntKeyConditionInput = {
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
 };
 
 export type ModelLiveGameChatRoomFilterInput = {
@@ -944,6 +1064,7 @@ export type ModelSubscriptionLikesFilterInput = {
 export type ModelSubscriptionCommentsFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   usernameID?: ModelSubscriptionIDInput | null;
+  sorterValue?: ModelSubscriptionStringInput | null;
   profileID?: ModelSubscriptionIDInput | null;
   comment?: ModelSubscriptionStringInput | null;
   time_posted?: ModelSubscriptionStringInput | null;
@@ -971,6 +1092,34 @@ export type ModelSubscriptionSportsGameFilterInput = {
   liveGameChatRoomID?: ModelSubscriptionIDInput | null;
   and?: Array<ModelSubscriptionSportsGameFilterInput | null> | null;
   or?: Array<ModelSubscriptionSportsGameFilterInput | null> | null;
+};
+
+export type ModelSubscriptionBaseballAtBatIndexFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  sortKey?: ModelSubscriptionStringInput | null;
+  sportsGameID?: ModelSubscriptionIDInput | null;
+  pitchCount?: ModelSubscriptionIntInput | null;
+  isOut?: ModelSubscriptionStringInput | null;
+  count?: ModelSubscriptionStringInput | null;
+  call?: ModelSubscriptionStringInput | null;
+  hasResult?: ModelSubscriptionStringInput | null;
+  batIndex?: ModelSubscriptionIntInput | null;
+  resultDescription?: ModelSubscriptionStringInput | null;
+  pitchData?: ModelSubscriptionStringInput | null;
+  and?: Array<ModelSubscriptionBaseballAtBatIndexFilterInput | null> | null;
+  or?: Array<ModelSubscriptionBaseballAtBatIndexFilterInput | null> | null;
+};
+
+export type ModelSubscriptionIntInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+  in?: Array<number | null> | null;
+  notIn?: Array<number | null> | null;
 };
 
 export type ModelSubscriptionLiveGameChatRoomFilterInput = {
@@ -1023,47 +1172,9 @@ export type CreateProfilePictureMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -1089,47 +1200,9 @@ export type UpdateProfilePictureMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -1155,47 +1228,9 @@ export type DeleteProfilePictureMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -1222,40 +1257,6 @@ export type CreateProfileMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -1268,44 +1269,8 @@ export type CreateProfileMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -1322,23 +1287,6 @@ export type CreateProfileMutation = {
     __typename: "ProfilePicture";
     id: string;
     imageurl?: string | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1365,40 +1313,6 @@ export type UpdateProfileMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -1411,44 +1325,8 @@ export type UpdateProfileMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -1465,23 +1343,6 @@ export type UpdateProfileMutation = {
     __typename: "ProfilePicture";
     id: string;
     imageurl?: string | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1508,40 +1369,6 @@ export type DeleteProfileMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -1554,44 +1381,8 @@ export type DeleteProfileMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -1608,23 +1399,6 @@ export type DeleteProfileMutation = {
     __typename: "ProfilePicture";
     id: string;
     imageurl?: string | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1647,33 +1421,10 @@ export type CreateImagePostMutation = {
   time_posted?: string | null;
   likes?: {
     __typename: "ModelLikesConnection";
-    items: Array<{
-      __typename: "Likes";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      createdAt: string;
-      updatedAt: string;
-      imagePostLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   comments?: {
     __typename: "ModelCommentsConnection";
-    items: Array<{
-      __typename: "Comments";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      comment?: string | null;
-      time_posted?: string | null;
-      imagePostsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      imagePostCommentsId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   usernameID: string;
@@ -1682,40 +1433,6 @@ export type CreateImagePostMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -1730,47 +1447,9 @@ export type CreateImagePostMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -1796,33 +1475,10 @@ export type UpdateImagePostMutation = {
   time_posted?: string | null;
   likes?: {
     __typename: "ModelLikesConnection";
-    items: Array<{
-      __typename: "Likes";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      createdAt: string;
-      updatedAt: string;
-      imagePostLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   comments?: {
     __typename: "ModelCommentsConnection";
-    items: Array<{
-      __typename: "Comments";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      comment?: string | null;
-      time_posted?: string | null;
-      imagePostsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      imagePostCommentsId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   usernameID: string;
@@ -1831,40 +1487,6 @@ export type UpdateImagePostMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -1879,47 +1501,9 @@ export type UpdateImagePostMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -1945,33 +1529,10 @@ export type DeleteImagePostMutation = {
   time_posted?: string | null;
   likes?: {
     __typename: "ModelLikesConnection";
-    items: Array<{
-      __typename: "Likes";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      createdAt: string;
-      updatedAt: string;
-      imagePostLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   comments?: {
     __typename: "ModelCommentsConnection";
-    items: Array<{
-      __typename: "Comments";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      comment?: string | null;
-      time_posted?: string | null;
-      imagePostsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      imagePostCommentsId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   usernameID: string;
@@ -1980,40 +1541,6 @@ export type DeleteImagePostMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -2028,47 +1555,9 @@ export type DeleteImagePostMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -2095,40 +1584,6 @@ export type CreateLikesMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -2143,47 +1598,9 @@ export type CreateLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -2206,40 +1623,6 @@ export type UpdateLikesMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -2254,47 +1637,9 @@ export type UpdateLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -2317,40 +1662,6 @@ export type DeleteLikesMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -2365,47 +1676,9 @@ export type DeleteLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -2428,46 +1701,13 @@ export type CreateCommentsMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
+  sorterValue?: string | null;
   profileID: string;
   profile?: {
     __typename: "Profile";
@@ -2476,47 +1716,9 @@ export type CreateCommentsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -2542,46 +1744,13 @@ export type UpdateCommentsMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
+  sorterValue?: string | null;
   profileID: string;
   profile?: {
     __typename: "Profile";
@@ -2590,47 +1759,9 @@ export type UpdateCommentsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -2656,46 +1787,13 @@ export type DeleteCommentsMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
+  sorterValue?: string | null;
   profileID: string;
   profile?: {
     __typename: "Profile";
@@ -2704,47 +1802,9 @@ export type DeleteCommentsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -2772,44 +1832,8 @@ export type CreateUsernameMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -2826,47 +1850,9 @@ export type CreateUsernameMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -2892,44 +1878,8 @@ export type UpdateUsernameMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -2946,47 +1896,9 @@ export type UpdateUsernameMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -3012,44 +1924,8 @@ export type DeleteUsernameMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -3066,47 +1942,9 @@ export type DeleteUsernameMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -3136,28 +1974,14 @@ export type CreateSportsGameMutation = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
+  } | null;
+  pitchIndex?: {
+    __typename: "ModelBaseballAtBatIndexConnection";
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -3179,28 +2003,14 @@ export type UpdateSportsGameMutation = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
+  } | null;
+  pitchIndex?: {
+    __typename: "ModelBaseballAtBatIndexConnection";
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -3222,29 +2032,111 @@ export type DeleteSportsGameMutation = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
   } | null;
+  pitchIndex?: {
+    __typename: "ModelBaseballAtBatIndexConnection";
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type CreateBaseballAtBatIndexMutation = {
+  __typename: "BaseballAtBatIndex";
+  id: string;
+  sortKey?: string | null;
+  sportsGameID: string;
+  sportsgame?: {
+    __typename: "SportsGame";
+    id: string;
+    sport?: string | null;
+    homeTeam?: string | null;
+    awayTeam?: string | null;
+    gameInfo?: string | null;
+    startTime?: string | null;
+    lastUpdate?: string | null;
+    liveGameChatRoomID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+  pitchCount?: number | null;
+  isOut?: string | null;
+  count?: string | null;
+  call?: string | null;
+  hasResult?: string | null;
+  batIndex?: number | null;
+  resultDescription?: string | null;
+  pitchData?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type UpdateBaseballAtBatIndexMutation = {
+  __typename: "BaseballAtBatIndex";
+  id: string;
+  sortKey?: string | null;
+  sportsGameID: string;
+  sportsgame?: {
+    __typename: "SportsGame";
+    id: string;
+    sport?: string | null;
+    homeTeam?: string | null;
+    awayTeam?: string | null;
+    gameInfo?: string | null;
+    startTime?: string | null;
+    lastUpdate?: string | null;
+    liveGameChatRoomID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+  pitchCount?: number | null;
+  isOut?: string | null;
+  count?: string | null;
+  call?: string | null;
+  hasResult?: string | null;
+  batIndex?: number | null;
+  resultDescription?: string | null;
+  pitchData?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type DeleteBaseballAtBatIndexMutation = {
+  __typename: "BaseballAtBatIndex";
+  id: string;
+  sortKey?: string | null;
+  sportsGameID: string;
+  sportsgame?: {
+    __typename: "SportsGame";
+    id: string;
+    sport?: string | null;
+    homeTeam?: string | null;
+    awayTeam?: string | null;
+    gameInfo?: string | null;
+    startTime?: string | null;
+    lastUpdate?: string | null;
+    liveGameChatRoomID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+  pitchCount?: number | null;
+  isOut?: string | null;
+  count?: string | null;
+  call?: string | null;
+  hasResult?: string | null;
+  batIndex?: number | null;
+  resultDescription?: string | null;
+  pitchData?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -3265,16 +2157,6 @@ export type CreateLiveGameChatRoomMutation = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -3282,19 +2164,6 @@ export type CreateLiveGameChatRoomMutation = {
   chatsID?: string | null;
   chats?: {
     __typename: "ModelChatsConnection";
-    items: Array<{
-      __typename: "Chats";
-      id: string;
-      sortKey?: string | null;
-      usernameID?: string | null;
-      profileID?: string | null;
-      chat?: string | null;
-      timePosted?: string | null;
-      liveGameChatRoomID: string;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   createdAt: string;
@@ -3317,16 +2186,6 @@ export type UpdateLiveGameChatRoomMutation = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -3334,19 +2193,6 @@ export type UpdateLiveGameChatRoomMutation = {
   chatsID?: string | null;
   chats?: {
     __typename: "ModelChatsConnection";
-    items: Array<{
-      __typename: "Chats";
-      id: string;
-      sortKey?: string | null;
-      usernameID?: string | null;
-      profileID?: string | null;
-      chat?: string | null;
-      timePosted?: string | null;
-      liveGameChatRoomID: string;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   createdAt: string;
@@ -3369,16 +2215,6 @@ export type DeleteLiveGameChatRoomMutation = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -3386,19 +2222,6 @@ export type DeleteLiveGameChatRoomMutation = {
   chatsID?: string | null;
   chats?: {
     __typename: "ModelChatsConnection";
-    items: Array<{
-      __typename: "Chats";
-      id: string;
-      sortKey?: string | null;
-      usernameID?: string | null;
-      profileID?: string | null;
-      chat?: string | null;
-      timePosted?: string | null;
-      liveGameChatRoomID: string;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   createdAt: string;
@@ -3423,16 +2246,6 @@ export type CreateHubPostsMutation = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -3459,16 +2272,6 @@ export type UpdateHubPostsMutation = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -3495,16 +2298,6 @@ export type DeleteHubPostsMutation = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -3524,40 +2317,6 @@ export type CreateChatsMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -3572,47 +2331,9 @@ export type CreateChatsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -3620,20 +2341,20 @@ export type CreateChatsMutation = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
+  profilePicture?: {
+    __typename: "ProfilePicture";
+    id: string;
+    imageurl?: string | null;
+    profileID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   chat?: string | null;
   timePosted?: string | null;
   likes?: {
     __typename: "ModelChatLikesConnection";
-    items: Array<{
-      __typename: "ChatLikes";
-      id: string;
-      usernameID?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      chatsLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   liveGameChatRoomID: string;
@@ -3642,25 +2363,7 @@ export type CreateChatsMutation = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -3680,40 +2383,6 @@ export type UpdateChatsMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -3728,47 +2397,9 @@ export type UpdateChatsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -3776,20 +2407,20 @@ export type UpdateChatsMutation = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
+  profilePicture?: {
+    __typename: "ProfilePicture";
+    id: string;
+    imageurl?: string | null;
+    profileID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   chat?: string | null;
   timePosted?: string | null;
   likes?: {
     __typename: "ModelChatLikesConnection";
-    items: Array<{
-      __typename: "ChatLikes";
-      id: string;
-      usernameID?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      chatsLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   liveGameChatRoomID: string;
@@ -3798,25 +2429,7 @@ export type UpdateChatsMutation = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -3836,40 +2449,6 @@ export type DeleteChatsMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -3884,47 +2463,9 @@ export type DeleteChatsMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -3932,20 +2473,20 @@ export type DeleteChatsMutation = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
+  profilePicture?: {
+    __typename: "ProfilePicture";
+    id: string;
+    imageurl?: string | null;
+    profileID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   chat?: string | null;
   timePosted?: string | null;
   likes?: {
     __typename: "ModelChatLikesConnection";
-    items: Array<{
-      __typename: "ChatLikes";
-      id: string;
-      usernameID?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      chatsLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   liveGameChatRoomID: string;
@@ -3954,25 +2495,7 @@ export type DeleteChatsMutation = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -3991,40 +2514,6 @@ export type CreateChatLikesMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -4039,47 +2528,9 @@ export type CreateChatLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -4102,40 +2553,6 @@ export type UpdateChatLikesMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -4150,47 +2567,9 @@ export type UpdateChatLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -4213,40 +2592,6 @@ export type DeleteChatLikesMutation = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -4261,47 +2606,9 @@ export type DeleteChatLikesMutation = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -4326,47 +2633,9 @@ export type GetProfilePictureQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -4387,23 +2656,6 @@ export type ListProfilePicturesQuery = {
     __typename: "ProfilePicture";
     id: string;
     imageurl?: string | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -4425,40 +2677,6 @@ export type GetProfileQuery = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -4471,44 +2689,8 @@ export type GetProfileQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -4525,23 +2707,6 @@ export type GetProfileQuery = {
     __typename: "ProfilePicture";
     id: string;
     imageurl?: string | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -4565,47 +2730,9 @@ export type ListProfilesQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -4625,47 +2752,9 @@ export type ProfilesByUsernameIDQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -4685,47 +2774,9 @@ export type ProfilesByProfilepictureIDQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -4744,33 +2795,10 @@ export type GetImagePostQuery = {
   time_posted?: string | null;
   likes?: {
     __typename: "ModelLikesConnection";
-    items: Array<{
-      __typename: "Likes";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      createdAt: string;
-      updatedAt: string;
-      imagePostLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   comments?: {
     __typename: "ModelCommentsConnection";
-    items: Array<{
-      __typename: "Comments";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      comment?: string | null;
-      time_posted?: string | null;
-      imagePostsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      imagePostCommentsId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   usernameID: string;
@@ -4779,40 +2807,6 @@ export type GetImagePostQuery = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -4827,47 +2821,9 @@ export type GetImagePostQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -4893,44 +2849,8 @@ export type ListImagePostsQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -4951,44 +2871,8 @@ export type ImagePostsBySorterValueAndTime_postedQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -5009,44 +2893,8 @@ export type ImagePostsByUsernameIDQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -5067,44 +2915,8 @@ export type ImagePostsByProfileIDQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -5126,40 +2938,6 @@ export type GetLikesQuery = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -5174,47 +2952,9 @@ export type GetLikesQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -5234,35 +2974,7 @@ export type ListLikesQuery = {
     __typename: "Likes";
     id: string;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     imagePostLikesId?: string | null;
@@ -5277,35 +2989,7 @@ export type LikesByUsernameIDQuery = {
     __typename: "Likes";
     id: string;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     imagePostLikesId?: string | null;
@@ -5320,35 +3004,7 @@ export type LikesByProfileIDQuery = {
     __typename: "Likes";
     id: string;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     imagePostLikesId?: string | null;
@@ -5366,46 +3022,13 @@ export type GetCommentsQuery = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
+  sorterValue?: string | null;
   profileID: string;
   profile?: {
     __typename: "Profile";
@@ -5414,47 +3037,9 @@ export type GetCommentsQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -5477,35 +3062,27 @@ export type ListCommentsQuery = {
     __typename: "Comments";
     id: string;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
+    sorterValue?: string | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
+    comment?: string | null;
+    time_posted?: string | null;
+    imagePostsID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    imagePostCommentsId?: string | null;
+    owner?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type CommentsBySorterValueAndTime_postedQuery = {
+  __typename: "ModelCommentsConnection";
+  items: Array<{
+    __typename: "Comments";
+    id: string;
+    usernameID: string;
+    sorterValue?: string | null;
+    profileID: string;
     comment?: string | null;
     time_posted?: string | null;
     imagePostsID?: string | null;
@@ -5523,35 +3100,8 @@ export type CommentsByProfileIDQuery = {
     __typename: "Comments";
     id: string;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
+    sorterValue?: string | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     comment?: string | null;
     time_posted?: string | null;
     imagePostsID?: string | null;
@@ -5574,44 +3124,8 @@ export type GetUsernameQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -5628,47 +3142,9 @@ export type GetUsernameQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -5690,40 +3166,6 @@ export type ListUsernamesQuery = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -5748,28 +3190,14 @@ export type GetSportsGameQuery = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
+  } | null;
+  pitchIndex?: {
+    __typename: "ModelBaseballAtBatIndexConnection";
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -5788,16 +3216,6 @@ export type ListSportsGamesQuery = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -5817,16 +3235,6 @@ export type SportsGamesBySportAndStartTimeQuery = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -5846,16 +3254,104 @@ export type SportsGamesByLiveGameChatRoomIDQuery = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type GetBaseballAtBatIndexQuery = {
+  __typename: "BaseballAtBatIndex";
+  id: string;
+  sortKey?: string | null;
+  sportsGameID: string;
+  sportsgame?: {
+    __typename: "SportsGame";
+    id: string;
+    sport?: string | null;
+    homeTeam?: string | null;
+    awayTeam?: string | null;
+    gameInfo?: string | null;
+    startTime?: string | null;
+    lastUpdate?: string | null;
+    liveGameChatRoomID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+  pitchCount?: number | null;
+  isOut?: string | null;
+  count?: string | null;
+  call?: string | null;
+  hasResult?: string | null;
+  batIndex?: number | null;
+  resultDescription?: string | null;
+  pitchData?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type ListBaseballAtBatIndicesQuery = {
+  __typename: "ModelBaseballAtBatIndexConnection";
+  items: Array<{
+    __typename: "BaseballAtBatIndex";
+    id: string;
+    sortKey?: string | null;
+    sportsGameID: string;
+    pitchCount?: number | null;
+    isOut?: string | null;
+    count?: string | null;
+    call?: string | null;
+    hasResult?: string | null;
+    batIndex?: number | null;
+    resultDescription?: string | null;
+    pitchData?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type BaseballAtBatIndicesBySortKeyAndBatIndexQuery = {
+  __typename: "ModelBaseballAtBatIndexConnection";
+  items: Array<{
+    __typename: "BaseballAtBatIndex";
+    id: string;
+    sortKey?: string | null;
+    sportsGameID: string;
+    pitchCount?: number | null;
+    isOut?: string | null;
+    count?: string | null;
+    call?: string | null;
+    hasResult?: string | null;
+    batIndex?: number | null;
+    resultDescription?: string | null;
+    pitchData?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type BaseballAtBatIndicesBySportsGameIDAndBatIndexQuery = {
+  __typename: "ModelBaseballAtBatIndexConnection";
+  items: Array<{
+    __typename: "BaseballAtBatIndex";
+    id: string;
+    sortKey?: string | null;
+    sportsGameID: string;
+    pitchCount?: number | null;
+    isOut?: string | null;
+    count?: string | null;
+    call?: string | null;
+    hasResult?: string | null;
+    batIndex?: number | null;
+    resultDescription?: string | null;
+    pitchData?: string | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -5878,16 +3374,6 @@ export type GetLiveGameChatRoomQuery = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -5895,19 +3381,6 @@ export type GetLiveGameChatRoomQuery = {
   chatsID?: string | null;
   chats?: {
     __typename: "ModelChatsConnection";
-    items: Array<{
-      __typename: "Chats";
-      id: string;
-      sortKey?: string | null;
-      usernameID?: string | null;
-      profileID?: string | null;
-      chat?: string | null;
-      timePosted?: string | null;
-      liveGameChatRoomID: string;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   createdAt: string;
@@ -5922,25 +3395,7 @@ export type ListLiveGameChatRoomsQuery = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -5965,16 +3420,6 @@ export type GetHubPostsQuery = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -5993,20 +3438,6 @@ export type ListHubPostsQuery = {
     postType?: string | null;
     timePosted?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -6023,20 +3454,6 @@ export type HubPostsBySortKeyAndTimePostedQuery = {
     postType?: string | null;
     timePosted?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -6054,40 +3471,6 @@ export type GetChatsQuery = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -6102,47 +3485,9 @@ export type GetChatsQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -6150,20 +3495,20 @@ export type GetChatsQuery = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
+  profilePicture?: {
+    __typename: "ProfilePicture";
+    id: string;
+    imageurl?: string | null;
+    profileID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   chat?: string | null;
   timePosted?: string | null;
   likes?: {
     __typename: "ModelChatLikesConnection";
-    items: Array<{
-      __typename: "ChatLikes";
-      id: string;
-      usernameID?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      chatsLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   liveGameChatRoomID: string;
@@ -6172,25 +3517,7 @@ export type GetChatsQuery = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -6207,52 +3534,10 @@ export type ListChatsQuery = {
     id: string;
     sortKey?: string | null;
     usernameID?: string | null;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     chat?: string | null;
     timePosted?: string | null;
-    likes?: {
-      __typename: "ModelChatLikesConnection";
-      nextToken?: string | null;
-    } | null;
     liveGameChatRoomID: string;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -6267,52 +3552,10 @@ export type ChatsBySortKeyAndTimePostedQuery = {
     id: string;
     sortKey?: string | null;
     usernameID?: string | null;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     chat?: string | null;
     timePosted?: string | null;
-    likes?: {
-      __typename: "ModelChatLikesConnection";
-      nextToken?: string | null;
-    } | null;
     liveGameChatRoomID: string;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -6327,52 +3570,10 @@ export type ChatsByLiveGameChatRoomIDAndTimePostedQuery = {
     id: string;
     sortKey?: string | null;
     usernameID?: string | null;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     chat?: string | null;
     timePosted?: string | null;
-    likes?: {
-      __typename: "ModelChatLikesConnection";
-      nextToken?: string | null;
-    } | null;
     liveGameChatRoomID: string;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -6389,40 +3590,6 @@ export type GetChatLikesQuery = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -6437,47 +3604,9 @@ export type GetChatLikesQuery = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -6497,35 +3626,7 @@ export type ListChatLikesQuery = {
     __typename: "ChatLikes";
     id: string;
     usernameID?: string | null;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     chatsLikesId?: string | null;
@@ -6545,47 +3646,9 @@ export type OnCreateProfilePictureSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -6611,47 +3674,9 @@ export type OnUpdateProfilePictureSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -6677,47 +3702,9 @@ export type OnDeleteProfilePictureSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -6744,40 +3731,6 @@ export type OnCreateProfileSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -6790,44 +3743,8 @@ export type OnCreateProfileSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -6844,23 +3761,6 @@ export type OnCreateProfileSubscription = {
     __typename: "ProfilePicture";
     id: string;
     imageurl?: string | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -6887,40 +3787,6 @@ export type OnUpdateProfileSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -6933,44 +3799,8 @@ export type OnUpdateProfileSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -6987,23 +3817,6 @@ export type OnUpdateProfileSubscription = {
     __typename: "ProfilePicture";
     id: string;
     imageurl?: string | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -7030,40 +3843,6 @@ export type OnDeleteProfileSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -7076,44 +3855,8 @@ export type OnDeleteProfileSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -7130,23 +3873,6 @@ export type OnDeleteProfileSubscription = {
     __typename: "ProfilePicture";
     id: string;
     imageurl?: string | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -7169,33 +3895,10 @@ export type OnCreateImagePostSubscription = {
   time_posted?: string | null;
   likes?: {
     __typename: "ModelLikesConnection";
-    items: Array<{
-      __typename: "Likes";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      createdAt: string;
-      updatedAt: string;
-      imagePostLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   comments?: {
     __typename: "ModelCommentsConnection";
-    items: Array<{
-      __typename: "Comments";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      comment?: string | null;
-      time_posted?: string | null;
-      imagePostsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      imagePostCommentsId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   usernameID: string;
@@ -7204,40 +3907,6 @@ export type OnCreateImagePostSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -7252,47 +3921,9 @@ export type OnCreateImagePostSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -7318,33 +3949,10 @@ export type OnUpdateImagePostSubscription = {
   time_posted?: string | null;
   likes?: {
     __typename: "ModelLikesConnection";
-    items: Array<{
-      __typename: "Likes";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      createdAt: string;
-      updatedAt: string;
-      imagePostLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   comments?: {
     __typename: "ModelCommentsConnection";
-    items: Array<{
-      __typename: "Comments";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      comment?: string | null;
-      time_posted?: string | null;
-      imagePostsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      imagePostCommentsId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   usernameID: string;
@@ -7353,40 +3961,6 @@ export type OnUpdateImagePostSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -7401,47 +3975,9 @@ export type OnUpdateImagePostSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -7467,33 +4003,10 @@ export type OnDeleteImagePostSubscription = {
   time_posted?: string | null;
   likes?: {
     __typename: "ModelLikesConnection";
-    items: Array<{
-      __typename: "Likes";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      createdAt: string;
-      updatedAt: string;
-      imagePostLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   comments?: {
     __typename: "ModelCommentsConnection";
-    items: Array<{
-      __typename: "Comments";
-      id: string;
-      usernameID: string;
-      profileID: string;
-      comment?: string | null;
-      time_posted?: string | null;
-      imagePostsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      imagePostCommentsId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   usernameID: string;
@@ -7502,40 +4015,6 @@ export type OnDeleteImagePostSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -7550,47 +4029,9 @@ export type OnDeleteImagePostSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -7617,40 +4058,6 @@ export type OnCreateLikesSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -7665,47 +4072,9 @@ export type OnCreateLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -7728,40 +4097,6 @@ export type OnUpdateLikesSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -7776,47 +4111,9 @@ export type OnUpdateLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -7839,40 +4136,6 @@ export type OnDeleteLikesSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -7887,47 +4150,9 @@ export type OnDeleteLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -7950,46 +4175,13 @@ export type OnCreateCommentsSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
+  sorterValue?: string | null;
   profileID: string;
   profile?: {
     __typename: "Profile";
@@ -7998,47 +4190,9 @@ export type OnCreateCommentsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -8064,46 +4218,13 @@ export type OnUpdateCommentsSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
+  sorterValue?: string | null;
   profileID: string;
   profile?: {
     __typename: "Profile";
@@ -8112,47 +4233,9 @@ export type OnUpdateCommentsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -8178,46 +4261,13 @@ export type OnDeleteCommentsSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
     usernameProfileId?: string | null;
     owner?: string | null;
   } | null;
+  sorterValue?: string | null;
   profileID: string;
   profile?: {
     __typename: "Profile";
@@ -8226,47 +4276,9 @@ export type OnDeleteCommentsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -8279,7 +4291,6 @@ export type OnDeleteCommentsSubscription = {
   imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
-  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -8294,44 +4305,8 @@ export type OnCreateUsernameSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -8348,47 +4323,9 @@ export type OnCreateUsernameSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -8414,44 +4351,8 @@ export type OnUpdateUsernameSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -8468,47 +4369,9 @@ export type OnUpdateUsernameSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -8534,44 +4397,8 @@ export type OnDeleteUsernameSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    likes?: {
-      __typename: "ModelLikesConnection";
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentsConnection";
-      nextToken?: string | null;
-    } | null;
     usernameID: string;
-    username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     profileID: string;
-    profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     s3_key?: string | null;
     mediaSourceMobile?: string | null;
     mediaSourceDesktop?: string | null;
@@ -8588,47 +4415,9 @@ export type OnDeleteUsernameSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -8658,28 +4447,14 @@ export type OnCreateSportsGameSubscription = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
+  } | null;
+  pitchIndex?: {
+    __typename: "ModelBaseballAtBatIndexConnection";
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -8701,28 +4476,14 @@ export type OnUpdateSportsGameSubscription = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
+  } | null;
+  pitchIndex?: {
+    __typename: "ModelBaseballAtBatIndexConnection";
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -8744,29 +4505,111 @@ export type OnDeleteSportsGameSubscription = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
   } | null;
+  pitchIndex?: {
+    __typename: "ModelBaseballAtBatIndexConnection";
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type OnCreateBaseballAtBatIndexSubscription = {
+  __typename: "BaseballAtBatIndex";
+  id: string;
+  sortKey?: string | null;
+  sportsGameID: string;
+  sportsgame?: {
+    __typename: "SportsGame";
+    id: string;
+    sport?: string | null;
+    homeTeam?: string | null;
+    awayTeam?: string | null;
+    gameInfo?: string | null;
+    startTime?: string | null;
+    lastUpdate?: string | null;
+    liveGameChatRoomID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+  pitchCount?: number | null;
+  isOut?: string | null;
+  count?: string | null;
+  call?: string | null;
+  hasResult?: string | null;
+  batIndex?: number | null;
+  resultDescription?: string | null;
+  pitchData?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type OnUpdateBaseballAtBatIndexSubscription = {
+  __typename: "BaseballAtBatIndex";
+  id: string;
+  sortKey?: string | null;
+  sportsGameID: string;
+  sportsgame?: {
+    __typename: "SportsGame";
+    id: string;
+    sport?: string | null;
+    homeTeam?: string | null;
+    awayTeam?: string | null;
+    gameInfo?: string | null;
+    startTime?: string | null;
+    lastUpdate?: string | null;
+    liveGameChatRoomID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+  pitchCount?: number | null;
+  isOut?: string | null;
+  count?: string | null;
+  call?: string | null;
+  hasResult?: string | null;
+  batIndex?: number | null;
+  resultDescription?: string | null;
+  pitchData?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type OnDeleteBaseballAtBatIndexSubscription = {
+  __typename: "BaseballAtBatIndex";
+  id: string;
+  sortKey?: string | null;
+  sportsGameID: string;
+  sportsgame?: {
+    __typename: "SportsGame";
+    id: string;
+    sport?: string | null;
+    homeTeam?: string | null;
+    awayTeam?: string | null;
+    gameInfo?: string | null;
+    startTime?: string | null;
+    lastUpdate?: string | null;
+    liveGameChatRoomID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+  pitchCount?: number | null;
+  isOut?: string | null;
+  count?: string | null;
+  call?: string | null;
+  hasResult?: string | null;
+  batIndex?: number | null;
+  resultDescription?: string | null;
+  pitchData?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -8787,16 +4630,6 @@ export type OnCreateLiveGameChatRoomSubscription = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -8804,19 +4637,6 @@ export type OnCreateLiveGameChatRoomSubscription = {
   chatsID?: string | null;
   chats?: {
     __typename: "ModelChatsConnection";
-    items: Array<{
-      __typename: "Chats";
-      id: string;
-      sortKey?: string | null;
-      usernameID?: string | null;
-      profileID?: string | null;
-      chat?: string | null;
-      timePosted?: string | null;
-      liveGameChatRoomID: string;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   createdAt: string;
@@ -8839,16 +4659,6 @@ export type OnUpdateLiveGameChatRoomSubscription = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -8856,19 +4666,6 @@ export type OnUpdateLiveGameChatRoomSubscription = {
   chatsID?: string | null;
   chats?: {
     __typename: "ModelChatsConnection";
-    items: Array<{
-      __typename: "Chats";
-      id: string;
-      sortKey?: string | null;
-      usernameID?: string | null;
-      profileID?: string | null;
-      chat?: string | null;
-      timePosted?: string | null;
-      liveGameChatRoomID: string;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   createdAt: string;
@@ -8891,16 +4688,6 @@ export type OnDeleteLiveGameChatRoomSubscription = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -8908,19 +4695,6 @@ export type OnDeleteLiveGameChatRoomSubscription = {
   chatsID?: string | null;
   chats?: {
     __typename: "ModelChatsConnection";
-    items: Array<{
-      __typename: "Chats";
-      id: string;
-      sortKey?: string | null;
-      usernameID?: string | null;
-      profileID?: string | null;
-      chat?: string | null;
-      timePosted?: string | null;
-      liveGameChatRoomID: string;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   createdAt: string;
@@ -8945,16 +4719,6 @@ export type OnCreateHubPostsSubscription = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -8981,16 +4745,6 @@ export type OnUpdateHubPostsSubscription = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -9017,16 +4771,6 @@ export type OnDeleteHubPostsSubscription = {
     startTime?: string | null;
     lastUpdate?: string | null;
     liveGameChatRoomID?: string | null;
-    livegamechatroom?: {
-      __typename: "LiveGameChatRoom";
-      id: string;
-      sport?: string | null;
-      sportsGameID?: string | null;
-      chatsID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -9046,40 +4790,6 @@ export type OnCreateChatsSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -9094,47 +4804,9 @@ export type OnCreateChatsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -9142,20 +4814,20 @@ export type OnCreateChatsSubscription = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
+  profilePicture?: {
+    __typename: "ProfilePicture";
+    id: string;
+    imageurl?: string | null;
+    profileID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   chat?: string | null;
   timePosted?: string | null;
   likes?: {
     __typename: "ModelChatLikesConnection";
-    items: Array<{
-      __typename: "ChatLikes";
-      id: string;
-      usernameID?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      chatsLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   liveGameChatRoomID: string;
@@ -9164,25 +4836,7 @@ export type OnCreateChatsSubscription = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -9202,40 +4856,6 @@ export type OnUpdateChatsSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -9250,47 +4870,9 @@ export type OnUpdateChatsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -9298,20 +4880,20 @@ export type OnUpdateChatsSubscription = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
+  profilePicture?: {
+    __typename: "ProfilePicture";
+    id: string;
+    imageurl?: string | null;
+    profileID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   chat?: string | null;
   timePosted?: string | null;
   likes?: {
     __typename: "ModelChatLikesConnection";
-    items: Array<{
-      __typename: "ChatLikes";
-      id: string;
-      usernameID?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      chatsLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   liveGameChatRoomID: string;
@@ -9320,25 +4902,7 @@ export type OnUpdateChatsSubscription = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -9358,40 +4922,6 @@ export type OnDeleteChatsSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -9406,47 +4936,9 @@ export type OnDeleteChatsSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -9454,20 +4946,20 @@ export type OnDeleteChatsSubscription = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
+  profilePicture?: {
+    __typename: "ProfilePicture";
+    id: string;
+    imageurl?: string | null;
+    profileID?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureProfileId?: string | null;
+    owner?: string | null;
+  } | null;
   chat?: string | null;
   timePosted?: string | null;
   likes?: {
     __typename: "ModelChatLikesConnection";
-    items: Array<{
-      __typename: "ChatLikes";
-      id: string;
-      usernameID?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      chatsLikesId?: string | null;
-      owner?: string | null;
-    } | null>;
     nextToken?: string | null;
   } | null;
   liveGameChatRoomID: string;
@@ -9476,25 +4968,7 @@ export type OnDeleteChatsSubscription = {
     id: string;
     sport?: string | null;
     sportsGameID?: string | null;
-    sportsgame?: {
-      __typename: "SportsGame";
-      id: string;
-      sport?: string | null;
-      homeTeam?: string | null;
-      awayTeam?: string | null;
-      gameInfo?: string | null;
-      startTime?: string | null;
-      lastUpdate?: string | null;
-      liveGameChatRoomID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     chatsID?: string | null;
-    chats?: {
-      __typename: "ModelChatsConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -9513,40 +4987,6 @@ export type OnCreateChatLikesSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -9561,47 +5001,9 @@ export type OnCreateChatLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -9624,40 +5026,6 @@ export type OnUpdateChatLikesSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -9672,47 +5040,9 @@ export type OnUpdateChatLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -9735,40 +5065,6 @@ export type OnDeleteChatLikesSubscription = {
     id: string;
     username?: string | null;
     profileID?: string | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    Profile?: {
-      __typename: "Profile";
-      id: string;
-      email?: string | null;
-      relation?: string | null;
-      cognitoID?: string | null;
-      usernameID?: string | null;
-      first_name?: string | null;
-      last_name?: string | null;
-      profilepictureID?: string | null;
-      bio?: string | null;
-      birthday?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profileImagePostsId?: string | null;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     usernameImagePostsId?: string | null;
@@ -9783,47 +5079,9 @@ export type OnDeleteChatLikesSubscription = {
     relation?: string | null;
     cognitoID?: string | null;
     usernameID?: string | null;
-    Username?: {
-      __typename: "Username";
-      id: string;
-      username?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      usernameImagePostsId?: string | null;
-      usernameProfileId?: string | null;
-      owner?: string | null;
-    } | null;
-    ImagePosts?: {
-      __typename: "ImagePost";
-      id: string;
-      sorterValue?: string | null;
-      description?: string | null;
-      time_posted?: string | null;
-      usernameID: string;
-      profileID: string;
-      s3_key?: string | null;
-      mediaSourceMobile?: string | null;
-      mediaSourceDesktop?: string | null;
-      downloadableVideo?: string | null;
-      posterImage?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     first_name?: string | null;
     last_name?: string | null;
     profilepictureID?: string | null;
-    profilepicture?: {
-      __typename: "ProfilePicture";
-      id: string;
-      imageurl?: string | null;
-      profileID?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      profilePictureProfileId?: string | null;
-      owner?: string | null;
-    } | null;
     bio?: string | null;
     birthday?: string | null;
     createdAt: string;
@@ -9836,7 +5094,6 @@ export type OnDeleteChatLikesSubscription = {
   chatsLikesId?: string | null;
   owner?: string | null;
 };
-
 // ZACH CREATED
 export type GetUsernameDataQuery = {
   __typename: "Username";
@@ -9854,35 +5111,6 @@ export type GetUsernameDataQuery = {
 export class APIService {
 
   finalArray;
-
-  // ZACH CREATED  
-
-  async getImageComments(id: string): Promise<any> {
-    const statement = `query listImageComments($id: String) {
-      listComments(filter: {imagePostsID: {eq: $id}}) {
-        items {
-          id
-          time_posted
-          usernameID
-          imagePostsID
-          comment
-        }
-      }
-    }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-
-    let data = this.sortByDate(response.data.listComments.items)
-    data.map(async values => {
-      values.username = await (await this.GetUsername(values.usernameID))?.username
-      values.profilePic = await this.checkForProfilePhoto(await (await this.GetProfilePictureProfileID(await (await this.GetUsername(values.usernameID))?.profileID)))
-    })
-    return data;
-  }
 
   async checkForProfilePhoto(url) {
     if (url) {
@@ -10260,7 +5488,7 @@ export class APIService {
     )) as any;
     return <GetProfilePictureQuery>response.data.listProfilePictures.items[0];
   }
-  
+
   async CreateProfilePicture(
     input: CreateProfilePictureInput,
     condition?: ModelProfilePictureConditionInput
@@ -10277,47 +5505,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -10359,47 +5549,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -10441,47 +5593,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -10524,40 +5638,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -10570,44 +5650,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -10624,23 +5668,6 @@ export class APIService {
             __typename
             id
             imageurl
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             profileID
             createdAt
             updatedAt
@@ -10683,40 +5710,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -10729,44 +5722,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -10783,23 +5740,6 @@ export class APIService {
             __typename
             id
             imageurl
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             profileID
             createdAt
             updatedAt
@@ -10842,40 +5782,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -10888,44 +5794,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -10942,23 +5812,6 @@ export class APIService {
             __typename
             id
             imageurl
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             profileID
             createdAt
             updatedAt
@@ -10997,33 +5850,10 @@ export class APIService {
           time_posted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              imagePostLikesId
-              owner
-            }
             nextToken
           }
           comments {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              comment
-              time_posted
-              imagePostsID
-              createdAt
-              updatedAt
-              imagePostCommentsId
-              owner
-            }
             nextToken
           }
           usernameID
@@ -11032,40 +5862,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -11080,47 +5876,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -11162,33 +5920,10 @@ export class APIService {
           time_posted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              imagePostLikesId
-              owner
-            }
             nextToken
           }
           comments {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              comment
-              time_posted
-              imagePostsID
-              createdAt
-              updatedAt
-              imagePostCommentsId
-              owner
-            }
             nextToken
           }
           usernameID
@@ -11197,40 +5932,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -11245,47 +5946,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -11327,33 +5990,10 @@ export class APIService {
           time_posted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              imagePostLikesId
-              owner
-            }
             nextToken
           }
           comments {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              comment
-              time_posted
-              imagePostsID
-              createdAt
-              updatedAt
-              imagePostCommentsId
-              owner
-            }
             nextToken
           }
           usernameID
@@ -11362,40 +6002,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -11410,47 +6016,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -11493,40 +6061,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -11541,47 +6075,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -11620,40 +6116,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -11668,47 +6130,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -11747,40 +6171,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -11795,47 +6185,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -11874,46 +6226,13 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
             usernameProfileId
             owner
           }
+          sorterValue
           profileID
           profile {
             __typename
@@ -11922,47 +6241,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -11975,7 +6256,6 @@ export class APIService {
           imagePostsID
           createdAt
           updatedAt
-          imagePostCommentsId
           owner
         }
       }`;
@@ -12004,46 +6284,13 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
             usernameProfileId
             owner
           }
+          sorterValue
           profileID
           profile {
             __typename
@@ -12052,47 +6299,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -12105,7 +6314,6 @@ export class APIService {
           imagePostsID
           createdAt
           updatedAt
-          imagePostCommentsId
           owner
         }
       }`;
@@ -12134,46 +6342,13 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
             usernameProfileId
             owner
           }
+          sorterValue
           profileID
           profile {
             __typename
@@ -12182,47 +6357,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -12235,7 +6372,6 @@ export class APIService {
           imagePostsID
           createdAt
           updatedAt
-          imagePostCommentsId
           owner
         }
       }`;
@@ -12266,44 +6402,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -12320,47 +6420,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -12402,44 +6464,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -12456,47 +6482,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -12538,44 +6526,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -12592,47 +6544,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -12678,28 +6592,14 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
+          }
+          pitchIndex {
+            __typename
+            nextToken
           }
           createdAt
           updatedAt
@@ -12737,28 +6637,14 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
+          }
+          pitchIndex {
+            __typename
+            nextToken
           }
           createdAt
           updatedAt
@@ -12796,28 +6682,14 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
+          }
+          pitchIndex {
+            __typename
+            nextToken
           }
           createdAt
           updatedAt
@@ -12834,6 +6706,156 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteSportsGameMutation>response.data.deleteSportsGame;
+  }
+  async CreateBaseballAtBatIndex(
+    input: CreateBaseballAtBatIndexInput,
+    condition?: ModelBaseballAtBatIndexConditionInput
+  ): Promise<CreateBaseballAtBatIndexMutation> {
+    const statement = `mutation CreateBaseballAtBatIndex($input: CreateBaseballAtBatIndexInput!, $condition: ModelBaseballAtBatIndexConditionInput) {
+        createBaseballAtBatIndex(input: $input, condition: $condition) {
+          __typename
+          id
+          sortKey
+          sportsGameID
+          sportsgame {
+            __typename
+            id
+            sport
+            homeTeam
+            awayTeam
+            gameInfo
+            startTime
+            lastUpdate
+            liveGameChatRoomID
+            createdAt
+            updatedAt
+            owner
+          }
+          pitchCount
+          isOut
+          count
+          call
+          hasResult
+          batIndex
+          resultDescription
+          pitchData
+          createdAt
+          updatedAt
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateBaseballAtBatIndexMutation>(
+      response.data.createBaseballAtBatIndex
+    );
+  }
+  async UpdateBaseballAtBatIndex(
+    input: UpdateBaseballAtBatIndexInput,
+    condition?: ModelBaseballAtBatIndexConditionInput
+  ): Promise<UpdateBaseballAtBatIndexMutation> {
+    const statement = `mutation UpdateBaseballAtBatIndex($input: UpdateBaseballAtBatIndexInput!, $condition: ModelBaseballAtBatIndexConditionInput) {
+        updateBaseballAtBatIndex(input: $input, condition: $condition) {
+          __typename
+          id
+          sortKey
+          sportsGameID
+          sportsgame {
+            __typename
+            id
+            sport
+            homeTeam
+            awayTeam
+            gameInfo
+            startTime
+            lastUpdate
+            liveGameChatRoomID
+            createdAt
+            updatedAt
+            owner
+          }
+          pitchCount
+          isOut
+          count
+          call
+          hasResult
+          batIndex
+          resultDescription
+          pitchData
+          createdAt
+          updatedAt
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateBaseballAtBatIndexMutation>(
+      response.data.updateBaseballAtBatIndex
+    );
+  }
+  async DeleteBaseballAtBatIndex(
+    input: DeleteBaseballAtBatIndexInput,
+    condition?: ModelBaseballAtBatIndexConditionInput
+  ): Promise<DeleteBaseballAtBatIndexMutation> {
+    const statement = `mutation DeleteBaseballAtBatIndex($input: DeleteBaseballAtBatIndexInput!, $condition: ModelBaseballAtBatIndexConditionInput) {
+        deleteBaseballAtBatIndex(input: $input, condition: $condition) {
+          __typename
+          id
+          sortKey
+          sportsGameID
+          sportsgame {
+            __typename
+            id
+            sport
+            homeTeam
+            awayTeam
+            gameInfo
+            startTime
+            lastUpdate
+            liveGameChatRoomID
+            createdAt
+            updatedAt
+            owner
+          }
+          pitchCount
+          isOut
+          count
+          call
+          hasResult
+          batIndex
+          resultDescription
+          pitchData
+          createdAt
+          updatedAt
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteBaseballAtBatIndexMutation>(
+      response.data.deleteBaseballAtBatIndex
+    );
   }
   async CreateLiveGameChatRoom(
     input: CreateLiveGameChatRoomInput,
@@ -12855,16 +6877,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -12872,19 +6884,6 @@ export class APIService {
           chatsID
           chats {
             __typename
-            items {
-              __typename
-              id
-              sortKey
-              usernameID
-              profileID
-              chat
-              timePosted
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             nextToken
           }
           createdAt
@@ -12923,16 +6922,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -12940,19 +6929,6 @@ export class APIService {
           chatsID
           chats {
             __typename
-            items {
-              __typename
-              id
-              sortKey
-              usernameID
-              profileID
-              chat
-              timePosted
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             nextToken
           }
           createdAt
@@ -12991,16 +6967,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -13008,19 +6974,6 @@ export class APIService {
           chatsID
           chats {
             __typename
-            items {
-              __typename
-              id
-              sortKey
-              usernameID
-              profileID
-              chat
-              timePosted
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             nextToken
           }
           createdAt
@@ -13061,16 +7014,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -13113,16 +7056,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -13165,16 +7098,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -13210,40 +7133,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -13258,47 +7147,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -13306,20 +7157,20 @@ export class APIService {
             profileImagePostsId
             owner
           }
+          profilePicture {
+            __typename
+            id
+            imageurl
+            profileID
+            createdAt
+            updatedAt
+            profilePictureProfileId
+            owner
+          }
           chat
           timePosted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              chatsLikesId
-              owner
-            }
             nextToken
           }
           liveGameChatRoomID
@@ -13328,25 +7179,7 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
@@ -13382,40 +7215,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -13430,47 +7229,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -13478,20 +7239,20 @@ export class APIService {
             profileImagePostsId
             owner
           }
+          profilePicture {
+            __typename
+            id
+            imageurl
+            profileID
+            createdAt
+            updatedAt
+            profilePictureProfileId
+            owner
+          }
           chat
           timePosted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              chatsLikesId
-              owner
-            }
             nextToken
           }
           liveGameChatRoomID
@@ -13500,25 +7261,7 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
@@ -13554,40 +7297,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -13602,47 +7311,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -13650,20 +7321,20 @@ export class APIService {
             profileImagePostsId
             owner
           }
+          profilePicture {
+            __typename
+            id
+            imageurl
+            profileID
+            createdAt
+            updatedAt
+            profilePictureProfileId
+            owner
+          }
           chat
           timePosted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              chatsLikesId
-              owner
-            }
             nextToken
           }
           liveGameChatRoomID
@@ -13672,25 +7343,7 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
@@ -13725,40 +7378,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -13773,47 +7392,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -13852,40 +7433,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -13900,47 +7447,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -13979,40 +7488,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -14027,47 +7502,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -14105,47 +7542,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -14180,23 +7579,6 @@ export class APIService {
             __typename
             id
             imageurl
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             profileID
             createdAt
             updatedAt
@@ -14235,40 +7617,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -14281,44 +7629,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -14335,23 +7647,6 @@ export class APIService {
             __typename
             id
             imageurl
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             profileID
             createdAt
             updatedAt
@@ -14389,47 +7684,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -14463,7 +7720,13 @@ export class APIService {
     nextToken?: string
   ): Promise<ProfilesByUsernameIDQuery> {
     const statement = `query ProfilesByUsernameID($usernameID: ID!, $sortDirection: ModelSortDirection, $filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
-        profilesByUsernameID(usernameID: $usernameID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        profilesByUsernameID(
+          usernameID: $usernameID
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
@@ -14472,47 +7735,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -14551,7 +7776,13 @@ export class APIService {
     nextToken?: string
   ): Promise<ProfilesByProfilepictureIDQuery> {
     const statement = `query ProfilesByProfilepictureID($profilepictureID: ID!, $sortDirection: ModelSortDirection, $filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
-        profilesByProfilepictureID(profilepictureID: $profilepictureID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        profilesByProfilepictureID(
+          profilepictureID: $profilepictureID
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
@@ -14560,47 +7791,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -14643,33 +7836,10 @@ export class APIService {
           time_posted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              imagePostLikesId
-              owner
-            }
             nextToken
           }
           comments {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              comment
-              time_posted
-              imagePostsID
-              createdAt
-              updatedAt
-              imagePostCommentsId
-              owner
-            }
             nextToken
           }
           usernameID
@@ -14678,40 +7848,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -14726,47 +7862,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -14806,44 +7904,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -14880,7 +7942,14 @@ export class APIService {
     nextToken?: string
   ): Promise<ImagePostsBySorterValueAndTime_postedQuery> {
     const statement = `query ImagePostsBySorterValueAndTime_posted($sorterValue: String!, $time_posted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
-        imagePostsBySorterValueAndTime_posted(sorterValue: $sorterValue, time_posted: $time_posted, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        imagePostsBySorterValueAndTime_posted(
+          sorterValue: $sorterValue
+          time_posted: $time_posted
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
@@ -14888,44 +7957,18 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
             comments {
-              __typename
-              nextToken
+              items {
+                comments
+              }
+            }
+            likes {
+              items {
+                username
+              }
             }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -14971,7 +8014,13 @@ export class APIService {
     nextToken?: string
   ): Promise<ImagePostsByUsernameIDQuery> {
     const statement = `query ImagePostsByUsernameID($usernameID: ID!, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
-        imagePostsByUsernameID(usernameID: $usernameID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        imagePostsByUsernameID(
+          usernameID: $usernameID
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
@@ -14979,44 +8028,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -15057,7 +8070,13 @@ export class APIService {
     nextToken?: string
   ): Promise<ImagePostsByProfileIDQuery> {
     const statement = `query ImagePostsByProfileID($profileID: ID!, $sortDirection: ModelSortDirection, $filter: ModelImagePostFilterInput, $limit: Int, $nextToken: String) {
-        imagePostsByProfileID(profileID: $profileID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        imagePostsByProfileID(
+          profileID: $profileID
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
@@ -15065,44 +8084,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -15146,40 +8129,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -15194,47 +8143,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -15268,35 +8179,7 @@ export class APIService {
             __typename
             id
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             imagePostLikesId
@@ -15328,41 +8211,19 @@ export class APIService {
     nextToken?: string
   ): Promise<LikesByUsernameIDQuery> {
     const statement = `query LikesByUsernameID($usernameID: ID!, $sortDirection: ModelSortDirection, $filter: ModelLikesFilterInput, $limit: Int, $nextToken: String) {
-        likesByUsernameID(usernameID: $usernameID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        likesByUsernameID(
+          usernameID: $usernameID
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
             id
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             imagePostLikesId
@@ -15399,41 +8260,19 @@ export class APIService {
     nextToken?: string
   ): Promise<LikesByProfileIDQuery> {
     const statement = `query LikesByProfileID($profileID: ID!, $sortDirection: ModelSortDirection, $filter: ModelLikesFilterInput, $limit: Int, $nextToken: String) {
-        likesByProfileID(profileID: $profileID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        likesByProfileID(
+          profileID: $profileID
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
             id
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             imagePostLikesId
@@ -15473,46 +8312,13 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
             usernameProfileId
             owner
           }
+          sorterValue
           profileID
           profile {
             __typename
@@ -15521,47 +8327,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -15574,7 +8342,6 @@ export class APIService {
           imagePostsID
           createdAt
           updatedAt
-          imagePostCommentsId
           owner
         }
       }`;
@@ -15598,41 +8365,13 @@ export class APIService {
             __typename
             id
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
+            sorterValue
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             comment
             time_posted
             imagePostsID
             createdAt
             updatedAt
-            imagePostCommentsId
             owner
           }
           nextToken
@@ -15653,6 +8392,72 @@ export class APIService {
     )) as any;
     return <ListCommentsQuery>response.data.listComments;
   }
+  async CommentsBySorterValueAndTime_posted(
+    sorterValue: string,
+    time_posted?: ModelStringKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelCommentsFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<CommentsBySorterValueAndTime_postedQuery> {
+    const statement = `query CommentsBySorterValueAndTime_posted($sorterValue: String!, $time_posted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelCommentsFilterInput, $limit: Int, $nextToken: String) {
+        commentsBySorterValueAndTime_posted(
+          sorterValue: $sorterValue
+          time_posted: $time_posted
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
+          __typename
+          items {
+            __typename
+            id
+            usernameID
+            username {
+              username
+            }
+            sorterValue
+            profileID
+            profile {
+              profilepictureID
+              profilepicture {
+                imageurl
+              }
+            }
+            comment
+            time_posted
+            imagePostsID
+            owner
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      sorterValue
+    };
+    if (time_posted) {
+      gqlAPIServiceArguments.time_posted = time_posted;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CommentsBySorterValueAndTime_postedQuery>(
+      response.data.commentsBySorterValueAndTime_posted
+    );
+  }
   async CommentsByProfileID(
     profileID: string,
     sortDirection?: ModelSortDirection,
@@ -15661,47 +8466,25 @@ export class APIService {
     nextToken?: string
   ): Promise<CommentsByProfileIDQuery> {
     const statement = `query CommentsByProfileID($profileID: ID!, $sortDirection: ModelSortDirection, $filter: ModelCommentsFilterInput, $limit: Int, $nextToken: String) {
-        commentsByProfileID(profileID: $profileID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        commentsByProfileID(
+          profileID: $profileID
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
             id
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
+            sorterValue
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             comment
             time_posted
             imagePostsID
             createdAt
             updatedAt
-            imagePostCommentsId
             owner
           }
           nextToken
@@ -15740,44 +8523,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -15794,47 +8541,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -15870,40 +8579,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -15945,28 +8620,14 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
+          }
+          pitchIndex {
+            __typename
+            nextToken
           }
           createdAt
           updatedAt
@@ -15999,16 +8660,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -16040,7 +8691,14 @@ export class APIService {
     nextToken?: string
   ): Promise<SportsGamesBySportAndStartTimeQuery> {
     const statement = `query SportsGamesBySportAndStartTime($sport: String!, $startTime: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelSportsGameFilterInput, $limit: Int, $nextToken: String) {
-        sportsGamesBySportAndStartTime(sport: $sport, startTime: $startTime, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        sportsGamesBySportAndStartTime(
+          sport: $sport
+          startTime: $startTime
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
@@ -16052,16 +8710,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -16102,7 +8750,13 @@ export class APIService {
     nextToken?: string
   ): Promise<SportsGamesByLiveGameChatRoomIDQuery> {
     const statement = `query SportsGamesByLiveGameChatRoomID($liveGameChatRoomID: ID!, $sortDirection: ModelSortDirection, $filter: ModelSportsGameFilterInput, $limit: Int, $nextToken: String) {
-        sportsGamesByLiveGameChatRoomID(liveGameChatRoomID: $liveGameChatRoomID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        sportsGamesByLiveGameChatRoomID(
+          liveGameChatRoomID: $liveGameChatRoomID
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
@@ -16114,16 +8768,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -16153,6 +8797,219 @@ export class APIService {
       response.data.sportsGamesByLiveGameChatRoomID
     );
   }
+  async GetBaseballAtBatIndex(id: string): Promise<GetBaseballAtBatIndexQuery> {
+    const statement = `query GetBaseballAtBatIndex($id: ID!) {
+        getBaseballAtBatIndex(id: $id) {
+          __typename
+          id
+          sortKey
+          sportsGameID
+          sportsgame {
+            __typename
+            id
+            sport
+            homeTeam
+            awayTeam
+            gameInfo
+            startTime
+            lastUpdate
+            liveGameChatRoomID
+            createdAt
+            updatedAt
+            owner
+          }
+          pitchCount
+          isOut
+          count
+          call
+          hasResult
+          batIndex
+          resultDescription
+          pitchData
+          createdAt
+          updatedAt
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetBaseballAtBatIndexQuery>response.data.getBaseballAtBatIndex;
+  }
+  async ListBaseballAtBatIndices(
+    filter?: ModelBaseballAtBatIndexFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListBaseballAtBatIndicesQuery> {
+    const statement = `query ListBaseballAtBatIndices($filter: ModelBaseballAtBatIndexFilterInput, $limit: Int, $nextToken: String) {
+        listBaseballAtBatIndices(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            sortKey
+            sportsGameID
+            pitchCount
+            isOut
+            count
+            call
+            hasResult
+            batIndex
+            resultDescription
+            pitchData
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListBaseballAtBatIndicesQuery>(
+      response.data.listBaseballAtBatIndices
+    );
+  }
+  async BaseballAtBatIndicesBySortKeyAndBatIndex(
+    sortKey: string,
+    batIndex?: ModelIntKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBaseballAtBatIndexFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BaseballAtBatIndicesBySortKeyAndBatIndexQuery> {
+    const statement = `query BaseballAtBatIndicesBySortKeyAndBatIndex($sortKey: String!, $batIndex: ModelIntKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBaseballAtBatIndexFilterInput, $limit: Int, $nextToken: String) {
+        baseballAtBatIndicesBySortKeyAndBatIndex(
+          sortKey: $sortKey
+          batIndex: $batIndex
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
+          __typename
+          items {
+            __typename
+            id
+            sortKey
+            sportsGameID
+            pitchCount
+            isOut
+            count
+            call
+            hasResult
+            batIndex
+            resultDescription
+            pitchData
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      sortKey
+    };
+    if (batIndex) {
+      gqlAPIServiceArguments.batIndex = batIndex;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BaseballAtBatIndicesBySortKeyAndBatIndexQuery>(
+      response.data.baseballAtBatIndicesBySortKeyAndBatIndex
+    );
+  }
+  async BaseballAtBatIndicesBySportsGameIDAndBatIndex(
+    sportsGameID: string,
+    batIndex?: ModelIntKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBaseballAtBatIndexFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BaseballAtBatIndicesBySportsGameIDAndBatIndexQuery> {
+    const statement = `query BaseballAtBatIndicesBySportsGameIDAndBatIndex($sportsGameID: ID!, $batIndex: ModelIntKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBaseballAtBatIndexFilterInput, $limit: Int, $nextToken: String) {
+        baseballAtBatIndicesBySportsGameIDAndBatIndex(
+          sportsGameID: $sportsGameID
+          batIndex: $batIndex
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
+          __typename
+          items {
+            __typename
+            id
+            sortKey
+            sportsGameID
+            pitchCount
+            isOut
+            count
+            call
+            hasResult
+            batIndex
+            resultDescription
+            pitchData
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      sportsGameID
+    };
+    if (batIndex) {
+      gqlAPIServiceArguments.batIndex = batIndex;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BaseballAtBatIndicesBySportsGameIDAndBatIndexQuery>(
+      response.data.baseballAtBatIndicesBySportsGameIDAndBatIndex
+    );
+  }
   async GetLiveGameChatRoom(id: string): Promise<GetLiveGameChatRoomQuery> {
     const statement = `query GetLiveGameChatRoom($id: ID!) {
         getLiveGameChatRoom(id: $id) {
@@ -16170,16 +9027,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -16187,19 +9034,6 @@ export class APIService {
           chatsID
           chats {
             __typename
-            items {
-              __typename
-              id
-              sortKey
-              usernameID
-              profileID
-              chat
-              timePosted
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             nextToken
           }
           createdAt
@@ -16228,25 +9062,7 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
@@ -16288,16 +9104,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -16330,20 +9136,6 @@ export class APIService {
             postType
             timePosted
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -16375,7 +9167,14 @@ export class APIService {
     nextToken?: string
   ): Promise<HubPostsBySortKeyAndTimePostedQuery> {
     const statement = `query HubPostsBySortKeyAndTimePosted($sortKey: String!, $timePosted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelHubPostsFilterInput, $limit: Int, $nextToken: String) {
-        hubPostsBySortKeyAndTimePosted(sortKey: $sortKey, timePosted: $timePosted, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        hubPostsBySortKeyAndTimePosted(
+          sortKey: $sortKey
+          timePosted: $timePosted
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
@@ -16394,12 +9193,8 @@ export class APIService {
               startTime
               lastUpdate
               liveGameChatRoomID
-              createdAt
-              updatedAt
               owner
             }
-            createdAt
-            updatedAt
             owner
           }
           nextToken
@@ -16442,40 +9237,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -16490,47 +9251,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -16538,20 +9261,20 @@ export class APIService {
             profileImagePostsId
             owner
           }
+          profilePicture {
+            __typename
+            id
+            imageurl
+            profileID
+            createdAt
+            updatedAt
+            profilePictureProfileId
+            owner
+          }
           chat
           timePosted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              chatsLikesId
-              owner
-            }
             nextToken
           }
           liveGameChatRoomID
@@ -16560,25 +9283,7 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
@@ -16609,52 +9314,10 @@ export class APIService {
             id
             sortKey
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             chat
             timePosted
-            likes {
-              __typename
-              nextToken
-            }
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -16686,59 +9349,24 @@ export class APIService {
     nextToken?: string
   ): Promise<ChatsBySortKeyAndTimePostedQuery> {
     const statement = `query ChatsBySortKeyAndTimePosted($sortKey: String!, $timePosted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelChatsFilterInput, $limit: Int, $nextToken: String) {
-        chatsBySortKeyAndTimePosted(sortKey: $sortKey, timePosted: $timePosted, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        chatsBySortKeyAndTimePosted(
+          sortKey: $sortKey
+          timePosted: $timePosted
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
             id
             sortKey
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             chat
             timePosted
-            likes {
-              __typename
-              nextToken
-            }
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -16780,59 +9408,24 @@ export class APIService {
     nextToken?: string
   ): Promise<ChatsByLiveGameChatRoomIDAndTimePostedQuery> {
     const statement = `query ChatsByLiveGameChatRoomIDAndTimePosted($liveGameChatRoomID: ID!, $timePosted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelChatsFilterInput, $limit: Int, $nextToken: String) {
-        chatsByLiveGameChatRoomIDAndTimePosted(liveGameChatRoomID: $liveGameChatRoomID, timePosted: $timePosted, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        chatsByLiveGameChatRoomIDAndTimePosted(
+          liveGameChatRoomID: $liveGameChatRoomID
+          timePosted: $timePosted
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
           items {
             __typename
             id
             sortKey
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             chat
             timePosted
-            likes {
-              __typename
-              nextToken
-            }
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -16876,40 +9469,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -16924,47 +9483,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -16998,35 +9519,7 @@ export class APIService {
             __typename
             id
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             chatsLikesId
@@ -17070,47 +9563,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -17161,47 +9616,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -17252,47 +9669,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -17342,40 +9721,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -17388,44 +9733,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -17442,23 +9751,6 @@ export class APIService {
             __typename
             id
             imageurl
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             profileID
             createdAt
             updatedAt
@@ -17506,40 +9798,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -17552,44 +9810,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -17606,23 +9828,6 @@ export class APIService {
             __typename
             id
             imageurl
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             profileID
             createdAt
             updatedAt
@@ -17670,40 +9875,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -17716,44 +9887,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -17770,23 +9905,6 @@ export class APIService {
             __typename
             id
             imageurl
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             profileID
             createdAt
             updatedAt
@@ -17830,33 +9948,10 @@ export class APIService {
           time_posted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              imagePostLikesId
-              owner
-            }
             nextToken
           }
           comments {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              comment
-              time_posted
-              imagePostsID
-              createdAt
-              updatedAt
-              imagePostCommentsId
-              owner
-            }
             nextToken
           }
           usernameID
@@ -17865,43 +9960,8 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
-            usernameImagePostsId
             usernameProfileId
             owner
           }
@@ -17913,47 +9973,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -18000,33 +10022,10 @@ export class APIService {
           time_posted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              imagePostLikesId
-              owner
-            }
             nextToken
           }
           comments {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              comment
-              time_posted
-              imagePostsID
-              createdAt
-              updatedAt
-              imagePostCommentsId
-              owner
-            }
             nextToken
           }
           usernameID
@@ -18035,40 +10034,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -18083,47 +10048,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -18170,33 +10097,10 @@ export class APIService {
           time_posted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              imagePostLikesId
-              owner
-            }
             nextToken
           }
           comments {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              comment
-              time_posted
-              imagePostsID
-              createdAt
-              updatedAt
-              imagePostCommentsId
-              owner
-            }
             nextToken
           }
           usernameID
@@ -18205,40 +10109,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -18253,47 +10123,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -18341,40 +10173,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -18389,47 +10187,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -18473,40 +10233,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -18521,47 +10247,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -18605,40 +10293,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -18653,47 +10307,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -18737,46 +10353,13 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
             usernameProfileId
             owner
           }
+          sorterValue
           profileID
           profile {
             __typename
@@ -18785,47 +10368,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -18836,9 +10381,6 @@ export class APIService {
           comment
           time_posted
           imagePostsID
-          createdAt
-          updatedAt
-          imagePostCommentsId
           owner
         }
       }`;
@@ -18872,46 +10414,13 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
             usernameProfileId
             owner
           }
+          sorterValue
           profileID
           profile {
             __typename
@@ -18920,47 +10429,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -18971,9 +10442,6 @@ export class APIService {
           comment
           time_posted
           imagePostsID
-          createdAt
-          updatedAt
-          imagePostCommentsId
           owner
         }
       }`;
@@ -19007,46 +10475,13 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
             usernameProfileId
             owner
           }
+          sorterValue
           profileID
           profile {
             __typename
@@ -19055,47 +10490,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -19106,9 +10503,6 @@ export class APIService {
           comment
           time_posted
           imagePostsID
-          createdAt
-          updatedAt
-          imagePostCommentsId
           owner
         }
       }`;
@@ -19144,44 +10538,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -19198,47 +10556,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -19285,44 +10605,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -19339,47 +10623,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -19426,44 +10672,8 @@ export class APIService {
             sorterValue
             description
             time_posted
-            likes {
-              __typename
-              nextToken
-            }
-            comments {
-              __typename
-              nextToken
-            }
             usernameID
-            username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
             profileID
-            profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             s3_key
             mediaSourceMobile
             mediaSourceDesktop
@@ -19480,47 +10690,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -19571,28 +10743,14 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
+          }
+          pitchIndex {
+            __typename
+            nextToken
           }
           createdAt
           updatedAt
@@ -19635,28 +10793,12 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
             owner
+          }
+          pitchIndex {
+            __typename
+            nextToken
           }
           owner
         }
@@ -19697,28 +10839,14 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
+          }
+          pitchIndex {
+            __typename
+            nextToken
           }
           createdAt
           updatedAt
@@ -19736,6 +10864,177 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<
       SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteSportsGame">>
+    >;
+  }
+
+  OnCreateBaseballAtBatIndexListener(
+    filter?: ModelSubscriptionBaseballAtBatIndexFilterInput,
+    owner?: string
+  ): Observable<
+    SubscriptionResponse<
+      Pick<__SubscriptionContainer, "onCreateBaseballAtBatIndex">
+    >
+  > {
+    const statement = `subscription OnCreateBaseballAtBatIndex($filter: ModelSubscriptionBaseballAtBatIndexFilterInput, $owner: String) {
+        onCreateBaseballAtBatIndex(filter: $filter, owner: $owner) {
+          __typename
+          id
+          sortKey
+          sportsGameID
+          sportsgame {
+            __typename
+            id
+            sport
+            homeTeam
+            awayTeam
+            gameInfo
+            startTime
+            lastUpdate
+            liveGameChatRoomID
+            createdAt
+            updatedAt
+            owner
+          }
+          pitchCount
+          isOut
+          count
+          call
+          hasResult
+          batIndex
+          resultDescription
+          pitchData
+          createdAt
+          updatedAt
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<
+        Pick<__SubscriptionContainer, "onCreateBaseballAtBatIndex">
+      >
+    >;
+  }
+
+  OnUpdateBaseballAtBatIndexListener(
+    filter?: ModelSubscriptionBaseballAtBatIndexFilterInput,
+    owner?: string
+  ): Observable<
+    SubscriptionResponse<
+      Pick<__SubscriptionContainer, "onUpdateBaseballAtBatIndex">
+    >
+  > {
+    const statement = `subscription OnUpdateBaseballAtBatIndex($filter: ModelSubscriptionBaseballAtBatIndexFilterInput, $owner: String) {
+        onUpdateBaseballAtBatIndex(filter: $filter, owner: $owner) {
+          __typename
+          id
+          sortKey
+          sportsGameID
+          sportsgame {
+            __typename
+            id
+            sport
+            homeTeam
+            awayTeam
+            gameInfo
+            startTime
+            lastUpdate
+            liveGameChatRoomID
+            createdAt
+            updatedAt
+            owner
+          }
+          pitchCount
+          isOut
+          count
+          call
+          hasResult
+          batIndex
+          resultDescription
+          pitchData
+          createdAt
+          updatedAt
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<
+        Pick<__SubscriptionContainer, "onUpdateBaseballAtBatIndex">
+      >
+    >;
+  }
+
+  OnDeleteBaseballAtBatIndexListener(
+    filter?: ModelSubscriptionBaseballAtBatIndexFilterInput,
+    owner?: string
+  ): Observable<
+    SubscriptionResponse<
+      Pick<__SubscriptionContainer, "onDeleteBaseballAtBatIndex">
+    >
+  > {
+    const statement = `subscription OnDeleteBaseballAtBatIndex($filter: ModelSubscriptionBaseballAtBatIndexFilterInput, $owner: String) {
+        onDeleteBaseballAtBatIndex(filter: $filter, owner: $owner) {
+          __typename
+          id
+          sortKey
+          sportsGameID
+          sportsgame {
+            __typename
+            id
+            sport
+            homeTeam
+            awayTeam
+            gameInfo
+            startTime
+            lastUpdate
+            liveGameChatRoomID
+            createdAt
+            updatedAt
+            owner
+          }
+          pitchCount
+          isOut
+          count
+          call
+          hasResult
+          batIndex
+          resultDescription
+          pitchData
+          createdAt
+          updatedAt
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<
+        Pick<__SubscriptionContainer, "onDeleteBaseballAtBatIndex">
+      >
     >;
   }
 
@@ -19763,16 +11062,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -19780,19 +11069,6 @@ export class APIService {
           chatsID
           chats {
             __typename
-            items {
-              __typename
-              id
-              sortKey
-              usernameID
-              profileID
-              chat
-              timePosted
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             nextToken
           }
           createdAt
@@ -19840,16 +11116,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -19857,19 +11123,6 @@ export class APIService {
           chatsID
           chats {
             __typename
-            items {
-              __typename
-              id
-              sortKey
-              usernameID
-              profileID
-              chat
-              timePosted
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             nextToken
           }
           createdAt
@@ -19917,16 +11170,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -19934,19 +11177,6 @@ export class APIService {
           chatsID
           chats {
             __typename
-            items {
-              __typename
-              id
-              sortKey
-              usernameID
-              profileID
-              chat
-              timePosted
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             nextToken
           }
           createdAt
@@ -19994,16 +11224,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -20051,22 +11271,8 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
-            createdAt
-            updatedAt
             owner
           }
-          createdAt
-          updatedAt
           owner
         }
       }`;
@@ -20108,16 +11314,6 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            livegamechatroom {
-              __typename
-              id
-              sport
-              sportsGameID
-              chatsID
-              createdAt
-              updatedAt
-              owner
-            }
             createdAt
             updatedAt
             owner
@@ -20158,40 +11354,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -20206,47 +11368,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -20254,20 +11378,20 @@ export class APIService {
             profileImagePostsId
             owner
           }
+          profilePicture {
+            __typename
+            id
+            imageurl
+            profileID
+            createdAt
+            updatedAt
+            profilePictureProfileId
+            owner
+          }
           chat
           timePosted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              chatsLikesId
-              owner
-            }
             nextToken
           }
           liveGameChatRoomID
@@ -20276,25 +11400,7 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
@@ -20335,40 +11441,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -20383,47 +11455,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -20431,20 +11465,20 @@ export class APIService {
             profileImagePostsId
             owner
           }
+          profilePicture {
+            __typename
+            id
+            imageurl
+            profileID
+            createdAt
+            updatedAt
+            profilePictureProfileId
+            owner
+          }
           chat
           timePosted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              chatsLikesId
-              owner
-            }
             nextToken
           }
           liveGameChatRoomID
@@ -20453,25 +11487,7 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
@@ -20512,40 +11528,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -20560,47 +11542,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -20608,20 +11552,20 @@ export class APIService {
             profileImagePostsId
             owner
           }
+          profilePicture {
+            __typename
+            id
+            imageurl
+            profileID
+            createdAt
+            updatedAt
+            profilePictureProfileId
+            owner
+          }
           chat
           timePosted
           likes {
             __typename
-            items {
-              __typename
-              id
-              usernameID
-              profileID
-              createdAt
-              updatedAt
-              chatsLikesId
-              owner
-            }
             nextToken
           }
           liveGameChatRoomID
@@ -20630,25 +11574,7 @@ export class APIService {
             id
             sport
             sportsGameID
-            sportsgame {
-              __typename
-              id
-              sport
-              homeTeam
-              awayTeam
-              gameInfo
-              startTime
-              lastUpdate
-              liveGameChatRoomID
-              createdAt
-              updatedAt
-              owner
-            }
             chatsID
-            chats {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
             owner
@@ -20688,40 +11614,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -20736,47 +11628,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -20820,40 +11674,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -20868,47 +11688,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt
@@ -20952,40 +11734,6 @@ export class APIService {
             id
             username
             profileID
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
-            Profile {
-              __typename
-              id
-              email
-              relation
-              cognitoID
-              usernameID
-              first_name
-              last_name
-              profilepictureID
-              bio
-              birthday
-              createdAt
-              updatedAt
-              profileImagePostsId
-              owner
-            }
             createdAt
             updatedAt
             usernameImagePostsId
@@ -21000,47 +11748,9 @@ export class APIService {
             relation
             cognitoID
             usernameID
-            Username {
-              __typename
-              id
-              username
-              profileID
-              createdAt
-              updatedAt
-              usernameImagePostsId
-              usernameProfileId
-              owner
-            }
-            ImagePosts {
-              __typename
-              id
-              sorterValue
-              description
-              time_posted
-              usernameID
-              profileID
-              s3_key
-              mediaSourceMobile
-              mediaSourceDesktop
-              downloadableVideo
-              posterImage
-              createdAt
-              updatedAt
-              owner
-            }
             first_name
             last_name
             profilepictureID
-            profilepicture {
-              __typename
-              id
-              imageurl
-              profileID
-              createdAt
-              updatedAt
-              profilePictureProfileId
-              owner
-            }
             bio
             birthday
             createdAt

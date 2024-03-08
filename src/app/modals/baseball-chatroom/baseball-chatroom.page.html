@@ -120,9 +120,20 @@
 </ion-header>
 
 <ion-content>
+  <ion-card *ngFor="let play of gamePlays">
+    <ion-note>At Bat Index: {{play.batIndex}} | Count B: {{play.count.balls}} S: {{play.count.strikes}} | Outs: {{play.count.outs}}</ion-note>
+  </ion-card>
   <div *ngFor="let chat of chats" class="chat-wrapper">
     <ion-card class="chat-bubble-user" *ngIf="chat.username.id === this.userUsernameID" lines="none" color="light">
-      <div class="chat-item-wrapper" >
+      <ion-avatar> 
+        <img *ngIf="!chat.profilePictureUrl" src="../../../assets/avatar.svg" />
+        <img *ngIf="chat.profilePictureUrl" src="{{chat.profilePictureUrl}}" />
+      </ion-avatar>
+      <ion-note color="dark">{{chat.chat}} </ion-note>
+
+
+      
+      <!-- <div class="chat-item-wrapper" >
         <div class="top-chat">
           <div class="top-chat-left">
             <ion-note class="time-posted" color="dark">{{chat.timePosted | date: 'MMM'}} {{chat.timePosted | date: 'd' }} at {{chat.timePosted | date: 'h:mma'}} ET</ion-note>
@@ -130,8 +141,8 @@
           <div class="top-chat-right">
             <ion-note color="dark">{{chat.username.username}}&nbsp;</ion-note>
             <ion-avatar>
-              <img *ngIf="!chat.profile.profilePictureUrl" src="../../../assets/avatar.svg" />
-              <img *ngIf="chat.profile.profilePictureUrl" src="{{chat.profile.profilePictureUrl}}" />
+              <img *ngIf="!chat.profilePictureUrl" src="../../../assets/avatar.svg" />
+              <img *ngIf="chat.profilePictureUrl" src="{{chat.profilePictureUrl}}" />
             </ion-avatar>
           </div>
         </div>
@@ -146,15 +157,15 @@
             <ion-label color="dark">Reply</ion-label><ion-icon color="dark" name="return-down-forward-outline"></ion-icon>
           </ion-chip>
         </div>
-      </div>
+      </div> -->
     </ion-card>
     <ion-card class="chat-bubble-otheruser" *ngIf="chat.username.id !== this.userUsernameID" lines="none" color="light">
       <div class="chat-item-wrapper">
         <div class="top-chat">
           <div class="top-chat-left">
             <ion-avatar>
-              <img *ngIf="!chat.profile.profilePictureUrl" src="../../../assets/avatar.svg" />
-              <img *ngIf="chat.profile.profilePictureUrl" src="{{chat.profile.profilePictureUrl}}" />
+              <img *ngIf="!chat.profilePictureUrl" src="../../../assets/avatar.svg" />
+              <img *ngIf="chat.profilePictureUrl" src="{{chat.profilePictureUrl}}" />
             </ion-avatar>
             <ion-note color="dark">&nbsp;{{chat.username.username}}</ion-note>
           </div>
@@ -181,14 +192,15 @@
 </ion-content>
 
 <ion-footer lines="none">
-  <!-- <form [formGroup]="postChat" (ngSubmit)="createChat(postChat.value)">
+  <form [formGroup]="postChat" (ngSubmit)="createChat(postChat.value)">
     <ion-item class="chat-box" lines="none">
       <ion-avatar class="chat-user-pic">
-        <img id="avatar" src="../../../assets/avatar.svg">
+        <img *ngIf="!hasProfilePic" id="avatar" src="../../../assets/avatar.svg">
+        <img *ngIf="hasProfilePic" id="avatar" [src]="profilePicture" />
       </ion-avatar>
       <ion-textarea (ionChange)="userTypedEvent($event)" shape="round" placeholder="How 'bout dem O's..." lines="none" formControlName="chat" rows="1" minLength="300" autoGrow="true" class="chat-text-area">
         <ion-icon (click)="createChat(postChat.value)" *ngIf="userTyped" color="dark" size="large" name="arrow-up-circle"></ion-icon>
       </ion-textarea>
     </ion-item>
-  </form> -->
+  </form>
 </ion-footer>

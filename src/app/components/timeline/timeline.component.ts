@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, QueryList, ViewChildren, ElementRef, Renderer2} from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { MediaService } from 'src/app/services/media.service';
-import { FA } from "../../FA.service";
+import { FA, ModelSortDirection } from "../../FA.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
 import { LikeListModalPage } from '../../modals/like-list-modal/like-list-modal.page';
@@ -41,7 +41,7 @@ export class TimelineComponent implements OnInit {
   @ViewChild(IonRefresher) ionRefresher: IonRefresher;
   @ViewChild(IonContent) ionContent: IonContent;
   @Input('data') data = [];
-  @Input('token') token: String;
+  @Input('token') nextToken: string;
   @ViewChildren('timelineVideo') videos: QueryList<any>
   @ViewChildren('timelineVideo', { read: ElementRef})
   timelineVideo!: QueryList<ElementRef<any>>
@@ -108,11 +108,6 @@ export class TimelineComponent implements OnInit {
   async ngAfterViewInit() {
     this.didScroll();
     this.startSubscriptions();
-
-    this.timelineVideo.forEach(video => {
-      console.log(video.nativeElement)
-      this.renderer.setStyle(video.nativeElement.poster, 'background', 'green');
-    })
   }
 
 // Video player functions
@@ -212,49 +207,25 @@ export class TimelineComponent implements OnInit {
     }
   }
 
-
-  // // DO WE NEED??
-  // async ngOnChanges() {
-
-  //   this.startSubscriptions();
-
-  //   // if (this.platform.is('hybrid')) {
-  //   //   this.platform.resume.subscribe(async (event) => {
-  //   //     document.location.reload();
-  //   //     this.startSubscriptions();
-  //   //   })
-  //   // }
-
-  //   this.currentUserUsername = await localStorage.getItem('username');
-  //   this.currentUserUsernameID = await localStorage.getItem('usernameID');
-
-  //   // await Network.addListener('networkStatusChange', async status => {
-  //   //   console.log(status.connected)
-  //   //   this.networkStatus = 'online';
-  //   //   if(!status.connected){
-  //   //     this.networkStatus = 'offline';
-  //   //     const toast = await this.toastController.create({
-  //   //       message: '<strong>You are currently offline</strong>. We cannot load new content and you can only view content until you find a stable connection.',
-  //   //       position: "top",
-  //   //       color: "danger"
-  //   //     });
-  //   //     toast.present().then(() => {
-  //   //       console.log(this.networkStatus)
-  //   //       this.disableButtons = true;
-  //   //       console.log(this.disableButtons)
-  //   //     });
-
-  //   //   }
-  //   // });
-  // }
-
   // TOASTS
 
 
   // toast messages
   
   async seeNewPostsButton() {
-    document.location.reload();
+    this.mediaService.getTimelineData().pipe(
+      finalize(() => {
+        this.loaded = true;
+      })
+    ).subscribe(async data => {
+      console.log(data[0].data)
+      this.data = data[0].data;
+      this.nextToken = data[0].nextToken;
+      this.refresh = false;
+      this.scrollFinished = false;
+      await this.changeLocation();
+      this.showFabButton = false;
+    })
     this.showFabButton = false;
   }
 
@@ -291,8 +262,6 @@ export class TimelineComponent implements OnInit {
   // This is for editing and sharing posts on wall
 
   async clickEditPost(mediaUrl, mediaId) {
-
-
     let mediaData: any;
 
     await this.fa.GetImagePost(mediaId).then((data) => {
@@ -635,24 +604,26 @@ export class TimelineComponent implements OnInit {
 
   // when user scrolls to bottom, invoke this function
 
-  // loadData(event) {
-  //     try {
-  //       this.mediaService.getTimelineDataPaginated(this.token).subscribe((data) => {
-  //         let dataPull = data[0]
-  //         this.token = data[2]
+  loadData(event) {
+      try {
+        if(this.nextToken !== null){
+          this.fa.ImagePostsBySorterValueAndTime_posted("media", null, ModelSortDirection.DESC, null, 4, this.nextToken).then((data) => {
+            let dataPull = data.items;
+            this.nextToken = data.nextToken;
+    
+            Object.entries(dataPull).forEach(([key, value]) => { this.data[this.data.length] = value })
+            event.target.complete();
+          })
+        } else {
+            this.refresh = false;
+            this.scrollFinished = true;
+            event.target.complete();
+        }
+      } catch (error) {
+        console.log(error)
+      }
 
-  //         if (this.token === null) {
-  //           // event.target.disabled = true;
-  //           this.scrollFinished = true;
-  //         } 
-  //         Object.entries(dataPull).forEach(([key, value]) => { this.data[this.data.length] = value })
-  //         event.target.complete();
-  //       });
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-
-  // }
+  }
 
   async changeLocation(){
     // save current route first
@@ -665,8 +636,12 @@ export class TimelineComponent implements OnInit {
     this.refresh = false;
   }
 
-  scrollToTop(){
-    this.ionContent.scrollToTop(400).then(() => {
+  async scrollToTop(){
+    if (this.platform.is('hybrid')) {
+      await Haptics.impact({ style: ImpactStyle.Heavy })
+    }
+
+    this.ionContent.scrollToTop(100).then(() => {
       this.refresh = true;
 
       this.mediaService.getTimelineData().pipe(
@@ -674,11 +649,13 @@ export class TimelineComponent implements OnInit {
           this.loaded = true;
         })
       ).subscribe(async data => {
-        this.data = data[0];
-        this.token = data[2];
+        console.log(data[0].data)
+        this.data = data[0].data;
+        this.nextToken = data[0].nextToken;
         this.refresh = false;
         this.scrollFinished = false;
         await this.changeLocation();
+        await this.didScroll();
         this.showFabButton = false;
       })
     })
@@ -737,24 +714,14 @@ export class TimelineComponent implements OnInit {
     this.onCreateCommentsSubscription = <Subscription>(
       this.fa.OnCreateCommentsListener().subscribe({
         next: async (event: any) => {
-          const imageId = event.value.data.onCreateComments.imagePostsID;
 
+          const imageId = event.value.data.onCreateComments.imagePostsID;
           let commentsArray: [] = await this.fa.getImageComments(imageId)
           let commentLength: string = commentsArray.length.toString()
 
-          // await this.fa.UpdateImagePost({ id: imageId, comments: commentLength })
-
-          let timelineData = await this.fa.ListImagePosts();
-
-          timelineData.items.map(values => {
+          this.data.filter(values => {
             if (values.id === imageId) {
-              // values.comments = commentLength
-            }
-          })
-
-          this.data.filter((media) => {
-            if (media.id === imageId) {
-              media.comments = commentLength
+              values.comments = commentLength
             }
           })
         }
@@ -768,18 +735,9 @@ export class TimelineComponent implements OnInit {
           let commentsArray: [] = await this.fa.getImageComments(imageId)
           let commentLength: string = commentsArray.length.toString()
 
-          // await this.fa.UpdateImagePost({id: imageId, comments: commentLength})
-
-          let timelineData = await this.fa.ListImagePosts();
-
-          timelineData.items.map(values => {
-            if(values.id === imageId){
-              // values.comments = commentLength
-            }
-          })
-
           this.data.filter(values => {
             if(values.id === imageId){
+              console.log(values)
               values.comments = commentLength
             }
           })

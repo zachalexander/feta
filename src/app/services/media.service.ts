@@ -319,7 +319,7 @@ export class MediaService {
           id: posts.id,
           likes: posts.likes,
           posterImage: await Storage.get(posts.posterImage, { bucket: "fetadevvodservice-dev-output-nk0sepbg" }),
-          comments: +await this.commentLength(posts.id),
+          // comments: +await this.commentLength(posts.id),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),
@@ -337,7 +337,7 @@ export class MediaService {
           description: posts.description,
           id: posts.id,
           likes: posts.likes,
-          comments: +await this.commentLength(posts.id),
+          // comments: +await this.commentLength(posts.id),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),
@@ -448,7 +448,7 @@ export class MediaService {
     //   }
     // }))
     // this.mediaPosted = this.sortByDate(this.mediaPosted)
-    return [this.mediaPosted, this.mediaPosted.length, response.data.imagePostsBySorterValueAndTime_posted.nextToken]
+    return [{"data": this.mediaPosted, "nextToken": response.data.imagePostsBySorterValueAndTime_posted.nextToken}]
   }
 
   async getDataFromGraphQL(currentUser){
@@ -500,7 +500,7 @@ export class MediaService {
           id: posts.id,
           likes: posts.likes,
           posterImage: await Storage.get(posts.posterImage, {bucket: "fetadevvodservice-dev-output-nk0sepbg"}),
-          comments: +(await this.commentLength(posts.id)).toString(),
+          // comments: +(await this.commentLength(posts.id)).toString(),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),            
@@ -518,7 +518,7 @@ export class MediaService {
           description: posts.description,
           id: posts.id,
           likes: posts.likes,
-          comments: +(await this.commentLength(posts.id)).toString(),
+          // comments: +(await this.commentLength(posts.id)).toString(),
           like_count: await this.getLikeCount(posts.likes),
           username: posts.username.username,
           userLiked: await this.getLikeData(posts.likes, currentUser),
@@ -530,10 +530,10 @@ export class MediaService {
     return [this.mediaPosted, this.mediaPosted.length, response.data.imagePostsBySorterValueAndTime_posted.nextToken]
   }
 
-  async commentLength(imageID){
-    let commentArray: [] = await this.api.getImageComments(imageID)
-    return commentArray.length
-  }
+  // async commentLength(imageID){
+  //   let commentArray: [] = await this.api.getImageComments(imageID)
+  //   return commentArray.length
+  // }
 
 
   async checkForVideo(filename){

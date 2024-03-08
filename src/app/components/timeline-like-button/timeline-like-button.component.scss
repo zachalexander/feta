@@ -1,10 +1,10 @@
 .already-liked-button {
-    color: tomato;
+    color: var(--ion-color-tertiary);
 
     
     .already-liked {
-        color: tomato;
-        fill: tomato;
+        color: var(--ion-color-tertiary);
+        fill: var(--ion-color-tertiary);
         ;
 
         .ionicon {
@@ -14,8 +14,8 @@
 }
 
 .already-liked-button:hover {
-    color: tomato;
-    fill: tomato;
+    color: var(--ion-color-tertiary);
+    fill: var(--ion-color-tertiary);
 }
 
 ion-tab-button {
@@ -34,14 +34,14 @@ ion-tab-button {
 
 .like-text {
     margin: 0;
-    fill: tomato;
-    color: tomato;
+    fill: var(--ion-color-tertiary);
+    color: var(--ion-color-tertiary);
 }
 
 .like-text:hover {
     margin: 0;
-    fill: tomato;
-    color: tomato;
+    fill: var(--ion-color-tertiary);
+    color: var(--ion-color-tertiary);
 }
 
 .like-text-nolike {

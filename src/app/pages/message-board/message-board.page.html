@@ -93,8 +93,8 @@
             <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{post.sportsgame.gameInfo.initialGameData.probablePitchers.away.id}}/spots/120"/></ion-avatar>
             <div class="stats-wrapper" *ngIf="(post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Scheduled' || post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Pre-Game' || post.sportsgame.gameInfo.initialGameData.status.detailedState === 'Warmup')">
               <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.probablePitchers.away">{{post.sportsgame.gameInfo.initialGameData.probablePitchers.away.fullName}}</ion-note>
-              <!-- <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.probablePitchers.away">ERA {{post.sportsgame.gameInfo.startingAwayPitcherStats[0].stat.era}}</ion-note>
-              <ion-note *ngIf="post.sportsgame.gameInfo.startingAwayPitcherStats">({{post.sportsgame.gameInfo.startingAwayPitcherStats[0].stat.wins}}-{{post.sportsgame.gameInfo.startingAwayPitcherStats[0].stat.losses}})</ion-note> -->
+              <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.probablePitchers.away">ERA {{post.sportsgame.gameInfo.startingPitcherSplitsAway.era}}</ion-note>
+              <ion-note *ngIf="post.sportsgame.gameInfo.startingPitcherSplitsAway">({{post.sportsgame.gameInfo.startingPitcherSplitsAway.wins}}-{{post.sportsgame.gameInfo.startingPitcherSplitsAway.losses}})</ion-note>
             </div>
           </div>
           <div class="right-side">
@@ -102,8 +102,8 @@
             <div class="stats-wrapper">
               <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState !== 'In Progress' && post.sportsgame.gameInfo.initialGameData.status.detailedState !== 'Final' && !post.sportsgame.gameInfo.initialGameData.probablePitchers.home">TBD</ion-note>
               <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.status.detailedState !== 'In Progress' && post.sportsgame.gameInfo.initialGameData.status.detailedState !== 'Final' && post.sportsgame.gameInfo.initialGameData.probablePitchers.home">{{post.sportsgame.gameInfo.initialGameData.probablePitchers.home.fullName}}</ion-note>
-              <!-- <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.probablePitchers.home">ERA {{post.sportsgame.startingHomePitcherStats[0].stat.era}}</ion-note> -->
-              <!-- <ion-note>({{post.sportsgame.gameInfo.startingHomePitcherStats[0].stat.wins}}-{{post.sportsgame.gameInfo.startingHomePitcherStats[0].stat.losses}})</ion-note> -->
+              <ion-note *ngIf="post.sportsgame.gameInfo.initialGameData.probablePitchers.home">ERA {{post.sportsgame.gameInfo.startingPitcherSplitsHome.era}}</ion-note>
+              <ion-note *ngIf="post.sportsgame.gameInfo.startingPitcherSplitsHome">({{post.sportsgame.gameInfo.startingPitcherSplitsHome.wins}}-{{post.sportsgame.gameInfo.startingPitcherSplitsHome.losses}})</ion-note>
             </div>
           </div>
         </div>

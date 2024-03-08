@@ -9890,6 +9890,9 @@ export class FA {
             comments {
               __typename
               nextToken
+              items {
+                comment
+              }
             }
             usernameID
             username {
@@ -11711,9 +11714,6 @@ export class FA {
               id
               usernameID
               profileID
-              createdAt
-              updatedAt
-              imagePostLikesId
               owner
             }
             nextToken
@@ -11728,9 +11728,6 @@ export class FA {
               comment
               time_posted
               imagePostsID
-              createdAt
-              updatedAt
-              imagePostCommentsId
               owner
             }
             nextToken
@@ -11883,7 +11880,6 @@ export class FA {
               profileID
               createdAt
               updatedAt
-              imagePostLikesId
               owner
             }
             nextToken
@@ -11900,7 +11896,6 @@ export class FA {
               imagePostsID
               createdAt
               updatedAt
-              imagePostCommentsId
               owner
             }
             nextToken
@@ -12053,7 +12048,6 @@ export class FA {
               profileID
               createdAt
               updatedAt
-              imagePostLikesId
               owner
             }
             nextToken
@@ -12070,7 +12064,6 @@ export class FA {
               imagePostsID
               createdAt
               updatedAt
-              imagePostCommentsId
               owner
             }
             nextToken
@@ -12712,9 +12705,6 @@ export class FA {
           comment
           time_posted
           imagePostsID
-          createdAt
-          updatedAt
-          imagePostCommentsId
           owner
         }
       }`;
@@ -12761,8 +12751,6 @@ export class FA {
               mediaSourceDesktop
               downloadableVideo
               posterImage
-              createdAt
-              updatedAt
               owner
             }
             Profile {
@@ -12847,8 +12835,6 @@ export class FA {
           comment
           time_posted
           imagePostsID
-          createdAt
-          updatedAt
           imagePostCommentsId
           owner
         }
@@ -12982,9 +12968,6 @@ export class FA {
           comment
           time_posted
           imagePostsID
-          createdAt
-          updatedAt
-          imagePostCommentsId
           owner
         }
       }`;

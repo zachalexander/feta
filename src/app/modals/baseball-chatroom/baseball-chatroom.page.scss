@@ -294,3 +294,14 @@ ion-footer {
         }
     }
 }
+
+.exit {
+    display: flex;
+    width: 10%;
+
+    ion-icon {
+        width: 24px;
+        height: 24px;
+        font-weight: 600;
+    }
+}

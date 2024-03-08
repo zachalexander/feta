@@ -28,10 +28,10 @@
           <div class="comment-wrapper">
             <div class="comment-box">
               <ion-avatar class="comment-user-pic">
-                <img id="avatar" src="{{comment.profilePic}}">
+                <img id="avatar" src="https://ik.imagekit.io/bkf4g8lrl/profile-photos/{{comment.profile.profilepicture.imageurl}}">
               </ion-avatar>
               <p class="comment-text"><strong (click)="closeModal()"
-                  routerLink="/profile/{{comment.username}}">{{comment.username}}</strong>&nbsp;{{comment.comment}}</p>
+                  routerLink="/profile/{{comment.username.username}}">{{comment.username.username}}</strong>&nbsp;{{comment.comment}}</p>
             </div>
 
             <div class="commentAgoDivUser">
@@ -54,10 +54,10 @@
         <div class="comment-wrapper">
           <div class="comment-box">
             <ion-avatar class="comment-user-pic">
-              <img id="avatar" src="{{comment.profilePic}}">
+              <img id="avatar" src="https://ik.imagekit.io/bkf4g8lrl/profile-photos/{{comment.profile.profilepicture.imageurl}}">
             </ion-avatar>
             <p class="comment-text"><strong (click)="closeModal()"
-                routerLink="/profile/{{comment.username}}">{{comment.username}}</strong>&nbsp;{{comment.comment}}</p>
+                routerLink="/profile/{{comment.username.username}}">{{comment.username.username}}</strong>&nbsp;{{comment.comment}}</p>
           </div>
 
           <div class="commentAgoDivUser">
@@ -80,7 +80,7 @@
       <ion-textarea #commentInput class="form-text-area" lines="none" #userEditComment placeholder="Add a comment..."
         formControlName="comment" rows="1" minLength="300" autoGrow="true">
         <ion-button color="clear" class="comment-submit" [disabled]="!writeCommentForm.valid"
-          (click)="postWrittenComment(writeCommentForm.value)">Post</ion-button>
+          (click)="postWrittenComment(writeCommentForm.value)"><ion-icon color="dark" size="large" name="arrow-up-circle"></ion-icon></ion-button>
       </ion-textarea>
     </p>
   </form>
@@ -94,8 +94,9 @@
       </ion-avatar>
       <ion-textarea #editCommentInput class="form-text-area" lines="none" formControlName="comment" id="userEditComment"
         rows="1" minLength="300" autoGrow="true">
-        <ion-button color="clear" class="comment-submit"
-          (click)="postUpdatedComment(updateCommentForm.value)">Post</ion-button>
+        <ion-icon (click)="postUpdatedComment(updateCommentForm.value)" class="comment-submit" color="dark" size="large" name="arrow-up-circle"></ion-icon>
+        <ion-button  color="clear" class="comment-submit"
+          (click)="postUpdatedComment(updateCommentForm.value)"><ion-icon color="dark" size="large" name="arrow-up-circle"></ion-icon></ion-button>
       </ion-textarea>
     </p>
   </form>

@@ -42,8 +42,8 @@ type ImagePost @model @auth(rules: [
   sorterValue: String @index(name: "byTimePosted", sortKeyFields: ["time_posted"])
   description: String
   time_posted: AWSDateTime
-  likes: [Likes] @hasMany(indexName: "byLikes", fields: ["id"])
-  comments: [Comments] @hasMany(indexName: "byComments", fields: ["id"])
+  likes: [Likes] @hasMany
+  comments: [Comments] @hasMany
   usernameID: ID! @index(name: "byUsername")
   username: Username @hasOne(fields: ["usernameID"])
   profileID: ID! @index(name: "byProfile")
@@ -65,7 +65,6 @@ type Likes @model @auth(rules: [
       username: Username @hasOne(fields: ["usernameID"])
       profileID: ID! @index(name: "byProfile")
       profile: Profile @hasOne(fields: ["profileID"])
-      imagePostsID: ID! @index(name: "byLikes", sortKeyFields: ["id"])
     }
 
 type Comments @model @auth(rules: [
@@ -76,12 +75,11 @@ type Comments @model @auth(rules: [
   id: ID!
   usernameID: ID!
   username: Username @hasOne(fields: ["usernameID"])
-  sorterValue: String @index(name: "byTimePosted", sortKeyFields: ["time_posted"])
   profileID: ID! @index(name: "byProfile")
   profile: Profile @hasOne(fields: ["profileID"])
   comment: String
   time_posted: AWSDateTime
-  imagePostsID: ID! @index(name: "byComments", sortKeyFields: ["time_posted"])
+  imagePostsID: String
 }
 
 type Username @model @auth(rules: [
@@ -110,10 +108,10 @@ type SportsGame @model @auth(rules: [
   lastUpdate: String
   liveGameChatRoomID: ID @index(name: "byLiveGameChatRoomData")
   livegamechatroom: LiveGameChatRoom @hasOne(fields: ["liveGameChatRoomID"])
-  pitchIndex: [BaseballAtBatIndex] @hasMany(indexName: "byBaseballBatIndex", fields: ["id"])
+  pitchIndex: [BaseballPitchIndex] @hasMany(indexName: "byBaseballBatIndex", fields: ["id"])
 }
 
-type BaseballAtBatIndex @model @auth(rules: [
+type BaseballPitchIndex @model @auth(rules: [
       { allow: owner }
       { allow: public, operations: [create, read, update, delete] }
       { allow: private, operations: [create, read, update, delete] }
@@ -129,7 +127,6 @@ type BaseballAtBatIndex @model @auth(rules: [
       hasResult: String
       batIndex: Int
       resultDescription: String
-      pitchData: AWSJSON
     }
 
 type LiveGameChatRoom @model @auth(rules: [

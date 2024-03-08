@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { APIService } from 'src/app/API.service';
+import { APIService, ModelSortDirection } from 'src/app/API.service';
 import { MediaService } from 'src/app/services/media.service';
 import { ModalController, IonTextarea, ToastController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -16,7 +16,8 @@ export class CommentModalPage implements OnInit {
   @ViewChild('editCommentInput') editCommentInput: IonTextarea;
 
   currentUserUsername;
-  currentUserProfilePicture;
+  profilePictureUrl: string;
+  currentUserProfilePicture: string;
   imageID;
   noInput;
   editComment;
@@ -62,27 +63,35 @@ export class CommentModalPage implements OnInit {
     this.spinner = true;
     let currentUser = await this.api.GetProfile(localStorage.getItem('profileID'))
     this.currentUserUsername = localStorage.getItem('username');
-    this.currentUserProfilePicture = await this.mediaService.checkForProfilePhoto(currentUser.profilepicture);
+    this.currentUserProfilePicture = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + currentUser.profilepicture.imageurl;
     let imageDetails = await this.api.GetImagePost(this.imageID);
     this.userNameID = localStorage.getItem('usernameID')
+    let profilePictureData = await this.api.GetProfilePictureProfileID(imageDetails.profile.id)
+    if (profilePictureData) {
+      this.profilePictureUrl = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + profilePictureData.imageurl;
+    } else {
+      this.profilePictureUrl = "../../../assets/avatar.svg";
+    }
 
     this.postDetails = {
       id: imageDetails.id,
       description: imageDetails.description,
       time_posted: imageDetails.time_posted,
-      likes: await this.mediaService.getLikeCount(imageDetails.likes),
       username: await (await this.api.GetUsername(imageDetails.usernameID)).username,
-      profilePicture: await this.mediaService.checkForProfilePhoto(imageDetails.profile.profilepicture)
+      profilePicture: this.profilePictureUrl
     }
 
-    this.comments = await this.api.getImageComments(this.imageID)
+    let comments = await this.api.CommentsBySorterValueAndTime_posted(this.imageID + "-comment", null, ModelSortDirection.DESC).then((data) => data)
+    this.comments = comments.items;
+    console.log(this.comments)
 
     this.spinner = false;
 
     this.onCreateCommentsSubscription = <Subscription>(
       this.api.OnCreateCommentsListener().subscribe({
         next: async (event: any) => {
-          this.comments = await this.api.getImageComments(this.imageID)
+          let comments = await this.api.CommentsBySorterValueAndTime_posted(this.imageID + "-comment", null, ModelSortDirection.DESC).then((data) => data)
+          this.comments = comments.items;
         }
       })
     )
@@ -90,7 +99,8 @@ export class CommentModalPage implements OnInit {
     this.onUpdateCommentsSubscription = <Subscription>(
       this.api.OnUpdateCommentsListener().subscribe({
         next: async (event: any) => {
-          this.comments = await this.api.getImageComments(this.imageID)
+          let comments = await this.api.CommentsBySorterValueAndTime_posted(this.imageID + "-comment", null, ModelSortDirection.DESC).then((data) => data)
+          this.comments = comments.items;
         }
       })
     )
@@ -98,41 +108,25 @@ export class CommentModalPage implements OnInit {
     this.onDeleteCommentsSubscription = <Subscription>(
       this.api.OnDeleteCommentsListener().subscribe({
         next: async (event: any) => {
-          this.comments = await this.api.getImageComments(this.imageID)
+          let comments = await this.api.CommentsBySorterValueAndTime_posted(this.imageID + "-comment", null, ModelSortDirection.DESC).then((data) => data)
+          this.comments = comments.items;
         }
       })
     )
   }
 
   async postWrittenComment(imagepost) {
+    let userComment = imagepost.comment;
+    let time_posted = new Date().toISOString()
 
-    // let userComment = imagepost.comment;
-    // let time_posted = new Date().toISOString()
-    // let comments = await this.api.getImageComments(this.imageID).then(image => image)
-
-    // if (!comments) {
-    //   try {
-    //     const result = await this.createComment(userComment, time_posted).then(() => console.log('success'))
-    //     this.writeCommentForm.reset();
-    //   } catch (error) {
-    //     this.failureCallback(error)
-    //   }
-
-    // } else {
-    //   try {
-    //     const result = this.createComment(userComment, time_posted).then(() => console.log('success'))
-    //     this.writeCommentForm.reset();
-    //   } catch (error) {
-    //     this.failureCallback(error)
-    //   }
-    // }
+    try {
+      await this.api.CreateComments({ "usernameID": localStorage.getItem("usernameID"), "profileID": localStorage.getItem("profileID"), "comment": userComment, "time_posted": time_posted, "imagePostsID": this.imageID, "sorterValue": this.imageID + "-comment"}).then(() => console.log('success'))
+      this.writeCommentForm.reset();
+    } catch (error) {
+      this.failureCallback(error)
+    }
   }
 
-  createComment(userComment, time_posted) {
-    // return new Promise(async (resolve, reject) =>
-    //   // resolve(await this.api.CreateComments({ usernameID: localStorage.getItem('usernameID'), comment: userComment, time_posted: time_posted, imagePostsID: this.imageID }))
-    // )
-  }
 
   async updateComment(id, editSlider, comment) {
     localStorage.setItem('commentID', id)
@@ -157,7 +151,7 @@ export class CommentModalPage implements OnInit {
   }
 
   async deleteComment(id) {
-    await this.api.DeleteComments({ id: id})
+    await this.api.DeleteComments({id: id})
     this.presentDeleteComment();
   }
 

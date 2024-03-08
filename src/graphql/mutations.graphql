@@ -1,4 +1,5 @@
 # this is an auto generated file. This will be overwritten
+
 mutation CreateProfilePicture(
   $input: CreateProfilePictureInput!
   $condition: ModelProfilePictureConditionInput
@@ -12,58 +13,26 @@ mutation CreateProfilePicture(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     profileID
     createdAt
     updatedAt
     profilePictureProfileId
     owner
+    __typename
   }
 }
+
 mutation UpdateProfilePicture(
   $input: UpdateProfilePictureInput!
   $condition: ModelProfilePictureConditionInput
@@ -77,58 +46,26 @@ mutation UpdateProfilePicture(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     profileID
     createdAt
     updatedAt
     profilePictureProfileId
     owner
+    __typename
   }
 }
+
 mutation DeleteProfilePicture(
   $input: DeleteProfilePictureInput!
   $condition: ModelProfilePictureConditionInput
@@ -142,58 +79,26 @@ mutation DeleteProfilePicture(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     profileID
     createdAt
     updatedAt
     profilePictureProfileId
     owner
+    __typename
   }
 }
+
 mutation CreateProfile(
   $input: CreateProfileInput!
   $condition: ModelProfileConditionInput
@@ -208,83 +113,20 @@ mutation CreateProfile(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     ImagePosts {
       id
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -293,6 +135,7 @@ mutation CreateProfile(
       createdAt
       updatedAt
       owner
+      __typename
     }
     first_name
     last_name
@@ -300,27 +143,12 @@ mutation CreateProfile(
     profilepicture {
       id
       imageurl
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       profileID
       createdAt
       updatedAt
       profilePictureProfileId
       owner
+      __typename
     }
     bio
     birthday
@@ -328,8 +156,10 @@ mutation CreateProfile(
     updatedAt
     profileImagePostsId
     owner
+    __typename
   }
 }
+
 mutation UpdateProfile(
   $input: UpdateProfileInput!
   $condition: ModelProfileConditionInput
@@ -344,83 +174,20 @@ mutation UpdateProfile(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     ImagePosts {
       id
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -429,6 +196,7 @@ mutation UpdateProfile(
       createdAt
       updatedAt
       owner
+      __typename
     }
     first_name
     last_name
@@ -436,27 +204,12 @@ mutation UpdateProfile(
     profilepicture {
       id
       imageurl
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       profileID
       createdAt
       updatedAt
       profilePictureProfileId
       owner
+      __typename
     }
     bio
     birthday
@@ -464,8 +217,10 @@ mutation UpdateProfile(
     updatedAt
     profileImagePostsId
     owner
+    __typename
   }
 }
+
 mutation DeleteProfile(
   $input: DeleteProfileInput!
   $condition: ModelProfileConditionInput
@@ -480,83 +235,20 @@ mutation DeleteProfile(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     ImagePosts {
       id
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -565,6 +257,7 @@ mutation DeleteProfile(
       createdAt
       updatedAt
       owner
+      __typename
     }
     first_name
     last_name
@@ -572,27 +265,12 @@ mutation DeleteProfile(
     profilepicture {
       id
       imageurl
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       profileID
       createdAt
       updatedAt
       profilePictureProfileId
       owner
+      __typename
     }
     bio
     birthday
@@ -600,8 +278,10 @@ mutation DeleteProfile(
     updatedAt
     profileImagePostsId
     owner
+    __typename
   }
 }
+
 mutation CreateImagePost(
   $input: CreateImagePostInput!
   $condition: ModelImagePostConditionInput
@@ -612,74 +292,24 @@ mutation CreateImagePost(
     description
     time_posted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        imagePostLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     comments {
-      items {
-        id
-        usernameID
-        profileID
-        comment
-        time_posted
-        imagePostsID
-        createdAt
-        updatedAt
-        imagePostCommentsId
-        owner
-      }
       nextToken
+      __typename
     }
     usernameID
     username {
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -688,50 +318,16 @@ mutation CreateImagePost(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     s3_key
     mediaSourceMobile
@@ -741,8 +337,10 @@ mutation CreateImagePost(
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation UpdateImagePost(
   $input: UpdateImagePostInput!
   $condition: ModelImagePostConditionInput
@@ -753,74 +351,24 @@ mutation UpdateImagePost(
     description
     time_posted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        imagePostLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     comments {
-      items {
-        id
-        usernameID
-        profileID
-        comment
-        time_posted
-        imagePostsID
-        createdAt
-        updatedAt
-        imagePostCommentsId
-        owner
-      }
       nextToken
+      __typename
     }
     usernameID
     username {
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -829,50 +377,16 @@ mutation UpdateImagePost(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     s3_key
     mediaSourceMobile
@@ -882,8 +396,10 @@ mutation UpdateImagePost(
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation DeleteImagePost(
   $input: DeleteImagePostInput!
   $condition: ModelImagePostConditionInput
@@ -894,74 +410,24 @@ mutation DeleteImagePost(
     description
     time_posted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        imagePostLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     comments {
-      items {
-        id
-        usernameID
-        profileID
-        comment
-        time_posted
-        imagePostsID
-        createdAt
-        updatedAt
-        imagePostCommentsId
-        owner
-      }
       nextToken
+      __typename
     }
     usernameID
     username {
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -970,50 +436,16 @@ mutation DeleteImagePost(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     s3_key
     mediaSourceMobile
@@ -1023,8 +455,10 @@ mutation DeleteImagePost(
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation CreateLikes(
   $input: CreateLikesInput!
   $condition: ModelLikesConditionInput
@@ -1036,43 +470,12 @@ mutation CreateLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -1081,57 +484,25 @@ mutation CreateLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     imagePostLikesId
     owner
+    __typename
   }
 }
+
 mutation UpdateLikes(
   $input: UpdateLikesInput!
   $condition: ModelLikesConditionInput
@@ -1143,43 +514,12 @@ mutation UpdateLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -1188,57 +528,25 @@ mutation UpdateLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     imagePostLikesId
     owner
+    __typename
   }
 }
+
 mutation DeleteLikes(
   $input: DeleteLikesInput!
   $condition: ModelLikesConditionInput
@@ -1250,43 +558,12 @@ mutation DeleteLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -1295,57 +572,25 @@ mutation DeleteLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     imagePostLikesId
     owner
+    __typename
   }
 }
+
 mutation CreateComments(
   $input: CreateCommentsInput!
   $condition: ModelCommentsConditionInput
@@ -1357,44 +602,14 @@ mutation CreateComments(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
+    sorterValue
     profileID
     profile {
       id
@@ -1402,50 +617,16 @@ mutation CreateComments(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     comment
     time_posted
@@ -1454,8 +635,10 @@ mutation CreateComments(
     updatedAt
     imagePostCommentsId
     owner
+    __typename
   }
 }
+
 mutation UpdateComments(
   $input: UpdateCommentsInput!
   $condition: ModelCommentsConditionInput
@@ -1467,44 +650,14 @@ mutation UpdateComments(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
+    sorterValue
     profileID
     profile {
       id
@@ -1512,50 +665,16 @@ mutation UpdateComments(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     comment
     time_posted
@@ -1564,8 +683,10 @@ mutation UpdateComments(
     updatedAt
     imagePostCommentsId
     owner
+    __typename
   }
 }
+
 mutation DeleteComments(
   $input: DeleteCommentsInput!
   $condition: ModelCommentsConditionInput
@@ -1577,44 +698,14 @@ mutation DeleteComments(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
+    sorterValue
     profileID
     profile {
       id
@@ -1622,50 +713,16 @@ mutation DeleteComments(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     comment
     time_posted
@@ -1674,8 +731,10 @@ mutation DeleteComments(
     updatedAt
     imagePostCommentsId
     owner
+    __typename
   }
 }
+
 mutation CreateUsername(
   $input: CreateUsernameInput!
   $condition: ModelUsernameConditionInput
@@ -1689,40 +748,8 @@ mutation CreateUsername(
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -1731,6 +758,7 @@ mutation CreateUsername(
       createdAt
       updatedAt
       owner
+      __typename
     }
     Profile {
       id
@@ -1738,58 +766,26 @@ mutation CreateUsername(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     usernameImagePostsId
     usernameProfileId
     owner
+    __typename
   }
 }
+
 mutation UpdateUsername(
   $input: UpdateUsernameInput!
   $condition: ModelUsernameConditionInput
@@ -1803,40 +799,8 @@ mutation UpdateUsername(
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -1845,6 +809,7 @@ mutation UpdateUsername(
       createdAt
       updatedAt
       owner
+      __typename
     }
     Profile {
       id
@@ -1852,58 +817,26 @@ mutation UpdateUsername(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     usernameImagePostsId
     usernameProfileId
     owner
+    __typename
   }
 }
+
 mutation DeleteUsername(
   $input: DeleteUsernameInput!
   $condition: ModelUsernameConditionInput
@@ -1917,40 +850,8 @@ mutation DeleteUsername(
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -1959,6 +860,7 @@ mutation DeleteUsername(
       createdAt
       updatedAt
       owner
+      __typename
     }
     Profile {
       id
@@ -1966,58 +868,26 @@ mutation DeleteUsername(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     usernameImagePostsId
     usernameProfileId
     owner
+    __typename
   }
 }
+
 mutation CreateSportsGame(
   $input: CreateSportsGameInput!
   $condition: ModelSportsGameConditionInput
@@ -2035,32 +905,23 @@ mutation CreateSportsGame(
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
+    }
+    pitchIndex {
+      nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation UpdateSportsGame(
   $input: UpdateSportsGameInput!
   $condition: ModelSportsGameConditionInput
@@ -2078,32 +939,23 @@ mutation UpdateSportsGame(
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
+    }
+    pitchIndex {
+      nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation DeleteSportsGame(
   $input: DeleteSportsGameInput!
   $condition: ModelSportsGameConditionInput
@@ -2121,32 +973,134 @@ mutation DeleteSportsGame(
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
+    }
+    pitchIndex {
+      nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
+mutation CreateBaseballAtBatIndex(
+  $input: CreateBaseballAtBatIndexInput!
+  $condition: ModelBaseballAtBatIndexConditionInput
+) {
+  createBaseballAtBatIndex(input: $input, condition: $condition) {
+    id
+    sortKey
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameInfo
+      startTime
+      lastUpdate
+      liveGameChatRoomID
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    pitchCount
+    isOut
+    count
+    call
+    hasResult
+    batIndex
+    resultDescription
+    pitchData
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+
+mutation UpdateBaseballAtBatIndex(
+  $input: UpdateBaseballAtBatIndexInput!
+  $condition: ModelBaseballAtBatIndexConditionInput
+) {
+  updateBaseballAtBatIndex(input: $input, condition: $condition) {
+    id
+    sortKey
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameInfo
+      startTime
+      lastUpdate
+      liveGameChatRoomID
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    pitchCount
+    isOut
+    count
+    call
+    hasResult
+    batIndex
+    resultDescription
+    pitchData
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+
+mutation DeleteBaseballAtBatIndex(
+  $input: DeleteBaseballAtBatIndexInput!
+  $condition: ModelBaseballAtBatIndexConditionInput
+) {
+  deleteBaseballAtBatIndex(input: $input, condition: $condition) {
+    id
+    sortKey
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameInfo
+      startTime
+      lastUpdate
+      liveGameChatRoomID
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    pitchCount
+    isOut
+    count
+    call
+    hasResult
+    batIndex
+    resultDescription
+    pitchData
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+
 mutation CreateLiveGameChatRoom(
   $input: CreateLiveGameChatRoomInput!
   $condition: ModelLiveGameChatRoomConditionInput
@@ -2164,40 +1118,23 @@ mutation CreateLiveGameChatRoom(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     chatsID
     chats {
-      items {
-        id
-        sortKey
-        usernameID
-        profileID
-        chat
-        timePosted
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation UpdateLiveGameChatRoom(
   $input: UpdateLiveGameChatRoomInput!
   $condition: ModelLiveGameChatRoomConditionInput
@@ -2215,40 +1152,23 @@ mutation UpdateLiveGameChatRoom(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     chatsID
     chats {
-      items {
-        id
-        sortKey
-        usernameID
-        profileID
-        chat
-        timePosted
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation DeleteLiveGameChatRoom(
   $input: DeleteLiveGameChatRoomInput!
   $condition: ModelLiveGameChatRoomConditionInput
@@ -2266,40 +1186,23 @@ mutation DeleteLiveGameChatRoom(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     chatsID
     chats {
-      items {
-        id
-        sortKey
-        usernameID
-        profileID
-        chat
-        timePosted
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation CreateHubPosts(
   $input: CreateHubPostsInput!
   $condition: ModelHubPostsConditionInput
@@ -2319,24 +1222,18 @@ mutation CreateHubPosts(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation UpdateHubPosts(
   $input: UpdateHubPostsInput!
   $condition: ModelHubPostsConditionInput
@@ -2356,24 +1253,18 @@ mutation UpdateHubPosts(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation DeleteHubPosts(
   $input: DeleteHubPostsInput!
   $condition: ModelHubPostsConditionInput
@@ -2393,24 +1284,18 @@ mutation DeleteHubPosts(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation CreateChats(
   $input: CreateChatsInput!
   $condition: ModelChatsConditionInput
@@ -2423,43 +1308,12 @@ mutation CreateChats(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -2468,96 +1322,51 @@ mutation CreateChats(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
+    }
+    profilePicture {
+      id
+      imageurl
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+      owner
+      __typename
     }
     chat
     timePosted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        chatsLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     liveGameChatRoomID
     livegamechatroom {
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation UpdateChats(
   $input: UpdateChatsInput!
   $condition: ModelChatsConditionInput
@@ -2570,43 +1379,12 @@ mutation UpdateChats(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -2615,96 +1393,51 @@ mutation UpdateChats(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
+    }
+    profilePicture {
+      id
+      imageurl
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+      owner
+      __typename
     }
     chat
     timePosted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        chatsLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     liveGameChatRoomID
     livegamechatroom {
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation DeleteChats(
   $input: DeleteChatsInput!
   $condition: ModelChatsConditionInput
@@ -2717,43 +1450,12 @@ mutation DeleteChats(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -2762,96 +1464,51 @@ mutation DeleteChats(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
+    }
+    profilePicture {
+      id
+      imageurl
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+      owner
+      __typename
     }
     chat
     timePosted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        chatsLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     liveGameChatRoomID
     livegamechatroom {
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 mutation CreateChatLikes(
   $input: CreateChatLikesInput!
   $condition: ModelChatLikesConditionInput
@@ -2863,43 +1520,12 @@ mutation CreateChatLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -2908,57 +1534,25 @@ mutation CreateChatLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     chatsLikesId
     owner
+    __typename
   }
 }
+
 mutation UpdateChatLikes(
   $input: UpdateChatLikesInput!
   $condition: ModelChatLikesConditionInput
@@ -2970,43 +1564,12 @@ mutation UpdateChatLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -3015,57 +1578,25 @@ mutation UpdateChatLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     chatsLikesId
     owner
+    __typename
   }
 }
+
 mutation DeleteChatLikes(
   $input: DeleteChatLikesInput!
   $condition: ModelChatLikesConditionInput
@@ -3077,43 +1608,12 @@ mutation DeleteChatLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -3122,54 +1622,21 @@ mutation DeleteChatLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     chatsLikesId
     owner
+    __typename
   }
 }

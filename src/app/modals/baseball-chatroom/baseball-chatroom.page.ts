@@ -26,15 +26,18 @@ export class BaseballChatroomPage implements OnInit {
   priorConnectionState: ConnectionState;
   
   baseballData: any;
+  gamePlays: any = [];
   sportsGameID;
   liveGameChatRoomID;
   accordionOpen;
+  profilePicture;
+  hasProfilePic: boolean;
 
   userProfileID;
   userUsernameID;
   userTyped;
 
-  chats = [];
+  chats;
   livechatroomdata;
 
   constructor(
@@ -47,26 +50,19 @@ export class BaseballChatroomPage implements OnInit {
     })
   }
 
-
-  openAccordion(){
-
-    if(!this.accordionOpen){
-      let d = document.getElementById("accordion")
-      d.classList.remove("accordion-collapsed")
-      d.classList.remove("accordion-animated")
-      d.className += "ios hydrated"
-      d.className += " accordion-expanded"
-      this.accordionOpen = true;
-    } else {
-      let d = document.getElementById("accordion")
-      d.classList.remove("accordion-expanded")
-      d.className = " accordion-collapsed"
-      this.accordionOpen = false;
-    }
+  async getPlays(gamePk){
+    this.gamePlays = await this.api.BaseballAtBatIndicesBySportsGameIDAndBatIndex(gamePk, null, ModelSortDirection.ASC).then(data => data.items)
+    this.gamePlays.map(async plays => {
+      plays.count = await JSON.parse(plays.count);
+      plays.id = await JSON.parse(plays.id)
+      plays.pitchData = await JSON.parse(plays.pitchData)
+    })
+    return this.gamePlays;
   }
 
   async getChats(livegamechatroomid){
-    return await this.api.ChatsByLiveGameChatRoomIDAndTimePosted(livegamechatroomid, null, ModelSortDirection.ASC).then(data => data)
+    let response = await this.api.ChatsByLiveGameChatRoomIDAndTimePosted(livegamechatroomid, null, ModelSortDirection.ASC).then(data => data);
+    return response.items;
   }
 
   ionViewDidLoad(){
@@ -76,25 +72,38 @@ export class BaseballChatroomPage implements OnInit {
   }
 
   async ngOnInit() {
+    this.startSubscriptions();
     console.log(this.baseballData)
     // this.accordionOpen = false;
-    // this.userTyped = false;
-    // this.startSubscriptions();
+    this.userTyped = false;
     this.liveGameChatRoomID = this.sportsGameID + "-chatroom"
     this.userProfileID = localStorage.getItem('profileID');
     this.userUsernameID = localStorage.getItem('usernameID')
-    // this.chats = await this.getChats(this.liveGameChatRoomID) as any;
-    // this.ionViewDidLoad();
-    // this.userTyped = false;
-    // document.querySelector<HTMLElement>(".textarea-wrapper").style.minWidth = "100%";
+    this.chats = await this.getChats(this.liveGameChatRoomID);
+    console.log(this.chats)
+
+    this.gamePlays = await this.getPlays(this.baseballData.id);
+    console.log(this.gamePlays)
+
+    this.chats.map(async chat => {
+      let profilePicture = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'));
+      chat.profilePictureUrl = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + profilePicture.imageurl;
+    })
+    this.ionViewDidLoad();
+    this.userTyped = false;
+    document.querySelector<HTMLElement>(".textarea-wrapper").style.minWidth = "100%";
+
+    await this.getProfilePic();
 
 
     Hub.listen('api', (data: any) => {
       const { payload } = data;
+      console.log(payload)
       if (payload.event === CONNECTION_STATE_CHANGE) {
 
         if (this.priorConnectionState === ConnectionState.Connecting && payload.data.connectionState === ConnectionState.Connected) {
           this.getChats(this.liveGameChatRoomID)
+          console.log(this.baseballData)
         }
 
         this.priorConnectionState = payload.data.connectionState;
@@ -116,18 +125,18 @@ export class BaseballChatroomPage implements OnInit {
 
   startSubscriptions() {
 
-    // this.onUpdateChats = <Subscription>(
-    //   this.api.OnCreateChatsListener().subscribe({
-    //     next: async (event: any) => {
-    //       const data = event;
-    //       data.value.data.onCreateChats.profile.profilePictureUrl = await Storage.get('profile-pictures/' + await (await this.api.GetProfilePictureProfileID(data.value.data.onCreateChats.profile.id)).imageurl)
-    //       this.chats.push(data.value.data.onCreateChats);
-    //       setTimeout(() => {
-    //         this.ionContent.scrollToBottom(400);
-    //       }, 500)
-    //     }
-    //   })
-    // )
+    this.onUpdateChats = <Subscription>(
+      this.api.OnCreateChatsListener().subscribe({
+        next: async (event: any) => {
+          const data = event;
+          data.value.data.onCreateChats.profile.profilePictureUrl = this.profilePicture;
+          this.chats.push(data.value.data.onCreateChats);
+          setTimeout(() => {
+            this.ionContent.scrollToBottom(400);
+          }, 500)
+        }
+      })
+    )
     this.onUpdateHubPost = <Subscription>(
       this.api.OnUpdateHubPostsListener().subscribe({
         next: async (event: any) => {
@@ -140,28 +149,29 @@ export class BaseballChatroomPage implements OnInit {
         next: async (event: any) => {
           const data = event;
           if (data.value.data.onUpdateSportsGame.id === this.baseballData.id) {
-            console.log(data.value.data.onUpdateSportsGame)
+            console.log(this.baseballData.id)
             this.baseballData.losingPitcherStats = [];
             this.baseballData.winningPitcherStats = [];
             this.baseballData.oriolesOutcome = [];
             this.baseballData.currentHalfInning = null;
             this.baseballData = data.value.data.onUpdateSportsGame;
-            this.baseballData.basicGameInfo = JSON.parse(data.value.data.onUpdateSportsGame.basicGameInfo)
-            this.baseballData.currentHalfInning = this.baseballData.gameStatus === 'In Progress' ? this.baseballData.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.baseballData.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", this.baseballData.gameInfo.currentPlay.about.inning.toString()) : null;
+            this.baseballData.gameInfo = JSON.parse(data.value.data.onUpdateSportsGame.gameInfo)
+            this.baseballData.gameInfo.currentHalfInning = this.baseballData.gameInfo.initialGameData.status.detailedState === 'In Progress' ? this.baseballData.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.baseballData.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", this.baseballData.gameInfo.currentPlay.about.inning.toString()) : null;
 
-            if (this.baseballData.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final') {
-              this.baseballData.oriolesOutcome = (this.baseballData.gameStatus === 'Final' && (this.baseballData.awayTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.awayScore > this.baseballData.gameInfo.currentPlay.result.homeScore) || (this.baseballData.homeTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.homeScore > this.baseballData.gameInfo.currentPlay.result.awayScore)) ? "O's WON" : (this.baseballData.gameStatus === 'Final' && (this.baseballData.awayTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.awayScore < this.baseballData.gameInfo.currentPlay.result.homeScore) || (this.baseballData.homeTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.homeScore < this.baseballData.gameInfo.currentPlay.result.awayScore)) ? "O's LOST" : null;
+            console.log(this.baseballData)
+            if (this.baseballData.gameInfo.initialGameData.status.detailedState === 'Final') {
+              this.baseballData.oriolesOutcome = (this.baseballData.gameInfo.initialGameData.status.detailedState === 'Final' && (this.baseballData.awayTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.awayScore > this.baseballData.gameInfo.currentPlay.result.homeScore) || (this.baseballData.homeTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.homeScore > this.baseballData.gameInfo.currentPlay.result.awayScore)) ? "O's WON" : (this.baseballData.gameStatus === 'Final' && (this.baseballData.awayTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.awayScore < this.baseballData.gameInfo.currentPlay.result.homeScore) || (this.baseballData.homeTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.homeScore < this.baseballData.gameInfo.currentPlay.result.awayScore)) ? "O's LOST" : null;
               this.baseballData.losingPitcherStats = (this.baseballData.gameInfo.finalData && this.baseballData.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(this.baseballData.gameInfo.finalData.loser.id, +this.baseballData.id) as any : null;
               this.baseballData.winningPitcherStats = (this.baseballData.gameStatus === 'Final' && this.baseballData.gameInfo.finalData) ? await this.getFinalPitcherGameStats(this.baseballData.gameInfo.finalData.winner.id, +this.baseballData.id) as any : null;
             }
 
-            if (this.baseballData.sportsgame.gameInfo.initialGameData.status.detailedState === 'Scheduled' || this.baseballData.gameStatus === 'Pre-Game' || this.baseballData.gameStatus === 'Warmup') {
-              this.baseballData.startingAwayPitcherStats = ((this.baseballData.gameStatus !== 'In Progress' && this.baseballData.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(this.baseballData.gameInfo.initialGameData.probablePitchers.away.id) as any : null;
-              this.baseballData.startingHomePitcherStats = ((this.baseballData.gameStatus !== 'In Progress' && this.baseballData.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(this.baseballData.gameInfo.initialGameData.probablePitchers.home.id) as any : null;
+            if (this.baseballData.gameInfo.initialGameData.status.detailedState === 'Scheduled' || this.baseballData.gameStatus === 'Pre-Game' || this.baseballData.gameStatus === 'Warmup') {
+              this.baseballData.startingAwayPitcherStats = ((this.baseballData.gameInfo.initialGameData.status.detailedState !== 'In Progress' && this.baseballData.gameInfo.initialGameData.status.detailedState !== 'Final')) ? await this.getStartingPitcherStats(this.baseballData.gameInfo.initialGameData.probablePitchers.away.id) as any : null;
+              this.baseballData.startingHomePitcherStats = ((this.baseballData.gameInfo.initialGameData.status.detailedState !== 'In Progress' && this.baseballData.gameInfo.initialGameData.status.detailedState !== 'Final')) ? await this.getStartingPitcherStats(this.baseballData.gameInfo.initialGameData.probablePitchers.home.id) as any : null;
             }
 
-            if (this.baseballData.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress') {
-              this.baseballData.currentHalfInning = this.baseballData.gameStatus === 'In Progress' ? this.baseballData.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.baseballData.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", this.baseballData.gameInfo.currentPlay.about.inning.toString()) : null;            }
+            if (this.baseballData.gameInfo.initialGameData.status.detailedState === 'In Progress') {
+              this.baseballData.currentHalfInning = this.baseballData.gameInfo.initialGameData.status.detailedState === 'In Progress' ? this.baseballData.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.baseballData.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", this.baseballData.gameInfo.currentPlay.about.inning.toString()) : null;            }
           }
         }
       })
@@ -196,5 +206,36 @@ export class BaseballChatroomPage implements OnInit {
       this.userTyped = false;
     }
   }
+
+  async getProfilePic(){
+    this.profilePicture = await this.api.GetProfilePictureProfileID(localStorage.getItem('profileID'));
+
+    // console.log(this.profilePicture)
+  
+    if(this.profilePicture){
+      this.profilePicture = "https://ik.imagekit.io/bkf4g8lrl/profile-photos/" + this.profilePicture.imageurl;
+  
+        if(this.profilePicture){
+          this.hasProfilePic = true;
+        } else {
+          this.hasProfilePic = false;
+        }
+    }
+  }
+
+  // async ngOnDestroy() {
+  //   if (this.onUpdateChats) {
+  //     await this.onUpdateChats.unsubscribe();
+  //   }
+  //   if (this.onUpdateHubPost) {
+  //     await this.onUpdateHubPost.unsubscribe();
+  //   }
+  //   if (this.onUpdateSportsGame) {
+  //     await this.onUpdateSportsGame.unsubscribe();
+  //   }
+
+  // }
+
+  
 
 }

@@ -248,7 +248,7 @@ ion-toolbar {
     }
 
     .comment-text {
-        margin: 0.25em 0em 0.25em 0.5em !important;
+        margin: 0.25em 0em 0.25em 0.25em !important;
         color: #595959;
         height: 100%;
         font-size: 0.85em;
@@ -385,8 +385,10 @@ ion-toolbar {
 }
 
 .comment-post-pic {
-    height: 2.0em;
-    width: 2.0em;
+    min-height: 2em;
+    min-width: 2em;
+    height: 2em;
+    width: 2em;
 }
 
 .comment-input-user-pic {

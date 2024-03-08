@@ -49,9 +49,9 @@ export class TimelinePage implements OnInit {
     this.profile = await this.fa.GetProfile(localStorage.getItem('profileID'))
 
     // pulling most recent media for timeline
-    await this.fa.ImagePostsBySorterValueAndTime_posted("media", null, ModelSortDirection.DESC).then(data => {
+    await this.fa.ImagePostsBySorterValueAndTime_posted("media", null, ModelSortDirection.DESC, null, 4).then(data => {
       this.timelineData = data.items;
-      this.nextToken = data[2];
+      this.nextToken = data.nextToken;
       this.loaded = true;
       console.log(this.timelineData)
     })

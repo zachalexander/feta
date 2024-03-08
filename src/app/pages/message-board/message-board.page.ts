@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Injectable, QueryList, ViewChildren, OnChanges, AfterViewInit } from '@angular/core';
 import { APIService, ModelSortDirection } from 'src/app/API.service';
 import { SportsService } from 'src/app/services/sports.service';
-import { BehaviorSubject, Subscription, finalize } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription, finalize } from 'rxjs';
 import { Amplify, Hub } from 'aws-amplify';
 import { CONNECTION_STATE_CHANGE, ConnectionState } from '@aws-amplify/pubsub';
 import awsconfig from './../../../aws-exports';
@@ -19,12 +19,16 @@ export class MessageBoardPage implements OnInit {
 
   onUpdateSportsGame: Subscription | null = null;
   onUpdateHubPost: Subscription | null = null;
+  onUpdateAtBatIndex: Subscription | null = null;
   data: any;
-  baseballData: any = [];
+  baseballData = new Subject<any>();
+  baseballData$: Observable<any> = this.baseballData.asObservable();
+  // baseballData: any = [];
   hubData: any = [];
   liveData: any = [];
   currentData: any = [];
   lastEvent: any = [];
+  gamePlays: any = [];
   lastEventDescription;
   opponentName;
   currentHalfInning;
@@ -50,25 +54,33 @@ export class MessageBoardPage implements OnInit {
   async ngOnInit() {
     this.startSubscriptions();
     await this.getHubData();
-
-    this.openBaseballChatroom(this.hubData[0].sportsgame, '748222')
-
     console.log(this.hubData);
 
-    Hub.listen('api', (data: any) => {
-      const { payload } = data;
-      if (payload.event === CONNECTION_STATE_CHANGE) {
-
-        if (this.priorConnectionState === ConnectionState.Connecting && payload.data.connectionState === ConnectionState.Connected){
-            this.getHubData();
+    this.onUpdateAtBatIndex = <Subscription>(
+      this.api.OnUpdateBaseballAtBatIndexListener().subscribe({
+        next: async (event: any) => {
+          const data = event;
+          console.log(data)
         }
+      })
+    )
 
-        this.priorConnectionState = payload.data.connectionState;
-        // const connectionState = payload.data.connectionState as ConnectionState;
-        // console.log(connectionState)
-      }
-    })
+
+  //   Hub.listen('api', (data: any) => {
+  //     const { payload } = data;
+  //     if (payload.event === CONNECTION_STATE_CHANGE) {
+
+  //       if (this.priorConnectionState === ConnectionState.Connecting && payload.data.connectionState === ConnectionState.Connected){
+  //           this.getHubData();
+  //       }
+
+  //       this.priorConnectionState = payload.data.connectionState;
+  //       const connectionState = payload.data.connectionState as ConnectionState;
+  //       console.log(connectionState)
+  //     }
+  //   })
   }
+
 
   async openBaseballChatroom(gameData, gameID){
     const modal = await this.modalController.create({
@@ -78,12 +90,6 @@ export class MessageBoardPage implements OnInit {
         sportsGameID: gameID
       }
     });
-
-    // modal.onDidDismiss().then((dataReturned) => {
-    //   if (dataReturned !== null) {
-    //     this.dataReturned = dataReturned.data;
-    //   }
-    // });
     return await modal.present();
   }
 
@@ -102,7 +108,6 @@ export class MessageBoardPage implements OnInit {
           const data = event;
           this.hubData.map(async (game) => {
             if(data.value.data.onUpdateSportsGame.id === game.sportsgame.id){
-
               game.sportsgame.gameInfo.losingPitcherStats = [];
               game.sportsgame.gameInfo.winningPitcherStats = [];
               game.sportsgame.gameInfo.oriolesOutcome = [];
@@ -111,24 +116,19 @@ export class MessageBoardPage implements OnInit {
               game.sportsgame.gameInfo.currentHalfInning = game.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress' ? game.sportsgame.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.sportsgame.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", game.sportsgame.gameInfo.currentPlay.about.inning.toString()) : null;
               game.sportsgame.lastUpdate = data.value.data.onUpdateSportsGame.lastUpdate
 
+              console.log(game)
+
               if (Date.parse(game.sportsgame.startTime) > Date.now()) {
                 game.sportsgame.gameInfo.gameStarted = false;
               } else {
                 game.sportsgame.gameInfo.gameStarted = true;
               }
 
-
               if (game.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final') {
                 game.sportsgame.oriolesOutcome = (game.sportsgame.gameStatus === 'Final' && (game.sportsgame.awayTeam === 'Baltimore Orioles' && game.sportsgame.gameInfo.currentPlay.result.awayScore > game.gameInfo.currentPlay.result.homeScore) || (game.sportsgame.homeTeam === 'Baltimore Orioles' && game.sportsgame.gameInfo.currentPlay.result.homeScore > game.sportsgame.gameInfo.currentPlay.result.awayScore)) ? "O's WON" : (game.sportsgame.gameStatus === 'Final' && (game.sportsgame.awayTeam === 'Baltimore Orioles' && game.sportsgame.gameInfo.currentPlay.result.awayScore < game.sportsgame.gameInfo.currentPlay.result.homeScore) || (game.sportsgame.homeTeam === 'Baltimore Orioles' && game.sportsgame.gameInfo.currentPlay.result.homeScore < game.sportsgame.gameInfo.currentPlay.result.awayScore)) ? "O's LOST" : null;
                 game.sportsgame.gameInfo.losingPitcherStats = (game.sportsgame.gameData.finalData && game.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final') ? await this.getFinalPitcherGameStats(game.sportsgame.gameInfo.finalData.loser.id, +game.sportsgame.id) as any : null;
                 game.sportsgame.gameInfo.winningPitcherStats = (game.sportsgame.gameStatus === 'Final' && game.sportsgame.gameInfo.finalData) ? await this.getFinalPitcherGameStats(game.sportsgame.gameInfo.finalData.winner.id, +game.sportsgame.id) as any : null;
               }
-
-              if (game.sportsgame.gameInfo.initialGameData.status.detailedState === 'Scheduled' || game.sportsgame.gameInfo.initialGameData.status.detailedState === 'Pre-Game' || game.sportsgame.gameInfo.initialGameData.status.detailedState === 'Warmup') {
-                // game.sportsgame.startingAwayPitcherStats = ((game.sportsgame.gameStatus !== 'In Progress' && game.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.sportsgame.gameInfo.initialGameData.probablePitchers.away.id) as any : null;
-                // game.sportsgame.startingHomePitcherStats = ((game.sportsgame.gameStatus !== 'In Progress' && game.sportsgame.gameStatus !== 'Final')) ? await this.getStartingPitcherStats(game.sportsgame.gameInfo.initialGameData.probablePitchers.home.id) as any : null;
-              }
-
               if (game.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress') {
                 game.sportsgame.gameInfo.currentHalfInning = game.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress' ? game.sportsgame.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(game.sportsgame.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", game.sportsgame.gameInfo.currentPlay.about.inning.toString()) : null;              }
             }
@@ -170,18 +170,11 @@ export class MessageBoardPage implements OnInit {
 
           hubs.sportsgame.gameInfo.currentHalfInning = hubs.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress' ? hubs.sportsgame.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(hubs.sportsgame.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", hubs.sportsgame.gameInfo.currentPlay.about.inning.toString()) : null;
 
-
           if (hubs.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final') {
             hubs.sportsgame.oriolesOutcome = (hubs.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final' && (hubs.sportsgame.awayTeam === 'Baltimore Orioles' && hubs.sportsgame.gameInfo.currentPlay.result.awayScore > hubs.sportsgame.gameInfo.currentPlay.result.homeScore) || (hubs.sportsgame.homeTeam === 'Baltimore Orioles' && hubs.sportsgame.gameInfo.currentPlay.result.homeScore > hubs.sportsgame.gameInfo.currentPlay.result.awayScore)) ? "O's WON" : (hubs.sportsgame.gameStatus === 'Final' && (hubs.sportsgame.awayTeam === 'Baltimore Orioles' && hubs.sportsgame.gameInfo.currentPlay.result.awayScore < hubs.sportsgame.gameInfo.currentPlay.result.homeScore) || (hubs.sportsgame.homeTeam === 'Baltimore Orioles' && hubs.sportsgame.gameInfo.currentPlay.result.homeScore < hubs.sportsgame.gameInfo.currentPlay.result.awayScore)) ? "O's LOST" : null;
             hubs.sportsgame.gameInfo.losingPitcherStats = (hubs.sportsgame.gameInfo.finalData && hubs.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final') ? await this.getFinalPitcherGameStats(hubs.sportsgame.gameInfo.finalData.loser.id, +hubs.sportsgame.id) : [];
             hubs.sportsgame.gameInfo.winningPitcherStats = (hubs.sportsgame.gameInfo.initialGameData.status.detailedState === 'Final' && hubs.sportsgame.gameInfo.finalData) ? await this.getFinalPitcherGameStats(hubs.sportsgame.gameInfo.finalData.winner.id, +hubs.sportsgame.id) : [];
           }
-
-          if (hubs.sportsgame.gameInfo.initialGameData.status.detailedState === 'Scheduled' || hubs.sportsgame.gameInfo.initialGameData.status.detailedState === 'Pre-Game' || hubs.sportsgame.gameInfo.initialGameData.status.detailedState === 'Warmup') {
-            // hubs.sportsgame.gameInfo.startingAwayPitcherStats = await this.getStartingPitcherStats(hubs.sportsgame.gameInfo.initialGameData.probablePitchers.away.id);
-            // hubs.sportsgame.gameInfo.startingHomePitcherStats = await this.getStartingPitcherStats(hubs.sportsgame.gameInfo.initialGameData.probablePitchers.home.id);
-          }
-
           if (hubs.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress') {
             hubs.sportsgame.gameInfo.currentHalfInning = hubs.sportsgame.gameInfo.initialGameData.status.detailedState === 'In Progress' ? hubs.sportsgame.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(hubs.sportsgame.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", hubs.sportsgame.gameInfo.currentPlay.about.inning.toString()) : null;
           }

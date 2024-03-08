@@ -1,4 +1,5 @@
 # this is an auto generated file. This will be overwritten
+
 subscription OnCreateProfilePicture(
   $filter: ModelSubscriptionProfilePictureFilterInput
   $owner: String
@@ -12,58 +13,26 @@ subscription OnCreateProfilePicture(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     profileID
     createdAt
     updatedAt
     profilePictureProfileId
     owner
+    __typename
   }
 }
+
 subscription OnUpdateProfilePicture(
   $filter: ModelSubscriptionProfilePictureFilterInput
   $owner: String
@@ -77,58 +46,26 @@ subscription OnUpdateProfilePicture(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     profileID
     createdAt
     updatedAt
     profilePictureProfileId
     owner
+    __typename
   }
 }
+
 subscription OnDeleteProfilePicture(
   $filter: ModelSubscriptionProfilePictureFilterInput
   $owner: String
@@ -142,58 +79,26 @@ subscription OnDeleteProfilePicture(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     profileID
     createdAt
     updatedAt
     profilePictureProfileId
     owner
+    __typename
   }
 }
+
 subscription OnCreateProfile(
   $filter: ModelSubscriptionProfileFilterInput
   $owner: String
@@ -208,83 +113,20 @@ subscription OnCreateProfile(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     ImagePosts {
       id
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -293,6 +135,7 @@ subscription OnCreateProfile(
       createdAt
       updatedAt
       owner
+      __typename
     }
     first_name
     last_name
@@ -300,27 +143,12 @@ subscription OnCreateProfile(
     profilepicture {
       id
       imageurl
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       profileID
       createdAt
       updatedAt
       profilePictureProfileId
       owner
+      __typename
     }
     bio
     birthday
@@ -328,8 +156,10 @@ subscription OnCreateProfile(
     updatedAt
     profileImagePostsId
     owner
+    __typename
   }
 }
+
 subscription OnUpdateProfile(
   $filter: ModelSubscriptionProfileFilterInput
   $owner: String
@@ -344,83 +174,20 @@ subscription OnUpdateProfile(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     ImagePosts {
       id
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -429,6 +196,7 @@ subscription OnUpdateProfile(
       createdAt
       updatedAt
       owner
+      __typename
     }
     first_name
     last_name
@@ -436,27 +204,12 @@ subscription OnUpdateProfile(
     profilepicture {
       id
       imageurl
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       profileID
       createdAt
       updatedAt
       profilePictureProfileId
       owner
+      __typename
     }
     bio
     birthday
@@ -464,8 +217,10 @@ subscription OnUpdateProfile(
     updatedAt
     profileImagePostsId
     owner
+    __typename
   }
 }
+
 subscription OnDeleteProfile(
   $filter: ModelSubscriptionProfileFilterInput
   $owner: String
@@ -480,83 +235,20 @@ subscription OnDeleteProfile(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     ImagePosts {
       id
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -565,6 +257,7 @@ subscription OnDeleteProfile(
       createdAt
       updatedAt
       owner
+      __typename
     }
     first_name
     last_name
@@ -572,27 +265,12 @@ subscription OnDeleteProfile(
     profilepicture {
       id
       imageurl
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       profileID
       createdAt
       updatedAt
       profilePictureProfileId
       owner
+      __typename
     }
     bio
     birthday
@@ -600,8 +278,10 @@ subscription OnDeleteProfile(
     updatedAt
     profileImagePostsId
     owner
+    __typename
   }
 }
+
 subscription OnCreateImagePost(
   $filter: ModelSubscriptionImagePostFilterInput
   $owner: String
@@ -612,74 +292,24 @@ subscription OnCreateImagePost(
     description
     time_posted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        imagePostLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     comments {
-      items {
-        id
-        usernameID
-        profileID
-        comment
-        time_posted
-        imagePostsID
-        createdAt
-        updatedAt
-        imagePostCommentsId
-        owner
-      }
       nextToken
+      __typename
     }
     usernameID
     username {
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -688,50 +318,16 @@ subscription OnCreateImagePost(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     s3_key
     mediaSourceMobile
@@ -741,8 +337,10 @@ subscription OnCreateImagePost(
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnUpdateImagePost(
   $filter: ModelSubscriptionImagePostFilterInput
   $owner: String
@@ -753,74 +351,24 @@ subscription OnUpdateImagePost(
     description
     time_posted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        imagePostLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     comments {
-      items {
-        id
-        usernameID
-        profileID
-        comment
-        time_posted
-        imagePostsID
-        createdAt
-        updatedAt
-        imagePostCommentsId
-        owner
-      }
       nextToken
+      __typename
     }
     usernameID
     username {
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -829,50 +377,16 @@ subscription OnUpdateImagePost(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     s3_key
     mediaSourceMobile
@@ -882,8 +396,10 @@ subscription OnUpdateImagePost(
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnDeleteImagePost(
   $filter: ModelSubscriptionImagePostFilterInput
   $owner: String
@@ -894,74 +410,24 @@ subscription OnDeleteImagePost(
     description
     time_posted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        imagePostLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     comments {
-      items {
-        id
-        usernameID
-        profileID
-        comment
-        time_posted
-        imagePostsID
-        createdAt
-        updatedAt
-        imagePostCommentsId
-        owner
-      }
       nextToken
+      __typename
     }
     usernameID
     username {
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -970,50 +436,16 @@ subscription OnDeleteImagePost(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     s3_key
     mediaSourceMobile
@@ -1023,8 +455,10 @@ subscription OnDeleteImagePost(
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnCreateLikes(
   $filter: ModelSubscriptionLikesFilterInput
   $owner: String
@@ -1036,43 +470,12 @@ subscription OnCreateLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -1081,57 +484,25 @@ subscription OnCreateLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     imagePostLikesId
     owner
+    __typename
   }
 }
+
 subscription OnUpdateLikes(
   $filter: ModelSubscriptionLikesFilterInput
   $owner: String
@@ -1143,43 +514,12 @@ subscription OnUpdateLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -1188,57 +528,25 @@ subscription OnUpdateLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     imagePostLikesId
     owner
+    __typename
   }
 }
+
 subscription OnDeleteLikes(
   $filter: ModelSubscriptionLikesFilterInput
   $owner: String
@@ -1250,43 +558,12 @@ subscription OnDeleteLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -1295,57 +572,25 @@ subscription OnDeleteLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     imagePostLikesId
     owner
+    __typename
   }
 }
+
 subscription OnCreateComments(
   $filter: ModelSubscriptionCommentsFilterInput
   $owner: String
@@ -1357,44 +602,14 @@ subscription OnCreateComments(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
+    sorterValue
     profileID
     profile {
       id
@@ -1402,50 +617,16 @@ subscription OnCreateComments(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     comment
     time_posted
@@ -1454,8 +635,10 @@ subscription OnCreateComments(
     updatedAt
     imagePostCommentsId
     owner
+    __typename
   }
 }
+
 subscription OnUpdateComments(
   $filter: ModelSubscriptionCommentsFilterInput
   $owner: String
@@ -1467,44 +650,14 @@ subscription OnUpdateComments(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
+    sorterValue
     profileID
     profile {
       id
@@ -1512,50 +665,16 @@ subscription OnUpdateComments(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     comment
     time_posted
@@ -1564,8 +683,10 @@ subscription OnUpdateComments(
     updatedAt
     imagePostCommentsId
     owner
+    __typename
   }
 }
+
 subscription OnDeleteComments(
   $filter: ModelSubscriptionCommentsFilterInput
   $owner: String
@@ -1577,44 +698,14 @@ subscription OnDeleteComments(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
+    sorterValue
     profileID
     profile {
       id
@@ -1622,50 +713,16 @@ subscription OnDeleteComments(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     comment
     time_posted
@@ -1674,8 +731,10 @@ subscription OnDeleteComments(
     updatedAt
     imagePostCommentsId
     owner
+    __typename
   }
 }
+
 subscription OnCreateUsername(
   $filter: ModelSubscriptionUsernameFilterInput
   $owner: String
@@ -1689,40 +748,8 @@ subscription OnCreateUsername(
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -1731,6 +758,7 @@ subscription OnCreateUsername(
       createdAt
       updatedAt
       owner
+      __typename
     }
     Profile {
       id
@@ -1738,58 +766,26 @@ subscription OnCreateUsername(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     usernameImagePostsId
     usernameProfileId
     owner
+    __typename
   }
 }
+
 subscription OnUpdateUsername(
   $filter: ModelSubscriptionUsernameFilterInput
   $owner: String
@@ -1803,40 +799,8 @@ subscription OnUpdateUsername(
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -1845,6 +809,7 @@ subscription OnUpdateUsername(
       createdAt
       updatedAt
       owner
+      __typename
     }
     Profile {
       id
@@ -1852,58 +817,26 @@ subscription OnUpdateUsername(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     usernameImagePostsId
     usernameProfileId
     owner
+    __typename
   }
 }
+
 subscription OnDeleteUsername(
   $filter: ModelSubscriptionUsernameFilterInput
   $owner: String
@@ -1917,40 +850,8 @@ subscription OnDeleteUsername(
       sorterValue
       description
       time_posted
-      likes {
-        nextToken
-      }
-      comments {
-        nextToken
-      }
       usernameID
-      username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
       profileID
-      profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       s3_key
       mediaSourceMobile
       mediaSourceDesktop
@@ -1959,6 +860,7 @@ subscription OnDeleteUsername(
       createdAt
       updatedAt
       owner
+      __typename
     }
     Profile {
       id
@@ -1966,58 +868,26 @@ subscription OnDeleteUsername(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     usernameImagePostsId
     usernameProfileId
     owner
+    __typename
   }
 }
+
 subscription OnCreateSportsGame(
   $filter: ModelSubscriptionSportsGameFilterInput
   $owner: String
@@ -2035,32 +905,23 @@ subscription OnCreateSportsGame(
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
+    }
+    pitchIndex {
+      nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnUpdateSportsGame(
   $filter: ModelSubscriptionSportsGameFilterInput
   $owner: String
@@ -2078,32 +939,23 @@ subscription OnUpdateSportsGame(
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
+    }
+    pitchIndex {
+      nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnDeleteSportsGame(
   $filter: ModelSubscriptionSportsGameFilterInput
   $owner: String
@@ -2121,32 +973,134 @@ subscription OnDeleteSportsGame(
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
+    }
+    pitchIndex {
+      nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
+subscription OnCreateBaseballAtBatIndex(
+  $filter: ModelSubscriptionBaseballAtBatIndexFilterInput
+  $owner: String
+) {
+  onCreateBaseballAtBatIndex(filter: $filter, owner: $owner) {
+    id
+    sortKey
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameInfo
+      startTime
+      lastUpdate
+      liveGameChatRoomID
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    pitchCount
+    isOut
+    count
+    call
+    hasResult
+    batIndex
+    resultDescription
+    pitchData
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+
+subscription OnUpdateBaseballAtBatIndex(
+  $filter: ModelSubscriptionBaseballAtBatIndexFilterInput
+  $owner: String
+) {
+  onUpdateBaseballAtBatIndex(filter: $filter, owner: $owner) {
+    id
+    sortKey
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameInfo
+      startTime
+      lastUpdate
+      liveGameChatRoomID
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    pitchCount
+    isOut
+    count
+    call
+    hasResult
+    batIndex
+    resultDescription
+    pitchData
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+
+subscription OnDeleteBaseballAtBatIndex(
+  $filter: ModelSubscriptionBaseballAtBatIndexFilterInput
+  $owner: String
+) {
+  onDeleteBaseballAtBatIndex(filter: $filter, owner: $owner) {
+    id
+    sortKey
+    sportsGameID
+    sportsgame {
+      id
+      sport
+      homeTeam
+      awayTeam
+      gameInfo
+      startTime
+      lastUpdate
+      liveGameChatRoomID
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    pitchCount
+    isOut
+    count
+    call
+    hasResult
+    batIndex
+    resultDescription
+    pitchData
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+
 subscription OnCreateLiveGameChatRoom(
   $filter: ModelSubscriptionLiveGameChatRoomFilterInput
   $owner: String
@@ -2164,40 +1118,23 @@ subscription OnCreateLiveGameChatRoom(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     chatsID
     chats {
-      items {
-        id
-        sortKey
-        usernameID
-        profileID
-        chat
-        timePosted
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnUpdateLiveGameChatRoom(
   $filter: ModelSubscriptionLiveGameChatRoomFilterInput
   $owner: String
@@ -2215,40 +1152,23 @@ subscription OnUpdateLiveGameChatRoom(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     chatsID
     chats {
-      items {
-        id
-        sortKey
-        usernameID
-        profileID
-        chat
-        timePosted
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnDeleteLiveGameChatRoom(
   $filter: ModelSubscriptionLiveGameChatRoomFilterInput
   $owner: String
@@ -2266,40 +1186,23 @@ subscription OnDeleteLiveGameChatRoom(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     chatsID
     chats {
-      items {
-        id
-        sortKey
-        usernameID
-        profileID
-        chat
-        timePosted
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       nextToken
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnCreateHubPosts(
   $filter: ModelSubscriptionHubPostsFilterInput
   $owner: String
@@ -2319,24 +1222,18 @@ subscription OnCreateHubPosts(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnUpdateHubPosts(
   $filter: ModelSubscriptionHubPostsFilterInput
   $owner: String
@@ -2356,24 +1253,18 @@ subscription OnUpdateHubPosts(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnDeleteHubPosts(
   $filter: ModelSubscriptionHubPostsFilterInput
   $owner: String
@@ -2393,24 +1284,18 @@ subscription OnDeleteHubPosts(
       startTime
       lastUpdate
       liveGameChatRoomID
-      livegamechatroom {
-        id
-        sport
-        sportsGameID
-        chatsID
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnCreateChats(
   $filter: ModelSubscriptionChatsFilterInput
   $owner: String
@@ -2423,43 +1308,12 @@ subscription OnCreateChats(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -2468,96 +1322,51 @@ subscription OnCreateChats(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
+    }
+    profilePicture {
+      id
+      imageurl
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+      owner
+      __typename
     }
     chat
     timePosted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        chatsLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     liveGameChatRoomID
     livegamechatroom {
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnUpdateChats(
   $filter: ModelSubscriptionChatsFilterInput
   $owner: String
@@ -2570,43 +1379,12 @@ subscription OnUpdateChats(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -2615,96 +1393,51 @@ subscription OnUpdateChats(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
+    }
+    profilePicture {
+      id
+      imageurl
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+      owner
+      __typename
     }
     chat
     timePosted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        chatsLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     liveGameChatRoomID
     livegamechatroom {
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnDeleteChats(
   $filter: ModelSubscriptionChatsFilterInput
   $owner: String
@@ -2717,43 +1450,12 @@ subscription OnDeleteChats(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -2762,96 +1464,51 @@ subscription OnDeleteChats(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
+    }
+    profilePicture {
+      id
+      imageurl
+      profileID
+      createdAt
+      updatedAt
+      profilePictureProfileId
+      owner
+      __typename
     }
     chat
     timePosted
     likes {
-      items {
-        id
-        usernameID
-        profileID
-        createdAt
-        updatedAt
-        chatsLikesId
-        owner
-      }
       nextToken
+      __typename
     }
     liveGameChatRoomID
     livegamechatroom {
       id
       sport
       sportsGameID
-      sportsgame {
-        id
-        sport
-        homeTeam
-        awayTeam
-        gameInfo
-        startTime
-        lastUpdate
-        liveGameChatRoomID
-        createdAt
-        updatedAt
-        owner
-      }
       chatsID
-      chats {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
+      __typename
     }
     createdAt
     updatedAt
     owner
+    __typename
   }
 }
+
 subscription OnCreateChatLikes(
   $filter: ModelSubscriptionChatLikesFilterInput
   $owner: String
@@ -2863,43 +1520,12 @@ subscription OnCreateChatLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -2908,57 +1534,25 @@ subscription OnCreateChatLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     chatsLikesId
     owner
+    __typename
   }
 }
+
 subscription OnUpdateChatLikes(
   $filter: ModelSubscriptionChatLikesFilterInput
   $owner: String
@@ -2970,43 +1564,12 @@ subscription OnUpdateChatLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -3015,57 +1578,25 @@ subscription OnUpdateChatLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     chatsLikesId
     owner
+    __typename
   }
 }
+
 subscription OnDeleteChatLikes(
   $filter: ModelSubscriptionChatLikesFilterInput
   $owner: String
@@ -3077,43 +1608,12 @@ subscription OnDeleteChatLikes(
       id
       username
       profileID
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
-      Profile {
-        id
-        email
-        relation
-        cognitoID
-        usernameID
-        first_name
-        last_name
-        profilepictureID
-        bio
-        birthday
-        createdAt
-        updatedAt
-        profileImagePostsId
-        owner
-      }
       createdAt
       updatedAt
       usernameImagePostsId
       usernameProfileId
       owner
+      __typename
     }
     profileID
     profile {
@@ -3122,54 +1622,21 @@ subscription OnDeleteChatLikes(
       relation
       cognitoID
       usernameID
-      Username {
-        id
-        username
-        profileID
-        createdAt
-        updatedAt
-        usernameImagePostsId
-        usernameProfileId
-        owner
-      }
-      ImagePosts {
-        id
-        sorterValue
-        description
-        time_posted
-        usernameID
-        profileID
-        s3_key
-        mediaSourceMobile
-        mediaSourceDesktop
-        downloadableVideo
-        posterImage
-        createdAt
-        updatedAt
-        owner
-      }
       first_name
       last_name
       profilepictureID
-      profilepicture {
-        id
-        imageurl
-        profileID
-        createdAt
-        updatedAt
-        profilePictureProfileId
-        owner
-      }
       bio
       birthday
       createdAt
       updatedAt
       profileImagePostsId
       owner
+      __typename
     }
     createdAt
     updatedAt
     chatsLikesId
     owner
+    __typename
   }
 }

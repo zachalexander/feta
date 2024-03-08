@@ -11,7 +11,7 @@
   <!-- subscription to listen for new posts, will show pop-up when new posts added to wall -->
   <div class="new-post-button-div">
     <ion-fab *ngIf="showFabButton" vertical="top" slot="fixed">
-      <ion-fab-button (click)="seeNewPostsButton()" color="light">See new posts&nbsp;<ion-icon size="small" name="arrow-up-outline"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="seeNewPostsButton()" color="tertiary">See new posts&nbsp;<ion-icon size="small" name="arrow-up-outline"></ion-icon></ion-fab-button>
     </ion-fab>
   </div>
 
@@ -101,10 +101,10 @@
           </ion-card-header>
 
           <!-- start of comment section of post -->
-          <ion-item-group lines="none" class="comments" *ngIf="image.comments > 0">
+          <ion-item-group lines="none" class="comments" *ngIf="image.comments.items.length > 0">
             <!-- if greater than 0 comments, show below -->
             <ion-item-divider lines="none" class="comment-divider">
-              <ion-label class="view-all-comments" color="medium" (click)="openCommentModal(image.id)">View all {{image.comments}} comments </ion-label>
+              <ion-label class="view-all-comments" color="medium" (click)="openCommentModal(image.id)">View all {{image.comments.items.length}} comments </ion-label>
             </ion-item-divider>
           </ion-item-group>
         </ion-card>
@@ -116,13 +116,13 @@
     </div>
   </ion-grid>
 
-  <!-- <ion-fab color="dark" (click)="scrollToTop()" (ionInfinite)="loadData($event)" class="arrow-up-outline" slot="fixed" horizontal="end" vertical="bottom">
-    <ion-fab-button color="light" class="cycle-up-button">
+  <ion-fab color="tertiary" (click)="scrollToTop()" class="arrow-up-outline" slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button color="tertiary" class="cycle-up-button">
       <ion-icon name="arrow-up-outline"></ion-icon>
     </ion-fab-button>
-  </ion-fab> -->
+  </ion-fab>
 
-  <!-- <ion-infinite-scroll *ngIf="mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
+  <ion-infinite-scroll *ngIf="mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
     <ion-infinite-scroll-content loadingSpinner="lines-sharp-small">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
@@ -130,7 +130,7 @@
   <ion-infinite-scroll *ngIf="!mobilePlatform && !profileSearch" threshold="150%" (ionInfinite)="loadData($event)" position="bottom">
     <ion-infinite-scroll-content loadingSpinner="lines-sharp-small">
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+  </ion-infinite-scroll>
 
 </ion-content>
 
