@@ -1,14 +1,13 @@
 import { Component, OnInit, ViewChild, Input, QueryList, ViewChildren, ElementRef, Renderer2} from '@angular/core';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, ViewDidEnter, IonInfiniteScroll, IonRefresher, IonRefresherContent, ViewDidLeave, } from '@ionic/angular';
 import { MediaService } from 'src/app/services/media.service';
 import { FA, ModelSortDirection } from "../../FA.service";
-import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
+import { ActivatedRoute, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { CommentModalPage } from '../../modals/comment-modal/comment-modal.page';
 import { LikeListModalPage } from '../../modals/like-list-modal/like-list-modal.page';
 import { EditMediaModalPage } from 'src/app/modals/edit-media-modal/edit-media-modal.page';
 import { Storage } from '@aws-amplify/storage';
 import { Subscription } from 'rxjs';
-import { IonInfiniteScroll, IonRefresher, IonRefresherContent} from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { IonItemSliding} from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
@@ -20,6 +19,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
 import { finalize } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
 import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
@@ -29,6 +29,7 @@ import SwiperCore, { Zoom, EffectFade } from 'swiper';
 SwiperCore.use([Zoom, EffectFade]);
 
 import { APIService } from 'src/app/API.service';
+import { Hub } from 'aws-amplify';
 
 @Component({
   selector: 'app-timeline',
@@ -37,18 +38,20 @@ import { APIService } from 'src/app/API.service';
   providers: [DateAsAgoPipe, DateAsAgoShortPipe, DateSuffixPipe]
 })
 
-export class TimelineComponent implements OnInit {
+export class TimelineComponent implements ViewDidEnter, ViewDidLeave {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRefresher) ionRefresher: IonRefresher;
   @ViewChild(IonContent) ionContent: IonContent;
   @Input('data') data = [];
   @Input('token') nextToken: string;
+  @Input('liked') liked: any;
   @ViewChildren('timelineVideo') videos: QueryList<any>
   @ViewChildren('timelineVideo', { read: ElementRef})
   timelineVideo!: QueryList<ElementRef<any>>
 
   nowPlaying = null;
+  isPlaying;
   videoOver = false;
   muted = true;
   replay = false;
@@ -59,6 +62,12 @@ export class TimelineComponent implements OnInit {
   onDeleteImageSubscription: Subscription | null = null;
   onCreateCommentsSubscription: Subscription | null = null;
   onDeleteCommentsSubscription: Subscription | null = null;
+  onCreateLikesSubscription: Subscription | null = null;
+  onDeleteLikesSubscription: Subscription | null = null;
+
+  onUpdateSportsGame: Subscription | null = null;
+  onUpdateHubPost: Subscription | null = null;
+  onUpdateAtBatIndex: Subscription | null = null;
 
   alreadyLiked: boolean;
   loaded: boolean;
@@ -97,31 +106,33 @@ export class TimelineComponent implements OnInit {
     public toastController: ToastController,
     private router: Router,
     private renderer: Renderer2,
-    private api: APIService
+    private api: APIService,
+    private location: Location
   ) {
     this.mobilePlatform = this.platform.is("mobile");
   }
 
-  async ngOnInit() {
-    this.currentUserUsernameID = localStorage.getItem('usernameID');
-    this.currentUserUsername = localStorage.getItem('username');
-    this.browser = localStorage.getItem('User-browser');
-    this.platformView = this.platform.platforms();
 
+  async ionViewDidEnter() {
 
     // if navigate to new page, stop playing current video
     this.routeSub = this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.nowPlaying.pause();
+        if (this.nowPlaying) {
+          this.nowPlaying.pause();
+        }
       }
     })
 
-    console.log(this.routeSub)
   }
 
   async ngAfterViewInit() {
     this.didScroll();
     this.startSubscriptions();
+    this.currentUserUsernameID = localStorage.getItem('usernameID');
+    this.currentUserUsername = localStorage.getItem('username');
+    this.browser = localStorage.getItem('User-browser');
+    this.platformView = this.platform.platforms();
   }
 
 // Video player functions
@@ -150,7 +161,6 @@ export class TimelineComponent implements OnInit {
             this.nowPlaying.play();
           })
             .catch(error => {
-              this.nowPlaying.play();
               console.log(error)
             })
         }
@@ -589,8 +599,6 @@ export class TimelineComponent implements OnInit {
       }
     });
 
-    // await this.photoService.getPostImageID(id)
-
     modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null) {
         this.dataReturned = dataReturned.data;
@@ -644,11 +652,13 @@ export class TimelineComponent implements OnInit {
     const currentRoute = this.router.url;
 
     this.router.navigateByUrl('/timeline', { skipLocationChange: true }).then(() => {
-      this.router.navigate([currentRoute]); // navigate to same route
+      this.router.navigate([currentRoute]) // navigate to same route
     }); 
 
     this.refresh = false;
   }
+
+  
 
   async scrollToTop(){
     if (this.platform.is('hybrid')) {
@@ -701,21 +711,10 @@ export class TimelineComponent implements OnInit {
               media.description = event.value.data.onUpdateImagePost.description;
             }
           })
-
-          // if((JSON.parse(event.value.data.onUpdateImagePost.likes))){
-          //   let post = await this.fa.GetPostLikes(imageId)
-          //   this.data.filter((media) => {
-          //     if(media.id == imageId){
-          //       media.likes = post.likes
-          //       // media.like_count = JSON.parse(post.likes)['usernames'].length
-          //     }
-          //     return media;
-          //   })
-          // }
         }
       })
     )
-  
+
     this.onDeleteImageSubscription = <Subscription>(
       this.fa.OnDeleteImagePostListener().subscribe((event: any) => {
         setTimeout(() => {
@@ -753,9 +752,49 @@ export class TimelineComponent implements OnInit {
         }
       })
     )
+
+    this.onCreateLikesSubscription = <Subscription>(
+      this.api.OnCreateLikesListener().subscribe({
+        next: async (event: any) => {
+          const imageId = event.value.data.onCreateLikes.imagePostsID;
+          let likesList: any = await this.api.ListLikes({imagePostsID: {eq: imageId} }).then((data) => data)
+
+          this.data.filter(values => {
+            if (values.id === imageId){
+              values.likes = likesList
+            }
+          })
+        }
+      })
+    )
+
+    this.onDeleteLikesSubscription = <Subscription>(
+      this.api.OnDeleteLikesListener().subscribe({
+        next: async (event: any) => {
+          const imageId = event.value.data.onDeleteLikes.imagePostsID;
+          let likesList: any = await this.api.ListLikes({ imagePostsID: { eq: imageId } }).then((data) => data)
+
+
+          if(likesList){
+            this.data.filter(values => {
+              if (values.id === imageId) {
+                values.likes = likesList
+              }
+            })
+          } else {
+            this.data.filter(values => {
+              if (values.id === imageId) {
+                values.likes = []
+              }
+            })
+          }
+
+        }
+      })
+    )
   }
 
-  async ngOnDestroy() {
+  async ionViewDidLeave() {
     if (this.onCreateImageSubscription) {
       await this.onCreateImageSubscription.unsubscribe();
     }
@@ -770,6 +809,12 @@ export class TimelineComponent implements OnInit {
     }
     if (this.onDeleteCommentsSubscription) {
       await this.onDeleteCommentsSubscription.unsubscribe();
+    }
+    if (this.onCreateLikesSubscription) {
+      await this.onCreateLikesSubscription.unsubscribe();
+    }
+    if (this.onDeleteLikesSubscription) {
+      await this.onDeleteLikesSubscription.unsubscribe();
     }
     this.platform.pause.subscribe(async () => {
       console.log('pausing subscription')

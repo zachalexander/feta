@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild, AfterViewInit, OnChanges, ElementRef, OnInit } from '@angular/core';
 import { APIService } from 'src/app/API.service';
 import { ActivatedRoute, ActivationStart, NavigationStart } from '@angular/router';
+import { BehaviorSubject, Observable, Subject, Subscription, finalize } from 'rxjs';
 import { Auth } from 'aws-amplify'
 import { Router } from '@angular/router';
 import { FA, ModelSortDirection } from 'src/app/FA.service';
@@ -19,6 +20,9 @@ import { AppRulesModalPage } from 'src/app/modals/app-rules-modal/app-rules-moda
   styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
+
+  onUpdateSportsGame: Subscription | null = null;
+  onUpdateHubPost: Subscription | null = null;
 
   username_tab;
   urlUser;
@@ -57,13 +61,18 @@ export class TabsPage {
   ) {
     router.events.forEach((event) => {
       if(event instanceof NavigationStart){
-        console.log(event)
+        if(event.url !== '/message-board'){
+          this.onUpdateSportsGame.unsubscribe();
+        }
       }
     })
   }
   
   async ngOnInit(){
 
+    this.onUpdateSportsGame = <Subscription>(
+      this.api.OnUpdateSportsGameListener().subscribe(data => data)
+    )
 
     localStorage.setItem('User-browser', this.browserName)
 
@@ -102,6 +111,15 @@ export class TabsPage {
         }
       }
     // }, 500)
+  }
+
+  async ngOnDestroy() {
+    if (this.onUpdateSportsGame) {
+      await this.onUpdateSportsGame.unsubscribe();
+    }
+    if (this.onUpdateHubPost) {
+      await this.onUpdateHubPost.unsubscribe();
+    }
   }
 
   homeClick(){

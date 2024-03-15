@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { LoadingController, ModalController } from '@ionic/angular';
+import { LoadingController, ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { FA, ModelSortDirection } from 'src/app/FA.service';
 import { Directory } from '@capacitor/filesystem';
 import write_blob from 'capacitor-blob-writer';
 import { CreateMediaModalPage } from 'src/app/modals/create-media-modal/create-media-modal.page';
 import { Storage } from 'aws-amplify';
-import { catchError } from 'rxjs';
+import { Subscription, catchError } from 'rxjs';
 
 const APP_DIRECTORY = Directory.Documents;
 
@@ -15,7 +15,7 @@ const APP_DIRECTORY = Directory.Documents;
   templateUrl: 'timeline.page.html',
   styleUrls: ['timeline.page.scss']
 })
-export class TimelinePage implements OnInit {
+export class TimelinePage implements ViewDidEnter {
   
   @ViewChild('filepicker') picker: ElementRef;
   currentFolder = 'feta';
@@ -39,7 +39,7 @@ export class TimelinePage implements OnInit {
     this.timelineDataLength;
   }
 
-  async ngOnInit(){
+  async ionViewDidEnter(){
 
     // ensures that the option to add media is not active on load
     this.addMediaClick = false;

@@ -173,7 +173,6 @@ export type ImagePost = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  alreadyLiked?: boolean | null;
   likes?: ModelLikesConnection | null;
   comments?: ModelCommentsConnection | null;
   usernameID: string;
@@ -203,9 +202,9 @@ export type Likes = {
   username?: Username | null;
   profileID: string;
   profile?: Profile | null;
-  imagePostsID: string;
   createdAt: string;
   updatedAt: string;
+  imagePostLikesId?: string | null;
   owner?: string | null;
 };
 
@@ -225,7 +224,7 @@ export type Comments = {
   profile?: Profile | null;
   comment?: string | null;
   time_posted?: string | null;
-  imagePostsID: string;
+  imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -295,7 +294,6 @@ export type CreateImagePostInput = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  alreadyLiked?: boolean | null;
   usernameID: string;
   profileID: string;
   s3_key?: string | null;
@@ -309,7 +307,6 @@ export type ModelImagePostConditionInput = {
   sorterValue?: ModelStringInput | null;
   description?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
-  alreadyLiked?: ModelBooleanInput | null;
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
@@ -322,19 +319,11 @@ export type ModelImagePostConditionInput = {
   not?: ModelImagePostConditionInput | null;
 };
 
-export type ModelBooleanInput = {
-  ne?: boolean | null;
-  eq?: boolean | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-};
-
 export type UpdateImagePostInput = {
   id: string;
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  alreadyLiked?: boolean | null;
   usernameID?: string | null;
   profileID?: string | null;
   s3_key?: string | null;
@@ -358,17 +347,17 @@ export type CreateLikesInput = {
 export type ModelLikesConditionInput = {
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
-  imagePostsID?: ModelIDInput | null;
   and?: Array<ModelLikesConditionInput | null> | null;
   or?: Array<ModelLikesConditionInput | null> | null;
   not?: ModelLikesConditionInput | null;
+  imagePostLikesId?: ModelIDInput | null;
 };
 
 export type UpdateLikesInput = {
   id: string;
   usernameID?: string | null;
   profileID?: string | null;
-  imagePostsID?: string | null;
+  imagePostLikesId?: string | null;
 };
 
 export type DeleteLikesInput = {
@@ -382,7 +371,8 @@ export type CreateCommentsInput = {
   profileID: string;
   comment?: string | null;
   time_posted?: string | null;
-  imagePostsID: string;
+  imagePostsID?: string | null;
+  imagePostCommentsId?: string | null;
 };
 
 export type ModelCommentsConditionInput = {
@@ -391,10 +381,11 @@ export type ModelCommentsConditionInput = {
   profileID?: ModelIDInput | null;
   comment?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
-  imagePostsID?: ModelIDInput | null;
+  imagePostsID?: ModelStringInput | null;
   and?: Array<ModelCommentsConditionInput | null> | null;
   or?: Array<ModelCommentsConditionInput | null> | null;
   not?: ModelCommentsConditionInput | null;
+  imagePostCommentsId?: ModelIDInput | null;
 };
 
 export type UpdateCommentsInput = {
@@ -405,6 +396,7 @@ export type UpdateCommentsInput = {
   comment?: string | null;
   time_posted?: string | null;
   imagePostsID?: string | null;
+  imagePostCommentsId?: string | null;
 };
 
 export type DeleteCommentsInput = {
@@ -474,11 +466,6 @@ export type SportsGame = {
   gameInfo?: string | null;
   startTime?: string | null;
   lastUpdate?: string | null;
-  liveGameChatRoomID?: string | null;
-  livegamechatroom?: LiveGameChatRoom | null;
-  pitchIndex?: ModelBaseballAtBatIndexConnection | null;
-  createdAt: string;
-  updatedAt: string;
   owner?: string | null;
 };
 
@@ -821,7 +808,6 @@ export type ModelImagePostFilterInput = {
   sorterValue?: ModelStringInput | null;
   description?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
-  alreadyLiked?: ModelBooleanInput | null;
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
   s3_key?: ModelStringInput | null;
@@ -854,20 +840,10 @@ export type ModelLikesFilterInput = {
   id?: ModelIDInput | null;
   usernameID?: ModelIDInput | null;
   profileID?: ModelIDInput | null;
-  imagePostsID?: ModelIDInput | null;
   and?: Array<ModelLikesFilterInput | null> | null;
   or?: Array<ModelLikesFilterInput | null> | null;
   not?: ModelLikesFilterInput | null;
-};
-
-export type ModelIDKeyConditionInput = {
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
+  imagePostLikesId?: ModelIDInput | null;
 };
 
 export type ModelCommentsFilterInput = {
@@ -877,10 +853,11 @@ export type ModelCommentsFilterInput = {
   profileID?: ModelIDInput | null;
   comment?: ModelStringInput | null;
   time_posted?: ModelStringInput | null;
-  imagePostsID?: ModelIDInput | null;
+  imagePostsID?: ModelStringInput | null;
   and?: Array<ModelCommentsFilterInput | null> | null;
   or?: Array<ModelCommentsFilterInput | null> | null;
   not?: ModelCommentsFilterInput | null;
+  imagePostCommentsId?: ModelIDInput | null;
 };
 
 export type ModelUsernameFilterInput = {
@@ -1060,7 +1037,6 @@ export type ModelSubscriptionImagePostFilterInput = {
   sorterValue?: ModelSubscriptionStringInput | null;
   description?: ModelSubscriptionStringInput | null;
   time_posted?: ModelSubscriptionStringInput | null;
-  alreadyLiked?: ModelSubscriptionBooleanInput | null;
   usernameID?: ModelSubscriptionIDInput | null;
   profileID?: ModelSubscriptionIDInput | null;
   s3_key?: ModelSubscriptionStringInput | null;
@@ -1072,16 +1048,10 @@ export type ModelSubscriptionImagePostFilterInput = {
   or?: Array<ModelSubscriptionImagePostFilterInput | null> | null;
 };
 
-export type ModelSubscriptionBooleanInput = {
-  ne?: boolean | null;
-  eq?: boolean | null;
-};
-
 export type ModelSubscriptionLikesFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   usernameID?: ModelSubscriptionIDInput | null;
   profileID?: ModelSubscriptionIDInput | null;
-  imagePostsID?: ModelSubscriptionIDInput | null;
   and?: Array<ModelSubscriptionLikesFilterInput | null> | null;
   or?: Array<ModelSubscriptionLikesFilterInput | null> | null;
 };
@@ -1093,7 +1063,7 @@ export type ModelSubscriptionCommentsFilterInput = {
   profileID?: ModelSubscriptionIDInput | null;
   comment?: ModelSubscriptionStringInput | null;
   time_posted?: ModelSubscriptionStringInput | null;
-  imagePostsID?: ModelSubscriptionIDInput | null;
+  imagePostsID?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionCommentsFilterInput | null> | null;
   or?: Array<ModelSubscriptionCommentsFilterInput | null> | null;
 };
@@ -1294,7 +1264,6 @@ export type CreateProfileMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -1351,7 +1320,6 @@ export type UpdateProfileMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -1408,7 +1376,6 @@ export type DeleteProfileMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -1447,7 +1414,6 @@ export type CreateImagePostMutation = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  alreadyLiked?: boolean | null;
   likes?: {
     __typename: "ModelLikesConnection";
     nextToken?: string | null;
@@ -1502,7 +1468,6 @@ export type UpdateImagePostMutation = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  alreadyLiked?: boolean | null;
   likes?: {
     __typename: "ModelLikesConnection";
     nextToken?: string | null;
@@ -1557,7 +1522,6 @@ export type DeleteImagePostMutation = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  alreadyLiked?: boolean | null;
   likes?: {
     __typename: "ModelLikesConnection";
     nextToken?: string | null;
@@ -1639,9 +1603,9 @@ export type CreateLikesMutation = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
-  imagePostsID: string;
   createdAt: string;
   updatedAt: string;
+  imagePostLikesId?: string | null;
   owner?: string | null;
 };
 
@@ -1678,9 +1642,9 @@ export type UpdateLikesMutation = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
-  imagePostsID: string;
   createdAt: string;
   updatedAt: string;
+  imagePostLikesId?: string | null;
   owner?: string | null;
 };
 
@@ -1717,9 +1681,9 @@ export type DeleteLikesMutation = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
-  imagePostsID: string;
   createdAt: string;
   updatedAt: string;
+  imagePostLikesId?: string | null;
   owner?: string | null;
 };
 
@@ -1759,9 +1723,10 @@ export type CreateCommentsMutation = {
   } | null;
   comment?: string | null;
   time_posted?: string | null;
-  imagePostsID: string;
+  imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -1801,9 +1766,10 @@ export type UpdateCommentsMutation = {
   } | null;
   comment?: string | null;
   time_posted?: string | null;
-  imagePostsID: string;
+  imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -1843,9 +1809,10 @@ export type DeleteCommentsMutation = {
   } | null;
   comment?: string | null;
   time_posted?: string | null;
-  imagePostsID: string;
+  imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -1860,7 +1827,6 @@ export type CreateUsernameMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -1907,7 +1873,6 @@ export type UpdateUsernameMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -1954,7 +1919,6 @@ export type DeleteUsernameMutation = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -2720,7 +2684,6 @@ export type GetProfileQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -2825,10 +2788,8 @@ export type GetImagePostQuery = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  alreadyLiked?: boolean | null;
   likes?: {
     __typename: "ModelLikesConnection";
-    username: string | null;
     nextToken?: string | null;
   } | null;
   comments?: {
@@ -2883,7 +2844,6 @@ export type ListImagePostsQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -2906,7 +2866,6 @@ export type ImagePostsBySorterValueAndTime_postedQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -2929,7 +2888,6 @@ export type ImagePostsByUsernameIDQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -2952,7 +2910,6 @@ export type ImagePostsByProfileIDQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -3000,9 +2957,9 @@ export type GetLikesQuery = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
-  imagePostsID: string;
   createdAt: string;
   updatedAt: string;
+  imagePostLikesId?: string | null;
   owner?: string | null;
 };
 
@@ -3013,9 +2970,9 @@ export type ListLikesQuery = {
     id: string;
     usernameID: string;
     profileID: string;
-    imagePostsID: string;
     createdAt: string;
     updatedAt: string;
+    imagePostLikesId?: string | null;
     owner?: string | null;
   } | null>;
   nextToken?: string | null;
@@ -3028,9 +2985,9 @@ export type LikesByUsernameIDQuery = {
     id: string;
     usernameID: string;
     profileID: string;
-    imagePostsID: string;
     createdAt: string;
     updatedAt: string;
+    imagePostLikesId?: string | null;
     owner?: string | null;
   } | null>;
   nextToken?: string | null;
@@ -3043,24 +3000,9 @@ export type LikesByProfileIDQuery = {
     id: string;
     usernameID: string;
     profileID: string;
-    imagePostsID: string;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type LikesByImagePostsIDAndIdQuery = {
-  __typename: "ModelLikesConnection";
-  items: Array<{
-    __typename: "Likes";
-    id: string;
-    usernameID: string;
-    profileID: string;
-    imagePostsID: string;
-    createdAt: string;
-    updatedAt: string;
+    imagePostLikesId?: string | null;
     owner?: string | null;
   } | null>;
   nextToken?: string | null;
@@ -3102,9 +3044,10 @@ export type GetCommentsQuery = {
   } | null;
   comment?: string | null;
   time_posted?: string | null;
-  imagePostsID: string;
+  imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -3118,9 +3061,10 @@ export type ListCommentsQuery = {
     profileID: string;
     comment?: string | null;
     time_posted?: string | null;
-    imagePostsID: string;
+    imagePostsID?: string | null;
     createdAt: string;
     updatedAt: string;
+    imagePostCommentsId?: string | null;
     owner?: string | null;
   } | null>;
   nextToken?: string | null;
@@ -3136,9 +3080,10 @@ export type CommentsBySorterValueAndTime_postedQuery = {
     profileID: string;
     comment?: string | null;
     time_posted?: string | null;
-    imagePostsID: string;
+    imagePostsID?: string | null;
     createdAt: string;
     updatedAt: string;
+    imagePostCommentsId?: string | null;
     owner?: string | null;
   } | null>;
   nextToken?: string | null;
@@ -3154,27 +3099,10 @@ export type CommentsByProfileIDQuery = {
     profileID: string;
     comment?: string | null;
     time_posted?: string | null;
-    imagePostsID: string;
+    imagePostsID?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type CommentsByImagePostsIDAndTime_postedQuery = {
-  __typename: "ModelCommentsConnection";
-  items: Array<{
-    __typename: "Comments";
-    id: string;
-    usernameID: string;
-    sorterValue?: string | null;
-    profileID: string;
-    comment?: string | null;
-    time_posted?: string | null;
-    imagePostsID: string;
-    createdAt: string;
-    updatedAt: string;
+    imagePostCommentsId?: string | null;
     owner?: string | null;
   } | null>;
   nextToken?: string | null;
@@ -3191,7 +3119,6 @@ export type GetUsernameQuery = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -3811,7 +3738,6 @@ export type OnCreateProfileSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -3868,7 +3794,6 @@ export type OnUpdateProfileSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -3925,7 +3850,6 @@ export type OnDeleteProfileSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -3964,7 +3888,6 @@ export type OnCreateImagePostSubscription = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  alreadyLiked?: boolean | null;
   likes?: {
     __typename: "ModelLikesConnection";
     nextToken?: string | null;
@@ -4019,7 +3942,6 @@ export type OnUpdateImagePostSubscription = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  alreadyLiked?: boolean | null;
   likes?: {
     __typename: "ModelLikesConnection";
     nextToken?: string | null;
@@ -4074,7 +3996,6 @@ export type OnDeleteImagePostSubscription = {
   sorterValue?: string | null;
   description?: string | null;
   time_posted?: string | null;
-  alreadyLiked?: boolean | null;
   likes?: {
     __typename: "ModelLikesConnection";
     nextToken?: string | null;
@@ -4156,9 +4077,9 @@ export type OnCreateLikesSubscription = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
-  imagePostsID: string;
   createdAt: string;
   updatedAt: string;
+  imagePostLikesId?: string | null;
   owner?: string | null;
 };
 
@@ -4195,9 +4116,9 @@ export type OnUpdateLikesSubscription = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
-  imagePostsID: string;
   createdAt: string;
   updatedAt: string;
+  imagePostLikesId?: string | null;
   owner?: string | null;
 };
 
@@ -4234,9 +4155,9 @@ export type OnDeleteLikesSubscription = {
     profileImagePostsId?: string | null;
     owner?: string | null;
   } | null;
-  imagePostsID: string;
   createdAt: string;
   updatedAt: string;
+  imagePostLikesId?: string | null;
   owner?: string | null;
 };
 
@@ -4276,9 +4197,10 @@ export type OnCreateCommentsSubscription = {
   } | null;
   comment?: string | null;
   time_posted?: string | null;
-  imagePostsID: string;
+  imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -4318,9 +4240,10 @@ export type OnUpdateCommentsSubscription = {
   } | null;
   comment?: string | null;
   time_posted?: string | null;
-  imagePostsID: string;
+  imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
+  imagePostCommentsId?: string | null;
   owner?: string | null;
 };
 
@@ -4360,7 +4283,7 @@ export type OnDeleteCommentsSubscription = {
   } | null;
   comment?: string | null;
   time_posted?: string | null;
-  imagePostsID: string;
+  imagePostsID?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -4377,7 +4300,6 @@ export type OnCreateUsernameSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -4424,7 +4346,6 @@ export type OnUpdateUsernameSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -4471,7 +4392,6 @@ export type OnDeleteUsernameSubscription = {
     sorterValue?: string | null;
     description?: string | null;
     time_posted?: string | null;
-    alreadyLiked?: boolean | null;
     usernameID: string;
     profileID: string;
     s3_key?: string | null;
@@ -5169,7 +5089,6 @@ export type OnDeleteChatLikesSubscription = {
   chatsLikesId?: string | null;
   owner?: string | null;
 };
-
 // ZACH CREATED
 export type GetUsernameDataQuery = {
   __typename: "Username";
@@ -5726,7 +5645,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -5799,7 +5717,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -5872,7 +5789,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -5927,7 +5843,6 @@ export class APIService {
           sorterValue
           description
           time_posted
-          alreadyLiked
           likes {
             __typename
             nextToken
@@ -5998,7 +5913,6 @@ export class APIService {
           sorterValue
           description
           time_posted
-          alreadyLiked
           likes {
             __typename
             nextToken
@@ -6069,7 +5983,6 @@ export class APIService {
           sorterValue
           description
           time_posted
-          alreadyLiked
           likes {
             __typename
             nextToken
@@ -6167,9 +6080,9 @@ export class APIService {
             profileImagePostsId
             owner
           }
-          imagePostsID
           createdAt
           updatedAt
+          imagePostsID
           owner
         }
       }`;
@@ -6222,9 +6135,9 @@ export class APIService {
             profileImagePostsId
             owner
           }
-          imagePostsID
           createdAt
           updatedAt
+          imagePostLikesId
           owner
         }
       }`;
@@ -6277,9 +6190,9 @@ export class APIService {
             profileImagePostsId
             owner
           }
-          imagePostsID
           createdAt
           updatedAt
+          imagePostLikesId
           owner
         }
       }`;
@@ -6484,7 +6397,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -6547,7 +6459,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -6610,7 +6521,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -7714,7 +7624,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -7920,14 +7829,8 @@ export class APIService {
           sorterValue
           description
           time_posted
-          alreadyLiked
           likes {
             __typename
-            items {
-              username {
-                username
-              }
-            }
             nextToken
           }
           comments {
@@ -7996,7 +7899,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -8050,7 +7952,17 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
+            comments {
+              items {
+                comments
+              }
+            }
+            likes {
+              items {
+                id
+                username
+              }
+            }
             usernameID
             profileID
             s3_key
@@ -8112,7 +8024,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -8169,7 +8080,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -8239,9 +8149,9 @@ export class APIService {
             profileImagePostsId
             owner
           }
-          imagePostsID
           createdAt
           updatedAt
+          imagePostLikesId
           owner
         }
       }`;
@@ -8266,9 +8176,9 @@ export class APIService {
             id
             usernameID
             profileID
-            imagePostsID
             createdAt
             updatedAt
+            imagePostLikesId
             owner
           }
           nextToken
@@ -8310,9 +8220,9 @@ export class APIService {
             id
             usernameID
             profileID
-            imagePostsID
             createdAt
             updatedAt
+            imagePostLikesId
             owner
           }
           nextToken
@@ -8359,9 +8269,9 @@ export class APIService {
             id
             usernameID
             profileID
-            imagePostsID
             createdAt
             updatedAt
+            imagePostLikesId
             owner
           }
           nextToken
@@ -8386,62 +8296,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <LikesByProfileIDQuery>response.data.likesByProfileID;
-  }
-  async LikesByImagePostsIDAndId(
-    imagePostsID: string,
-    id?: ModelIDKeyConditionInput,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelLikesFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<LikesByImagePostsIDAndIdQuery> {
-    const statement = `query LikesByImagePostsIDAndId($imagePostsID: ID!, $id: ModelIDKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelLikesFilterInput, $limit: Int, $nextToken: String) {
-        likesByImagePostsIDAndId(
-          imagePostsID: $imagePostsID
-          id: $id
-          sortDirection: $sortDirection
-          filter: $filter
-          limit: $limit
-          nextToken: $nextToken
-        ) {
-          __typename
-          items {
-            __typename
-            id
-            usernameID
-            profileID
-            imagePostsID
-            createdAt
-            updatedAt
-            owner
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      imagePostsID
-    };
-    if (id) {
-      gqlAPIServiceArguments.id = id;
-    }
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <LikesByImagePostsIDAndIdQuery>(
-      response.data.likesByImagePostsIDAndId
-    );
   }
   async GetComments(id: string): Promise<GetCommentsQuery> {
     const statement = `query GetComments($id: ID!) {
@@ -8562,6 +8416,7 @@ export class APIService {
             sorterValue
             profileID
             profile {
+              profilepictureID
               profilepicture {
                 imageurl
               }
@@ -8569,8 +8424,6 @@ export class APIService {
             comment
             time_posted
             imagePostsID
-            createdAt
-            updatedAt
             owner
           }
           nextToken
@@ -8653,65 +8506,6 @@ export class APIService {
     )) as any;
     return <CommentsByProfileIDQuery>response.data.commentsByProfileID;
   }
-  async CommentsByImagePostsIDAndTime_posted(
-    imagePostsID: string,
-    time_posted?: ModelStringKeyConditionInput,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelCommentsFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<CommentsByImagePostsIDAndTime_postedQuery> {
-    const statement = `query CommentsByImagePostsIDAndTime_posted($imagePostsID: ID!, $time_posted: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelCommentsFilterInput, $limit: Int, $nextToken: String) {
-        commentsByImagePostsIDAndTime_posted(
-          imagePostsID: $imagePostsID
-          time_posted: $time_posted
-          sortDirection: $sortDirection
-          filter: $filter
-          limit: $limit
-          nextToken: $nextToken
-        ) {
-          __typename
-          items {
-            __typename
-            id
-            usernameID
-            sorterValue
-            profileID
-            comment
-            time_posted
-            imagePostsID
-            createdAt
-            updatedAt
-            owner
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      imagePostsID
-    };
-    if (time_posted) {
-      gqlAPIServiceArguments.time_posted = time_posted;
-    }
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CommentsByImagePostsIDAndTime_postedQuery>(
-      response.data.commentsByImagePostsIDAndTime_posted
-    );
-  }
   async GetUsername(id: string): Promise<GetUsernameQuery> {
     const statement = `query GetUsername($id: ID!) {
         getUsername(id: $id) {
@@ -8725,7 +8519,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -9118,8 +8911,6 @@ export class APIService {
             batIndex
             resultDescription
             pitchData
-            createdAt
-            updatedAt
             owner
           }
           nextToken
@@ -9181,8 +8972,6 @@ export class APIService {
             batIndex
             resultDescription
             pitchData
-            createdAt
-            updatedAt
             owner
           }
           nextToken
@@ -9387,6 +9176,7 @@ export class APIService {
             timePosted
             sportsGameID
             sportsgame {
+              __typename
               id
               sport
               homeTeam
@@ -9394,9 +9184,9 @@ export class APIService {
               gameInfo
               startTime
               lastUpdate
+              liveGameChatRoomID
+              owner
             }
-            createdAt
-            updatedAt
             owner
           }
           nextToken
@@ -9490,8 +9280,6 @@ export class APIService {
             updatedAt
             owner
           }
-          createdAt
-          updatedAt
           owner
         }
       }`;
@@ -9628,8 +9416,6 @@ export class APIService {
             chat
             timePosted
             liveGameChatRoomID
-            createdAt
-            updatedAt
             owner
           }
           nextToken
@@ -9935,7 +9721,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -10013,7 +9798,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -10091,7 +9875,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -10151,7 +9934,6 @@ export class APIService {
           sorterValue
           description
           time_posted
-          alreadyLiked
           likes {
             __typename
             nextToken
@@ -10168,7 +9950,6 @@ export class APIService {
             profileID
             createdAt
             updatedAt
-            usernameImagePostsId
             usernameProfileId
             owner
           }
@@ -10227,7 +10008,6 @@ export class APIService {
           sorterValue
           description
           time_posted
-          alreadyLiked
           likes {
             __typename
             nextToken
@@ -10303,7 +10083,6 @@ export class APIService {
           sorterValue
           description
           time_posted
-          alreadyLiked
           likes {
             __typename
             nextToken
@@ -10382,8 +10161,6 @@ export class APIService {
             id
             username
             profileID
-            createdAt
-            updatedAt
             usernameImagePostsId
             usernameProfileId
             owner
@@ -10401,14 +10178,10 @@ export class APIService {
             profilepictureID
             bio
             birthday
-            createdAt
-            updatedAt
             profileImagePostsId
             owner
           }
           imagePostsID
-          createdAt
-          updatedAt
           owner
         }
       }`;
@@ -10466,9 +10239,9 @@ export class APIService {
             profileImagePostsId
             owner
           }
-          imagePostsID
           createdAt
           updatedAt
+          imagePostLikesId
           owner
         }
       }`;
@@ -10526,9 +10299,9 @@ export class APIService {
             profileImagePostsId
             owner
           }
-          imagePostsID
           createdAt
           updatedAt
+          imagePostLikesId
           owner
         }
       }`;
@@ -10590,8 +10363,6 @@ export class APIService {
           comment
           time_posted
           imagePostsID
-          createdAt
-          updatedAt
           owner
         }
       }`;
@@ -10653,8 +10424,6 @@ export class APIService {
           comment
           time_posted
           imagePostsID
-          createdAt
-          updatedAt
           owner
         }
       }`;
@@ -10716,8 +10485,6 @@ export class APIService {
           comment
           time_posted
           imagePostsID
-          createdAt
-          updatedAt
           owner
         }
       }`;
@@ -10753,7 +10520,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -10821,7 +10587,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -10889,7 +10654,6 @@ export class APIService {
             sorterValue
             description
             time_posted
-            alreadyLiked
             usernameID
             profileID
             s3_key
@@ -11005,15 +10769,6 @@ export class APIService {
           gameInfo
           startTime
           lastUpdate
-          liveGameChatRoomID
-          livegamechatroom {
-            __typename
-            id
-            sport
-            sportsGameID
-            chatsID
-            owner
-          }
           owner
         }
       }`;
@@ -11095,20 +10850,6 @@ export class APIService {
           id
           sortKey
           sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameInfo
-            startTime
-            lastUpdate
-            liveGameChatRoomID
-            createdAt
-            updatedAt
-            owner
-          }
           pitchCount
           isOut
           count
@@ -11117,8 +10858,6 @@ export class APIService {
           batIndex
           resultDescription
           pitchData
-          createdAt
-          updatedAt
           owner
         }
       }`;
@@ -11152,20 +10891,6 @@ export class APIService {
           id
           sortKey
           sportsGameID
-          sportsgame {
-            __typename
-            id
-            sport
-            homeTeam
-            awayTeam
-            gameInfo
-            startTime
-            lastUpdate
-            liveGameChatRoomID
-            createdAt
-            updatedAt
-            owner
-          }
           pitchCount
           isOut
           count
@@ -11174,9 +10899,6 @@ export class APIService {
           batIndex
           resultDescription
           pitchData
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -11485,12 +11207,8 @@ export class APIService {
             startTime
             lastUpdate
             liveGameChatRoomID
-            createdAt
-            updatedAt
             owner
           }
-          createdAt
-          updatedAt
           owner
         }
       }`;

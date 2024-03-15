@@ -320,7 +320,7 @@ export type CreateLikesInput = {
   id?: string | null;
   usernameID: string;
   profileID: string;
-  imagePostLikesId?: string | null;
+  imagePostsID: string;
 };
 
 export type ModelLikesConditionInput = {
@@ -6342,7 +6342,14 @@ export class FA {
   async GetPostLikes(id: string): Promise<GetImagePostQuery> {
     const statement = `query getImageLikes($id: ID!) {
       getImagePost(id: $id) {
-        likes
+        likes {
+          items {
+            id
+            username {
+              username
+            }
+          }
+        }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -9883,8 +9890,16 @@ export class FA {
             sorterValue
             description
             time_posted
+            alreadyLiked
             likes {
               __typename
+              items {
+                id
+                usernameID
+                username {
+                  username
+                }
+              }
               nextToken
             }
             comments {
@@ -9900,7 +9915,6 @@ export class FA {
               id
               username
               profileID
-              usernameImagePostsId
               usernameProfileId
               owner
             }

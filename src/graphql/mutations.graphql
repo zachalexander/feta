@@ -125,6 +125,7 @@ mutation CreateProfile(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -186,6 +187,7 @@ mutation UpdateProfile(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -247,6 +249,7 @@ mutation DeleteProfile(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -291,6 +294,7 @@ mutation CreateImagePost(
     sorterValue
     description
     time_posted
+    alreadyLiked
     likes {
       nextToken
       __typename
@@ -350,6 +354,7 @@ mutation UpdateImagePost(
     sorterValue
     description
     time_posted
+    alreadyLiked
     likes {
       nextToken
       __typename
@@ -409,6 +414,7 @@ mutation DeleteImagePost(
     sorterValue
     description
     time_posted
+    alreadyLiked
     likes {
       nextToken
       __typename
@@ -495,9 +501,9 @@ mutation CreateLikes(
       owner
       __typename
     }
+    imagePostsID
     createdAt
     updatedAt
-    imagePostLikesId
     owner
     __typename
   }
@@ -539,9 +545,9 @@ mutation UpdateLikes(
       owner
       __typename
     }
+    imagePostsID
     createdAt
     updatedAt
-    imagePostLikesId
     owner
     __typename
   }
@@ -583,9 +589,9 @@ mutation DeleteLikes(
       owner
       __typename
     }
+    imagePostsID
     createdAt
     updatedAt
-    imagePostLikesId
     owner
     __typename
   }
@@ -633,7 +639,6 @@ mutation CreateComments(
     imagePostsID
     createdAt
     updatedAt
-    imagePostCommentsId
     owner
     __typename
   }
@@ -681,7 +686,6 @@ mutation UpdateComments(
     imagePostsID
     createdAt
     updatedAt
-    imagePostCommentsId
     owner
     __typename
   }
@@ -729,7 +733,6 @@ mutation DeleteComments(
     imagePostsID
     createdAt
     updatedAt
-    imagePostCommentsId
     owner
     __typename
   }
@@ -748,6 +751,7 @@ mutation CreateUsername(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -799,6 +803,7 @@ mutation UpdateUsername(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -850,6 +855,7 @@ mutation DeleteUsername(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
