@@ -42,6 +42,7 @@ type ImagePost @model @auth(rules: [
   sorterValue: String @index(name: "byTimePosted", sortKeyFields: ["time_posted"])
   description: String
   time_posted: AWSDateTime
+  alreadyLiked: Boolean
   likes: [Likes] @hasMany(indexName: "byLikes", fields: ["id"])
   comments: [Comments] @hasMany(indexName: "byComments", fields: ["id"])
   usernameID: ID! @index(name: "byUsername")

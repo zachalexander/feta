@@ -70,8 +70,8 @@
           <ion-card-subtitle>At Bat</ion-card-subtitle>
           <div class="batter-stats">
             <ion-avatar class="headshot-live"><img src="https://midfield.mlbstatic.com/v1/people/{{baseballData.gameInfo.currentPlay.matchup.batter.id}}/spots/120" /></ion-avatar>
-            <ion-note class="current-batter-stats" *ngIf="baseballData.gameInfo.initialGameData.status.detailedState === 'In Progress' && !baseballData.gameInfo.currentBatterSplits.stats">{{baseballData.gameInfo.currentPlay.matchup.batter.fullName}}<br>({{baseballData.gameInfo.currentBatterStats}})</ion-note>
-            <ion-note class="current-batter-stats" *ngIf="baseballData.gameInfo.initialGameData.status.detailedState === 'In Progress' && baseballData.gameInfo.currentBatterSplits.stats">{{baseballData.gameInfo.currentPlay.matchup.batter.fullName}}&nbsp;({{baseballData.gameInfo.currentBatterSplits.stats}})</ion-note>
+            <ion-note class="current-batter-stats" *ngIf="baseballData.gameInfo.initialGameData.status.detailedState === 'In Progress'">{{baseballData.gameInfo.currentPlay.matchup.batter.fullName}}</ion-note>
+            <!-- <ion-note class="current-batter-stats" *ngIf="baseballData.gameInfo.initialGameData.status.detailedState === 'In Progress' && baseballData.gameInfo.currentBatterSplits.stats">{{baseballData.gameInfo.currentPlay.matchup.batter.fullName}}&nbsp;({{baseballData.gameInfo.currentBatterSplits.stats}})</ion-note> -->
           </div>
         </div>
         <div class="current-pitcher">
@@ -116,6 +116,9 @@
             </div>
         </div>
       </ion-accordion> -->
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-note *ngIf="newPlaysAnimate" [@playRender]="'in'">{{newPlaysAnimate.resultDescription}}</ion-note>
   </ion-toolbar>
 </ion-header>
 

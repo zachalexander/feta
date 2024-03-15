@@ -45,6 +45,8 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import {VgStreamingModule} from '@videogular/ngx-videogular/streaming';
 import { SharedmodulePageModule } from './pages/sharedmodule/sharedmodule.module';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 Amplify.configure(awsconfig);
 Amplify.configure(awsvideoconfig);
@@ -68,6 +70,7 @@ Amplify.configure(awsvideoconfig);
   ],
   imports: [
     BrowserModule, 
+    BrowserAnimationsModule,
     HttpClientModule,
     IonicModule.forRoot(), 
     AppRoutingModule, 

@@ -125,6 +125,7 @@ subscription OnCreateProfile(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -186,6 +187,7 @@ subscription OnUpdateProfile(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -247,6 +249,7 @@ subscription OnDeleteProfile(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -291,6 +294,7 @@ subscription OnCreateImagePost(
     sorterValue
     description
     time_posted
+    alreadyLiked
     likes {
       nextToken
       __typename
@@ -350,6 +354,7 @@ subscription OnUpdateImagePost(
     sorterValue
     description
     time_posted
+    alreadyLiked
     likes {
       nextToken
       __typename
@@ -409,6 +414,7 @@ subscription OnDeleteImagePost(
     sorterValue
     description
     time_posted
+    alreadyLiked
     likes {
       nextToken
       __typename
@@ -495,9 +501,9 @@ subscription OnCreateLikes(
       owner
       __typename
     }
+    imagePostsID
     createdAt
     updatedAt
-    imagePostLikesId
     owner
     __typename
   }
@@ -539,9 +545,9 @@ subscription OnUpdateLikes(
       owner
       __typename
     }
+    imagePostsID
     createdAt
     updatedAt
-    imagePostLikesId
     owner
     __typename
   }
@@ -583,9 +589,9 @@ subscription OnDeleteLikes(
       owner
       __typename
     }
+    imagePostsID
     createdAt
     updatedAt
-    imagePostLikesId
     owner
     __typename
   }
@@ -633,7 +639,6 @@ subscription OnCreateComments(
     imagePostsID
     createdAt
     updatedAt
-    imagePostCommentsId
     owner
     __typename
   }
@@ -681,7 +686,6 @@ subscription OnUpdateComments(
     imagePostsID
     createdAt
     updatedAt
-    imagePostCommentsId
     owner
     __typename
   }
@@ -729,7 +733,6 @@ subscription OnDeleteComments(
     imagePostsID
     createdAt
     updatedAt
-    imagePostCommentsId
     owner
     __typename
   }
@@ -748,6 +751,7 @@ subscription OnCreateUsername(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -799,6 +803,7 @@ subscription OnUpdateUsername(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -850,6 +855,7 @@ subscription OnDeleteUsername(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key

@@ -53,7 +53,7 @@
             </swiper>
             <div id="video-container" *ngIf="!image.mediaSourceDesktop && !image.mediaSourceMobile">
               <vg-player>
-                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [poster]="image.posterImage" posterelement="#test" vgHls="https://d2glij88atjbas.cloudfront.net/public/{{image.s3_key}}" #media preload="none" playsinline webkit-playsinline="webkit-playsinline" muted="true">
+                <video (ended)="videoEnd()" #timelineVideo class="video_{{image.id}}" [vgMedia]="$any(media)" [poster]="image.posterImage" posterelement="#test" vgHls="https://d2glij88atjbas.cloudfront.net/public/{{image.s3_key}}" #media preload="none" crossorigin playsinline webkit-playsinline="webkit-playsinline" muted="true">
                   <source vgHls="https://d2glij88atjbas.cloudfront.net/public/{{image.s3_key}}" type="application/x-mpegURL">
                 </video>
               </vg-player>
@@ -72,8 +72,8 @@
             <ion-list lines="none" mode= "md">
               <ion-tab-bar lines="none" id="interaction_{{image.imagesID}}" class="interactions-photos">
 
-                <!-- custom component for like button -->
-                <app-timeline-like-button [version]="image.version" [user]="this.currentUserUsername" [alreadyLiked]="image.userLiked" [imageId] = "image.id" [usernameID]="this.currentUserUsernameID"></app-timeline-like-button>
+                <!-- custom component for like button, uses pipe to see if like button already pressed by user per image -->
+                <app-timeline-like-button [alreadyLiked]="image.likes | likeButtonAlready:currentUserUsernameID" [imageId]="image.id"></app-timeline-like-button>
 
                 <!-- comment chat-bubble button below image -->
                 <ion-tab-button (click)="openCommentModal(image.id)">
@@ -89,8 +89,8 @@
 
             <!-- shows the number of likes for each post -->
             <div class="likes-bar">
-              <small *ngIf="image.like_count < 1"><strong>0 likes</strong></small>
-              <small class="likes-count" (click)="showLikesModal([image.url, image.id, image.imagesID])" *ngIf="image.like_count >= 1"><strong>{{image.like_count}} likes</strong></small>
+              <small *ngIf="image.likes.items.length < 1">0 likes</small>
+              <small class="likes-count" (click)="showLikesModal([image.url, image.id, image.imagesID])" *ngIf="image.likes.items.length >= 1">{{image.likes.items.length}} likes</small>
             </div>
             <!-- shows the post description and the user that posted the image -->
             <ion-card-content class="ion-no-padding" lines="none" class="image-description">

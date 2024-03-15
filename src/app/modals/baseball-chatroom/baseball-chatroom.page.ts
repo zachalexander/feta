@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { BehaviorSubject, Subscription, finalize } from 'rxjs';
+import { ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { BehaviorSubject, Subscription, finalize, timer, Subject, Observable, switchMap, takeUntil } from 'rxjs';
 import { APIService, ModelSortDirection } from 'src/app/API.service';
 import { SportsService } from 'src/app/services/sports.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -10,17 +10,35 @@ import { DateSuffixPipe } from 'src/app/pipes/date-suffix.pipe';
 import { Amplify, Hub } from 'aws-amplify';
 import { CONNECTION_STATE_CHANGE, ConnectionState } from '@aws-amplify/pubsub';
 
+import { trigger, state, style, animate, transition, query, stagger} from '@angular/animations';
+
 
 @Component({
   selector: 'app-baseball-chatroom',
   templateUrl: './baseball-chatroom.page.html',
   styleUrls: ['./baseball-chatroom.page.scss'],
+  animations: [
+    trigger('playRender', [
+      transition('* => *', [
+        query(':leave', [
+          stagger(500, [
+            animate(1000, style({ opacity: 0 }))
+          ])
+        ], { optional: true }),
+        query(':enter', [
+          style({ opacity: 0 }),
+          animate(1000, style({ opacity: 1 }))
+        ], { optional: true })
+      ])
+    ])
+  ],
 })
-export class BaseballChatroomPage implements OnInit {
+export class BaseballChatroomPage implements ViewDidEnter, ViewDidLeave {
 
   onUpdateSportsGame: Subscription | null = null;
   onUpdateHubPost: Subscription | null = null;
   onUpdateChats: Subscription | null = null;
+  onCreateBaseballAtBatIndex: Subscription | null = null;
   postChat = {} as FormGroup;
   @ViewChild(IonContent) ionContent: IonContent;
   priorConnectionState: ConnectionState;
@@ -40,6 +58,11 @@ export class BaseballChatroomPage implements OnInit {
   chats;
   livechatroomdata;
 
+  closeTimer$ = new Subject<any>();
+
+  newPlays;
+  newPlaysAnimate;
+
   constructor(
     private modalController: ModalController,
     private api: APIService,
@@ -57,7 +80,10 @@ export class BaseballChatroomPage implements OnInit {
       plays.id = await JSON.parse(plays.id)
       plays.pitchData = await JSON.parse(plays.pitchData)
     })
-    return this.gamePlays;
+    const sorted = this.gamePlays.sort((a, b) => {
+      return a.batIndex - b.batIndex || a.pitchCount - b.pitchCount;
+    })
+    return sorted;
   }
 
   async getChats(livegamechatroomid){
@@ -71,7 +97,7 @@ export class BaseballChatroomPage implements OnInit {
     }, 50)
   }
 
-  async ngOnInit() {
+  async ionViewDidEnter() {
     this.startSubscriptions();
     console.log(this.baseballData)
     // this.accordionOpen = false;
@@ -80,8 +106,6 @@ export class BaseballChatroomPage implements OnInit {
     this.userProfileID = localStorage.getItem('profileID');
     this.userUsernameID = localStorage.getItem('usernameID')
     this.chats = await this.getChats(this.liveGameChatRoomID);
-    console.log(this.chats)
-
     this.gamePlays = await this.getPlays(this.baseballData.id);
     console.log(this.gamePlays)
 
@@ -92,26 +116,51 @@ export class BaseballChatroomPage implements OnInit {
     this.ionViewDidLoad();
     this.userTyped = false;
     document.querySelector<HTMLElement>(".textarea-wrapper").style.minWidth = "100%";
-
     await this.getProfilePic();
 
-
-    Hub.listen('api', (data: any) => {
-      const { payload } = data;
-      console.log(payload)
-      if (payload.event === CONNECTION_STATE_CHANGE) {
-
-        if (this.priorConnectionState === ConnectionState.Connecting && payload.data.connectionState === ConnectionState.Connected) {
-          this.getChats(this.liveGameChatRoomID)
-          console.log(this.baseballData)
+    let playCount;
+    timer(0, 20000).pipe(
+      switchMap(async () => console.log('currently polling...')),
+      takeUntil(this.closeTimer$)
+    ).subscribe({
+      next: async (res: any) => {
+          let playCountPrev = playCount;
+          console.log('Previous Play Count: ', playCountPrev)
+          this.gamePlays = await this.getPlays(this.baseballData.id)
+          playCount = this.gamePlays.length;
+          console.log('Current Play Count: ', playCount)
+  
+          if((playCount !== playCountPrev) && (playCountPrev !== undefined)){
+            console.log(this.gamePlays)
+            this.newPlays = this.gamePlays.slice(playCountPrev - 1, playCount - 1);
+            console.log(this.newPlays)
+    
+            let timer = setInterval(() => {
+              if(this.newPlays.length){
+                console.log(this.newPlays.shift)
+                this.newPlaysAnimate = this.newPlays.shift();
+                console.log(this.newPlaysAnimate)
+              } else {
+                clearInterval(timer)
+              }
+            }, 5000)
+        } else {
+          this.newPlaysAnimate = this.gamePlays[this.gamePlays.length - 1];
         }
-
-        this.priorConnectionState = payload.data.connectionState;
-        // const connectionState = payload.data.connectionState as ConnectionState;
-        // console.log(connectionState)
+        // this.newPlays.forEach((play, index) => {
+        //   setTimeout(() => {
+        //     this.newPlaysAnimate.push(play[index].resultDescription)
+        //     console.log(this.newPlaysAnimate)
+        //   }, 2000)
+        //   this.newPlaysAnimate.pop();
+        // })
       }
     })
+
+
   }
+
+  
 
   ngAfterViewInit(){
     this.ionContent.scrollToBottom();
@@ -137,38 +186,17 @@ export class BaseballChatroomPage implements OnInit {
         }
       })
     )
-    this.onUpdateHubPost = <Subscription>(
-      this.api.OnUpdateHubPostsListener().subscribe({
-        next: async (event: any) => {
-          const data = event;
-        }
-      })
-    )
     this.onUpdateSportsGame = <Subscription>(
       this.api.OnUpdateSportsGameListener().subscribe({
         next: async (event: any) => {
           const data = event;
           if (data.value.data.onUpdateSportsGame.id === this.baseballData.id) {
-            console.log(this.baseballData.id)
-            this.baseballData.losingPitcherStats = [];
-            this.baseballData.winningPitcherStats = [];
-            this.baseballData.oriolesOutcome = [];
             this.baseballData.currentHalfInning = null;
             this.baseballData = data.value.data.onUpdateSportsGame;
             this.baseballData.gameInfo = JSON.parse(data.value.data.onUpdateSportsGame.gameInfo)
             this.baseballData.gameInfo.currentHalfInning = this.baseballData.gameInfo.initialGameData.status.detailedState === 'In Progress' ? this.baseballData.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.baseballData.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", this.baseballData.gameInfo.currentPlay.about.inning.toString()) : null;
 
             console.log(this.baseballData)
-            if (this.baseballData.gameInfo.initialGameData.status.detailedState === 'Final') {
-              this.baseballData.oriolesOutcome = (this.baseballData.gameInfo.initialGameData.status.detailedState === 'Final' && (this.baseballData.awayTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.awayScore > this.baseballData.gameInfo.currentPlay.result.homeScore) || (this.baseballData.homeTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.homeScore > this.baseballData.gameInfo.currentPlay.result.awayScore)) ? "O's WON" : (this.baseballData.gameStatus === 'Final' && (this.baseballData.awayTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.awayScore < this.baseballData.gameInfo.currentPlay.result.homeScore) || (this.baseballData.homeTeam === 'Baltimore Orioles' && this.baseballData.gameInfo.currentPlay.result.homeScore < this.baseballData.gameInfo.currentPlay.result.awayScore)) ? "O's LOST" : null;
-              this.baseballData.losingPitcherStats = (this.baseballData.gameInfo.finalData && this.baseballData.gameStatus === 'Final') ? await this.getFinalPitcherGameStats(this.baseballData.gameInfo.finalData.loser.id, +this.baseballData.id) as any : null;
-              this.baseballData.winningPitcherStats = (this.baseballData.gameStatus === 'Final' && this.baseballData.gameInfo.finalData) ? await this.getFinalPitcherGameStats(this.baseballData.gameInfo.finalData.winner.id, +this.baseballData.id) as any : null;
-            }
-
-            if (this.baseballData.gameInfo.initialGameData.status.detailedState === 'Scheduled' || this.baseballData.gameStatus === 'Pre-Game' || this.baseballData.gameStatus === 'Warmup') {
-              this.baseballData.startingAwayPitcherStats = ((this.baseballData.gameInfo.initialGameData.status.detailedState !== 'In Progress' && this.baseballData.gameInfo.initialGameData.status.detailedState !== 'Final')) ? await this.getStartingPitcherStats(this.baseballData.gameInfo.initialGameData.probablePitchers.away.id) as any : null;
-              this.baseballData.startingHomePitcherStats = ((this.baseballData.gameInfo.initialGameData.status.detailedState !== 'In Progress' && this.baseballData.gameInfo.initialGameData.status.detailedState !== 'Final')) ? await this.getStartingPitcherStats(this.baseballData.gameInfo.initialGameData.probablePitchers.home.id) as any : null;
-            }
 
             if (this.baseballData.gameInfo.initialGameData.status.detailedState === 'In Progress') {
               this.baseballData.currentHalfInning = this.baseballData.gameInfo.initialGameData.status.detailedState === 'In Progress' ? this.baseballData.gameInfo.currentPlay.about.halfInning.charAt(0).toUpperCase().concat(this.baseballData.gameInfo.currentPlay.about.halfInning.slice(1, 3), " ", this.baseballData.gameInfo.currentPlay.about.inning.toString()) : null;            }
@@ -176,14 +204,6 @@ export class BaseballChatroomPage implements OnInit {
         }
       })
     )
-  }
-
-  async getFinalPitcherGameStats(playerId, gamePk) {
-    return await this.sportsService.getPitcherFinalData(playerId, gamePk).then(data => data);
-  }
-
-  async getStartingPitcherStats(playerId) {
-    return await this.sportsService.getPitcherSeasonData(playerId).then(data => data);
   }
 
 
@@ -223,18 +243,24 @@ export class BaseballChatroomPage implements OnInit {
     }
   }
 
-  // async ngOnDestroy() {
-  //   if (this.onUpdateChats) {
-  //     await this.onUpdateChats.unsubscribe();
-  //   }
-  //   if (this.onUpdateHubPost) {
-  //     await this.onUpdateHubPost.unsubscribe();
-  //   }
-  //   if (this.onUpdateSportsGame) {
-  //     await this.onUpdateSportsGame.unsubscribe();
-  //   }
+  async ionViewDidLeave() {
+    if (this.onUpdateChats) {
+      await this.onUpdateChats.unsubscribe();
+    }
+    if (this.onUpdateHubPost) {
+      await this.onUpdateHubPost.unsubscribe();
+    }
+    if (this.onUpdateSportsGame) {
+      await this.onUpdateSportsGame.unsubscribe();
+    }
+    if (this.onCreateBaseballAtBatIndex) {
+      await this.onCreateBaseballAtBatIndex.unsubscribe();
+    }
 
-  // }
+    this.closeTimer$.next(true);
+    this.closeTimer$.complete();
+
+  }
 
   
 

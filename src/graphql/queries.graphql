@@ -74,6 +74,7 @@ query GetProfile($id: ID!) {
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -215,6 +216,7 @@ query GetImagePost($id: ID!) {
     sorterValue
     description
     time_posted
+    alreadyLiked
     likes {
       nextToken
       __typename
@@ -276,6 +278,7 @@ query ListImagePosts(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -314,6 +317,7 @@ query ImagePostsBySorterValueAndTime_posted(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -350,6 +354,7 @@ query ImagePostsByUsernameID(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -386,6 +391,7 @@ query ImagePostsByProfileID(
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key
@@ -436,9 +442,9 @@ query GetLikes($id: ID!) {
       owner
       __typename
     }
+    imagePostsID
     createdAt
     updatedAt
-    imagePostLikesId
     owner
     __typename
   }
@@ -454,9 +460,9 @@ query ListLikes(
       id
       usernameID
       profileID
+      imagePostsID
       createdAt
       updatedAt
-      imagePostLikesId
       owner
       __typename
     }
@@ -483,9 +489,9 @@ query LikesByUsernameID(
       id
       usernameID
       profileID
+      imagePostsID
       createdAt
       updatedAt
-      imagePostLikesId
       owner
       __typename
     }
@@ -512,9 +518,40 @@ query LikesByProfileID(
       id
       usernameID
       profileID
+      imagePostsID
       createdAt
       updatedAt
-      imagePostLikesId
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query LikesByImagePostsIDAndId(
+  $imagePostsID: ID!
+  $id: ModelIDKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelLikesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  likesByImagePostsIDAndId(
+    imagePostsID: $imagePostsID
+    id: $id
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      usernameID
+      profileID
+      imagePostsID
+      createdAt
+      updatedAt
       owner
       __typename
     }
@@ -562,7 +599,6 @@ query GetComments($id: ID!) {
     imagePostsID
     createdAt
     updatedAt
-    imagePostCommentsId
     owner
     __typename
   }
@@ -584,7 +620,6 @@ query ListComments(
       imagePostsID
       createdAt
       updatedAt
-      imagePostCommentsId
       owner
       __typename
     }
@@ -619,7 +654,6 @@ query CommentsBySorterValueAndTime_posted(
       imagePostsID
       createdAt
       updatedAt
-      imagePostCommentsId
       owner
       __typename
     }
@@ -652,7 +686,40 @@ query CommentsByProfileID(
       imagePostsID
       createdAt
       updatedAt
-      imagePostCommentsId
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query CommentsByImagePostsIDAndTime_posted(
+  $imagePostsID: ID!
+  $time_posted: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelCommentsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  commentsByImagePostsIDAndTime_posted(
+    imagePostsID: $imagePostsID
+    time_posted: $time_posted
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      usernameID
+      sorterValue
+      profileID
+      comment
+      time_posted
+      imagePostsID
+      createdAt
+      updatedAt
       owner
       __typename
     }
@@ -671,6 +738,7 @@ query GetUsername($id: ID!) {
       sorterValue
       description
       time_posted
+      alreadyLiked
       usernameID
       profileID
       s3_key

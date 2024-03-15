@@ -86,7 +86,7 @@ export class CommentModalPage implements OnInit {
 
     let comments = await this.api.CommentsBySorterValueAndTime_posted(this.imageID + "-comment", null, ModelSortDirection.DESC, null, 20).then((data) => data)
     this.comments = comments.items;
-    this.nextToken = comments.nextToken.toString();
+    this.nextToken = comments.nextToken;
     console.log(this.comments, this.nextToken)
 
     this.spinner = false;

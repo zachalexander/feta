@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { APIService } from '../../API.service';
+import { FA } from 'src/app/FA.service';
 import { MediaService } from 'src/app/services/media.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics'
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,28 +13,21 @@ import { Subscription } from 'rxjs';
 })
 
 
-export class TimelineLikeButtonComponent implements OnInit {
+export class TimelineLikeButtonComponent {
 
   @Input() alreadyLiked: boolean;
   @Input() imageId: string;
-  @Input() user: string;
-  @Input() version: any;
-  @Input() usernameID: string;
   @Output() liked: EventEmitter<boolean> = new EventEmitter();
   onUpdateImageLikeSubscription: Subscription | null = null;
   likeclicked;
+  onCreateLikesSubscription: Subscription | null = null;
 
   constructor(
     public api: APIService,
     public mediaService: MediaService,
     public platform: Platform,
+    public fa: FA
   ) { }
-
-  async getLikesforPost(id){
-    return await this.api.GetPostLikes(id).then(data => data)
-  }
-
-  async ngOnInit() {}
 
   async likeEvent(id){
     if(this.platform.is('hybrid')){
@@ -41,38 +35,23 @@ export class TimelineLikeButtonComponent implements OnInit {
     }
 
     this.likeclicked = true;
-    this.alreadyLiked = !this.alreadyLiked;
-    this.imageId = id;
-    this.liked.emit(this.alreadyLiked)
-    let likeResponse = await this.getLikesforPost(this.imageId).then(data => data)
-    let likeArray = JSON.parse(JSON.stringify(likeResponse)).likes;
+    let userData: any = await this.api.ListLikes({and: [{imagePostsID: { eq: id }, usernameID: {eq: localStorage.getItem('usernameID')}}]}).then((data) => data);
+    let userLiked = userData.items.length;
 
-  
-
-    if(likeArray == null){
-      let likeArray = []
-      likeArray.push(this.usernameID)
-      likeArray = [...new Set(likeArray)];
-
-      // this.api.UpdateImagePost({id: this.imageId, likes: JSON.stringify({usernames: likeArray})})
-      this.likeclicked = false;
+    if(userLiked > 0){
+      let likeID = userData.items[0].id;
+      await this.api.DeleteLikes({ id: likeID }).then(() => {
+        this.alreadyLiked = !this.alreadyLiked;
+        this.liked.emit(!this.alreadyLiked)
+        this.likeclicked = false;
+      })
     } else {
-      likeArray = JSON.parse(likeArray).usernames;
-      let index = likeArray.indexOf(this.usernameID);
-      
-      if(index > -1){
-        likeArray.splice(index, 1);
-        likeArray = [...new Set(likeArray)];
-        // this.api.UpdateImagePost({id: this.imageId, likes: JSON.stringify({usernames: likeArray})})
+      await this.api.CreateLikes({ "usernameID": localStorage.getItem('usernameID'), "profileID": localStorage.getItem('profileID'), "imagePostsID": id }).then(() => {
+        this.alreadyLiked = !this.alreadyLiked;
+        this.liked.emit(this.alreadyLiked)
         this.likeclicked = false;
-      } else {
-        likeArray.push(this.usernameID)
-        likeArray = [...new Set(likeArray)];
-        // this.api.UpdateImagePost({id: this.imageId, likes: JSON.stringify({usernames: likeArray})})
-        this.likeclicked = false;
-      }
+      })
     }
-
   }
 
 

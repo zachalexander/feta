@@ -9,6 +9,7 @@ import { SharedmodulePage } from './sharedmodule.page';
 import { DateAsAgoPipe } from 'src/app/pipes/date-as-ago.pipe';
 import { DateAsAgoShortPipe } from 'src/app/pipes/date-as-ago-short.pipe';
 import { DateSuffixPipe } from 'src/app/pipes/date-suffix.pipe';
+import { LikeButtonAlreadyPipe } from 'src/app/pipes/like-button-already.pipe';
 
 import { SwiperModule } from 'swiper/angular';
 import {ImagekitioAngularModule} from 'imagekitio-angular';
@@ -30,6 +31,8 @@ import { TimelineComponent } from './../../components/timeline/timeline.componen
 import { TimelineLikeButtonComponent } from './../../components/timeline-like-button/timeline-like-button.component';
 import { TimelinePage } from '../timeline/timeline.page';
 import { ProfileMediaClickPage } from 'src/app/modals/profile-media-click/profile-media-click.page';
+
+
 
 
 @NgModule({
@@ -62,6 +65,7 @@ import { ProfileMediaClickPage } from 'src/app/modals/profile-media-click/profil
     DateAsAgoPipe, 
     DateAsAgoShortPipe, 
     DateSuffixPipe, 
+    LikeButtonAlreadyPipe
   ],
   exports: [
     CommonModule,
@@ -80,6 +84,7 @@ import { ProfileMediaClickPage } from 'src/app/modals/profile-media-click/profil
     DateAsAgoPipe,
     DateAsAgoShortPipe,
     DateSuffixPipe, 
+    LikeButtonAlreadyPipe,
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,
